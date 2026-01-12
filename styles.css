@@ -489,14 +489,20 @@ h3 { font-size: 1.25rem; }
 .school.harvard { color: var(--harvard-purple); }
 
 .credential-companies {
-    font-size: 1rem;
-    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 8px;
 }
 
-.credential-companies .company {
-    color: var(--text-light);
-    font-weight: 500;
+.company {
+    font-weight: 700;
 }
+
+.company.google { color: #4285F4; }
+.company.apple { color: #A2AAAD; }
+.company.meta { color: #0668E1; }
+.company.amazon { color: #FF9900; }
+.company.microsoft { color: #00A4EF; }
 
 /* CTA Section */
 .cta-section {
