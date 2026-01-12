@@ -705,11 +705,18 @@ img.instructor-avatar {
 }
 
 .avatar {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--purple-light), var(--magenta));
     flex-shrink: 0;
+    object-fit: cover;
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+img.avatar {
+    background: none;
 }
 
 .testimonial-meta h4 {
