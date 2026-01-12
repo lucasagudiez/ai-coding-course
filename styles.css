@@ -566,11 +566,18 @@ h3 { font-size: 1.25rem; }
 }
 
 .instructor-avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--purple-light), var(--magenta));
     margin: 0 auto 16px;
+    object-fit: cover;
+    border: 3px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+img.instructor-avatar {
+    background: none;
 }
 
 .instructor-card h3 {
