@@ -1,7 +1,7 @@
 /* ============================================
    AI Coding Mastery — Styles
    Based on Adava University design language
-   Purple/magenta gradients with teal CTAs
+   Purple/magenta gradients with teal/green CTAs
    ============================================ */
 
 :root {
@@ -19,9 +19,6 @@
     --cambridge-pink: #e91e8c;
     --harvard-purple: #a855f7;
     
-    /* CTA - Gold/Yellow (Adava style) */
-    --cta-gold: #f59e0b;
-    --cta-gold-hover: #fbbf24;
     /* CTA - Teal/Green (original Adava palette) */
     --cta-teal: #25877D;
     --cta-teal-hover: #2a9a8e;
