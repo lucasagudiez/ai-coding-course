@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 50" fill="none">
-  <!-- Dark purple base triangle -->
-  <polygon points="30,0 0,50 35,50" fill="#3d2c5e"/>
-  <!-- Light purple/magenta overlapping triangle -->
-  <polygon points="30,12 18,42 55,42" fill="#8b5cf6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 45" fill="none">
+  <!-- Dark maroon/purple base shape (left part of the A) -->
+  <path d="M25 0 L0 45 L30 45 Z" fill="#4a2c4a"/>
+  <!-- Light purple overlay (right part of the A) -->
+  <path d="M22 10 L12 40 L50 40 Z" fill="#7c5caa"/>
 </svg>
-

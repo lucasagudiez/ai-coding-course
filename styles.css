@@ -15,7 +15,7 @@
     /* School colors */
     --mit-blue: #4a90d9;
     --stanford-green: #2ecc71;
-    --oxford-orange: #f39c12;
+    --oxford-green: #2ecc71;
     --cambridge-pink: #e91e8c;
     --harvard-purple: #a855f7;
     
@@ -194,22 +194,18 @@ h3 { font-size: 1.25rem; }
 }
 
 .logo-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    letter-spacing: 0.15em;
-    color: var(--text-white);
-    background: linear-gradient(90deg, #fff 0%, #c4b5fd 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: 0.12em;
+    color: #ffffff;
 }
 
 .logo-subtitle {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 500;
-    letter-spacing: 0.35em;
-    color: var(--text-muted);
-    margin-top: 1px;
+    letter-spacing: 0.25em;
+    color: #7c5caa;
+    margin-top: 2px;
 }
 
 .logo-text {
@@ -515,7 +511,7 @@ h3 { font-size: 1.25rem; }
 
 .school.mit { color: var(--mit-blue); }
 .school.stanford { color: var(--stanford-green); }
-.school.oxford { color: var(--oxford-orange); }
+.school.oxford { color: var(--oxford-green); }
 .school.cambridge { color: var(--cambridge-pink); }
 .school.harvard { color: var(--harvard-purple); }
 
@@ -532,7 +528,7 @@ h3 { font-size: 1.25rem; }
 .company.google { color: #4285F4; }
 .company.apple { color: #A2AAAD; }
 .company.meta { color: #0668E1; }
-.company.amazon { color: #FF9900; }
+.company.amazon { color: #2ecc71; }
 .company.microsoft { color: #00A4EF; }
 
 /* CTA Section */
