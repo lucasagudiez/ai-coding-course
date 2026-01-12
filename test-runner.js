@@ -302,14 +302,14 @@ test('Uses purple/magenta color scheme (Adava style)', () => {
     assert(hasPurple, 'Missing purple/magenta color scheme');
 });
 
-test('Uses gold/yellow CTA colors (Adava style)', () => {
+test('Uses teal/green CTA colors (original Adava style)', () => {
     const css = fs.readFileSync('styles.css', 'utf8');
-    const hasGold = 
-        css.includes('#f59e0b') || css.includes('#fbbf24') ||
-        css.includes('#eab308') || css.includes('#facc15') ||
-        css.toLowerCase().includes('gold') || css.toLowerCase().includes('yellow') ||
-        css.includes('rgb(245,') || css.includes('rgb(250,');
-    assert(hasGold, 'Missing gold/yellow CTA colors');
+    const hasTeal = 
+        css.includes('#25877D') || css.includes('#25877d') ||
+        css.includes('#12756B') || css.includes('#12756b') ||
+        css.includes('--cta-teal') ||
+        css.includes('rgb(37, 135, 125)') || css.includes('rgb(18, 117, 107)');
+    assert(hasTeal, 'Missing teal/green CTA colors from original Adava palette');
 });
 
 test('Has dark background theme', () => {
@@ -711,6 +711,491 @@ test('HTML has viewport meta tag', () => {
     assert(
         html.includes('viewport') && html.includes('width=device-width'),
         'Missing proper viewport meta tag for mobile'
+    );
+});
+
+// ============================================================================
+// SECTION 25: TESTIMONIALS WITH REALISTIC PHOTOS
+// ============================================================================
+console.log('\n--- Testimonials Photo Tests ---');
+
+test('Testimonial avatars have actual images (not placeholders)', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Should have img tags with src pointing to real images
+    const hasRealImages = 
+        html.includes('randomuser.me') || 
+        html.includes('unsplash.com') ||
+        html.includes('pravatar.cc') ||
+        html.includes('thispersondoesnotexist') ||
+        (html.includes('<img') && html.includes('avatar'));
+    assert(hasRealImages, 'Testimonial avatars should use real images, not placeholders');
+});
+
+test('All testimonial cards have avatar images', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Count testimonial cards and avatar images
+    const testimonialCards = (html.match(/testimonial-card/g) || []).length;
+    const avatarImages = (html.match(/<img[^>]+class="avatar"/g) || []).length;
+    assert(
+        avatarImages >= testimonialCards / 2 || avatarImages >= 3,
+        `Found ${avatarImages} avatar images but expected at least 3 for testimonials`
+    );
+});
+
+test('Avatar images have proper styling for realistic look', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.avatar') && css.includes('border-radius'),
+        'Avatar should have rounded styling'
+    );
+    assert(
+        css.includes('object-fit: cover') || css.includes('object-fit:cover'),
+        'Avatar should use object-fit: cover for proper image display'
+    );
+});
+
+test('Testimonial names match realistic backgrounds', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Names should match their backgrounds (e.g., Marcus Chen - Engineer)
+    const hasRealisticProfiles = 
+        (html.includes('Marcus') && html.includes('Engineer')) ||
+        (html.includes('Sarah') && (html.includes('MD') || html.includes('Doctor'))) ||
+        (html.includes('James') && html.includes('PhD'));
+    assert(hasRealisticProfiles, 'Testimonial names should match their professional backgrounds');
+});
+
+// ============================================================================
+// SECTION 26: MULTI-LAYER PARALLAX EFFECT
+// ============================================================================
+console.log('\n--- Multi-Layer Parallax Tests ---');
+
+test('HTML has parallax layer containers', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('parallax-layer') || html.includes('parallax-back') || 
+        html.includes('parallax-mid') || html.includes('parallax-front'),
+        'Missing parallax layer containers for depth effect'
+    );
+});
+
+test('HTML has floating shape elements for parallax', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('float-shape') || html.includes('shape-1') ||
+        html.includes('floating') || html.includes('parallax'),
+        'Missing floating shape elements for parallax effect'
+    );
+});
+
+test('CSS has parallax layer styles with different z-indexes or transforms', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        (css.includes('.parallax-layer') || css.includes('.parallax-back')) &&
+        css.includes('position: absolute'),
+        'Parallax layers should be absolutely positioned'
+    );
+});
+
+test('CSS has floating shape styles with gradients', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.float-shape') || css.includes('.shape-'),
+        'Missing floating shape CSS styles'
+    );
+    assert(
+        css.includes('radial-gradient') || css.includes('linear-gradient'),
+        'Floating shapes should use gradients for visual effect'
+    );
+});
+
+test('JS has mouse parallax logic for multiple layers', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const hasParallaxLogic = 
+        html.includes('parallaxBack') || html.includes('parallax-back') ||
+        (html.includes('mousemove') && html.includes('parallax'));
+    assert(hasParallaxLogic, 'Missing JavaScript parallax logic for multiple layers');
+});
+
+test('Parallax uses translate3d for GPU acceleration', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        html.includes('translate3d') || css.includes('translate3d') ||
+        css.includes('translateZ') || html.includes('translateZ'),
+        'Parallax should use translate3d/translateZ for GPU acceleration'
+    );
+});
+
+test('CSS has float animation keyframes for shapes', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('@keyframes') && (css.includes('float') || css.includes('Float')),
+        'Missing float animation keyframes for parallax shapes'
+    );
+});
+
+// ============================================================================
+// SECTION 27: RESPONSIVE CENTERING (iPad/Tablet)
+// ============================================================================
+console.log('\n--- Responsive Centering Tests ---');
+
+test('CSS has tablet landscape breakpoint (1024px)', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('max-width: 1024px') || css.includes('max-width:1024px'),
+        'Missing tablet landscape breakpoint (1024px)'
+    );
+});
+
+test('CSS has tablet portrait breakpoint (768px)', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('max-width: 768px') || css.includes('max-width:768px'),
+        'Missing tablet portrait breakpoint (768px)'
+    );
+});
+
+test('CSS uses margin: 0 auto for centering grids on tablet', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('margin: 0 auto') || css.includes('margin:0 auto'),
+        'Missing margin: 0 auto for centered layouts'
+    );
+});
+
+test('CSS has max-width constraints for single-column layouts', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // Should have max-width values for centered containers
+    const hasMaxWidth = 
+        css.includes('max-width: 500px') || css.includes('max-width: 600px') ||
+        css.includes('max-width: 700px') || css.includes('max-width: 800px');
+    assert(hasMaxWidth, 'Missing max-width constraints for centered layouts');
+});
+
+test('CSS changes grid to single column on tablet', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('grid-template-columns: 1fr') || css.includes('grid-template-columns:1fr'),
+        'Grid should collapse to single column on tablet/mobile'
+    );
+});
+
+// ============================================================================
+// SECTION 28: INSTRUCTOR SECTION (Real Adava Team)
+// ============================================================================
+console.log('\n--- Instructor Section Tests ---');
+
+test('Page has real Adava instructor names', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const adavaInstructors = [
+        'Jorge', 'Aarshavi', 'Shu', 'Nishit', 'Abhishek', 
+        'Wilfried', 'Varun', 'Chase'
+    ];
+    const foundInstructors = adavaInstructors.filter(name => html.includes(name));
+    assert(
+        foundInstructors.length >= 4,
+        `Only ${foundInstructors.length} Adava instructors found, expected at least 4`
+    );
+});
+
+test('Instructor cards have profile images', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('instructor-avatar') || 
+        (html.includes('instructor-card') && html.includes('<img')),
+        'Instructor cards should have profile images'
+    );
+});
+
+test('Instructor images use external URLs (not placeholders)', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const hasRealImages = 
+        html.includes('adavauniversity.org') ||
+        html.includes('adava.co') ||
+        html.includes('amazonaws.com') ||
+        html.includes('googleusercontent') ||
+        (html.includes('instructor') && html.includes('https://'));
+    assert(hasRealImages, 'Instructor images should use real URLs');
+});
+
+test('CSS styles instructor avatars properly', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.instructor-avatar') || css.includes('instructor-card') && css.includes('img'),
+        'Missing instructor avatar styles'
+    );
+});
+
+// ============================================================================
+// SECTION 29: BRANDING (Adava University)
+// ============================================================================
+console.log('\n--- Branding Tests ---');
+
+test('Footer has Adava University copyright', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('Adava University') || html.includes('adava'),
+        'Footer should reference Adava University'
+    );
+});
+
+test('Footer has current year copyright', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('2025') || html.includes('2026'),
+        'Footer should have current year in copyright'
+    );
+});
+
+test('Reference doc mentions aifluency.com as source', () => {
+    if (fs.existsSync('adava-website-reference.md')) {
+        const md = fs.readFileSync('adava-website-reference.md', 'utf8');
+        assert(
+            md.includes('aifluency.com'),
+            'Reference doc should mention aifluency.com as primary source'
+        );
+    } else {
+        // Skip if file doesn't exist
+        assert(true, 'Reference doc check skipped - file not found');
+    }
+});
+
+test('Reference doc mentions adavauniversity.org as deployment target', () => {
+    if (fs.existsSync('adava-website-reference.md')) {
+        const md = fs.readFileSync('adava-website-reference.md', 'utf8');
+        assert(
+            md.includes('adavauniversity.org'),
+            'Reference doc should mention adavauniversity.org as deployment target'
+        );
+    } else {
+        assert(true, 'Reference doc check skipped - file not found');
+    }
+});
+
+// ============================================================================
+// SECTION 30: CREDENTIAL BOX WORDING
+// ============================================================================
+console.log('\n--- Credential Box Wording Tests ---');
+
+test('Credential box mentions Engineers and/or Researchers', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('Engineer') || html.includes('Researcher'),
+        'Credential box should mention Engineers or Researchers'
+    );
+});
+
+test('Credential box does NOT say "Exclusively" with both colleges AND companies', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Check that it doesn't claim instructors are BOTH from top colleges AND companies
+    // (They are either/or, not both necessarily)
+    const hasExclusively = html.includes('Taught Exclusively by') && 
+                           html.includes('MIT') && html.includes('Google');
+    if (hasExclusively) {
+        // If it says exclusively, it should NOT have the misleading "AND" phrasing
+        assert(
+            !html.includes('With experience at'),
+            'Should not claim instructors are exclusively from colleges AND have company experience'
+        );
+    } else {
+        assert(true, 'Credential wording is acceptable');
+    }
+});
+
+test('Credential box lists top universities', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const universities = ['MIT', 'Stanford', 'Oxford', 'Cambridge', 'Harvard'];
+    const foundUniversities = universities.filter(u => html.includes(u));
+    assert(
+        foundUniversities.length >= 3,
+        `Only ${foundUniversities.length} universities in credential box, expected at least 3`
+    );
+});
+
+test('Credential box lists top tech companies', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    const companies = ['Google', 'Apple', 'Meta', 'Amazon', 'Microsoft'];
+    const foundCompanies = companies.filter(c => html.includes(c));
+    assert(
+        foundCompanies.length >= 3,
+        `Only ${foundCompanies.length} companies in credential box, expected at least 3`
+    );
+});
+
+// ============================================================================
+// SECTION 31: 3D DEPTH EFFECTS
+// ============================================================================
+console.log('\n--- 3D Depth Effects Tests ---');
+
+test('CSS has perspective property for 3D depth', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('perspective:') || css.includes('perspective '),
+        'Missing perspective property for 3D depth'
+    );
+});
+
+test('CSS has transform-style: preserve-3d', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('transform-style: preserve-3d') || css.includes('transform-style:preserve-3d'),
+        'Missing transform-style: preserve-3d for 3D effects'
+    );
+});
+
+test('CSS has dynamic box-shadow for 3D floating effect', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // Should have multiple box-shadow values for layered shadows
+    const boxShadowCount = (css.match(/box-shadow:/g) || []).length;
+    assert(boxShadowCount >= 5, `Only ${boxShadowCount} box-shadow declarations, expected at least 5`);
+});
+
+test('Credential box has soft drop shadow for 3D effect', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.credential-box') && css.includes('box-shadow'),
+        'Credential box should have box-shadow for 3D depth'
+    );
+});
+
+// ============================================================================
+// SECTION 32: FORM AND CTA FUNCTIONALITY
+// ============================================================================
+console.log('\n--- Form & CTA Tests ---');
+
+test('CTA form has responsive layout', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.cta-form') && 
+        (css.includes('flex-direction: column') || css.includes('flex-wrap')),
+        'CTA form should have responsive layout'
+    );
+});
+
+test('CTA button has hover effect', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        (css.includes('.btn-primary:hover') || css.includes('.cta-btn:hover')) &&
+        css.includes('transform'),
+        'CTA button should have hover transform effect'
+    );
+});
+
+test('Form inputs have focus styles', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('input:focus') || css.includes(':focus'),
+        'Form inputs should have focus styles for accessibility'
+    );
+});
+
+// ============================================================================
+// SECTION 33: PERFORMANCE OPTIMIZATIONS
+// ============================================================================
+console.log('\n--- Performance Tests ---');
+
+test('CSS uses will-change for animated elements', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('will-change'),
+        'Missing will-change for performance optimization'
+    );
+});
+
+test('Parallax layers have pointer-events: none', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('pointer-events: none') || css.includes('pointer-events:none'),
+        'Parallax layers should have pointer-events: none'
+    );
+});
+
+test('Animations use hardware-accelerated properties', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // transform and opacity are GPU-accelerated
+    assert(
+        css.includes('transform') && css.includes('opacity'),
+        'Animations should use GPU-accelerated properties (transform, opacity)'
+    );
+});
+
+// ============================================================================
+// SECTION 34: SCROLL-BASED PARALLAX
+// ============================================================================
+console.log('\n--- Scroll-Based Parallax Tests ---');
+
+test('GSAP ScrollTrigger animates network background on scroll', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes("gsap.to('#network-bg'") || html.includes('gsap.to("#network-bg"'),
+        'Network background should have scroll-based parallax'
+    );
+});
+
+test('GSAP ScrollTrigger animates parallax layers on scroll', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes("gsap.to('.parallax-back'") || html.includes("gsap.to('.parallax-mid'"),
+        'Parallax layers should animate on scroll'
+    );
+});
+
+test('Cards have scroll-based float effect', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('promise-card') && html.includes('scrollTrigger') ||
+        html.includes('.day-card') && html.includes('scrollTrigger'),
+        'Cards should have scroll-based parallax float effect'
+    );
+});
+
+test('Parallax config values are subtle (not too aggressive)', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Should NOT have extreme values like 50+ for parallax movement
+    const hasSubtleValues = 
+        html.includes('title: { x: 12') || html.includes('title: { x: 15') ||
+        html.includes('SUBTLE parallax') || html.includes('subtle parallax');
+    assert(hasSubtleValues, 'Parallax should use subtle, not aggressive values');
+});
+
+// ============================================================================
+// SECTION 35: PARTICLE NETWORK EFFECT CONSISTENCY
+// ============================================================================
+console.log('\n--- Particle Network Consistency Tests ---');
+
+test('Network canvas covers entire page height', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('#network-bg') && (css.includes('height: 300%') || css.includes('position: fixed')),
+        'Network canvas should cover the full page'
+    );
+});
+
+test('Network background has fixed position', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('#network-bg') && css.includes('position: fixed'),
+        'Network background should be fixed for consistent effect'
+    );
+});
+
+test('Floating shapes have subtle opacity', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // opacity should be low (0.08, 0.1, 0.15, etc.) not high
+    assert(
+        css.includes('.float-shape') && 
+        (css.includes('opacity: 0.08') || css.includes('opacity: 0.1') || css.includes('opacity: 0.15')),
+        'Floating shapes should have subtle opacity (not overwhelming)'
+    );
+});
+
+test('Floating shapes have slow animations', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // Animations should be slow (18s+) not fast
+    assert(
+        css.includes('float-slow') && 
+        (css.includes('25s') || css.includes('22s') || css.includes('30s')),
+        'Floating shapes should have slow, subtle animations'
     );
 });
 

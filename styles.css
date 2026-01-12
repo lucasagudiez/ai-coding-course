@@ -1,7 +1,7 @@
 /* ============================================
    AI Coding Mastery — Styles
    Based on Adava University design language
-   Purple/magenta gradients with gold CTAs
+   Purple/magenta gradients with teal CTAs
    ============================================ */
 
 :root {
@@ -19,9 +19,10 @@
     --cambridge-pink: #e91e8c;
     --harvard-purple: #a855f7;
     
-    /* CTA - Gold/Yellow */
-    --cta-gold: #f59e0b;
-    --cta-gold-hover: #fbbf24;
+    /* CTA - Teal/Green (original Adava palette) */
+    --cta-teal: #25877D;
+    --cta-teal-hover: #2a9a8e;
+    --cta-teal-dark: #12756B;
     
     /* Backgrounds */
     --bg-dark: #0f0818;
@@ -54,8 +55,8 @@
 }
 
 @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.2); }
-    50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.6), 0 0 60px rgba(245, 158, 11, 0.3); }
+    0%, 100% { box-shadow: 0 0 20px rgba(37, 135, 125, 0.4), 0 0 40px rgba(37, 135, 125, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(37, 135, 125, 0.6), 0 0 60px rgba(37, 135, 125, 0.3); }
 }
 
 @keyframes float {
@@ -124,7 +125,7 @@ h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
 h3 { font-size: 1.25rem; }
 
 .gradient-text {
-    background: linear-gradient(90deg, var(--purple-light), var(--cyan), var(--cta-gold));
+    background: linear-gradient(90deg, var(--purple-light), var(--cyan), var(--cta-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -196,7 +197,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .nav-cta {
-    background: var(--cta-gold) !important;
+    background: var(--cta-teal) !important;
     color: #000 !important;
     padding: 10px 20px !important;
     border-radius: 6px;
@@ -204,7 +205,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .nav-cta:hover {
-    background: var(--cta-gold-hover) !important;
+    background: var(--cta-teal-hover) !important;
 }
 
 /* Buttons */
@@ -223,7 +224,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .btn-primary {
-    background: linear-gradient(90deg, var(--cta-gold), #fcd34d, var(--cta-gold));
+    background: linear-gradient(90deg, var(--cta-teal), #3bb8aa, var(--cta-teal));
     background-size: 200% 100%;
     color: #000;
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -231,7 +232,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .btn-primary:hover {
-    background: var(--cta-gold-hover);
+    background: var(--cta-teal-hover);
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 0 60px rgba(245, 158, 11, 0.3), 0 6px 20px rgba(0, 0, 0, 0.4);
 }
@@ -278,8 +279,116 @@ h3 { font-size: 1.25rem; }
     text-align: center;
     padding: 120px 24px 80px;
     position: relative;
-    perspective: 1000px;
+    perspective: 1500px;
+    perspective-origin: 50% 40%;
     overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Floating Parallax Layers */
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
+    transition: transform 0.15s ease-out;
+}
+
+.parallax-back { z-index: 1; }
+.parallax-mid { z-index: 2; }
+.parallax-front { z-index: 3; }
+.hero-container { z-index: 10; position: relative; }
+
+/* Floating Shapes - Subtle and consistent */
+.float-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+    filter: blur(2px);
+}
+
+.shape-1 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, var(--purple-light) 0%, transparent 70%);
+    top: -50px;
+    left: -50px;
+    animation: float-slow 25s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, var(--magenta) 0%, transparent 70%);
+    top: 60%;
+    right: -30px;
+    animation: float-slow 30s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, var(--cta-teal) 0%, transparent 70%);
+    bottom: 15%;
+    left: 25%;
+    animation: float-slow 22s ease-in-out infinite;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
+    top: 35%;
+    left: 15%;
+    animation: float-medium 18s ease-in-out infinite;
+}
+
+.shape-5 {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(219, 39, 119, 0.4) 0%, transparent 70%);
+    top: 25%;
+    right: 20%;
+    animation: float-medium 20s ease-in-out infinite reverse;
+}
+
+.shape-6 {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.6) 0%, transparent 70%);
+    top: 45%;
+    left: 30%;
+    animation: float-fast 12s ease-in-out infinite;
+}
+
+.shape-7 {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.7) 0%, transparent 70%);
+    bottom: 35%;
+    right: 35%;
+    animation: float-fast 14s ease-in-out infinite reverse;
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(15px, -10px) scale(1.02); }
+    50% { transform: translate(-10px, 15px) scale(0.98); }
+    75% { transform: translate(-15px, -5px) scale(1.01); }
+}
+
+@keyframes float-medium {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(20px, -15px); }
+    66% { transform: translate(-15px, 20px); }
+}
+
+@keyframes float-fast {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(25px, -20px); }
 }
 
 .hero::before {
@@ -302,10 +411,13 @@ h3 { font-size: 1.25rem; }
     margin-bottom: 24px;
     will-change: transform;
     transform-style: preserve-3d;
+    transform: translateZ(0);
+    position: relative;
+    z-index: 10;
 }
 
 .highlight {
-    color: var(--cta-gold);
+    color: var(--cta-teal);
     position: relative;
 }
 
@@ -316,20 +428,29 @@ h3 { font-size: 1.25rem; }
     margin-bottom: 40px;
     line-height: 1.7;
     will-change: transform;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    position: relative;
+    z-index: 8;
 }
 
 /* Credential Box - Glassmorphism with 3D Depth */
 .credential-box {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 32px 40px;
     max-width: 700px;
     margin: 0 auto;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    will-change: transform, box-shadow;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    position: relative;
+    z-index: 20;
     box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 20px 60px rgba(0, 0, 0, 0.5),
         0 0 60px rgba(139, 92, 246, 0.1),
         inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     transform-style: preserve-3d;
@@ -472,7 +593,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .rotating-word {
-    color: var(--cta-gold);
+    color: var(--cta-teal);
     transition: opacity 0.3s;
     display: inline-block;
     min-width: 120px;
@@ -823,7 +944,7 @@ blockquote {
 
 .day-badge.bonus {
     background: rgba(245, 158, 11, 0.2);
-    color: var(--cta-gold);
+    color: var(--cta-teal);
 }
 
 .day-card h3 {
@@ -1134,10 +1255,31 @@ blockquote {
     .cohorts-grid {
         grid-template-columns: 1fr;
         gap: 32px;
+        max-width: 600px;
+        margin: 0 auto;
     }
     
     .cohort-card {
         max-width: 100%;
+    }
+    
+    .mentorship-grid {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .promise-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+    
+    .promise-card {
+        padding: 24px 16px;
+    }
+    
+    .testimonials-grid {
+        max-width: 900px;
+        margin: 0 auto;
     }
 }
 
@@ -1161,7 +1303,7 @@ blockquote {
     position: fixed;
     width: 8px;
     height: 8px;
-    background: var(--cta-gold);
+    background: var(--cta-teal);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
@@ -1172,7 +1314,7 @@ blockquote {
 .custom-cursor.cursor-hover {
     width: 60px;
     height: 60px;
-    border-color: var(--cta-gold);
+    border-color: var(--cta-teal);
     background: rgba(245, 158, 11, 0.1);
 }
 
@@ -1216,15 +1358,49 @@ blockquote {
     .admissions-info,
     .cohorts-grid {
         grid-template-columns: 1fr;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .promise-card,
+    .mentorship-card,
+    .instructor-card,
+    .day-card,
+    .admission-card {
+        text-align: center;
+    }
+    
+    .mentorship-card h3,
+    .mentorship-card p {
+        text-align: left;
+    }
+    
+    .day-card ul {
+        text-align: left;
     }
     
     .projects-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .testimonials-grid .testimonial-card.featured {
+        grid-column: span 1;
+    }
+    
     .stats-bar {
         flex-direction: column;
         gap: 24px;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .testimonial-header {
@@ -1265,6 +1441,27 @@ blockquote {
     }
 }
 
+/* Tablet Small (600px - 767px) */
+@media (max-width: 767px) and (min-width: 600px) {
+    .promise-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-width: 100%;
+    }
+    
+    .promise-card {
+        padding: 20px 12px;
+    }
+    
+    .promise-card h3 {
+        font-size: 1rem;
+    }
+    
+    .promise-card p {
+        font-size: 0.85rem;
+    }
+}
+
 /* Mobile Large (481px - 767px) */
 @media (max-width: 767px) and (min-width: 481px) {
     .projects-grid {
@@ -1278,6 +1475,14 @@ blockquote {
     
     .testimonials-grid .testimonial-card.featured {
         grid-column: span 1;
+    }
+}
+
+/* Mobile Medium (481px - 599px) */
+@media (max-width: 599px) and (min-width: 481px) {
+    .promise-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
     }
 }
 
