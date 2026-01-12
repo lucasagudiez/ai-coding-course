@@ -302,14 +302,14 @@ test('Uses purple/magenta color scheme (Adava style)', () => {
     assert(hasPurple, 'Missing purple/magenta color scheme');
 });
 
-test('Uses gold/yellow CTA colors (Adava style)', () => {
+test('Uses teal/green CTA colors (original Adava style)', () => {
     const css = fs.readFileSync('styles.css', 'utf8');
-    const hasGold = 
-        css.includes('#f59e0b') || css.includes('#fbbf24') ||
-        css.includes('#eab308') || css.includes('#facc15') ||
-        css.toLowerCase().includes('gold') || css.toLowerCase().includes('yellow') ||
-        css.includes('rgb(245,') || css.includes('rgb(250,');
-    assert(hasGold, 'Missing gold/yellow CTA colors');
+    const hasTeal = 
+        css.includes('#25877D') || css.includes('#25877d') ||
+        css.includes('#12756B') || css.includes('#12756b') ||
+        css.includes('--cta-teal') ||
+        css.includes('rgb(37, 135, 125)') || css.includes('rgb(18, 117, 107)');
+    assert(hasTeal, 'Missing teal/green CTA colors from original Adava palette');
 });
 
 test('Has dark background theme', () => {

@@ -1,7 +1,7 @@
 /* ============================================
    AI Coding Mastery — Styles
    Based on Adava University design language
-   Purple/magenta gradients with gold CTAs
+   Purple/magenta gradients with teal CTAs
    ============================================ */
 
 :root {
@@ -19,9 +19,10 @@
     --cambridge-pink: #e91e8c;
     --harvard-purple: #a855f7;
     
-    /* CTA - Gold/Yellow */
-    --cta-gold: #f59e0b;
-    --cta-gold-hover: #fbbf24;
+    /* CTA - Teal/Green (original Adava palette) */
+    --cta-teal: #25877D;
+    --cta-teal-hover: #2a9a8e;
+    --cta-teal-dark: #12756B;
     
     /* Backgrounds */
     --bg-dark: #0f0818;
@@ -54,8 +55,8 @@
 }
 
 @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.2); }
-    50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.6), 0 0 60px rgba(245, 158, 11, 0.3); }
+    0%, 100% { box-shadow: 0 0 20px rgba(37, 135, 125, 0.4), 0 0 40px rgba(37, 135, 125, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(37, 135, 125, 0.6), 0 0 60px rgba(37, 135, 125, 0.3); }
 }
 
 @keyframes float {
@@ -124,7 +125,7 @@ h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
 h3 { font-size: 1.25rem; }
 
 .gradient-text {
-    background: linear-gradient(90deg, var(--purple-light), var(--cyan), var(--cta-gold));
+    background: linear-gradient(90deg, var(--purple-light), var(--cyan), var(--cta-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -196,7 +197,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .nav-cta {
-    background: var(--cta-gold) !important;
+    background: var(--cta-teal) !important;
     color: #000 !important;
     padding: 10px 20px !important;
     border-radius: 6px;
@@ -204,7 +205,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .nav-cta:hover {
-    background: var(--cta-gold-hover) !important;
+    background: var(--cta-teal-hover) !important;
 }
 
 /* Buttons */
@@ -223,7 +224,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .btn-primary {
-    background: linear-gradient(90deg, var(--cta-gold), #fcd34d, var(--cta-gold));
+    background: linear-gradient(90deg, var(--cta-teal), #3bb8aa, var(--cta-teal));
     background-size: 200% 100%;
     color: #000;
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -231,7 +232,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .btn-primary:hover {
-    background: var(--cta-gold-hover);
+    background: var(--cta-teal-hover);
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 0 60px rgba(245, 158, 11, 0.3), 0 6px 20px rgba(0, 0, 0, 0.4);
 }
@@ -330,7 +331,7 @@ h3 { font-size: 1.25rem; }
 .shape-3 {
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, var(--cta-gold) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--cta-teal) 0%, transparent 70%);
     bottom: 15%;
     left: 25%;
     animation: float-slow 22s ease-in-out infinite;
@@ -416,7 +417,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .highlight {
-    color: var(--cta-gold);
+    color: var(--cta-teal);
     position: relative;
 }
 
@@ -592,7 +593,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .rotating-word {
-    color: var(--cta-gold);
+    color: var(--cta-teal);
     transition: opacity 0.3s;
     display: inline-block;
     min-width: 120px;
@@ -943,7 +944,7 @@ blockquote {
 
 .day-badge.bonus {
     background: rgba(245, 158, 11, 0.2);
-    color: var(--cta-gold);
+    color: var(--cta-teal);
 }
 
 .day-card h3 {
@@ -1302,7 +1303,7 @@ blockquote {
     position: fixed;
     width: 8px;
     height: 8px;
-    background: var(--cta-gold);
+    background: var(--cta-teal);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
@@ -1313,7 +1314,7 @@ blockquote {
 .custom-cursor.cursor-hover {
     width: 60px;
     height: 60px;
-    border-color: var(--cta-gold);
+    border-color: var(--cta-teal);
     background: rgba(245, 158, 11, 0.1);
 }
 
