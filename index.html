@@ -26,6 +26,12 @@
                     <span class="logo-subtitle">UNIVERSITY</span>
                 </div>
             </a>
+            <!-- Mobile hamburger menu button -->
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
             <div class="nav-links">
                 <a href="#method">Our Method</a>
                 <a href="#instructors">Instructors</a>
@@ -87,6 +93,17 @@
                 </div>
             </div>
         </div>
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll to explore</span>
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <div class="scroll-arrow">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </header>
 
     <!-- CTA Section 1 -->
@@ -96,7 +113,13 @@
             <form class="cta-form">
                 <input type="text" placeholder="Your Full Name" class="form-input">
                 <input type="email" placeholder="Your Email Address" class="form-input">
-                <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+                <div class="cta-button-group">
+                    <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+                    <div class="urgency-timer">
+                        <span class="timer-label">Scholarship expires in</span>
+                        <span class="timer-countdown" data-countdown>29:59</span>
+                    </div>
+                </div>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
@@ -310,7 +333,7 @@
                             </div>
                             <div class="salary-badge">$145K/year</div>
                         </div>
-                        <blockquote>"I have a Master's in Mechanical Engineering from Georgia Tech. I took all the calculus, physics, thermodynamics — but never a single programming class. I always wanted to build software tools for my simulations but the learning curve felt impossible. With AI Coding Mastery, I built a complete CAD automation tool in 10 days. Now I'm a software engineer at Tesla, combining my mechanical background with code. This course was the missing piece."</blockquote>
+                        <blockquote>"I have a Master's in Mechanical Engineering from Georgia Tech. I took all the calculus, physics, thermodynamics — but never a single programming class. I always wanted to build software tools for my simulations but the learning curve felt impossible. With Adava's Software Dev Bootcamp, I built a complete CAD automation tool in 10 days. Now I'm a software engineer at Tesla, combining my mechanical background with code. This course was the missing piece."</blockquote>
                     </div>
                 </div>
 
@@ -324,7 +347,7 @@
                             </div>
                             <div class="salary-badge">$165K/year</div>
                         </div>
-                        <blockquote>"As a physician, I constantly saw ways software could improve patient care — but I couldn't build any of it. I tried learning Python twice and quit both times. AI Coding Mastery was different. I built a clinical decision support tool during the course that I actually use in my practice now. The ex-Amazon instructor helped me understand systems thinking. I made the leap to health tech and finally get to solve the problems I've seen for years."</blockquote>
+                        <blockquote>"As a physician, I constantly saw ways software could improve patient care — but I couldn't build any of it. I tried learning Python twice and quit both times. Adava's Software Dev Bootcamp was different. I built a clinical decision support tool during the course that I actually use in my practice now. The ex-Amazon instructor helped me understand systems thinking. I made the leap to health tech and finally get to solve the problems I've seen for years."</blockquote>
                     </div>
                 </div>
 
@@ -338,7 +361,7 @@
                             </div>
                             <div class="salary-badge">$195K/year</div>
                         </div>
-                        <blockquote>"I spent 6 years doing pure mathematics — proofs, theorems, abstract algebra. I understood the math behind machine learning perfectly, but I couldn't implement any of it. Couldn't even write a for-loop. AI Coding Mastery bridged that gap in 10 days. Now I'm implementing the algorithms I used to only read about. The mathematical thinking transferred — I just needed the right approach to code."</blockquote>
+                        <blockquote>"I spent 6 years doing pure mathematics — proofs, theorems, abstract algebra. I understood the math behind machine learning perfectly, but I couldn't implement any of it. Couldn't even write a for-loop. Adava's Software Dev Bootcamp bridged that gap in 10 days. Now I'm implementing the algorithms I used to only read about. The mathematical thinking transferred — I just needed the right approach to code."</blockquote>
                     </div>
                 </div>
 
@@ -507,26 +530,45 @@
             </div>
 
             <div class="admissions-info">
-                <div class="admission-card">
+                <div class="admission-card" id="price-card">
                     <div class="admission-icon">💰</div>
                     <h3>COST OF THE PROGRAM</h3>
-                    <div class="price-display">
+                    <div class="price-display" id="original-price">
                         <span class="currency">$</span>
                         <span class="amount shimmer-text" data-glitch>1,280</span>
                         <span class="period">(USD)</span>
                     </div>
+                    <!-- Scholarship price (hidden by default) -->
+                    <div class="price-display scholarship-price" id="scholarship-price" style="display: none;">
+                        <div class="original-crossed">
+                            <span class="currency">$</span>
+                            <span class="amount crossed-out">1,280</span>
+                        </div>
+                        <div class="discounted-price">
+                            <span class="currency">$</span>
+                            <span class="amount scholarship-amount">591</span>
+                            <span class="period">(USD)</span>
+                        </div>
+                        <span class="scholarship-badge">🎉 SCHOLARSHIP APPLIED</span>
+                    </div>
                 </div>
-                <div class="admission-card">
+                <div class="admission-card" id="deadline-card">
                     <div class="admission-icon">📅</div>
-                    <h3>APPLICATION DEADLINE</h3>
-                    <p class="deadline-text">The night before classes start</p>
-                    <p class="deadline-sub">for each cohort</p>
+                    <h3 id="deadline-title">APPLICATION DEADLINE</h3>
+                    <p class="deadline-text" id="deadline-text">The night before classes start</p>
+                    <p class="deadline-sub" id="deadline-sub">for each cohort</p>
+                    <!-- Scholarship expiry (hidden by default) -->
+                    <div class="scholarship-expiry" id="scholarship-expiry" style="display: none;">
+                        <h3>SCHOLARSHIP EXPIRES</h3>
+                        <p class="expiry-countdown" data-countdown>29:59</p>
+                        <button class="btn btn-primary pulse-glow btn-small">Apply Now</button>
+                    </div>
                 </div>
             </div>
 
             <div class="scholarship-box">
-                <input type="text" placeholder="Scholarship code" class="form-input scholarship-input">
-                <button class="btn btn-secondary">Use Scholarship</button>
+                <input type="text" placeholder="Scholarship code" class="form-input scholarship-input" id="scholarship-code">
+                <button class="btn btn-secondary" id="apply-scholarship" onclick="applyScholarship()">Use Scholarship</button>
             </div>
 
             <p class="admissions-note">This program is highly selective and admission will be granted to a balanced cohort. Admissions are decided on a rolling basis.</p>
@@ -538,17 +580,18 @@
         <div class="container">
             <div class="section-header">
                 <h2>Pick Your Dates</h2>
-                <p class="section-subtitle">for the AI Coding Mastery Bootcamp</p>
+                <p class="section-subtitle">for the Software Dev Bootcamp</p>
             </div>
 
             <div class="cohorts-grid">
-                <div class="cohort-card">
-                    <h3>January Cohort</h3>
+                <div class="cohort-card featured-cohort">
+                    <div class="cohort-badge">🔥 Next Cohort</div>
+                    <h3>February Cohort</h3>
                     <p class="cohort-type">Daily Online Program</p>
                     <div class="cohort-dates">
                         <span class="date-icon">📅</span>
                         <div>
-                            <p class="date-range">From Jan 20th to Jan 31st</p>
+                            <p class="date-range">From Feb 3rd to Feb 14th, 2026</p>
                             <p class="date-time">Mon-Fri 6:00 PM - 8:00 PM (EST)</p>
                         </div>
                     </div>
@@ -557,13 +600,13 @@
                             <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
                         </div>
                         <div class="schedule-row">
-                            <span>1/20</span><span>1/21</span><span>1/22</span><span>1/23</span><span>1/24</span>
+                            <span>2/03</span><span>2/04</span><span>2/05</span><span>2/06</span><span>2/07</span>
                         </div>
                         <div class="schedule-row classes">
                             <span>Class 1</span><span>Class 2</span><span>Class 3</span><span>Class 4</span><span>Class 5</span>
                         </div>
                         <div class="schedule-row">
-                            <span>1/27</span><span>1/28</span><span>1/29</span><span>1/30</span><span>1/31</span>
+                            <span>2/10</span><span>2/11</span><span>2/12</span><span>2/13</span><span>2/14</span>
                         </div>
                         <div class="schedule-row classes">
                             <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
@@ -582,7 +625,7 @@
                     <div class="cohort-dates">
                         <span class="date-icon">📅</span>
                         <div>
-                            <p class="date-range">From Feb 8th to Apr 12th</p>
+                            <p class="date-range">From Mar 7th to May 9th, 2026</p>
                             <p class="date-time">Saturdays 2:00 PM - 4:00 PM (EST)</p>
                         </div>
                     </div>
@@ -591,13 +634,13 @@
                             <span>Sat</span><span>Sat</span><span>Sat</span><span>Sat</span><span>Sat</span>
                         </div>
                         <div class="schedule-row">
-                            <span>2/08</span><span>2/15</span><span>2/22</span><span>3/01</span><span>3/08</span>
+                            <span>3/07</span><span>3/14</span><span>3/21</span><span>3/28</span><span>4/04</span>
                         </div>
                         <div class="schedule-row classes">
                             <span>Class 1</span><span>Class 2</span><span>Class 3</span><span>Class 4</span><span>Class 5</span>
                         </div>
                         <div class="schedule-row">
-                            <span>3/15</span><span>3/22</span><span>3/29</span><span>4/05</span><span>4/12</span>
+                            <span>4/11</span><span>4/18</span><span>4/25</span><span>5/02</span><span>5/09</span>
                         </div>
                         <div class="schedule-row classes">
                             <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
@@ -626,11 +669,153 @@
         </div>
     </section>
 
-    <!-- Adava University Branding -->
+    <!-- FAQs Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know before you apply</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Do I need any programming experience?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely not! Our program is specifically designed for complete beginners. If you can use a computer, you can learn to build software with AI. We've had successful students from medicine, law, finance, and even the arts.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How much time do I need to commit?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our intensive cohort runs 2 hours per day for 10 days (weekdays). You'll also want 1-2 hours of practice between sessions. The weekly cohort is 2 hours on Saturdays over 10 weeks, with flexible practice time during the week.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What AI tools will I learn to use?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You'll master the latest AI coding assistants including ChatGPT, Claude, Cursor, GitHub Copilot, and more. We stay current with the rapidly evolving AI landscape and update our curriculum constantly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Will I actually be able to get a job?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>94% of our graduates find tech roles within 3 months. You'll build a portfolio of real projects, learn interview skills, and join our job board with 500+ roles. Many students land offers before even completing the program.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What's the refund policy?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We offer a 100% money-back guarantee. Try the program for 7 days — if it's not right for you, email us for a full refund. No questions asked, no hassle. We're confident you'll love it.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How is this different from free tutorials?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Free tutorials teach you <em>about</em> coding. We teach you to <em>build</em> with AI. You get live instruction from ex-FAANG engineers, personalized feedback, real project portfolio, career support, and a community of peers — not just videos you'll never finish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adava University Branding with World Map -->
     <section class="adava-branding-section">
         <div class="container">
             <h2 class="adava-title">Adava University around the world</h2>
-            <p class="adava-subtitle">students & instructors</p>
+            <p class="adava-subtitle">students & instructors from 45+ countries</p>
+            
+            <!-- World Map Visualization -->
+            <div class="world-map-container">
+                <svg class="world-map" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+                    <!-- Simplified world map outline -->
+                    <path class="map-outline" d="M150,180 Q200,150 280,160 L340,140 Q400,130 450,145 L520,150 Q580,140 620,160 L680,180 Q720,170 760,190 L800,200 Q840,180 880,200 L920,220 M120,200 L100,240 Q90,280 100,320 L120,360 M150,180 L130,220 Q120,260 130,300 L150,340 Q140,380 160,400 M280,160 L300,200 Q280,240 290,280 L270,320 Q290,360 280,400 M450,145 L480,180 Q460,220 470,260 L450,300 Q470,340 460,380 M620,160 L650,200 Q630,240 640,280 L620,320 Q640,360 630,400 M760,190 L800,230 Q780,270 790,310 L770,350 Q790,390 780,420 M920,220 L950,260 Q930,300 940,340 L920,380" fill="none" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+                    
+                    <!-- Glowing location dots -->
+                    <g class="map-dots">
+                        <!-- North America -->
+                        <circle cx="180" cy="200" r="6" class="map-dot" style="animation-delay: 0s"/>
+                        <circle cx="220" cy="220" r="4" class="map-dot" style="animation-delay: 0.3s"/>
+                        <circle cx="160" cy="240" r="5" class="map-dot" style="animation-delay: 0.6s"/>
+                        
+                        <!-- Europe -->
+                        <circle cx="480" cy="170" r="6" class="map-dot" style="animation-delay: 0.2s"/>
+                        <circle cx="520" cy="180" r="5" class="map-dot" style="animation-delay: 0.5s"/>
+                        <circle cx="500" cy="200" r="4" class="map-dot" style="animation-delay: 0.8s"/>
+                        <circle cx="460" cy="190" r="5" class="map-dot" style="animation-delay: 1.1s"/>
+                        
+                        <!-- Asia -->
+                        <circle cx="700" cy="200" r="6" class="map-dot" style="animation-delay: 0.4s"/>
+                        <circle cx="750" cy="220" r="5" class="map-dot" style="animation-delay: 0.7s"/>
+                        <circle cx="780" cy="250" r="4" class="map-dot" style="animation-delay: 1.0s"/>
+                        <circle cx="820" cy="230" r="5" class="map-dot" style="animation-delay: 1.3s"/>
+                        
+                        <!-- South America -->
+                        <circle cx="280" cy="340" r="5" class="map-dot" style="animation-delay: 0.9s"/>
+                        <circle cx="300" cy="370" r="4" class="map-dot" style="animation-delay: 1.2s"/>
+                        
+                        <!-- Africa -->
+                        <circle cx="520" cy="300" r="5" class="map-dot" style="animation-delay: 1.0s"/>
+                        <circle cx="550" cy="280" r="4" class="map-dot" style="animation-delay: 1.4s"/>
+                        
+                        <!-- Australia -->
+                        <circle cx="820" cy="360" r="5" class="map-dot" style="animation-delay: 1.1s"/>
+                        <circle cx="850" cy="340" r="4" class="map-dot" style="animation-delay: 1.5s"/>
+                    </g>
+                    
+                    <!-- Connection lines between dots -->
+                    <g class="map-connections" opacity="0.3">
+                        <line x1="180" y1="200" x2="480" y2="170" stroke="url(#connectionGradient)" stroke-width="1"/>
+                        <line x1="480" y1="170" x2="700" y2="200" stroke="url(#connectionGradient)" stroke-width="1"/>
+                        <line x1="520" y1="180" x2="280" y2="340" stroke="url(#connectionGradient)" stroke-width="1"/>
+                        <line x1="700" y1="200" x2="820" y2="360" stroke="url(#connectionGradient)" stroke-width="1"/>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="var(--purple-light)"/>
+                            <stop offset="100%" stop-color="var(--cta-teal)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                
+                <div class="map-stats">
+                    <div class="map-stat">
+                        <span class="map-stat-number">847+</span>
+                        <span class="map-stat-label">Students Worldwide</span>
+                    </div>
+                    <div class="map-stat">
+                        <span class="map-stat-number">45+</span>
+                        <span class="map-stat-label">Countries</span>
+                    </div>
+                    <div class="map-stat">
+                        <span class="map-stat-number">8</span>
+                        <span class="map-stat-label">Expert Instructors</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -765,6 +950,28 @@
                 rotatingWord.style.opacity = 1;
             }, 300);
         }, 2000);
+
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', () => {
+                const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('nav-open');
+                document.body.style.overflow = isExpanded ? '' : 'hidden';
+            });
+            
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    navLinks.classList.remove('nav-open');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1364,6 +1571,61 @@
                 });
             });
         }
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.closest('.faq-item');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Urgency Countdown Timer
+        (function() {
+            // Set countdown to 30 minutes from page load
+            let totalSeconds = 30 * 60;
+            
+            function updateCountdowns() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                document.querySelectorAll('[data-countdown]').forEach(el => {
+                    el.textContent = timeString;
+                    
+                    // Add urgency styling when under 10 minutes
+                    if (totalSeconds < 600) {
+                        el.style.color = '#ef4444';
+                    } else if (totalSeconds < 1200) {
+                        el.style.color = '#f59e0b';
+                    }
+                });
+                
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    setTimeout(updateCountdowns, 1000);
+                } else {
+                    document.querySelectorAll('[data-countdown]').forEach(el => {
+                        el.textContent = 'EXPIRED';
+                        el.style.color = '#ef4444';
+                    });
+                }
+            }
+            
+            updateCountdowns();
+        })();
     </script>
 </body>
 </html>
