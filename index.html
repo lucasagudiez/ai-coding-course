@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Geometric network background -->
     <canvas id="network-bg"></canvas>
 
@@ -65,7 +68,7 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Become a <span class="gradient-text">Programmer</span><br>
+                    Become a <span class="gradient-text typewriter-role">Programmer</span><br>
                     in Just <span class="highlight">10 Days</span>
                 </h1>
                 
@@ -107,7 +110,7 @@
     </header>
 
     <!-- CTA Section 1 -->
-    <section class="cta-section">
+    <section class="cta-section" id="main-content">
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
             <form class="cta-form">
@@ -1359,6 +1362,9 @@
         });
     </script>
 
+    <!-- Canvas Confetti for Celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    
     <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
     
@@ -1373,6 +1379,48 @@
     <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     
     <script>
+        // ============================================
+        // TYPEWRITER EFFECT FOR HERO HEADLINE
+        // ============================================
+        (function() {
+            const typewriterEl = document.querySelector('.typewriter-role');
+            if (!typewriterEl) return;
+            
+            const roles = ['Programmer', 'Developer', 'Creator', 'Builder', 'Engineer'];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let currentRole = roles[0];
+            
+            function typeWriter() {
+                const displayText = currentRole.substring(0, charIndex);
+                typewriterEl.textContent = displayText;
+                
+                // Add blinking cursor via CSS
+                typewriterEl.classList.add('typing');
+                
+                let speed = isDeleting ? 50 : 100;
+                
+                if (!isDeleting && charIndex === currentRole.length) {
+                    // Pause at end of word
+                    speed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    // Move to next word
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    currentRole = roles[roleIndex];
+                    speed = 500;
+                }
+                
+                charIndex += isDeleting ? -1 : 1;
+                setTimeout(typeWriter, speed);
+            }
+            
+            // Start after a short delay
+            setTimeout(typeWriter, 1500);
+        })();
+
         // Initialize Lenis Smooth Scroll
         const lenis = new Lenis({
             duration: 1.2,
@@ -1899,6 +1947,36 @@
                     submitBtn.classList.remove('loading');
                     submitBtn.classList.add('success');
                     submitBtn.textContent = 'Application Received!';
+                    
+                    // Celebrate with confetti! 🎉
+                    const rect = submitBtn.getBoundingClientRect();
+                    const x = (rect.left + rect.width / 2) / window.innerWidth;
+                    const y = (rect.top + rect.height / 2) / window.innerHeight;
+                    
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { x, y },
+                        colors: ['#8b5cf6', '#06b6d4', '#22c55e', '#f59e0b', '#ec4899']
+                    });
+                    
+                    // Second burst for extra celebration
+                    setTimeout(() => {
+                        confetti({
+                            particleCount: 50,
+                            angle: 60,
+                            spread: 55,
+                            origin: { x: x - 0.1, y },
+                            colors: ['#8b5cf6', '#06b6d4', '#22c55e']
+                        });
+                        confetti({
+                            particleCount: 50,
+                            angle: 120,
+                            spread: 55,
+                            origin: { x: x + 0.1, y },
+                            colors: ['#8b5cf6', '#06b6d4', '#22c55e']
+                        });
+                    }, 200);
                     
                     // Reset form
                     if (nameInput) {
