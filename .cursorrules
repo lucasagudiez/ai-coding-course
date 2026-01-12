@@ -1,0 +1,242 @@
+# AI Coding Course Landing Page - Cursor Rules
+
+## ⛔⛔⛔ NEVER RUN LONG COMMANDS WITHOUT PROGRESS FEEDBACK ⛔⛔⛔
+
+**CRITICAL: Commands that process multiple items MUST print feedback IMMEDIATELY and FREQUENTLY.**
+
+### THIS IS FORBIDDEN:
+- Running a script that processes 100+ items with no output for 30+ seconds
+- Buffering output until the end
+- Using `tail` or waiting for completion on long scripts
+- Any command that might timeout without showing progress
+
+### ALWAYS DO THIS:
+1. Print progress EVERY item or every few seconds: `[1/100] Processing X...`
+2. Use `process.stdout.write()` for inline updates
+3. Use `console.log()` after each item completes
+4. For long scripts, run in batches of 20-50 items max
+5. If a script doesn't have progress output, FIX IT FIRST before running
+
+**VIOLATION = TIMEOUT AND USER FRUSTRATION. NO EXCEPTIONS.**
+
+---
+
+## ⛔⛔⛔ NEVER GIT CHECKOUT WITHOUT CHECKING UNCOMMITTED CHANGES ⛔⛔⛔
+
+**CRITICAL: Never run `git checkout` or `git restore` without first checking `git status`.**
+
+### THIS IS FORBIDDEN:
+- `git checkout filename` without checking status first
+- `git restore filename` without asking user
+- Any command that overwrites working directory files
+
+### ALWAYS DO THIS:
+1. Run `git status` FIRST to see uncommitted changes
+2. If there are changes, ASK the user before reverting
+3. To VIEW original without overwriting: `git show HEAD:filename`
+4. NEVER assume the user wants to lose their work
+
+**VIOLATION = LOST USER WORK. UNRECOVERABLE. NO EXCEPTIONS.**
+
+---
+
+## 📖 BEFORE STARTING ANY WORK - READ FIRST!
+
+**Before doing ANY task, you MUST:**
+
+### 1. Read the file structure
+```bash
+ls -la
+```
+
+### 2. Read ALL relevant .md files
+- `README.md` - Project overview
+- `adava-website-reference.md` - Original site reference/copy
+- `UI-EFFECTS-RESEARCH.md` - UI effects to implement
+- Any other `.md` files in the repo
+
+### 3. Check existing code patterns
+- Look at how similar sections are implemented in `index.html`
+- Check the existing CSS patterns in `styles.css`
+- Understand the color palette and design language
+
+### WHY:
+- Prevents duplicate work
+- Ensures consistency with existing code
+- Avoids breaking existing functionality
+
+**VIOLATION = WASTED TIME AND BROKEN CODE**
+
+---
+
+## ⛔⛔⛔ ALWAYS RUN TESTS BEFORE COMMITTING ⛔⛔⛔
+
+**EVERY commit MUST pass all tests. NO EXCEPTIONS.**
+
+### MANDATORY CHECKLIST BEFORE COMMITTING:
+
+1. **Run tests:**
+   ```bash
+   node test-runner.js
+   ```
+
+2. **If tests fail:**
+   - Fix the issue
+   - Run tests again
+   - DO NOT commit until all tests pass
+
+3. **Git pre-commit hook will:**
+   - Automatically run tests
+   - Block commit if tests fail
+   - Add test results to commit message
+
+### WHAT TESTS COVER:
+| Area | Tests |
+|------|-------|
+| File existence | index.html, styles.css, reference docs |
+| HTML structure | DOCTYPE, viewport, title, lang |
+| Landing page content | Headlines, CTAs, credentials |
+| Instructors section | Universities, FAANG companies |
+| Testimonials | Salary info, believable backgrounds |
+| Curriculum | 10-day structure |
+| Pricing | Cost, guarantee |
+| CSS | Variables, responsive, layout |
+| Design consistency | Adava style colors |
+| Accessibility | Semantic HTML, form labels |
+
+### Rules
+1. **Run tests before every commit** - Automated via pre-commit hook
+2. **Test count can ONLY increase** - Never decrease number of tests
+3. **Commits are BLOCKED if tests fail**
+4. **Test results are automatically added to commit messages**
+
+**ADD THE TEST IMMEDIATELY. NOT "LATER". NOW.**
+
+---
+
+## ⛔⛔⛔ NEVER STOP TO ASK - JUST DO THE WORK ⛔⛔⛔
+
+**NEVER interrupt your task to ask the user if you should continue.**
+
+### THIS IS FORBIDDEN:
+- "Should I proceed?" ← FORBIDDEN
+- "Would you like me to..." ← FORBIDDEN  
+- "Do you want me to continue?" ← FORBIDDEN
+- Stopping work to ask for permission ← FORBIDDEN
+
+### ALWAYS DO THIS INSTEAD:
+1. Just do the work
+2. If something is blocked, work around it or note it and move on
+3. Keep working until the task is DONE
+
+### WHY:
+- Stopping to ask wastes time
+- The user asked you to do something - DO IT
+- If you need clarification on WHAT to do, ask. If you know what to do, JUST DO IT.
+
+---
+
+## ⛔ VISUAL VERIFICATION - MANDATORY - NO EXCEPTIONS ⛔
+
+**NEVER claim UI/visual work is "done" without PROOF via screenshot!**
+
+### PROCEDURE FOR ANY UI/CSS/VISUAL CHANGE:
+
+1. **BEFORE claiming done:**
+   ```
+   Step 1: Make the CSS/HTML change
+   Step 2: Navigate browser to page (browser_navigate)
+   Step 3: Wait for page load (browser_wait_for)
+   Step 4: Take screenshot (browser_take_screenshot)
+   Step 5: LOOK at the screenshot image
+   Step 6: If issues found → go back to Step 1
+   Step 7: Only after screenshot looks correct → commit
+   ```
+
+2. **Visual verification checklist:**
+   - [ ] Colors match Adava style (purple/magenta, gold CTAs)
+   - [ ] Text is readable
+   - [ ] Buttons are visible and styled
+   - [ ] Forms are functional looking
+   - [ ] Responsive layout works
+   - [ ] No obvious visual bugs
+
+3. **If you cannot take screenshot:** DO NOT claim the work is done. Say "I cannot verify this visually - please check manually"
+
+**VIOLATION OF THIS RULE = BROKEN TRUST**
+
+---
+
+## Code Organization Rules
+
+1. **HTML in HTML, CSS in CSS** - Keep them separate
+2. **Use semantic HTML** - header, nav, main, section, footer
+3. **CSS uses variables** - All colors should reference :root variables
+4. **Mobile-first responsive** - Start with mobile, enhance for desktop
+
+---
+
+## Version Control - CRITICAL and AUTOMATIC
+
+1. **ALWAYS use git versioning for EVERY change** - This is mandatory
+2. **Commit immediately after making changes** - Don't wait
+3. **Pre-commit hook runs tests automatically** - Blocks bad commits
+4. **prepare-commit-msg hook adds test results** - Documents test count
+5. **Never leave uncommitted changes** - Always commit before moving to new tasks
+
+---
+
+## Git Hooks Installed
+
+1. **pre-commit**: Runs test-runner.js, blocks commit if tests fail
+2. **prepare-commit-msg**: Appends "--- Tests: ✅ X passed, 0 failed" to commit messages
+3. **.test-count**: File tracking current number of tests (must only increase)
+
+---
+
+## Browser Testing
+
+1. Use local HTTP server: `python3 -m http.server 8888`
+2. Access at: http://localhost:8888/
+3. YouTube embeds and some features don't work with file:// protocol
+
+---
+
+## Code Standards
+
+### ALLOWED:
+1. **Plain HTML, CSS, JavaScript** only
+2. **Google Fonts** via CDN
+3. **Modern CSS** - Grid, Flexbox, Variables, clamp()
+4. **Optional JS libraries** via CDN (AOS, Vanilla Tilt, etc.)
+
+### FORBIDDEN - DO NOT USE:
+- ❌ TypeScript
+- ❌ npm / yarn / pnpm for the landing page
+- ❌ Webpack / Vite / Rollup / any bundler
+- ❌ React / Angular / Vue / Svelte
+- ❌ SASS/LESS (use native CSS)
+
+### Design Requirements (Adava Style):
+1. **Dark theme** - Dark purple/black backgrounds
+2. **Purple/Magenta accents** - Primary colors
+3. **Gold/Yellow CTAs** - For action buttons
+4. **University colors** - MIT blue, Stanford green, etc.
+5. **Professional but exciting** - Clean, conversion-focused
+
+---
+
+## Feature Checklist
+
+- [x] Hero section with headline
+- [x] Instructor section with credentials
+- [x] Testimonials with believable backgrounds
+- [x] Curriculum (10 days)
+- [x] Pricing/admissions
+- [x] Money-back guarantee
+- [x] Application forms
+- [x] Cohort schedule
+- [x] Automated tests (42+ tests)
+- [x] Git hooks for enforcement
+- [ ] UI effects (glassmorphism, animations) - see UI-EFFECTS-RESEARCH.md
+
