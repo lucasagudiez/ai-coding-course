@@ -781,6 +781,11 @@
     
     <!-- AOS - Animate On Scroll -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- GSAP + ScrollTrigger for Advanced Animations -->
+    <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    
     <script>
         // Initialize AOS
         AOS.init({
@@ -798,6 +803,106 @@
             glare: true,
             "max-glare": 0.2,
             perspective: 1000
+        });
+
+        // ============================================
+        // GSAP ScrollTrigger Animations
+        // ============================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Parallax effect on hero section
+        gsap.to('.hero::before', {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            opacity: 0,
+            y: 100
+        });
+
+        // Stats bar counter reveal with GSAP
+        gsap.from('.stats-bar', {
+            scrollTrigger: {
+                trigger: '.stats-bar',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+
+        // Stagger animation for curriculum cards
+        gsap.from('.day-card', {
+            scrollTrigger: {
+                trigger: '.curriculum-grid',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            y: 60,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+
+        // Project cards reveal
+        gsap.from('.project-card', {
+            scrollTrigger: {
+                trigger: '.projects-grid',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'back.out(1.7)'
+        });
+
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        const cursor = document.createElement('div');
+        cursor.className = 'custom-cursor';
+        const cursorDot = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        document.body.appendChild(cursor);
+        document.body.appendChild(cursorDot);
+
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+            cursorDot.style.left = cursorX + 'px';
+            cursorDot.style.top = cursorY + 'px';
+        });
+
+        // Smooth cursor follow
+        function animateCursor() {
+            dotX += (cursorX - dotX) * 0.1;
+            dotY += (cursorY - dotY) * 0.1;
+            cursor.style.left = dotX + 'px';
+            cursor.style.top = dotY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover effects
+        document.querySelectorAll('a, button, [data-tilt], .btn').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-hover');
+                cursorDot.classList.add('cursor-hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-hover');
+                cursorDot.classList.remove('cursor-hover');
+            });
         });
     </script>
 </body>

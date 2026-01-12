@@ -1073,7 +1073,60 @@ blockquote {
     }
 }
 
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.custom-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(139, 92, 246, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--cta-gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background-color 0.3s;
+}
+
+.custom-cursor.cursor-hover {
+    width: 60px;
+    height: 60px;
+    border-color: var(--cta-gold);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.cursor-dot.cursor-hover {
+    transform: translate(-50%, -50%) scale(0.5);
+    background: var(--purple-light);
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) {
+    .custom-cursor,
+    .cursor-dot {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
+    .custom-cursor,
+    .cursor-dot {
+        display: none;
+    }
+    
     .nav-links {
         display: none;
     }

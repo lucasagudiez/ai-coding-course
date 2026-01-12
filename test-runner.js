@@ -608,6 +608,56 @@ test('HTML/JS has mouse move event listener', () => {
 });
 
 // ============================================================================
+// SECTION 23: UI EFFECTS - GSAP
+// ============================================================================
+console.log('\n--- GSAP Effects Tests ---');
+
+test('HTML includes GSAP library', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('gsap') || html.includes('GSAP'),
+        'Missing GSAP library'
+    );
+});
+
+test('HTML includes ScrollTrigger plugin', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('ScrollTrigger'),
+        'Missing GSAP ScrollTrigger plugin'
+    );
+});
+
+test('GSAP ScrollTrigger is registered', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('gsap.registerPlugin') || html.includes('registerPlugin(ScrollTrigger)'),
+        'Missing GSAP ScrollTrigger registration'
+    );
+});
+
+// ============================================================================
+// SECTION 24: UI EFFECTS - CUSTOM CURSOR
+// ============================================================================
+console.log('\n--- Custom Cursor Tests ---');
+
+test('CSS has custom cursor styles', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('.custom-cursor') || css.includes('.cursor-dot'),
+        'Missing custom cursor CSS styles'
+    );
+});
+
+test('HTML/JS creates custom cursor elements', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('custom-cursor') || html.includes('cursor-dot'),
+        'Missing custom cursor JS implementation'
+    );
+});
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log();
