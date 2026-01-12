@@ -658,6 +658,63 @@ test('HTML/JS creates custom cursor elements', () => {
 });
 
 // ============================================================================
+// SECTION 24: RESPONSIVE DESIGN
+// ============================================================================
+console.log('\n--- Responsive Design Tests ---');
+
+test('CSS has multiple breakpoints for responsive design', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    const breakpoints = (css.match(/@media/g) || []).length;
+    assert(
+        breakpoints >= 3,
+        `Only ${breakpoints} media queries found, need at least 3 for proper responsive design`
+    );
+});
+
+test('CSS has mobile breakpoint (max-width: 768px or similar)', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('max-width: 768px') || css.includes('max-width:768px') ||
+        css.includes('max-width: 480px') || css.includes('max-width:480px'),
+        'Missing mobile breakpoint'
+    );
+});
+
+test('CSS has small mobile breakpoint (max-width: 480px or 375px)', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('max-width: 480px') || css.includes('max-width: 375px') ||
+        css.includes('max-width:480px') || css.includes('max-width:375px'),
+        'Missing small mobile breakpoint'
+    );
+});
+
+test('CSS hides custom cursor on touch devices', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('hover: none') || 
+        (css.includes('.custom-cursor') && css.includes('display: none')),
+        'Custom cursor should be hidden on touch devices'
+    );
+});
+
+test('CSS uses responsive font sizes (clamp or vw)', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('clamp(') || css.includes('vw'),
+        'Missing responsive font sizing (clamp or vw units)'
+    );
+});
+
+test('HTML has viewport meta tag', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('viewport') && html.includes('width=device-width'),
+        'Missing proper viewport meta tag for mobile'
+    );
+});
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log();

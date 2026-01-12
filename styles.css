@@ -1061,7 +1061,34 @@ blockquote {
     font-size: 0.85rem;
 }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+/* Extra Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+    :root {
+        --container-max: 1200px;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .credential-box {
+        max-width: 800px;
+        padding: 40px 60px;
+    }
+}
+
+/* Large Desktop (1024px - 1439px) */
+@media (max-width: 1439px) and (min-width: 1025px) {
+    .instructors-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tablet Landscape / Small Desktop (768px - 1024px) */
 @media (max-width: 1024px) {
     .instructors-grid,
     .curriculum-grid {
@@ -1070,6 +1097,15 @@ blockquote {
     
     .projects-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cohorts-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    
+    .cohort-card {
+        max-width: 100%;
     }
 }
 
@@ -1121,6 +1157,7 @@ blockquote {
     }
 }
 
+/* Tablet Portrait (768px) */
 @media (max-width: 768px) {
     .custom-cursor,
     .cursor-dot {
@@ -1133,6 +1170,7 @@ blockquote {
     
     .hero {
         padding-top: 100px;
+        padding-bottom: 60px;
     }
     
     .cta-form {
@@ -1177,5 +1215,162 @@ blockquote {
     
     .credential-schools {
         font-size: 1.1rem;
+    }
+    
+    /* Schedule grid - make cells smaller on tablet */
+    .schedule-header span,
+    .schedule-row span {
+        font-size: 0.75rem;
+        padding: 6px 2px;
+    }
+    
+    .section-header {
+        margin-bottom: 40px;
+    }
+    
+    :root {
+        --section-padding: 60px 0;
+    }
+}
+
+/* Mobile Large (481px - 767px) */
+@media (max-width: 767px) and (min-width: 481px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid .testimonial-card.featured {
+        grid-column: span 1;
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .hero {
+        padding: 80px 16px 40px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .credential-box {
+        padding: 20px 16px;
+    }
+    
+    .credential-intro {
+        font-size: 0.95rem;
+    }
+    
+    .credential-schools {
+        font-size: 1rem;
+    }
+    
+    .credential-companies {
+        font-size: 0.9rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-card {
+        padding: 20px;
+    }
+    
+    /* Schedule grid - even smaller on mobile */
+    .schedule-header,
+    .schedule-row {
+        gap: 4px;
+    }
+    
+    .schedule-header span,
+    .schedule-row span {
+        font-size: 0.65rem;
+        padding: 4px 2px;
+    }
+    
+    .cohort-card {
+        padding: 20px;
+    }
+    
+    .cohort-dates {
+        padding: 12px;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .form-input {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .admission-card {
+        padding: 24px 16px;
+    }
+    
+    .amount {
+        font-size: 2.5rem;
+    }
+    
+    blockquote {
+        font-size: 0.9rem;
+    }
+    
+    .testimonial-content {
+        padding: 20px;
+    }
+}
+
+/* Extra Small Mobile (max-width: 375px) */
+@media (max-width: 375px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.35rem;
+    }
+    
+    .credential-schools {
+        font-size: 0.9rem;
+    }
+    
+    .schedule-header span,
+    .schedule-row span {
+        font-size: 0.6rem;
+        padding: 3px 1px;
+    }
+    
+    .instructor-card {
+        padding: 20px;
+    }
+    
+    .instructor-bio {
+        font-size: 0.8rem;
     }
 }
