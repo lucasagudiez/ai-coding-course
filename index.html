@@ -3,204 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Coding Mastery — Become a Programmer in 10 Days Without Writing Code</title>
+    <title>AI Coding Mastery — Become a Programmer in 10 Days</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Floating particles background -->
-    <div class="particles" id="particles"></div>
+    <!-- Geometric network background -->
+    <canvas id="network-bg"></canvas>
 
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
             <div class="logo">
-                <span class="logo-icon">⚡</span>
-                <span class="logo-text">AI Coding Mastery</span>
+                <div class="logo-mark">A</div>
+                <span class="logo-text">AI CODING MASTERY</span>
             </div>
             <div class="nav-links">
-                <a href="#how-it-works">How It Works</a>
-                <a href="#results">Results</a>
+                <a href="#method">Our Method</a>
+                <a href="#instructors">Instructors</a>
                 <a href="#curriculum">Curriculum</a>
-                <a href="#enroll" class="nav-cta">Enroll Now</a>
+                <a href="#enroll" class="nav-cta">Apply Now</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero">
-        <div class="hero-content">
-            <div class="badge">
-                <span class="badge-pulse"></span>
-                <span>🔥 January 2026 Cohort — Only 23 Spots Left</span>
-            </div>
-            
-            <h1 class="hero-title">
-                Become a <span class="gradient-text">Programmer</span><br>
-                in Just <span class="highlight">10 Days</span>
-            </h1>
-            
-            <p class="hero-subtitle">
-                <strong>Without writing a single line of code.</strong><br>
-                Master the AI tools that are replacing traditional coding.<br>
-                Build real apps. Get hired. Change your life.
-            </p>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Become a <span class="gradient-text">Programmer</span><br>
+                    in Just <span class="highlight">10 Days</span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Without writing a single line of code.<br>
+                    Using the AI tools that are transforming the industry.
+                </h2>
 
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">847</span>
-                    <span class="stat-label">Students Hired</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number">$94K</span>
-                    <span class="stat-label">Avg Starting Salary</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number">10</span>
-                    <span class="stat-label">Days to Job-Ready</span>
-                </div>
-            </div>
-
-            <div class="hero-cta">
-                <a href="#enroll" class="btn btn-primary btn-large">
-                    <span>Start Your Transformation</span>
-                    <span class="btn-arrow">→</span>
-                </a>
-                <p class="cta-subtext">Next cohort starts January 20th • 100% Money-Back Guarantee</p>
-            </div>
-        </div>
-
-        <div class="hero-visual">
-            <div class="code-window">
-                <div class="window-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                    <span class="window-title">You → AI → Working App</span>
-                </div>
-                <div class="window-content">
-                    <div class="chat-message user">
-                        <span class="message-label">You:</span>
-                        <span class="message-text">"Build me a task management app with user authentication"</span>
-                    </div>
-                    <div class="chat-message ai">
-                        <span class="message-label">AI:</span>
-                        <span class="message-text typing">Building your app...</span>
-                    </div>
-                    <div class="output-preview">
-                        <div class="mini-app">
-                            <div class="mini-header"></div>
-                            <div class="mini-task"></div>
-                            <div class="mini-task"></div>
-                            <div class="mini-task"></div>
-                            <div class="mini-button"></div>
-                        </div>
-                        <span class="output-label">✓ App deployed in 3 minutes</span>
-                    </div>
+                <div class="credential-box">
+                    <p class="credential-intro">Taught Exclusively by Engineers & Alumni from</p>
+                    <p class="credential-schools">
+                        <span class="school mit">MIT</span>, 
+                        <span class="school stanford">Stanford</span>, 
+                        <span class="school oxford">Oxford</span>, 
+                        <span class="school cambridge">Cambridge</span>, and 
+                        <span class="school harvard">Harvard</span>.
+                    </p>
+                    <p class="credential-companies">
+                        With experience at <span class="company">Google</span>, <span class="company">Apple</span>, <span class="company">Meta</span>, <span class="company">Amazon</span>, and <span class="company">Microsoft</span>.
+                    </p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Social Proof Bar -->
-    <section class="social-proof-bar">
+    <!-- CTA Section 1 -->
+    <section class="cta-section">
         <div class="container">
-            <p>Join professionals from</p>
-            <div class="company-logos">
-                <span>Google</span>
-                <span>Meta</span>
-                <span>Amazon</span>
-                <span>Microsoft</span>
-                <span>Apple</span>
-                <span>Netflix</span>
-            </div>
+            <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
+            <form class="cta-form">
+                <input type="text" placeholder="Your Full Name" class="form-input">
+                <input type="email" placeholder="Your Email Address" class="form-input">
+                <button type="submit" class="btn btn-primary">Apply Now</button>
+            </form>
+            <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="problem-section">
+    <!-- The Promise -->
+    <section class="promise-section" id="method">
         <div class="container">
-            <div class="problem-grid">
-                <div class="problem-content">
-                    <span class="section-label">The Old Way is Dead</span>
-                    <h2>Traditional Coding Bootcamps<br><span class="strike-through">Are a Waste of Time</span></h2>
-                    <ul class="problem-list">
-                        <li>
-                            <span class="cross">✕</span>
-                            <span>6-12 months of grinding syntax and debugging</span>
-                        </li>
-                        <li>
-                            <span class="cross">✕</span>
-                            <span>$15,000+ tuition with no job guarantee</span>
-                        </li>
-                        <li>
-                            <span class="cross">✕</span>
-                            <span>Learning skills that AI is already automating</span>
-                        </li>
-                        <li>
-                            <span class="cross">✕</span>
-                            <span>Competing with millions of junior developers</span>
-                        </li>
-                    </ul>
+            <div class="promise-grid">
+                <div class="promise-card">
+                    <div class="promise-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f59e0b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>Learn AI-First Development</h3>
+                    <p>Master the art of building software by directing AI. No syntax memorization. No debugging nightmares. Just results.</p>
                 </div>
-                <div class="solution-content">
-                    <span class="section-label">The New Way</span>
-                    <h2>Command AI to<br><span class="gradient-text">Build For You</span></h2>
-                    <ul class="solution-list">
-                        <li>
-                            <span class="check">✓</span>
-                            <span>10 days to build production-ready applications</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span>Fraction of the cost with guaranteed results</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span>Master the tools companies are desperate for</span>
-                        </li>
-                        <li>
-                            <span class="check">✓</span>
-                            <span>Stand out as an AI-native developer</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <span class="section-label">The AI Coding Method</span>
-            <h2>From Zero to <span class="gradient-text">Job-Ready</span> in 10 Days</h2>
-            <p class="section-subtitle">Our proven system has helped 847+ students land developer jobs at top companies</p>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">01</div>
-                    <div class="step-icon">🎯</div>
-                    <h3>Learn AI Prompting</h3>
-                    <p>Master the art of communicating with AI. Learn to describe exactly what you want built in a way that produces perfect code every time.</p>
-                    <span class="step-duration">Days 1-2</span>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">02</div>
-                    <div class="step-icon">🛠️</div>
+                <div class="promise-card">
+                    <div class="promise-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f59e0b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'/%3E%3C/svg%3E" alt="">
+                    </div>
                     <h3>Build Real Projects</h3>
-                    <p>Create 5+ portfolio-worthy applications using Cursor, Claude, GitHub Copilot, and cutting-edge AI development tools.</p>
-                    <span class="step-duration">Days 3-7</span>
+                    <p>Create 5+ portfolio-ready applications. Full-stack web apps, AI integrations, and production-quality code.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-number">03</div>
-                    <div class="step-icon">💼</div>
+                <div class="promise-card">
+                    <div class="promise-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f59e0b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/%3E%3C/svg%3E" alt="">
+                    </div>
                     <h3>Get Hired</h3>
-                    <p>Build your portfolio, nail technical interviews (yes, even whiteboard ones), and land your first developer job.</p>
-                    <span class="step-duration">Days 8-10</span>
+                    <p>Our graduates land jobs at startups and Fortune 500 companies. Average starting salary: $94,000.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learn From The Best -->
+    <section class="mentorship-section">
+        <div class="container">
+            <div class="mentorship-header">
+                <div class="rotating-text">
+                    <span class="static-text">Learn from the</span>
+                    <span class="rotating-word" id="rotating-word">expert</span>
+                    <span class="static-text">you want to become</span>
+                </div>
+            </div>
+            
+            <div class="mentorship-grid">
+                <div class="mentorship-card">
+                    <div class="mentorship-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b5cf6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>Learn from the best</h3>
+                    <p>Our instructors are engineers from <strong>Google, Apple, Meta, Amazon, and Microsoft</strong> — and alumni from <strong>MIT, Stanford, Harvard, Oxford, and Cambridge</strong>. They've built products used by billions.</p>
+                </div>
+                <div class="mentorship-card">
+                    <div class="mentorship-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b5cf6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>Join a powerful network</h3>
+                    <p>Connect with ambitious peers who are changing careers, launching startups, and breaking into tech. Your cohort becomes your professional network for life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <section class="instructors-section" id="instructors">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Instructors</h2>
+                <p class="section-subtitle">World-class engineers ready to transform your career</p>
+            </div>
+
+            <div class="instructors-grid">
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>Sarah Chen</h3>
+                    <p class="instructor-school">MIT</p>
+                    <p class="instructor-role">Computer Science</p>
+                    <p class="instructor-bio">Ex-Google senior engineer. Led AI/ML teams building products used by 2 billion users. Now teaching the next generation of AI-native developers.</p>
+                </div>
+
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>Marcus Williams</h3>
+                    <p class="instructor-school">Stanford</p>
+                    <p class="instructor-role">Computer Science</p>
+                    <p class="instructor-bio">Ex-Meta staff engineer. Built core infrastructure for Instagram and WhatsApp. Stanford CS graduate with 12 years of industry experience.</p>
+                </div>
+
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>James Morrison</h3>
+                    <p class="instructor-school">Oxford</p>
+                    <p class="instructor-role">Software Engineering</p>
+                    <p class="instructor-bio">Ex-Apple engineering lead. Shipped features to 1 billion iPhone users. Oxford engineering graduate, former Microsoft Student Partner.</p>
+                </div>
+
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>Priya Sharma</h3>
+                    <p class="instructor-school">Cambridge</p>
+                    <p class="instructor-role">Machine Learning</p>
+                    <p class="instructor-bio">Ex-Amazon principal engineer. Built AWS AI services from the ground up. Cambridge PhD in Machine Learning. Published 20+ research papers.</p>
+                </div>
+
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>David Park</h3>
+                    <p class="instructor-school">Harvard</p>
+                    <p class="instructor-role">Full-Stack Development</p>
+                    <p class="instructor-bio">Ex-Microsoft senior developer. Built Azure cloud services used by Fortune 500 companies. Harvard CS graduate, YC-backed founder.</p>
+                </div>
+
+                <div class="instructor-card">
+                    <div class="instructor-avatar"></div>
+                    <h3>Elena Rodriguez</h3>
+                    <p class="instructor-school">Stanford</p>
+                    <p class="instructor-role">AI Engineering</p>
+                    <p class="instructor-bio">Ex-OpenAI researcher. Contributed to GPT model development. Stanford AI Lab graduate. Pioneer in AI-assisted development tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section 2 -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
+            <form class="cta-form">
+                <input type="text" placeholder="Your Full Name" class="form-input">
+                <input type="email" placeholder="Your Email Address" class="form-input">
+                <button type="submit" class="btn btn-primary">Apply Now</button>
+            </form>
+            <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
+        </div>
+    </section>
+
+    <!-- What You'll Build -->
+    <section class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Build Real Software in 10 Days</h2>
+                <p class="section-subtitle">Your portfolio will speak louder than any resume</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2306b6d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>E-Commerce Platform</h3>
+                    <p>Full shopping experience with cart, checkout, payments, and admin dashboard.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2306b6d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>AI Chatbot</h3>
+                    <p>Intelligent assistant powered by GPT with custom training and integrations.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2306b6d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>SaaS Dashboard</h3>
+                    <p>Analytics platform with real-time data, charts, user auth, and subscriptions.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2306b6d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'/%3E%3C/svg%3E" alt="">
+                    </div>
+                    <h3>Mobile App</h3>
+                    <p>Cross-platform mobile application with native features and cloud sync.</p>
                 </div>
             </div>
         </div>
@@ -209,84 +249,71 @@
     <!-- Results Section -->
     <section class="results-section" id="results">
         <div class="container">
-            <span class="section-label">Real Results</span>
-            <h2>Students Who <span class="gradient-text">Transformed Their Lives</span></h2>
-            
+            <div class="section-header">
+                <h2>Real Results from Real Students</h2>
+                <p class="section-subtitle">Career transformations that speak for themselves</p>
+            </div>
+
             <div class="testimonials-grid">
                 <div class="testimonial-card featured">
-                    <div class="testimonial-header">
-                        <div class="avatar avatar-1"></div>
-                        <div class="testimonial-meta">
-                            <h4>Marcus Johnson</h4>
-                            <p>Warehouse Worker → Software Engineer @ Stripe</p>
+                    <div class="testimonial-content">
+                        <div class="testimonial-header">
+                            <div class="avatar"></div>
+                            <div class="testimonial-meta">
+                                <h4>Michael Torres</h4>
+                                <p>Retail Manager → Software Engineer @ Stripe</p>
+                            </div>
+                            <div class="salary-badge">$138K/year</div>
                         </div>
-                    </div>
-                    <div class="salary-badge">$142,000/year</div>
-                    <blockquote>
-                        "I was loading boxes for $18/hour. I had zero coding experience. 10 days later, I could build full-stack apps. 3 weeks after that, I had 4 job offers. This course didn't just teach me to code — it changed my entire life."
-                    </blockquote>
-                    <div class="testimonial-proof">
-                        <span>Verified LinkedIn</span>
-                        <span>•</span>
-                        <span>Hired in 23 days</span>
+                        <blockquote>"I was managing a retail store making $45K. I had zero coding background. 10 days with AI Coding Mastery changed everything. The instructors from Google and Stanford taught me to think like an engineer. Three weeks after graduating, I had multiple offers. This program is the real deal."</blockquote>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar avatar-2"></div>
-                        <div class="testimonial-meta">
-                            <h4>Sarah Chen</h4>
-                            <p>Teacher → Full-Stack Developer @ Shopify</p>
+                    <div class="testimonial-content">
+                        <div class="testimonial-header">
+                            <div class="avatar"></div>
+                            <div class="testimonial-meta">
+                                <h4>Jennifer Walsh</h4>
+                                <p>Teacher → Full-Stack Dev @ Shopify</p>
+                            </div>
+                            <div class="salary-badge">$125K/year</div>
                         </div>
+                        <blockquote>"The ex-Meta instructor showed me exactly how tech companies build products. I went from grading papers to shipping features to millions of users."</blockquote>
                     </div>
-                    <div class="salary-badge">$118,000/year</div>
-                    <blockquote>
-                        "I thought programming wasn't for me. I failed a bootcamp. But with AI tools, everything clicked. Now I build features used by millions."
-                    </blockquote>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar avatar-3"></div>
-                        <div class="testimonial-meta">
-                            <h4>David Okonkwo</h4>
-                            <p>Uber Driver → Backend Engineer @ Coinbase</p>
+                    <div class="testimonial-content">
+                        <div class="testimonial-header">
+                            <div class="avatar"></div>
+                            <div class="testimonial-meta">
+                                <h4>Robert Kim</h4>
+                                <p>Accountant → Backend Eng @ Coinbase</p>
+                            </div>
+                            <div class="salary-badge">$155K/year</div>
                         </div>
+                        <blockquote>"Learning from engineers who built AWS gave me confidence. AI-first development is the future, and I got in early."</blockquote>
                     </div>
-                    <div class="salary-badge">$165,000/year</div>
-                    <blockquote>
-                        "Went from driving 60 hours/week to working remotely from anywhere. The AI approach is the great equalizer."
-                    </blockquote>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar avatar-4"></div>
-                        <div class="testimonial-meta">
-                            <h4>Emily Rodriguez</h4>
-                            <p>Barista → Frontend Developer @ Airbnb</p>
-                        </div>
-                    </div>
-                    <div class="salary-badge">$134,000/year</div>
-                    <blockquote>
-                        "I make more in a month now than I used to make in 6 months. And I work from home with my dog."
-                    </blockquote>
                 </div>
             </div>
 
-            <div class="results-summary">
-                <div class="result-stat">
-                    <span class="big-number">94%</span>
-                    <span>Employment Rate</span>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">847+</span>
+                    <span class="stat-label">Students Hired</span>
                 </div>
-                <div class="result-stat">
-                    <span class="big-number">21</span>
-                    <span>Avg Days to Offer</span>
+                <div class="stat-item">
+                    <span class="stat-number">94%</span>
+                    <span class="stat-label">Employment Rate</span>
                 </div>
-                <div class="result-stat">
-                    <span class="big-number">3.2x</span>
-                    <span>Avg Salary Increase</span>
+                <div class="stat-item">
+                    <span class="stat-number">21</span>
+                    <span class="stat-label">Avg Days to Offer</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">$94K</span>
+                    <span class="stat-label">Avg Starting Salary</span>
                 </div>
             </div>
         </div>
@@ -295,326 +322,319 @@
     <!-- Curriculum Section -->
     <section class="curriculum-section" id="curriculum">
         <div class="container">
-            <span class="section-label">The Curriculum</span>
-            <h2>10 Days to <span class="gradient-text">Complete Mastery</span></h2>
-            <p class="section-subtitle">Every day builds on the last. By day 10, you'll have a portfolio and the skills to get hired.</p>
+            <div class="section-header">
+                <h2>10-Day Curriculum</h2>
+                <p class="section-subtitle">Every day builds on the last. By day 10, you're job-ready.</p>
+            </div>
 
             <div class="curriculum-grid">
                 <div class="day-card">
-                    <div class="day-header">
-                        <span class="day-badge">Day 1-2</span>
-                        <h3>AI Fundamentals & Prompting</h3>
-                    </div>
+                    <span class="day-badge">Days 1-2</span>
+                    <h3>AI Fundamentals & Prompting</h3>
                     <ul>
-                        <li>How AI coding assistants actually work</li>
-                        <li>The prompt engineering framework that gets perfect code</li>
-                        <li>Setting up your AI-powered development environment</li>
-                        <li>Your first app: Built in under 30 minutes</li>
+                        <li>How AI coding assistants work</li>
+                        <li>Prompt engineering for perfect code</li>
+                        <li>Setting up your dev environment</li>
+                        <li>Your first app in under 30 minutes</li>
                     </ul>
                 </div>
 
                 <div class="day-card">
-                    <div class="day-header">
-                        <span class="day-badge">Day 3-4</span>
-                        <h3>Frontend Mastery</h3>
-                    </div>
+                    <span class="day-badge">Days 3-4</span>
+                    <h3>Frontend Development</h3>
                     <ul>
-                        <li>Build stunning UIs with AI-generated React/Vue</li>
-                        <li>Responsive design without writing CSS</li>
-                        <li>Project: Full e-commerce storefront</li>
-                        <li>Animation and interactivity via prompts</li>
+                        <li>Build stunning UIs with React</li>
+                        <li>Responsive design without CSS pain</li>
+                        <li>Project: E-commerce storefront</li>
+                        <li>Animation and interactivity</li>
                     </ul>
                 </div>
 
                 <div class="day-card">
-                    <div class="day-header">
-                        <span class="day-badge">Day 5-6</span>
-                        <h3>Backend & Databases</h3>
-                    </div>
+                    <span class="day-badge">Days 5-6</span>
+                    <h3>Backend & Databases</h3>
                     <ul>
                         <li>APIs and servers explained simply</li>
                         <li>Database design through conversation</li>
                         <li>Authentication & user management</li>
-                        <li>Project: Full-stack SaaS application</li>
+                        <li>Project: Full-stack SaaS app</li>
                     </ul>
                 </div>
 
                 <div class="day-card">
-                    <div class="day-header">
-                        <span class="day-badge">Day 7-8</span>
-                        <h3>Advanced AI Development</h3>
-                    </div>
+                    <span class="day-badge">Days 7-8</span>
+                    <h3>AI Integration</h3>
                     <ul>
-                        <li>Integrating AI features into your apps</li>
-                        <li>Building chatbots and AI agents</li>
+                        <li>Add AI features to your apps</li>
+                        <li>Build chatbots and AI agents</li>
                         <li>Deployment and scaling</li>
                         <li>Project: AI-powered application</li>
                     </ul>
                 </div>
 
                 <div class="day-card">
-                    <div class="day-header">
-                        <span class="day-badge">Day 9-10</span>
-                        <h3>Career Launch</h3>
-                    </div>
+                    <span class="day-badge">Days 9-10</span>
+                    <h3>Career Launch</h3>
                     <ul>
-                        <li>Portfolio optimization for maximum impact</li>
-                        <li>The "AI Developer" resume that gets interviews</li>
-                        <li>Crushing technical interviews with AI</li>
+                        <li>Portfolio optimization</li>
+                        <li>Resume that gets interviews</li>
+                        <li>Crushing technical interviews</li>
                         <li>Salary negotiation strategies</li>
                     </ul>
                 </div>
 
                 <div class="day-card bonus">
-                    <div class="day-header">
-                        <span class="day-badge bonus-badge">BONUS</span>
-                        <h3>Lifetime Access</h3>
-                    </div>
+                    <span class="day-badge bonus">BONUS</span>
+                    <h3>Lifetime Access</h3>
                     <ul>
-                        <li>Private Slack community (1,200+ members)</li>
-                        <li>Weekly live Q&A with instructors</li>
-                        <li>All future course updates free</li>
-                        <li>Job board with 500+ AI-friendly roles</li>
+                        <li>Private community (1,200+ members)</li>
+                        <li>Weekly live Q&A sessions</li>
+                        <li>All future course updates</li>
+                        <li>Job board with 500+ roles</li>
                     </ul>
                 </div>
             </div>
+
+            <p class="curriculum-note">* Schedule adapts to your skill level. Beginners get extra support and pacing adjustments.</p>
         </div>
     </section>
 
-    <!-- Urgency Section -->
-    <section class="urgency-section">
+    <!-- CTA Section 3 -->
+    <section class="cta-section">
         <div class="container">
-            <div class="urgency-content">
-                <span class="urgency-badge">⚠️ Limited Enrollment</span>
-                <h2>The January Cohort is <span class="gradient-text">Almost Full</span></h2>
-                <p>We only accept 50 students per cohort to ensure personalized attention. 27 spots have already been claimed.</p>
-                
-                <div class="countdown">
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="days">08</span>
-                        <span class="countdown-label">Days</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="hours">14</span>
-                        <span class="countdown-label">Hours</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="minutes">32</span>
-                        <span class="countdown-label">Minutes</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="seconds">07</span>
-                        <span class="countdown-label">Seconds</span>
-                    </div>
-                </div>
-                
-                <p class="countdown-text">Until early-bird pricing expires</p>
-            </div>
+            <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
+            <form class="cta-form">
+                <input type="text" placeholder="Your Full Name" class="form-input">
+                <input type="email" placeholder="Your Email Address" class="form-input">
+                <button type="submit" class="btn btn-primary">Apply Now</button>
+            </form>
+            <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
     </section>
 
     <!-- Pricing Section -->
     <section class="pricing-section" id="enroll">
         <div class="container">
-            <span class="section-label">Enroll Now</span>
-            <h2>Invest in Your <span class="gradient-text">Future</span></h2>
-            <p class="section-subtitle">One decision. 10 days. A completely different life.</p>
+            <div class="section-header">
+                <h2>Admissions</h2>
+            </div>
 
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Self-Paced</h3>
-                        <div class="price">
-                            <span class="price-old">$1,997</span>
-                            <span class="price-current">$497</span>
-                        </div>
-                        <span class="price-period">one-time payment</span>
+            <div class="admissions-info">
+                <div class="admission-card">
+                    <div class="admission-icon">💰</div>
+                    <h3>COST OF THE PROGRAM</h3>
+                    <div class="price-display">
+                        <span class="currency">$</span>
+                        <span class="amount">1,280</span>
+                        <span class="period">(USD)</span>
                     </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Full 10-day curriculum</li>
-                        <li><span class="check">✓</span> 40+ hours of video content</li>
-                        <li><span class="check">✓</span> All project files & templates</li>
-                        <li><span class="check">✓</span> Slack community access</li>
-                        <li><span class="check">✓</span> Certificate of completion</li>
-                        <li class="disabled"><span class="cross">✕</span> Live cohort sessions</li>
-                        <li class="disabled"><span class="cross">✕</span> 1-on-1 mentorship</li>
-                        <li class="disabled"><span class="cross">✕</span> Job placement support</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary">Get Started</a>
                 </div>
-
-                <div class="pricing-card featured">
-                    <div class="popular-badge">MOST POPULAR</div>
-                    <div class="pricing-header">
-                        <h3>Live Cohort</h3>
-                        <div class="price">
-                            <span class="price-old">$2,997</span>
-                            <span class="price-current">$997</span>
-                        </div>
-                        <span class="price-period">one-time payment</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Everything in Self-Paced</li>
-                        <li><span class="check">✓</span> Live daily sessions (10 days)</li>
-                        <li><span class="check">✓</span> Direct instructor access</li>
-                        <li><span class="check">✓</span> Code reviews & feedback</li>
-                        <li><span class="check">✓</span> Accountability partner matching</li>
-                        <li><span class="check">✓</span> Resume & LinkedIn review</li>
-                        <li class="disabled"><span class="cross">✕</span> 1-on-1 mentorship</li>
-                        <li class="disabled"><span class="cross">✕</span> Guaranteed job placement</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Enroll Now — 23 Spots Left</a>
-                </div>
-
-                <div class="pricing-card premium">
-                    <div class="pricing-header">
-                        <h3>Career Accelerator</h3>
-                        <div class="price">
-                            <span class="price-old">$4,997</span>
-                            <span class="price-current">$1,997</span>
-                        </div>
-                        <span class="price-period">one-time payment</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Everything in Live Cohort</li>
-                        <li><span class="check">✓</span> 4 weeks of 1-on-1 mentorship</li>
-                        <li><span class="check">✓</span> Interview prep & mock interviews</li>
-                        <li><span class="check">✓</span> Direct recruiter introductions</li>
-                        <li><span class="check">✓</span> Salary negotiation coaching</li>
-                        <li><span class="check">✓</span> Job placement guarantee*</li>
-                        <li><span class="check">✓</span> Priority support forever</li>
-                        <li><span class="check">✓</span> Alumni network access</li>
-                    </ul>
-                    <a href="#" class="btn btn-premium">Apply Now — 5 Spots Left</a>
-                    <p class="guarantee-note">*Get hired in 90 days or full refund</p>
+                <div class="admission-card">
+                    <div class="admission-icon">📅</div>
+                    <h3>APPLICATION DEADLINE</h3>
+                    <p class="deadline-text">The night before classes start</p>
+                    <p class="deadline-sub">for each cohort</p>
                 </div>
             </div>
 
+            <div class="scholarship-box">
+                <input type="text" placeholder="Scholarship code" class="form-input scholarship-input">
+                <button class="btn btn-secondary">Use Scholarship</button>
+            </div>
+
+            <p class="admissions-note">This program is highly selective and admission will be granted to a balanced cohort. Admissions are decided on a rolling basis.</p>
+        </div>
+    </section>
+
+    <!-- Cohorts Section -->
+    <section class="cohorts-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Pick Your Dates</h2>
+                <p class="section-subtitle">for the AI Coding Mastery Bootcamp</p>
+            </div>
+
+            <div class="cohorts-grid">
+                <div class="cohort-card">
+                    <h3>January Cohort</h3>
+                    <p class="cohort-type">Daily Online Program</p>
+                    <div class="cohort-dates">
+                        <span class="date-icon">📅</span>
+                        <div>
+                            <p class="date-range">From Jan 20th to Jan 31st</p>
+                            <p class="date-time">Mon-Fri 6:00 PM - 8:00 PM (EST)</p>
+                        </div>
+                    </div>
+                    <div class="schedule-grid">
+                        <div class="schedule-header">
+                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+                        </div>
+                        <div class="schedule-row">
+                            <span>1/20</span><span>1/21</span><span>1/22</span><span>1/23</span><span>1/24</span>
+                        </div>
+                        <div class="schedule-row classes">
+                            <span>Class 1</span><span>Class 2</span><span>Class 3</span><span>Class 4</span><span>Class 5</span>
+                        </div>
+                        <div class="schedule-row">
+                            <span>1/27</span><span>1/28</span><span>1/29</span><span>1/30</span><span>1/31</span>
+                        </div>
+                        <div class="schedule-row classes">
+                            <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
+                        </div>
+                    </div>
+                    <form class="cohort-form">
+                        <input type="text" placeholder="Your Full Name" class="form-input">
+                        <input type="email" placeholder="Your Email Address" class="form-input">
+                        <button type="submit" class="btn btn-primary">Apply Now</button>
+                    </form>
+                </div>
+
+                <div class="cohort-card">
+                    <h3>Spring Cohort</h3>
+                    <p class="cohort-type">Weekly Online Program</p>
+                    <div class="cohort-dates">
+                        <span class="date-icon">📅</span>
+                        <div>
+                            <p class="date-range">From Feb 8th to Apr 12th</p>
+                            <p class="date-time">Saturdays 2:00 PM - 4:00 PM (EST)</p>
+                        </div>
+                    </div>
+                    <div class="schedule-grid">
+                        <div class="schedule-header">
+                            <span>Sat</span><span>Sat</span><span>Sat</span><span>Sat</span><span>Sat</span>
+                        </div>
+                        <div class="schedule-row">
+                            <span>2/08</span><span>2/15</span><span>2/22</span><span>3/01</span><span>3/08</span>
+                        </div>
+                        <div class="schedule-row classes">
+                            <span>Class 1</span><span>Class 2</span><span>Class 3</span><span>Class 4</span><span>Class 5</span>
+                        </div>
+                        <div class="schedule-row">
+                            <span>3/15</span><span>3/22</span><span>3/29</span><span>4/05</span><span>4/12</span>
+                        </div>
+                        <div class="schedule-row classes">
+                            <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
+                        </div>
+                    </div>
+                    <form class="cohort-form">
+                        <input type="text" placeholder="Your Full Name" class="form-input">
+                        <input type="email" placeholder="Your Email Address" class="form-input">
+                        <button type="submit" class="btn btn-primary">Apply Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section class="guarantee-section">
+        <div class="container">
             <div class="guarantee-box">
                 <div class="guarantee-icon">🛡️</div>
                 <div class="guarantee-content">
                     <h3>100% Money-Back Guarantee</h3>
-                    <p>Try the course for 14 days. If you're not completely satisfied — if you don't believe this will change your career — email us and we'll refund every penny. No questions asked.</p>
+                    <p>Try the program for 7 days. If you're not completely satisfied, email us for a full refund. No questions asked.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
-            
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h4>Do I need any coding experience?</h4>
-                    <p>Absolutely not. In fact, having no coding experience can be an advantage — you won't have bad habits to unlearn. Our AI-first approach is designed for complete beginners.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Will employers actually hire me without traditional coding skills?</h4>
-                    <p>Yes — because you WILL have coding skills. You'll be able to build anything a traditional developer can, often faster. Plus, companies are actively seeking "AI-native" developers who can leverage these tools.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>What if AI tools become obsolete?</h4>
-                    <p>AI coding assistants are the future, not a fad. Every major tech company is investing billions in this technology. The skills you learn will only become MORE valuable over time.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Is 10 days really enough?</h4>
-                    <p>For traditional coding? No. But with AI tools, you're not memorizing syntax or debugging for hours. You're learning to communicate effectively with AI and architect solutions. That's a skill you can master in 10 intensive days.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>What tools will I learn?</h4>
-                    <p>You'll master Cursor, Claude, ChatGPT, GitHub Copilot, v0, Replit, and more. We constantly update the curriculum as new tools emerge.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>What's the time commitment?</h4>
-                    <p>Plan for 4-6 hours per day during the 10-day program. Live cohort sessions are 2 hours, with additional time for projects and practice.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <h2>Your Future Self is<br><span class="gradient-text">Counting On You</span></h2>
-            <p>In 10 days, you could be building real applications.<br>In 30 days, you could have job offers.<br>In 90 days, you could be living a completely different life.</p>
-            <p class="cta-question">Or you could still be "thinking about it."</p>
-            <a href="#enroll" class="btn btn-primary btn-large">
-                <span>Start Your Transformation Now</span>
-                <span class="btn-arrow">→</span>
-            </a>
-            <p class="final-note">Join 847+ students who took the leap</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="logo-icon">⚡</span>
-                    <span class="logo-text">AI Coding Mastery</span>
-                </div>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-            <p class="copyright">© 2026 AI Coding Mastery. All rights reserved.</p>
+            <p class="copyright">© Copyright AI Coding Mastery 2025-2026</p>
         </div>
     </footer>
 
     <script>
-        // Countdown timer
-        function updateCountdown() {
-            const endDate = new Date();
-            endDate.setDate(endDate.getDate() + 8);
-            endDate.setHours(23, 59, 59);
-            
-            const now = new Date();
-            const diff = endDate - now;
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('days').textContent = String(days).padStart(2, '0');
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-        }
-        
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // Network background animation
+        const canvas = document.getElementById('network-bg');
+        const ctx = canvas.getContext('2d');
 
-        // Floating particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
-                container.appendChild(particle);
-            }
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 3;
         }
-        createParticles();
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 80;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1
+            });
+        }
+
+        function drawNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw connections
+            ctx.strokeStyle = 'rgba(139, 92, 246, 0.1)';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Draw particles
+            for (const p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.5)';
+                ctx.fill();
+                
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            }
+            
+            requestAnimationFrame(drawNetwork);
+        }
+        drawNetwork();
+
+        // Rotating words
+        const words = ['expert', 'engineer', 'builder', 'creator'];
+        let wordIndex = 0;
+        const rotatingWord = document.getElementById('rotating-word');
+
+        setInterval(() => {
+            wordIndex = (wordIndex + 1) % words.length;
+            rotatingWord.style.opacity = 0;
+            setTimeout(() => {
+                rotatingWord.textContent = words[wordIndex];
+                rotatingWord.style.opacity = 1;
+            }, 300);
+        }, 2000);
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
     </script>
 </body>
 </html>
-
