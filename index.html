@@ -781,17 +781,17 @@
         const parallaxMid = document.querySelector('.parallax-mid');
         const parallaxFront = document.querySelector('.parallax-front');
         
-        // AGGRESSIVE parallax configuration - VERY noticeable depth layers
-        // Each layer moves at different speeds creating obvious depth
+        // SUBTLE parallax configuration - noticeable but not overwhelming
+        // Each layer moves at different speeds creating depth
         const parallaxConfig = {
             // Floating background elements - move OPPOSITE to cursor (far away)
-            back: { x: -20, y: -15 },
-            mid: { x: -40, y: -30 },
-            front: { x: -60, y: -45 },
+            back: { x: -8, y: -6 },
+            mid: { x: -15, y: -10 },
+            front: { x: -22, y: -15 },
             // Text layers - move WITH cursor (close to viewer)
-            title: { x: 50, y: 35 },
-            subtitle: { x: 30, y: 20 },
-            credential: { x: 70, y: 45 }
+            title: { x: 12, y: 8 },
+            subtitle: { x: 8, y: 5 },
+            credential: { x: 18, y: 12 }
         };
         
         if (hero) {
@@ -847,16 +847,16 @@
                     heroSubtitle.style.transform = `translate(${tx}px, ${ty}px)`;
                 }
                 
-                // Credential box - FLOATING element with dramatic 3D tilt + shadow
+                // Credential box - FLOATING element with subtle 3D tilt + shadow
                 if (credentialBox) {
                     const tx = x * parallaxConfig.credential.x;
                     const ty = y * parallaxConfig.credential.y;
-                    const rotateX = -y * 8; // Tilt toward cursor
-                    const rotateY = x * 8;
+                    const rotateX = -y * 3; // Subtle tilt toward cursor
+                    const rotateY = x * 3;
                     
                     // Dynamic shadow - moves OPPOSITE for 3D floating effect
-                    const shadowX = -x * 40;
-                    const shadowY = -y * 30 + 20;
+                    const shadowX = -x * 15;
+                    const shadowY = -y * 12 + 15;
                     const shadowBlur = 50 + Math.abs(x * 25) + Math.abs(y * 20);
                     
                     credentialBox.style.transform = `translate(${tx}px, ${ty}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
@@ -944,13 +944,13 @@
             delay: 0
         });
 
-        // Initialize Vanilla Tilt on all cards with data-tilt
+        // Initialize Vanilla Tilt on all cards with data-tilt - subtle effect
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-            max: 15,
-            speed: 400,
+            max: 8,
+            speed: 500,
             glare: true,
-            "max-glare": 0.2,
-            perspective: 1000
+            "max-glare": 0.1,
+            perspective: 1200
         });
 
         // ============================================
@@ -1009,6 +1009,84 @@
             duration: 0.6,
             stagger: 0.1,
             ease: 'back.out(1.7)'
+        });
+
+        // ============================================
+        // SCROLL-BASED PARALLAX FOR ALL SECTIONS
+        // ============================================
+        
+        // Network background parallax on scroll
+        gsap.to('#network-bg', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.5
+            },
+            y: -200,
+            ease: 'none'
+        });
+
+        // Section headings parallax (subtle upward float)
+        document.querySelectorAll('.section-header, .mentorship-header, .instructors-header').forEach(header => {
+            gsap.to(header, {
+                scrollTrigger: {
+                    trigger: header,
+                    start: 'top 90%',
+                    end: 'top 20%',
+                    scrub: 0.3
+                },
+                y: -15,
+                ease: 'none'
+            });
+        });
+
+        // Cards float up slightly as you scroll
+        document.querySelectorAll('.promise-card, .instructor-card, .testimonial-card, .day-card').forEach((card, i) => {
+            gsap.to(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 95%',
+                    end: 'top 30%',
+                    scrub: 0.4
+                },
+                y: -10 - (i % 3) * 5, // Slight variation in depth
+                ease: 'none'
+            });
+        });
+
+        // Floating shapes parallax on scroll (different speeds)
+        gsap.to('.parallax-back', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.8
+            },
+            y: -100,
+            ease: 'none'
+        });
+
+        gsap.to('.parallax-mid', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.6
+            },
+            y: -180,
+            ease: 'none'
+        });
+
+        gsap.to('.parallax-front', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.4
+            },
+            y: -260,
+            ease: 'none'
         });
 
         // ============================================

@@ -1120,6 +1120,86 @@ test('Animations use hardware-accelerated properties', () => {
 });
 
 // ============================================================================
+// SECTION 34: SCROLL-BASED PARALLAX
+// ============================================================================
+console.log('\n--- Scroll-Based Parallax Tests ---');
+
+test('GSAP ScrollTrigger animates network background on scroll', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes("gsap.to('#network-bg'") || html.includes('gsap.to("#network-bg"'),
+        'Network background should have scroll-based parallax'
+    );
+});
+
+test('GSAP ScrollTrigger animates parallax layers on scroll', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes("gsap.to('.parallax-back'") || html.includes("gsap.to('.parallax-mid'"),
+        'Parallax layers should animate on scroll'
+    );
+});
+
+test('Cards have scroll-based float effect', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    assert(
+        html.includes('promise-card') && html.includes('scrollTrigger') ||
+        html.includes('.day-card') && html.includes('scrollTrigger'),
+        'Cards should have scroll-based parallax float effect'
+    );
+});
+
+test('Parallax config values are subtle (not too aggressive)', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    // Should NOT have extreme values like 50+ for parallax movement
+    const hasSubtleValues = 
+        html.includes('title: { x: 12') || html.includes('title: { x: 15') ||
+        html.includes('SUBTLE parallax') || html.includes('subtle parallax');
+    assert(hasSubtleValues, 'Parallax should use subtle, not aggressive values');
+});
+
+// ============================================================================
+// SECTION 35: PARTICLE NETWORK EFFECT CONSISTENCY
+// ============================================================================
+console.log('\n--- Particle Network Consistency Tests ---');
+
+test('Network canvas covers entire page height', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('#network-bg') && (css.includes('height: 300%') || css.includes('position: fixed')),
+        'Network canvas should cover the full page'
+    );
+});
+
+test('Network background has fixed position', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    assert(
+        css.includes('#network-bg') && css.includes('position: fixed'),
+        'Network background should be fixed for consistent effect'
+    );
+});
+
+test('Floating shapes have subtle opacity', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // opacity should be low (0.08, 0.1, 0.15, etc.) not high
+    assert(
+        css.includes('.float-shape') && 
+        (css.includes('opacity: 0.08') || css.includes('opacity: 0.1') || css.includes('opacity: 0.15')),
+        'Floating shapes should have subtle opacity (not overwhelming)'
+    );
+});
+
+test('Floating shapes have slow animations', () => {
+    const css = fs.readFileSync('styles.css', 'utf8');
+    // Animations should be slow (18s+) not fast
+    assert(
+        css.includes('float-slow') && 
+        (css.includes('25s') || css.includes('22s') || css.includes('30s')),
+        'Floating shapes should have slow, subtle animations'
+    );
+});
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log();
