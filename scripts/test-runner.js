@@ -750,6 +750,151 @@ test('HTML has viewport meta tag', () => {
 });
 
 // ============================================================================
+// COHORT CARDS & FORM INPUTS TESTS
+// ============================================================================
+console.log('\n--- Cohort Cards & Form Inputs Tests ---');
+
+test('Cohort card background uses correct opacity (0.6, not 0.95)', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const bgCardMatch = css.match(/--bg-card:\s*rgba\([^)]+\)/);
+    assert(bgCardMatch, '--bg-card variable not found');
+    assert(
+        bgCardMatch[0].includes('0.6') && !bgCardMatch[0].includes('0.95'),
+        '--bg-card should be rgba(45, 27, 78, 0.6), not 0.95'
+    );
+});
+
+test('Cohort card does NOT have forced opacity override', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const cohortCardMatch = css.match(/\.cohort-card\s*\{[^}]*\}/s);
+    assert(cohortCardMatch, '.cohort-card rule not found');
+    assert(
+        !cohortCardMatch[0].includes('opacity: 1 !important'),
+        '.cohort-card should NOT have opacity: 1 !important (should use --bg-card opacity)'
+    );
+});
+
+test('Cohort form inputs have proper width styling', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    assert(
+        css.includes('.cohort-form .form-input') || css.includes('.cohort-form .form-input'),
+        'Missing .cohort-form .form-input styling'
+    );
+    const formInputMatch = css.match(/\.cohort-form\s+\.form-input\s*\{[^}]*\}/s);
+    if (formInputMatch) {
+        assert(
+            formInputMatch[0].includes('width: 100%') || formInputMatch[0].includes('width:100%'),
+            '.cohort-form .form-input should have width: 100%'
+        );
+    }
+});
+
+test('Cohort cards have February Cohort with correct dates', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('February Cohort') || html.includes('February cohort'),
+        'Missing February Cohort card'
+    );
+    assert(
+        html.includes('Feb 3rd to Feb 14th') || html.includes('Feb 3rd to Feb 14th, 2026'),
+        'February Cohort should have dates Feb 3rd to Feb 14th'
+    );
+});
+
+test('Cohort cards have Next Cohort badge', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('Next Cohort') || html.includes('cohort-badge'),
+        'Missing Next Cohort badge on featured cohort'
+    );
+});
+
+// ============================================================================
+// CDN LINKS TESTS
+// ============================================================================
+console.log('\n--- CDN Links Tests ---');
+
+test('JavaScript libraries load from CDN (not local files)', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('unpkg.com') || html.includes('cdnjs.cloudflare.com') || html.includes('jsdelivr.net'),
+        'JavaScript libraries should load from CDN, not local files'
+    );
+});
+
+test('AOS library loads from CDN', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('unpkg.com/aos') || html.includes('cdnjs.cloudflare.com/aos'),
+        'AOS library should load from CDN'
+    );
+    assert(
+        !html.includes('src="js/aos.js"') && !html.includes('src=\'js/aos.js\''),
+        'AOS should not load from local js/aos.js file'
+    );
+});
+
+test('GSAP library loads from CDN', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('unpkg.com/gsap') || html.includes('cdnjs.cloudflare.com/gsap'),
+        'GSAP library should load from CDN'
+    );
+    assert(
+        !html.includes('src="js/gsap') && !html.includes('src=\'js/gsap\''),
+        'GSAP should not load from local js/gsap files'
+    );
+});
+
+test('Vanilla Tilt loads from CDN', () => {
+    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    assert(
+        html.includes('unpkg.com/vanilla-tilt') || html.includes('cdnjs.cloudflare.com/vanilla-tilt'),
+        'Vanilla Tilt library should load from CDN'
+    );
+    assert(
+        !html.includes('src="js/vanilla-tilt') && !html.includes('src=\'js/vanilla-tilt\''),
+        'Vanilla Tilt should not load from local js/vanilla-tilt file'
+    );
+});
+
+// ============================================================================
+// CARD VISIBILITY TESTS
+// ============================================================================
+console.log('\n--- Card Visibility Tests ---');
+
+test('Project cards have forced visibility (opacity: 1 !important)', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const projectCardMatch = css.match(/\.project-card\s*\{[^}]*\}/s);
+    assert(projectCardMatch, '.project-card rule not found');
+    assert(
+        projectCardMatch[0].includes('opacity: 1 !important'),
+        '.project-card should have opacity: 1 !important to ensure visibility'
+    );
+});
+
+test('Curriculum day cards have forced visibility', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const dayCardMatch = css.match(/\.day-card\s*\{[^}]*\}/s);
+    assert(dayCardMatch, '.day-card rule not found');
+    assert(
+        dayCardMatch[0].includes('opacity: 1 !important'),
+        '.day-card should have opacity: 1 !important to ensure visibility'
+    );
+});
+
+test('Project cards have white text for visibility', () => {
+    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const projectCardH3 = css.match(/\.project-card\s+h3\s*\{[^}]*\}/s);
+    if (projectCardH3) {
+        assert(
+            projectCardH3[0].includes('color: var(--text-white)') || projectCardH3[0].includes('color:#ffffff'),
+            '.project-card h3 should have white text color'
+        );
+    }
+});
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log();

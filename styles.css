@@ -726,12 +726,13 @@ h3 { font-size: 1.25rem; }
 .cta-form {
     display: flex;
     gap: 12px;
-    max-width: 700px;
+    max-width: 850px;
     margin: 0 auto 16px;
 }
 
 .cta-form .form-input {
     flex: 1;
+    min-width: 100px;
 }
 
 .cta-note {
@@ -1017,11 +1018,13 @@ img.instructor-avatar {
     padding: 24px;
     text-align: center;
     transition: all 0.3s;
+    opacity: 1 !important;
+    transform: scale(1) !important;
 }
 
 .project-card:hover {
     border-color: var(--cyan);
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1) !important;
 }
 
 .project-icon {
@@ -1038,12 +1041,14 @@ img.instructor-avatar {
 .project-card h3 {
     font-size: 1rem;
     margin-bottom: 8px;
+    color: var(--text-white);
 }
 
 .project-card p {
-    color: var(--text-muted);
+    color: var(--text-white);
     font-size: 0.85rem;
     line-height: 1.5;
+    opacity: 0.9;
 }
 
 /* Results Section */
@@ -1455,6 +1460,8 @@ blockquote {
     border-radius: 12px;
     padding: 24px;
     transition: all 0.3s;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
 .day-card:hover {
@@ -1462,8 +1469,13 @@ blockquote {
 }
 
 .day-card.bonus {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    border-color: rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+    border-color: rgba(245, 158, 11, 0.5);
+    opacity: 1 !important;
+}
+
+.day-card.bonus:hover {
+    border-color: rgba(251, 191, 36, 0.9);
 }
 
 .day-badge {
@@ -1485,6 +1497,7 @@ blockquote {
 .day-card h3 {
     margin-bottom: 16px;
     font-size: 1.05rem;
+    color: var(--text-white);
 }
 
 .day-card ul {
@@ -1494,8 +1507,9 @@ blockquote {
 .day-card li {
     padding: 8px 0;
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-white);
     border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    opacity: 0.95;
 }
 
 .day-card li:last-child {
@@ -1716,9 +1730,13 @@ blockquote {
     transition: all 0.3s ease;
 }
 
+.cohort-card:hover {
+    border-color: var(--purple-light);
+}
+
 .cohort-card.featured-cohort {
     border-color: var(--cta-teal);
-    background: linear-gradient(135deg, rgba(37, 135, 125, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    background: var(--bg-card);
     box-shadow: 0 0 30px rgba(37, 135, 125, 0.2);
 }
 
@@ -1740,11 +1758,13 @@ blockquote {
 .cohort-card h3 {
     font-size: 1.5rem;
     margin-bottom: 4px;
+    color: var(--text-white);
 }
 
 .cohort-type {
-    color: var(--text-muted);
+    color: var(--text-white);
     margin-bottom: 24px;
+    opacity: 0.9;
 }
 
 .cohort-dates {
@@ -1764,11 +1784,13 @@ blockquote {
 .date-range {
     font-weight: 600;
     margin-bottom: 4px;
+    color: var(--text-white);
 }
 
 .date-time {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-white);
+    opacity: 0.9;
 }
 
 .schedule-grid {
@@ -1810,6 +1832,14 @@ blockquote {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+}
+
+.cohort-form .form-input {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* Guarantee Section */
