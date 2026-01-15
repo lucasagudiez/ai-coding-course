@@ -436,6 +436,21 @@ h3 { font-size: 1.25rem; }
     animation: float-slow 30s ease-in-out infinite reverse;
 }
 
+@media (max-width: 768px) {
+    /* Constrain floating shapes to viewport on mobile */
+    .shape-1 {
+        width: 150px;
+        height: 150px;
+        left: -25px;
+    }
+    
+    .shape-2 {
+        width: 100px;
+        height: 100px;
+        right: -10px;
+    }
+}
+
 .shape-3 {
     width: 150px;
     height: 150px;
@@ -2556,6 +2571,32 @@ blockquote {
     animation: morphBlob 8s ease-in-out infinite;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden; /* Prevent extending beyond container */
+}
+
+/* Disable tilt glare effect on mobile to prevent horizontal scroll */
+@media (max-width: 768px) {
+    .js-tilt-glare,
+    .js-tilt-glare-inner {
+        display: none !important;
+    }
+    
+    .morphing-blob {
+        display: none; /* Hide morphing blob on mobile - causes horizontal scroll */
+    }
+    
+    /* Constrain floating shapes to viewport on mobile */
+    .shape-1 {
+        width: 150px;
+        height: 150px;
+        left: -25px;
+    }
+    
+    .shape-2 {
+        width: 100px;
+        height: 100px;
+        right: -10px;
+    }
 }
 
 @keyframes morphBlob {
