@@ -766,10 +766,10 @@ test('HTML has viewport meta tag', () => {
 // ============================================================================
 // COHORT CARDS & FORM INPUTS TESTS
 // ============================================================================
-console.log('\n--- Cohort Cards & Form Inputs Tests ---');
+bufferLog('\n--- Cohort Cards & Form Inputs Tests ---');
 
 test('Cohort card background uses correct opacity (0.6, not 0.95)', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     const bgCardMatch = css.match(/--bg-card:\s*rgba\([^)]+\)/);
     assert(bgCardMatch, '--bg-card variable not found');
     assert(
@@ -779,7 +779,7 @@ test('Cohort card background uses correct opacity (0.6, not 0.95)', () => {
 });
 
 test('Cohort card does NOT have forced opacity override', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     const cohortCardMatch = css.match(/\.cohort-card\s*\{[^}]*\}/s);
     assert(cohortCardMatch, '.cohort-card rule not found');
     assert(
@@ -789,7 +789,7 @@ test('Cohort card does NOT have forced opacity override', () => {
 });
 
 test('Cohort form inputs have proper width styling', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     assert(
         css.includes('.cohort-form .form-input') || css.includes('.cohort-form .form-input'),
         'Missing .cohort-form .form-input styling'
@@ -804,7 +804,7 @@ test('Cohort form inputs have proper width styling', () => {
 });
 
 test('Cohort cards have February Cohort with correct dates', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('February Cohort') || html.includes('February cohort'),
         'Missing February Cohort card'
@@ -816,7 +816,7 @@ test('Cohort cards have February Cohort with correct dates', () => {
 });
 
 test('Cohort cards have Next Cohort badge', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('Next Cohort') || html.includes('cohort-badge'),
         'Missing Next Cohort badge on featured cohort'
@@ -826,10 +826,10 @@ test('Cohort cards have Next Cohort badge', () => {
 // ============================================================================
 // CDN LINKS TESTS
 // ============================================================================
-console.log('\n--- CDN Links Tests ---');
+bufferLog('\n--- CDN Links Tests ---');
 
 test('JavaScript libraries load from CDN (not local files)', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('unpkg.com') || html.includes('cdnjs.cloudflare.com') || html.includes('jsdelivr.net'),
         'JavaScript libraries should load from CDN, not local files'
@@ -837,7 +837,7 @@ test('JavaScript libraries load from CDN (not local files)', () => {
 });
 
 test('AOS library loads from CDN', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('unpkg.com/aos') || html.includes('cdnjs.cloudflare.com/aos'),
         'AOS library should load from CDN'
@@ -849,7 +849,7 @@ test('AOS library loads from CDN', () => {
 });
 
 test('GSAP library loads from CDN', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('unpkg.com/gsap') || html.includes('cdnjs.cloudflare.com/gsap'),
         'GSAP library should load from CDN'
@@ -861,7 +861,7 @@ test('GSAP library loads from CDN', () => {
 });
 
 test('Vanilla Tilt loads from CDN', () => {
-    const html = fs.readFileSync(resolveRoot('index.html'), 'utf8');
+    const html = getHTML();
     assert(
         html.includes('unpkg.com/vanilla-tilt') || html.includes('cdnjs.cloudflare.com/vanilla-tilt'),
         'Vanilla Tilt library should load from CDN'
@@ -875,10 +875,10 @@ test('Vanilla Tilt loads from CDN', () => {
 // ============================================================================
 // CARD VISIBILITY TESTS
 // ============================================================================
-console.log('\n--- Card Visibility Tests ---');
+bufferLog('\n--- Card Visibility Tests ---');
 
 test('Project cards have forced visibility (opacity: 1 !important)', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     const projectCardMatch = css.match(/\.project-card\s*\{[^}]*\}/s);
     assert(projectCardMatch, '.project-card rule not found');
     assert(
@@ -888,7 +888,7 @@ test('Project cards have forced visibility (opacity: 1 !important)', () => {
 });
 
 test('Curriculum day cards have forced visibility', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     const dayCardMatch = css.match(/\.day-card\s*\{[^}]*\}/s);
     assert(dayCardMatch, '.day-card rule not found');
     assert(
@@ -898,7 +898,7 @@ test('Curriculum day cards have forced visibility', () => {
 });
 
 test('Project cards have white text for visibility', () => {
-    const css = fs.readFileSync(resolveRoot('styles.css'), 'utf8');
+    const css = getCSS();
     const projectCardH3 = css.match(/\.project-card\s+h3\s*\{[^}]*\}/s);
     if (projectCardH3) {
         assert(

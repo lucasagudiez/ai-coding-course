@@ -6,16 +6,27 @@ All optimizations from the movie-trailer-finder project have been successfully a
 
 ### Unit Tests Performance
 
-**Before Optimization:** ~1.0 second  
-**After Optimization:** **0.45 seconds**  
-**Speedup:** **55% faster**
+**Before Optimization:** ~0.22 seconds  
+**After Cache Fix:** **0.14 seconds**  
+**Speedup:** **38% faster** ⚡  
+**Test Count:** **91 tests** (up from 79)
+
+#### Recent Performance Fix (2026-01-15)
+12 new tests were added but bypassed the file cache by calling `fs.readFileSync()` directly instead of using `getHTML()` and `getCSS()` cached helpers. This caused tests to slow down from 0.14s to 0.22s.
+
+**Fixed by:**
+- Replacing all `fs.readFileSync(resolveRoot('styles.css'), 'utf8')` with `getCSS()`
+- Replacing all `fs.readFileSync(resolveRoot('index.html'), 'utf8')` with `getHTML()`
+- Replacing direct `console.log()` with `bufferLog()` in new test sections
+
+**Result:** Test time back to **0.14 seconds** (650 tests/second)
 
 #### Optimizations Applied:
-1. **File Caching** - Read each file only once, cache in memory
-2. **Pre-computed Analysis** - Parse HTML/CSS once at startup, reuse everywhere
-3. **Buffered Output** - Reduce console I/O overhead by batching
-4. **Lazy Evaluation** - Only compute what's actually needed
-5. **Lowercase Caching** - Pre-compute `.toLowerCase()` for case-insensitive searches
+1. **File Caching** - Read each file only once, cache in memory ✅
+2. **Pre-computed Analysis** - Parse HTML/CSS once at startup, reuse everywhere ✅
+3. **Buffered Output** - Reduce console I/O overhead by batching ✅
+4. **Lazy Evaluation** - Only compute what's actually needed ✅
+5. **Lowercase Caching** - Pre-compute `.toLowerCase()` for case-insensitive searches ✅
 
 ### Playwright Tests Performance
 
@@ -35,11 +46,11 @@ All optimizations from the movie-trailer-finder project have been successfully a
 
 ```bash
 # Quick validation (before every commit)
-npm test              # 0.45s - Unit tests
+npm test              # 0.14s - Unit tests ⚡
 npm run test:ux:smoke # ~7s   - Critical path
 
 # Full validation (before deploy)
-npm run test:full     # ~30s  - Everything
+npm run test:full     # ~22s  - Everything
 ```
 
 ### Comparison with Movie Project
@@ -55,7 +66,7 @@ npm run test:full     # ~30s  - Everything
 
 ## Test Coverage
 
-- **79 unit tests** (0.45s) - Static analysis
+- **91 unit tests** (0.14s) - Static analysis ⚡
 - **6 smoke tests** (~7s) - Critical path
 - **33 viewport tests** (~60s) - Responsive design
 - **40+ full UX tests** (~20s) - Complete automation

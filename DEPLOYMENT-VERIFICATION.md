@@ -53,9 +53,18 @@ git diff deploy origin/deploy # No differences
 ## Performance Metrics
 
 ### Unit Tests
-- **Time:** 0.45 seconds
-- **Tests:** 91 tests
+- **Time:** 0.14 seconds (91 tests) ⚡
+- **Speed:** 650 tests/second
 - **Status:** All passing
+
+### Before Optimization (file re-reading)
+- **Time:** 0.22-0.70 seconds
+- **Issue:** New tests were calling `fs.readFileSync()` directly, bypassing cache
+
+### After Optimization (cached file access)
+- **Time:** 0.14 seconds consistently
+- **Improvement:** 38% faster
+- **Technique:** All tests use `getHTML()` and `getCSS()` cached functions
 
 ### Smoke Tests (UX)
 - **Time:** 22.2 seconds (with 4 parallel workers)
@@ -63,7 +72,7 @@ git diff deploy origin/deploy # No differences
 - **Status:** All passing
 
 ### Full Check Pipeline
-- **Total Time:** 25.2 seconds
+- **Total Time:** 22.4 seconds (down from 25.2s)
 - **Command:** `npm run check` (unit + smoke)
 - **Status:** ✅ All tests pass
 
