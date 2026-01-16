@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="314x241" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
     <!-- AOS - Animate On Scroll Library (CDN) -->
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dis t/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -106,8 +106,8 @@
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
             <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input">
-                <input type="email" placeholder="Your Email Address" class="form-input">
+                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
+                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                 <div class="cta-button-group">
                     <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
                     <div class="urgency-timer">
@@ -260,8 +260,8 @@
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
             <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input">
-                <input type="email" placeholder="Your Email Address" class="form-input">
+                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
+                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                 <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
@@ -388,19 +388,6 @@
                     </div>
                 </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="testimonial-header">
-                            <img class="avatar" src="images/avatars/amanda.jpg" alt="Amanda Torres">
-                            <div class="testimonial-meta">
-                                <h4>Amanda Torres</h4>
-                                <p>Finance Analyst → Fintech Engineer @ Stripe</p>
-                            </div>
-                            <div class="salary-badge">$152K/year</div>
-                        </div>
-                        <blockquote>"Excel wizard, financial modeling expert, but coding? Never. I was the person who requested features from engineering. Now I build them myself. The Stanford instructor understood how to teach analytical people. My finance background actually became an advantage in fintech."</blockquote>
-                    </div>
-                </div>
             </div>
 
             <div class="stats-bar">
@@ -509,8 +496,8 @@
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
             <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input">
-                <input type="email" placeholder="Your Email Address" class="form-input">
+                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
+                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                 <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
@@ -608,8 +595,8 @@
                         </div>
                     </div>
                     <form class="cohort-form">
-                        <input type="text" placeholder="Your Full Name" class="form-input">
-                        <input type="email" placeholder="Your Email Address" class="form-input">
+                        <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
+                        <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                         <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
                     </form>
                 </div>
@@ -642,8 +629,8 @@
                         </div>
                     </div>
                     <form class="cohort-form">
-                        <input type="text" placeholder="Your Full Name" class="form-input">
-                        <input type="email" placeholder="Your Email Address" class="form-input">
+                        <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
+                        <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                         <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
                     </form>
                 </div>
@@ -934,8 +921,9 @@
         let mouse = { x: null, y: null };
         
         document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
         });
 
         for (let i = 0; i < particleCount; i++) {
@@ -1762,11 +1750,41 @@
             });
         }
         
-        // Form validation enhancement
+        // Form validation enhancement with real-time character filtering
         document.querySelectorAll('form, .signup-form').forEach(form => {
             const inputs = form.querySelectorAll('input[type="text"], input[type="email"]');
             
             inputs.forEach(input => {
+                // Real-time character filtering for name inputs
+                if (input.placeholder && input.placeholder.toLowerCase().includes('name')) {
+                    input.addEventListener('input', (e) => {
+                        // Only allow letters, spaces, hyphens, and apostrophes
+                        e.target.value = e.target.value.replace(/[^A-Za-z\s'-]/g, '');
+                        input.classList.remove('error', 'success');
+                    });
+                    
+                    input.addEventListener('keypress', (e) => {
+                        // Prevent invalid characters from being typed
+                        const char = String.fromCharCode(e.which || e.keyCode);
+                        if (!/^[A-Za-z\s'-]$/.test(char)) {
+                            e.preventDefault();
+                        }
+                    });
+                }
+                
+                // Real-time validation for email inputs
+                if (input.type === 'email') {
+                    input.addEventListener('input', (e) => {
+                        // Allow only valid email characters
+                        const emailPattern = /^[a-zA-Z0-9._%+-@]*$/;
+                        if (!emailPattern.test(e.target.value)) {
+                            e.target.value = e.target.value.replace(/[^a-zA-Z0-9._%+-@]/g, '');
+                        }
+                        input.classList.remove('error', 'success');
+                    });
+                }
+                
+                // Validation on blur
                 input.addEventListener('blur', () => {
                     if (input.type === 'email') {
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1777,14 +1795,15 @@
                             input.classList.remove('error');
                             input.classList.add('success');
                         }
-                    } else if (input.value.trim().length >= 2) {
-                        input.classList.remove('error');
-                        input.classList.add('success');
+                    } else if (input.placeholder && input.placeholder.toLowerCase().includes('name')) {
+                        if (input.value.trim().length >= 2) {
+                            input.classList.remove('error');
+                            input.classList.add('success');
+                        } else if (input.value.trim().length > 0) {
+                            input.classList.add('error');
+                            input.classList.remove('success');
+                        }
                     }
-                });
-                
-                input.addEventListener('input', () => {
-                    input.classList.remove('error', 'success');
                 });
             });
         });

@@ -78,6 +78,8 @@
 
 html {
     scroll-behavior: smooth;
+    background: #0f0818; /* Dark background to prevent white showing when scrolling */
+    min-height: 100%;
 }
 
 body {
@@ -89,9 +91,33 @@ body {
         #0f0818 100%
     );
     background-attachment: fixed;
+    background-color: #0f0818; /* Fallback color */
     color: var(--text-white);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
+    cursor: default; /* Default cursor instead of text cursor */
+}
+
+/* Prevent text cursor on all text elements */
+p, h1, h2, h3, h4, h5, h6, span, div, li, td, th, label, a, blockquote, figcaption {
+    cursor: default;
+}
+
+/* Keep text cursor for input fields and textareas where text editing is expected */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea {
+    cursor: text;
+}
+
+/* Keep pointer cursor for clickable elements */
+a, button, [role="button"], .btn, .nav-cta {
+    cursor: pointer;
 }
 
 /* Network Background Canvas */
