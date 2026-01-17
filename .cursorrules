@@ -221,19 +221,21 @@ npm run test:ux
 
 ### Quick Reference - Common Issues:
 
-#### 1. **Node.js Compatibility - PRODUCTION RUNS NODE 8.10.0**
+#### 1. **Node.js Version - UPGRADED TO NODE 16 ✅**
 ```javascript
-// ❌ BREAKS ON NODE 8 - DO NOT USE:
-options?.encoding          // Optional chaining
-value ?? 'default'         // Nullish coalescing
+// ✅ USE MODERN SYNTAX - Server now supports it!
+options?.encoding          // Optional chaining - WORKS
+value ?? 'default'         // Nullish coalescing - WORKS
 
-// ✅ USE NODE 8 COMPATIBLE SYNTAX:
-options && options.encoding
-value !== null && value !== undefined ? value : 'default'
+// ❌ NEVER downgrade code for old infrastructure
+// Always upgrade infrastructure instead!
 ```
 
-**Server Node version:** 8.10.0 (2018)  
-**Check before deploying:** `ssh lucas@adavauniversity.org "node --version"`
+**Server Node version:** 16.20.2 (upgraded from 8.10.0)  
+**How:** Using nvm (Node Version Manager)  
+**Check server:** `ssh lucas@adavauniversity.org "source ~/.nvm/nvm.sh && node --version"`
+
+**Key Lesson:** Upgrade infrastructure, don't downgrade code quality!
 
 #### 2. **Z-Index Layering for Backgrounds**
 ```css
