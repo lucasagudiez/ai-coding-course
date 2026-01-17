@@ -689,7 +689,7 @@
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
                         </button>
-                        <p v-if="formError" class="error-message">{{ formErrorMessage }}</p>
+                        <p v-if="formError" class="error-message" v-html="formErrorMessage"></p>
                     </form>
                 </div>
 
@@ -733,14 +733,13 @@
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
                         </button>
-                        <p v-if="formError" class="error-message">{{ formErrorMessage }}</p>
+                        <p v-if="formError" class="error-message" v-html="formErrorMessage"></p>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Guarantee -->
     <!-- Guarantee Section -->
     <section class="guarantee-section" id="guarantee">
         <div class="container">
@@ -827,6 +826,22 @@
                     </div>
                 </details>
                 
+                <details class="faq-item" data-aos="fade-up" data-aos-delay="75">
+                    <summary class="faq-question">
+                        <span>Are there any additional costs beyond the tuition?</span>
+                        <span class="faq-icon"></span>
+                    </summary>
+                    <div class="faq-answer">
+                        <p>Yes, you'll need subscriptions to AI coding tools we use in the course:</p>
+                        <ul>
+                            <li><strong>Cursor IDE:</strong> $20/month (required)</li>
+                            <li><strong>Claude Pro (Anthropic):</strong> $20/month (recommended)</li>
+                            <li><strong>ChatGPT Plus or GitHub Copilot:</strong> $20/month (optional, but helpful)</li>
+                        </ul>
+                        <p>Estimated minimum additional cost: <strong>$40-60/month</strong> during the course. Most students find these tools invaluable and continue using them after graduation.</p>
+                    </div>
+                </details>
+                
                 <details class="faq-item" data-aos="fade-up" data-aos-delay="100">
                     <summary class="faq-question">
                         <span>What if I can't attend a session?</span>
@@ -834,16 +849,6 @@
                     </summary>
                     <div class="faq-answer">
                         <p>All sessions are recorded and available within 24 hours. You'll have lifetime access to all recordings, materials, and the community. Many students watch recordings even if they attended live.</p>
-                    </div>
-                </details>
-                
-                <details class="faq-item" data-aos="fade-up" data-aos-delay="150">
-                    <summary class="faq-question">
-                        <span>Will this actually help me get a job?</span>
-                        <span class="faq-icon"></span>
-                    </summary>
-                    <div class="faq-answer">
-                        <p>Our 94% employment rate speaks for itself. You'll build a portfolio of 5+ real projects, receive resume and interview coaching from instructors who've hired at top companies, and gain access to our job board with 500+ tech roles. The average time to offer after graduation is 21 days.</p>
                     </div>
                 </details>
                 
@@ -863,7 +868,7 @@
                         <span class="faq-icon"></span>
                     </summary>
                     <div class="faq-answer">
-                        <p>Traditional bootcamps spend 3-6 months teaching syntax memorization and debugging. We teach you to direct AI to write code for you, the same way senior engineers work today. This means you build production-quality applications in days, not months, with instructors from MIT, Stanford, Google, and Apple.</p>
+                        <p>Traditional bootcamps spend 3-6 months teaching syntax memorization and debugging. We teach you to direct AI to write code for you, the same way senior engineers work today. This means you build production-quality applications in days, not months, with instructors from MIT, Stanford, Google, and Apple - some of whom have worked at Google, Apple, Meta, and other top companies using AI coding tools in real world applications.</p>
                     </div>
                 </details>
             </div>
