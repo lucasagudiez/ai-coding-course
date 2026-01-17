@@ -4,6 +4,128 @@
    Purple/magenta gradients with teal/green CTAs
    ============================================ */
 
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    min-width: 320px;
+    max-width: 500px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    animation: toast-slide-in 0.3s ease-out;
+}
+
+@keyframes toast-slide-in {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast-fade-enter-active {
+    animation: toast-slide-in 0.3s ease-out;
+}
+
+.toast-fade-leave-active {
+    animation: toast-slide-out 0.3s ease-in;
+}
+
+@keyframes toast-slide-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.toast-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: white;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+.toast-close svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .toast-notification {
+        left: 20px;
+        right: 20px;
+        min-width: auto;
+        max-width: none;
+    }
+}
+
+/* Input Error State */
+.form-input.input-error {
+    border: 2px solid #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+.form-input.input-error::placeholder {
+    color: #fca5a5;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
 :root {
     /* Core palette - matching Adava */
     --purple-dark: #1a0a2e;
@@ -208,9 +330,14 @@ h3 { font-size: 1.25rem; }
 }
 
 .logo-icon {
-    width: 42px;
-    height: 35px;
+    width: 60px; /* Increased from 42px */
+    height: 50px; /* Increased from 35px */
     flex-shrink: 0;
+}
+
+.logo-text-img {
+    height: 50px;
+    width: auto;
 }
 
 .logo-text-group {
@@ -915,11 +1042,42 @@ h3 { font-size: 1.25rem; }
     font-weight: 600;
 }
 
+.rotating-text .static-text,
+.rotating-text .rotating-word {
+    margin: 0; /* No extra margin - browser handles natural word spacing */
+}
+
+.rotating-text .static-text:first-child {
+    margin-left: 0;
+}
+
+.rotating-text .static-text:last-child {
+    margin-right: 0;
+}
+
 .rotating-word {
     color: var(--cta-teal);
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, color 0.3s;
     display: inline-block;
     min-width: 120px;
+    text-align: center;
+}
+
+/* Different colors for each rotating word */
+.rotating-word.word-expert {
+    color: var(--purple-primary);
+}
+
+.rotating-word.word-engineer {
+    color: var(--cta-teal);
+}
+
+.rotating-word.word-builder {
+    color: #14b8a6; /* Brighter teal */
+}
+
+.rotating-word.word-creator {
+    color: #8b5cf6; /* Bright purple */
 }
 
 .mentorship-grid {
@@ -1615,6 +1773,14 @@ blockquote {
 .admission-icon {
     font-size: 2rem;
     margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admission-icon svg {
+    color: var(--cta-teal);
+    filter: drop-shadow(0 0 8px rgba(37, 135, 125, 0.5));
 }
 
 .admission-card h3 {
@@ -1838,6 +2004,14 @@ blockquote {
 
 .date-icon {
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-icon svg {
+    color: var(--cta-teal);
+    filter: drop-shadow(0 0 4px rgba(37, 135, 125, 0.4));
 }
 
 .date-range {
@@ -1923,6 +2097,14 @@ blockquote {
 .guarantee-icon {
     font-size: 3rem;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guarantee-icon svg {
+    color: #10b981;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
 }
 
 .guarantee-content h3 {
@@ -2072,6 +2254,71 @@ summary.faq-question::-webkit-details-marker {
     margin-bottom: 40px;
 }
 
+/* Global Stats Grid */
+.global-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    max-width: 1000px;
+    margin: 0 auto 60px auto;
+}
+
+.global-stat {
+    text-align: center;
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.stat-icon svg {
+    color: var(--cta-teal);
+    filter: drop-shadow(0 0 8px rgba(37, 135, 125, 0.5));
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Global Locations */
+.global-locations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.location-tag {
+    padding: 8px 16px;
+    background: rgba(37, 135, 125, 0.15);
+    border: 1px solid rgba(37, 135, 125, 0.3);
+    border-radius: 24px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.location-tag:hover {
+    background: rgba(37, 135, 125, 0.25);
+    border-color: var(--cta-teal);
+    transform: translateY(-2px);
+}
+
 /* World Map */
 .world-map-container {
     max-width: 900px;
@@ -2149,6 +2396,52 @@ summary.faq-question::-webkit-details-marker {
         font-size: 1.5rem;
     }
 }
+
+/* ============================================
+   LEGAL SECTIONS (PRIVACY & TERMS)
+   ============================================ */
+.legal-section {
+    padding: 80px 0;
+    background: var(--bg-primary);
+}
+
+.legal-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.legal-content h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.legal-content h3:first-child {
+    margin-top: 0;
+}
+
+.legal-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+}
+
+.legal-content a {
+    color: var(--cta-teal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.legal-content a:hover {
+    color: var(--cta-purple);
+    text-decoration: underline;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
 
 .footer {
     padding: 40px 0;
@@ -2481,16 +2774,22 @@ summary.faq-question::-webkit-details-marker {
         padding: 20px;
     }
     
-    /* Schedule grid - even smaller on mobile */
+    /* Schedule grid - Stack vertically on mobile for readability */
+    .schedule-grid {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     .schedule-header,
     .schedule-row {
-        gap: 4px;
+        gap: 6px;
+        min-width: 320px; /* Allow horizontal scroll if needed */
     }
     
     .schedule-header span,
     .schedule-row span {
-        font-size: 0.65rem;
-        padding: 4px 2px;
+        font-size: 0.75rem; /* Increased from 0.65rem - more readable */
+        padding: 8px 4px; /* Increased padding for better touch targets */
     }
     
     .cohort-card {
@@ -2546,10 +2845,19 @@ summary.faq-question::-webkit-details-marker {
         font-size: 0.9rem;
     }
     
+    /* Schedule grid - More readable on very small screens */
     .schedule-header span,
     .schedule-row span {
-        font-size: 0.6rem;
-        padding: 3px 1px;
+        font-size: 0.7rem; /* Increased from 0.6rem */
+        padding: 6px 2px; /* Better spacing */
+        line-height: 1.3;
+    }
+    
+    /* Allow horizontal scrolling for calendar on tiny screens */
+    .schedule-grid {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
     }
     
     .instructor-card {
@@ -3085,8 +3393,13 @@ summary.faq-question::-webkit-details-marker {
 }
 
 .footer-logo-icon {
-    width: 40px;
-    height: 40px;
+    width: 60px; /* Increased from 40px */
+    height: 50px; /* Increased from 40px */
+}
+
+.footer-logo-text-img {
+    height: 50px;
+    width: auto;
 }
 
 .footer-logo-text {

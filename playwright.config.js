@@ -77,7 +77,7 @@ module.exports = defineConfig({
 
     /* Fast server - npx http-server is 10x faster than Python */
     webServer: {
-        command: 'npx http-server . -p 8888 -c-1 --silent',
+        command: 'npx http-server public -p 8888 -c-1 --silent',
         url: 'http://localhost:8888',
         reuseExistingServer: true,
         timeout: 30000,  // 30s for server startup

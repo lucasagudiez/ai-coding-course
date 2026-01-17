@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 305 241" fill="none">
+  <defs>
+    <!-- Gradient for the teal left triangle -->
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d9488;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <!-- Gradient for the purple right triangle -->
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <!-- Gradient for the light triangle -->
+    <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#cbd5e1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Left teal triangle -->
+  <path d="M 0,120 L 80,0 L 140,170 L 60,240 Z" fill="url(#tealGradient)" />
+  
+  <!-- Bottom light triangle -->
+  <path d="M 60,240 L 140,170 L 220,240 Z" fill="url(#lightGradient)" />
+  
+  <!-- Right purple triangle -->
+  <path d="M 80,0 L 305,80 L 305,241 L 140,170 Z" fill="url(#purpleGradient)" />
+</svg>

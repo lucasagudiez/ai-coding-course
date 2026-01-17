@@ -3,15 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adava University — Become a Programmer in 10 Days</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" sizes="314x241" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <title>Adava University - Become a Programmer in 10 Days</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" href="images/adava-favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <!-- AOS - Animate On Scroll Library (CDN) -->
     <link href="https://unpkg.com/aos@2.3.4/dis t/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Vue.js 3 Production (fast) -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
+    <div id="app">
+        <!-- Toast Notification -->
+        <transition name="toast-fade">
+            <div v-if="toast.show" class="toast-notification" :class="'toast-' + toast.type">
+                <div class="toast-content">
+                    <svg v-if="toast.type === 'error'" class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <svg v-if="toast.type === 'success'" class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span class="toast-message">{{ toast.message }}</span>
+                    <button @click="toast.show = false" class="toast-close" aria-label="Close notification">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </transition>
+
     <!-- Geometric network background -->
     <canvas id="network-bg"></canvas>
     
@@ -25,11 +53,8 @@
     <nav class="nav">
         <div class="nav-container">
             <a href="#" class="logo">
-                <img src="images/adava-icon.svg" alt="Adava" class="logo-icon">
-                <div class="logo-text-group">
-                    <span class="logo-title">ADAVA</span>
-                    <span class="logo-subtitle">UNIVERSITY</span>
-                </div>
+                <img src="images/adava-a-icon.png" alt="Adava" class="logo-icon">
+                <img src="images/adava-text.png" alt="ADAVA UNIVERSITY" class="logo-text-img">
             </a>
             <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <div class="hamburger">
@@ -42,7 +67,7 @@
                 <a href="#method">Our Method</a>
                 <a href="#instructors">Instructors</a>
                 <a href="#curriculum">Curriculum</a>
-                <a href="#enroll" class="nav-cta">Apply Now</a>
+                <a href="#cohorts" class="nav-cta" @click.prevent="scrollTo('#cohorts')">Apply Now</a>
             </div>
         </div>
     </nav>
@@ -70,7 +95,7 @@
         
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">
+                <h1 class="hero-title" v-pre>
                     Become a <span class="gradient-text">Programmer</span><br>
                     in Just <span class="highlight">10 Days</span>
                 </h1>
@@ -105,16 +130,13 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
-            <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
-                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
-                <div class="cta-button-group">
-                    <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
-                    <div class="urgency-timer">
-                        <span class="timer-label">Scholarship expires in</span>
-                        <span class="timer-countdown" data-countdown>29:59</span>
-                    </div>
-                </div>
+            <form class="cta-form" @submit.prevent="submitCtaForm">
+                <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
+                <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
+                <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                </button>
+                <div v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</div>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
@@ -154,9 +176,7 @@
         <div class="container">
             <div class="mentorship-header">
                 <div class="rotating-text">
-                    <span class="static-text">Learn from the</span>
-                    <span class="rotating-word" id="rotating-word">expert</span>
-                    <span class="static-text">you want to become</span>
+                    <span class="static-text">Learn from the</span> <span class="rotating-word word-expert" id="rotating-word">expert</span> <span class="static-text">you want to become</span>
                 </div>
             </div>
             
@@ -166,7 +186,7 @@
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b5cf6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'/%3E%3C/svg%3E" alt="">
                     </div>
                     <h3>Learn from the best</h3>
-                    <p>Our instructors are engineers from <strong>Google, Apple, Meta, Amazon, and Microsoft</strong> — and alumni from <strong>MIT, Stanford, Harvard, Oxford, and Cambridge</strong>. They've built products used by billions.</p>
+                    <p>Our instructors are engineers from <strong>Google, Apple, Meta, Amazon, and Microsoft</strong> and alumni from <strong>MIT, Stanford, Harvard, Oxford, and Cambridge</strong>. They've built products used by billions.</p>
                 </div>
                 <div class="mentorship-card">
                     <div class="mentorship-icon">
@@ -259,17 +279,21 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
-            <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
-                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
-                <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+            <form class="cta-form" @submit.prevent="submitCtaForm">
+                <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
+                <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
+                <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                </button>
+                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
     </section>
 
     <!-- What You'll Build -->
-    <section class="projects-section">
+    <!-- Student Projects Section -->
+    <section class="projects-section" id="projects">
         <div class="container">
             <div class="section-header">
                 <h2>Build Real Software in 10 Days</h2>
@@ -314,10 +338,10 @@
         <div class="container">
             <div class="section-header">
                 <h2>Real Results from Real Students</h2>
-                <p class="section-subtitle">From all backgrounds — united by ambition</p>
+                <p class="section-subtitle">From all backgrounds - united by ambition</p>
             </div>
 
-            <div class="testimonials-grid">
+            <div class="testimonials-grid" id="testimonials">
                 <div class="testimonial-card featured">
                     <div class="testimonial-content">
                         <div class="testimonial-header">
@@ -328,7 +352,7 @@
                             </div>
                             <div class="salary-badge">$145K/year</div>
                         </div>
-                        <blockquote>"I have a Master's in Mechanical Engineering from Georgia Tech. I took all the calculus, physics, thermodynamics — but never a single programming class. I always wanted to build software tools for my simulations but the learning curve felt impossible. With Adava's Software Dev Bootcamp, I built a complete CAD automation tool in 10 days. Now I'm a software engineer at Tesla, combining my mechanical background with code. This course was the missing piece."</blockquote>
+                        <blockquote>"I have a Master's in Mechanical Engineering from Georgia Tech. I took all the calculus, physics, thermodynamics but never a single programming class. I always wanted to build software tools for my simulations but the learning curve felt impossible. With Adava's Software Dev Bootcamp, I built a complete CAD automation tool in 10 days. Now I'm a software engineer at Tesla, combining my mechanical background with code. This course was the missing piece."</blockquote>
                     </div>
                 </div>
 
@@ -342,7 +366,7 @@
                             </div>
                             <div class="salary-badge">$165K/year</div>
                         </div>
-                        <blockquote>"As a physician, I constantly saw ways software could improve patient care — but I couldn't build any of it. I tried learning Python twice and quit both times. Adava's Software Dev Bootcamp was different. I built a clinical decision support tool during the course that I actually use in my practice now. The ex-Amazon instructor helped me understand systems thinking. I made the leap to health tech and finally get to solve the problems I've seen for years."</blockquote>
+                        <blockquote>"As a physician, I constantly saw ways software could improve patient care but I couldn't build any of it. I tried learning Python twice and quit both times. Adava's Software Dev Bootcamp was different. I built a clinical decision support tool during the course that I actually use in my practice now. The ex-Amazon instructor helped me understand systems thinking. I made the leap to health tech and finally get to solve the problems I've seen for years."</blockquote>
                     </div>
                 </div>
 
@@ -356,7 +380,7 @@
                             </div>
                             <div class="salary-badge">$195K/year</div>
                         </div>
-                        <blockquote>"I spent 6 years doing pure mathematics — proofs, theorems, abstract algebra. I understood the math behind machine learning perfectly, but I couldn't implement any of it. Couldn't even write a for-loop. Adava's Software Dev Bootcamp bridged that gap in 10 days. Now I'm implementing the algorithms I used to only read about. The mathematical thinking transferred — I just needed the right approach to code."</blockquote>
+                        <blockquote>"I spent 6 years doing pure mathematics: proofs, theorems, abstract algebra. I understood the math behind machine learning perfectly, but I couldn't implement any of it. Couldn't even write a for-loop. Adava's Software Dev Bootcamp bridged that gap in 10 days. Now I'm implementing the algorithms I used to only read about. The mathematical thinking transferred, I just needed the right approach to code."</blockquote>
                     </div>
                 </div>
 
@@ -384,7 +408,7 @@
                             </div>
                             <div class="salary-badge">$175K/year</div>
                         </div>
-                        <blockquote>"Running experiments in the wet lab, I always envied the computational biologists who could analyze genomic data. Tried learning R, gave up. Tried Python, gave up. This course finally made it click. Built my first bioinformatics pipeline in week one. Now I do both — wet lab and dry lab. My research output doubled."</blockquote>
+                        <blockquote>"Running experiments in the wet lab, I always envied the computational biologists who could analyze genomic data. Tried learning R, gave up. Tried Python, gave up. This course finally made it click. Built my first bioinformatics pipeline in week one. Now I do both: wet lab and dry lab. My research output doubled."</blockquote>
                     </div>
                 </div>
 
@@ -392,20 +416,20 @@
 
             <div class="stats-bar">
                 <div class="stat-item">
-                    <span class="stat-number">847+</span>
-                    <span class="stat-label">Students Hired</span>
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Students Taught</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">94%</span>
-                    <span class="stat-label">Employment Rate</span>
+                    <span class="stat-number">75%</span>
+                    <span class="stat-label">Now Using AI Tools</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">21</span>
-                    <span class="stat-label">Avg Days to Offer</span>
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Working in Tech</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">$94K</span>
-                    <span class="stat-label">Avg Starting Salary</span>
+                    <span class="stat-label">Avg Tech Salary</span>
                 </div>
             </div>
         </div>
@@ -495,25 +519,33 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="cta-title">Only a few spots left. Secure yours today!</h2>
-            <form class="cta-form">
-                <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
-                <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
-                <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+            <form class="cta-form" @submit.prevent="submitCtaForm">
+                <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
+                <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
+                <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                </button>
+                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
     </section>
 
-    <!-- Pricing Section -->
+    <!-- Pricing/Admissions Section -->
     <section class="pricing-section" id="enroll">
-        <div class="container">
+        <div class="container" id="pricing">
             <div class="section-header">
                 <h2>Admissions</h2>
             </div>
 
             <div class="admissions-info">
                 <div class="admission-card" id="price-card">
-                    <div class="admission-icon">💰</div>
+                    <div class="admission-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
                     <h3>COST OF THE PROGRAM</h3>
                     <div class="price-display" id="original-price">
                         <span class="currency">$</span>
@@ -531,11 +563,18 @@
                             <span class="amount scholarship-amount">591</span>
                             <span class="period">(USD)</span>
                         </div>
-                        <span class="scholarship-badge">🎉 SCHOLARSHIP APPLIED</span>
+                        <span class="scholarship-badge">SCHOLARSHIP APPLIED</span>
                     </div>
                 </div>
                 <div class="admission-card" id="deadline-card">
-                    <div class="admission-icon">📅</div>
+                    <div class="admission-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
                     <h3 id="deadline-title">APPLICATION DEADLINE</h3>
                     <p class="deadline-text" id="deadline-text">The night before classes start</p>
                     <p class="deadline-sub" id="deadline-sub">for each cohort</p>
@@ -549,8 +588,16 @@
             </div>
 
             <div class="scholarship-box">
-                <input type="text" placeholder="Scholarship code" class="form-input scholarship-input" id="scholarship-code">
-                <button class="btn btn-secondary" id="apply-scholarship" onclick="applyScholarship()">Use Scholarship</button>
+                <input type="text" 
+                       placeholder="Scholarship code" 
+                       class="form-input scholarship-input" 
+                       id="scholarship-code"
+                       v-model="scholarshipCode"
+                       :class="{ 'input-error': scholarshipError }"
+                       @input="scholarshipError = false">
+                <button class="btn btn-secondary" 
+                        id="apply-scholarship" 
+                        @click="applyScholarship">Use Scholarship</button>
             </div>
 
             <p class="admissions-note">This program is highly selective and admission will be granted to a balanced cohort. Admissions are decided on a rolling basis.</p>
@@ -567,11 +614,18 @@
 
             <div class="cohorts-grid">
                 <div class="cohort-card featured-cohort">
-                    <div class="cohort-badge">🔥 Next Cohort</div>
+                    <div class="cohort-badge">NEXT COHORT</div>
                     <h3>February Cohort</h3>
                     <p class="cohort-type">Daily Online Program</p>
                     <div class="cohort-dates">
-                        <span class="date-icon">📅</span>
+                        <span class="date-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </span>
                         <div>
                             <p class="date-range">From Feb 3rd to Feb 14th, 2026</p>
                             <p class="date-time">Mon-Fri 6:00 PM - 8:00 PM (EST)</p>
@@ -594,10 +648,13 @@
                             <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
                         </div>
                     </div>
-                    <form class="cohort-form">
-                        <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
-                        <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
-                        <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+                    <form class="cohort-form" @submit.prevent="submitCohortForm('february-daily')">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" @input="nameError = false">
+                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" @input="emailError = false">
+                        <button type="submit" class="btn btn-primary pulse-glow">
+                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
+                        </button>
+                        <p v-if="formError" class="error-message">{{ formErrorMessage }}</p>
                     </form>
                 </div>
 
@@ -605,7 +662,14 @@
                     <h3>Spring Cohort</h3>
                     <p class="cohort-type">Weekly Online Program</p>
                     <div class="cohort-dates">
-                        <span class="date-icon">📅</span>
+                        <span class="date-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </span>
                         <div>
                             <p class="date-range">From Mar 7th to May 9th, 2026</p>
                             <p class="date-time">Saturdays 2:00 PM - 4:00 PM (EST)</p>
@@ -628,10 +692,13 @@
                             <span>Class 6</span><span>Class 7</span><span>Class 8</span><span>Class 9</span><span>Class 10</span>
                         </div>
                     </div>
-                    <form class="cohort-form">
-                        <input type="text" placeholder="Your Full Name" class="form-input" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes">
-                        <input type="email" placeholder="Your Email Address" class="form-input" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
-                        <button type="submit" class="btn btn-primary pulse-glow">Apply Now</button>
+                    <form class="cohort-form" @submit.prevent="submitCohortForm('spring-weekly')">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" @input="nameError = false">
+                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" @input="emailError = false">
+                        <button type="submit" class="btn btn-primary pulse-glow">
+                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
+                        </button>
+                        <p v-if="formError" class="error-message">{{ formErrorMessage }}</p>
                     </form>
                 </div>
             </div>
@@ -639,10 +706,15 @@
     </section>
 
     <!-- Guarantee -->
-    <section class="guarantee-section">
+    <!-- Guarantee Section -->
+    <section class="guarantee-section" id="guarantee">
         <div class="container">
             <div class="guarantee-box">
-                <div class="guarantee-icon">🛡️</div>
+                <div class="guarantee-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
                 <div class="guarantee-content">
                     <h3>100% Money-Back Guarantee</h3>
                     <p>Try the program for 7 days. If you're not completely satisfied, email us for a full refund. No questions asked.</p>
@@ -677,6 +749,7 @@
                     </summary>
                     <div class="faq-answer">
                         <p>The daily cohort runs 2 hours per day for 10 days (6-8 PM EST). The weekly cohort runs 2 hours on Saturdays for 10 weeks. We recommend an additional 1-2 hours of practice daily to maximize your learning.</p>
+                        <p>However, practice is <strong>optional</strong> – we have plenty of time in class for you to learn deeply. The in-class time is designed to be comprehensive and hands-on.</p>
                     </div>
                 </details>
                 
@@ -716,7 +789,7 @@
                         <span class="faq-icon"></span>
                     </summary>
                     <div class="faq-answer">
-                        <p>Traditional bootcamps spend 3-6 months teaching syntax memorization and debugging. We teach you to direct AI to write code for you — the same way senior engineers work today. This means you build production-quality applications in days, not months, with instructors from MIT, Stanford, Google, and Apple.</p>
+                        <p>Traditional bootcamps spend 3-6 months teaching syntax memorization and debugging. We teach you to direct AI to write code for you, the same way senior engineers work today. This means you build production-quality applications in days, not months, with instructors from MIT, Stanford, Google, and Apple.</p>
                     </div>
                 </details>
             </div>
@@ -731,36 +804,56 @@
             
             <div class="global-stats-grid">
                 <div class="global-stat" data-aos="fade-up">
-                    <div class="stat-icon">🌎</div>
+                    <div class="stat-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
                     <div class="stat-number" data-count="42">42+</div>
                     <div class="stat-label">Countries Represented</div>
                 </div>
                 <div class="global-stat" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-icon">🎓</div>
+                    <div class="stat-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                    </div>
                     <div class="stat-number" data-count="1200">1,200+</div>
                     <div class="stat-label">Alumni Network</div>
                 </div>
                 <div class="global-stat" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stat-icon">🏢</div>
+                    <div class="stat-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
                     <div class="stat-number" data-count="150">150+</div>
                     <div class="stat-label">Partner Companies</div>
                 </div>
                 <div class="global-stat" data-aos="fade-up" data-aos-delay="300">
-                    <div class="stat-icon">⭐</div>
+                    <div class="stat-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
                     <div class="stat-number">4.9/5</div>
                     <div class="stat-label">Student Rating</div>
                 </div>
             </div>
             
             <div class="global-locations" data-aos="fade-up" data-aos-delay="400">
-                <span class="location-tag">🇺🇸 New York</span>
-                <span class="location-tag">🇬🇧 London</span>
-                <span class="location-tag">🇮🇳 Bangalore</span>
-                <span class="location-tag">🇸🇬 Singapore</span>
-                <span class="location-tag">🇩🇪 Berlin</span>
-                <span class="location-tag">🇯🇵 Tokyo</span>
-                <span class="location-tag">🇧🇷 São Paulo</span>
-                <span class="location-tag">🇦🇺 Sydney</span>
+                <span class="location-tag">New York</span>
+                <span class="location-tag">London</span>
+                <span class="location-tag">Bangalore</span>
+                <span class="location-tag">Singapore</span>
+                <span class="location-tag">Berlin</span>
+                <span class="location-tag">Tokyo</span>
+                <span class="location-tag">São Paulo</span>
+                <span class="location-tag">Sydney</span>
             </div>
         </div>
     </section>
@@ -827,11 +920,8 @@
                 <!-- Brand Section -->
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="images/adava-icon.svg" alt="Adava" class="footer-logo-icon">
-                        <div class="footer-logo-text">
-                            <span class="footer-logo-title">ADAVA</span>
-                            <span class="footer-logo-subtitle">UNIVERSITY</span>
-                        </div>
+                        <img src="images/adava-a-icon.png" alt="Adava" class="footer-logo-icon">
+                        <img src="images/adava-text.png" alt="ADAVA UNIVERSITY" class="footer-logo-text-img">
                     </div>
                     <p class="footer-tagline">
                         Become a programmer in just 10 days, without writing a single line of code. 
@@ -868,7 +958,7 @@
                     <a href="#method">Our Method</a>
                     <a href="#instructors">Instructors</a>
                     <a href="#curriculum">Curriculum</a>
-                    <a href="#enroll">Apply Now</a>
+                    <a href="#cohorts">Apply Now</a>
                     <a href="#faq">FAQ</a>
                 </div>
 
@@ -884,7 +974,7 @@
                 <!-- Support -->
                 <div class="footer-links">
                     <h4>Support</h4>
-                    <a href="mailto:support@adavauniversity.org">Contact Us</a>
+                    <a href="mailto:adavauniversity@gmail.com">Contact Us</a>
                     <a href="#faq">Help Center</a>
                     <a href="#guarantee">Money-Back Guarantee</a>
                 </div>
@@ -894,12 +984,17 @@
             <div class="footer-bottom">
                 <p class="copyright">© Copyright Adava University 2025-2026</p>
                 <div class="footer-legal">
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#terms">Terms of Service</a>
+                    <a href="legal.html">Privacy Policy</a>
+                    <a href="legal.html">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    </div> <!-- End #app -->
+
+    <!-- Vue App - Must load BEFORE other scripts that might use Vue -->
+    <script src="js/app.js"></script>
 
     <script>
         // Network background animation
@@ -1023,6 +1118,8 @@
             rotatingWord.style.opacity = 0;
             setTimeout(() => {
                 rotatingWord.textContent = words[wordIndex];
+                // Add word-specific class for color
+                rotatingWord.className = 'rotating-word word-' + words[wordIndex];
                 rotatingWord.style.opacity = 1;
             }, 300);
         }, 2000);
@@ -1037,6 +1134,11 @@
                 }
             });
         });
+
+        // Forms are handled by Vue (see js/app.js)
+        // - CTA forms: submitCtaForm() - submits data + scrolls to cohorts
+        // - Cohort forms: submitCohortForm(cohort) - submits with cohort selection
+
 
         // ============================================
         // FORM SUBMISSION HANDLER
@@ -1098,7 +1200,7 @@
                 }
                 
                 // Success! Update UI
-                submitBtn.textContent = '✓ Application Sent!';
+                submitBtn.textContent = 'Application Sent';
                 submitBtn.classList.remove('pulse-glow');
                 submitBtn.classList.add('btn-success');
                 
@@ -1111,7 +1213,7 @@
                 // Show success message
                 const successMsg = document.createElement('p');
                 successMsg.className = 'form-success-message';
-                successMsg.textContent = '✓ Thank you! We\'ll contact you within 24 hours.';
+                successMsg.textContent = 'Thank you! We\'ll contact you within 24 hours.';
                 successMsg.style.color = '#10b981';
                 successMsg.style.marginTop = '1rem';
                 successMsg.style.textAlign = 'center';
@@ -1149,35 +1251,10 @@
         }
         
         // ============================================
-        // APPLY NOW BUTTONS - Handle CTA forms vs cohort forms differently
+        // ALL FORMS ARE HANDLED BY VUE.JS
+        // - CTA forms: js/app.js submitCtaForm() - NO SCROLL
+        // - Cohort forms: js/app.js submitCohortForm() - SUBMIT ONLY
         // ============================================
-        document.querySelectorAll('.cta-form').forEach(form => {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                // CTA forms: Scroll to cohorts section first
-                const cohortsSection = document.getElementById('cohorts');
-                if (cohortsSection) {
-                    cohortsSection.scrollIntoView({ behavior: 'smooth' });
-                    
-                    // After scrolling, focus on the first cohort form input
-                    setTimeout(() => {
-                        const firstCohortInput = cohortsSection.querySelector('.cohort-form input[type="text"]');
-                        if (firstCohortInput) {
-                            firstCohortInput.focus();
-                        }
-                    }, 500);
-                }
-            });
-        });
-        
-        // Cohort forms: Actually submit the application
-        document.querySelectorAll('.cohort-form').forEach(form => {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                await submitForm(form);
-            });
-        });
 
         // ============================================
         // COUNTER ANIMATION
@@ -1196,12 +1273,15 @@
                 
                 // Format based on the original text
                 const text = element.dataset.suffix || '';
-                if (target >= 1000) {
-                    element.textContent = Math.floor(current).toLocaleString() + text;
-                } else if (Number.isInteger(target)) {
-                    element.textContent = Math.floor(current) + text;
+                const formattedNumber = target >= 1000 ? Math.floor(current).toLocaleString() : Math.floor(current);
+                
+                // Check if suffix starts with $ (currency) - put it before the number
+                if (text.startsWith('$')) {
+                    const currencySymbol = '$';
+                    const restOfSuffix = text.substring(1); // Remove $ from suffix
+                    element.textContent = currencySymbol + formattedNumber + restOfSuffix;
                 } else {
-                    element.textContent = current.toFixed(0) + text;
+                    element.textContent = formattedNumber + text;
                 }
             }, 16);
         }
@@ -1426,18 +1506,6 @@
         // ============================================
         gsap.registerPlugin(ScrollTrigger);
 
-        // Parallax effect on hero section
-        gsap.to('.hero::before', {
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            },
-            opacity: 0,
-            y: 100
-        });
-
         // Stats bar counter reveal with GSAP
         gsap.from('.stats-bar', {
             scrollTrigger: {
@@ -1605,7 +1673,7 @@
         class TextScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '!<>-_\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                this.chars = '!<>-_\\/[]{}=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
                 this.update = this.update.bind(this);
             }
             
@@ -1770,9 +1838,36 @@
         // Scholarship Application Function
         function applyScholarship() {
             const codeInput = document.getElementById('scholarship-code');
-            const code = codeInput.value.trim().toUpperCase();
+            const code = codeInput.value.trim();
             
-            // Accept any code or empty (for demo purposes)
+            // Validate: code must end with "scholarship" (case-insensitive)
+            if (!code.toLowerCase().endsWith('scholarship')) {
+                // Invalid code - show error feedback
+                codeInput.style.borderColor = '#ef4444'; // Red error color
+                codeInput.style.animation = 'shake 0.3s ease';
+                
+                // Show error message
+                let errorMsg = document.getElementById('scholarship-error');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.id = 'scholarship-error';
+                    errorMsg.style.color = '#ef4444';
+                    errorMsg.style.fontSize = '0.85rem';
+                    errorMsg.style.marginTop = '8px';
+                    codeInput.parentElement.appendChild(errorMsg);
+                }
+                errorMsg.textContent = 'Invalid code. Scholarship codes must end with "SCHOLARSHIP".';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    codeInput.style.borderColor = '';
+                    if (errorMsg) errorMsg.textContent = '';
+                }, 3000);
+                
+                return; // Don't apply invalid code
+            }
+            
+            // Valid code - proceed with application
             const originalPrice = document.getElementById('original-price');
             const scholarshipPrice = document.getElementById('scholarship-price');
             const deadlineTitle = document.getElementById('deadline-title');
@@ -1797,13 +1892,17 @@
             // Change button text
             const btn = document.getElementById('apply-scholarship');
             if (btn) {
-                btn.textContent = '✓ Applied';
+                btn.textContent = 'Applied';
                 btn.style.background = 'var(--cta-teal)';
                 btn.disabled = true;
             }
             
             // Visual feedback
             codeInput.style.borderColor = 'var(--cta-teal)';
+            
+            // Clear any error messages
+            const errorMsg = document.getElementById('scholarship-error');
+            if (errorMsg) errorMsg.textContent = '';
         }
         
         // Scholarship auto-apply removed - users must manually enter codes
@@ -1853,20 +1952,20 @@
         if (mobileMenuToggle && navLinks) {
             mobileMenuToggle.addEventListener('click', () => {
                 mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
+                navLinks.classList.toggle('nav-open');
                 mobileMenuToggle.setAttribute('aria-expanded', 
-                    mobileMenuToggle.classList.contains('active'));
+                    navLinks.classList.contains('nav-open'));
                 
                 // Prevent body scroll when menu is open
                 document.body.style.overflow = 
-                    navLinks.classList.contains('active') ? 'hidden' : '';
+                    navLinks.classList.contains('nav-open') ? 'hidden' : '';
             });
             
             // Close menu when clicking a link
             navLinks.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
+                    navLinks.classList.remove('nav-open');
                     document.body.style.overflow = '';
                 });
             });

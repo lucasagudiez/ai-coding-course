@@ -1,65 +1,76 @@
 # Adava University Landing Page - Cursor Rules
 
-## ⛔⛔⛔ ALL IMPLEMENTATION WORK MUST BE IN A WORKTREE ⛔⛔⛔
+## ✍️ CONTENT RULES - ALWAYS FOLLOW
 
-**NEVER make code changes directly in `adavauniversity.org/`. ALWAYS create a worktree first.**
+1. **Email addresses:** ALWAYS use `adavauniversity@gmail.com` for ALL contact emails
+   - ❌ NEVER use: support@, legal@, privacy@, etc.
+   - ✅ ONLY use: adavauniversity@gmail.com
 
-### MANDATORY WORKFLOW FOR ANY TASK:
+2. **Em dashes (—):** NEVER use em dashes in copy
+   - ❌ NEVER use: —
+   - ✅ ALWAYS use: regular dash (-) or rewrite without dash
+
+3. **Typography:** Keep copy clean and readable
+   - Use hyphens (-) for compound words
+   - Use colons (:) for lists and explanations
+   - Avoid fancy punctuation
+
+## ⛔ GIT WORKFLOW - WORK ON BRANCHES DIRECTLY ⛔
+
+**Work directly on feature branches in the main project directory.**
+
+### STANDARD WORKFLOW FOR TASKS:
 ```bash
-# 1. Create a worktree for your task
+# 1. Create a feature branch
 cd "/Users/lucas/cursor projects/adavauniversity.org"
-git worktree add "../adavauniversity-<task-name>" -b "feature/<task-name>"
+git checkout -b feature/<task-name>
 
-# 2. Work in the worktree
-cd "../adavauniversity-<task-name>"
-# ... make all your changes here ...
+# 2. Make your changes
+# ... edit files, make commits ...
 
-# 3. When done, merge back to main
-cd "/Users/lucas/cursor projects/adavauniversity.org"
-git merge "feature/<task-name>" -m "Merge: <description>"
+# 3. Test your changes
+npm run test:full
+
+# 4. Commit your work
+git add .
+git commit -m "feat: description"
+
+# 5. Merge back to main
+git checkout main
+git merge feature/<task-name>
 git push origin main
 
-# 4. Update deploy and push
-cd "../adavauniversity.org-deploy"
-git merge main -m "Deploy: <description>"
+# 6. Update deploy branch
+git checkout deploy
+git merge main
 git push origin deploy
 
-# 5. Cleanup worktree
-cd "/Users/lucas/cursor projects/adavauniversity.org"
-git worktree remove "../adavauniversity-<task-name>"
-git branch -d "feature/<task-name>"
+# 7. Cleanup branch
+git checkout main
+git branch -d feature/<task-name>
 ```
 
-### THIS IS FORBIDDEN:
-- ❌ Making ANY code changes in `adavauniversity.org/` directory
-- ❌ Committing directly to `main` branch
-- ❌ Working without a worktree
-- ❌ Leaving worktrees unmerged for too long
+### THIS IS PREFERRED:
+- ✅ Work on branches in main project directory
+- ✅ Keep commits small and focused
+- ✅ Test before merging to main
+- ✅ Sync both main and deploy branches
 
-### EXISTING WORKTREES:
+### ONLY IF NECESSARY (Rare):
+If you absolutely must work on multiple branches simultaneously:
 ```bash
-git worktree list  # See all worktrees
+# Create worktree INSIDE project
+mkdir -p .worktrees
+git worktree add .worktrees/<task-name> -b feature/<task-name>
+cd .worktrees/<task-name>
+# ... work here ...
+
+# When done, remove worktree
+cd ../..
+git worktree remove .worktrees/<task-name>
 ```
 
-| Worktree | Branch | Purpose |
-|----------|--------|---------|
-| `adavauniversity.org/` | main | Main development |
-| `adavauniversity.org-deploy/` | deploy | Production deploys |
-
-### WHY:
-- Multiple AI agents may work on this repo simultaneously
-- Worktrees prevent merge conflicts and lost work
-- Keeps `main` and `deploy` branches clean and stable
-- Enables parallel development without conflicts
-
-**VIOLATION = MERGE CONFLICTS, LOST WORK, BROKEN DEPLOYMENTS. NO EXCEPTIONS.**
-
-### WHY:
-- Prevents merge conflicts between agents
-- Each agent has isolated workspace
-- Main directory stays clean for other agents
-
-**VIOLATION = CONFLICTS AND BROKEN WORK FOR OTHER AGENTS**
+**Never create worktrees outside the project directory.**
 
 ---
 
@@ -215,9 +226,40 @@ npm run test:ux
 
 ---
 
+## 🌐 ALWAYS SHARE THE URL!
+
+**When working on the website, ALWAYS start a local server and share the URL with the user immediately:**
+
+```bash
+# Start server
+cd /Users/lucas/cursor\ projects/adavauniversity.org
+python3 -m http.server 8888 &
+
+# Share URL
+echo "🌐 http://localhost:8888"
+```
+
+**Why:** The user needs to visually check the website. Never assume it works - always provide the URL!
+
+---
+
 ## 🔥 CRITICAL: LESSONS LEARNED - READ THIS FIRST! 🔥
 
 **⚠️ See `LESSONS-LEARNED-DEBUGGING.md` for detailed insights from real debugging sessions.**
+
+## 🌐 BROWSER TAB ASSIGNMENT (MULTI-AGENT COORDINATION)
+
+**THIS PROJECT'S TAB:** https://adavauniversity.org
+
+When working on this project:
+1. **ALWAYS** check which tab you're in: `browser_tabs({ action: "list" })`
+2. **ALWAYS** use the Adava University tab (URL: adavauniversity.org)
+3. **IF** tab changed: Select your tab using `browser_tabs({ action: "select", index: X })`
+4. **NEVER** close or navigate away from other agents' tabs
+
+See `.cursor/TAB-ASSIGNMENTS.md` for full multi-agent coordination protocol.
+
+---
 
 ### Quick Reference - Common Issues:
 
@@ -259,7 +301,34 @@ value ?? 'default'         // Nullish coalescing - WORKS
 - ❌ Buttons that submit without showing options
 - ✅ Guide users: Click → Scroll → Focus → Fill → Submit
 
-#### 5. **Debugging Failed Deployments**
+#### 5. **Icons & Visual Elements - NO EMOJIS**
+```html
+<!-- ❌ NEVER use emojis in production UI -->
+<div class="icon">🔥</div>
+<span class="location">🇺🇸 New York</span>
+
+<!-- ✅ ALWAYS use SVG icons or formal symbols -->
+<div class="icon">
+    <svg viewBox="0 0 24 24" stroke="currentColor">...</svg>
+</div>
+<span class="location">New York</span>
+```
+
+**Why:**
+- Emojis look unprofessional and inconsistent
+- Different browsers/devices render emojis differently
+- SVG icons are scalable, customizable, and formal
+- Better for branding and visual consistency
+
+**Icon Guidelines:**
+- Use inline SVG for best performance
+- Icons should use `stroke="currentColor"` for theming
+- Apply `filter: drop-shadow()` for subtle glow effects
+- Keep icon code clean and semantic
+
+**Remember:** Professional sites use formal icons, not emojis!
+
+#### 6. **Debugging Failed Deployments**
 ```bash
 # Step-by-step debugging checklist:
 ssh lucas@adavauniversity.org "cd /home/lucas/www/adavauniversity.org && git log --oneline -1"

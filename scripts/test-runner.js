@@ -38,7 +38,7 @@ fs.readFileSync = function(filePath, options) {
 // =============================================================================
 // PRE-COMPUTED FILE CONTENTS - Parse once at startup
 // =============================================================================
-const ROOT = path.join(__dirname, '..');
+const ROOT = path.join(__dirname, '..', 'public');
 const resolveRoot = (file) => path.join(ROOT, file);
 
 let _htmlContent = null;
@@ -141,16 +141,19 @@ test('test-runner.js exists', () => {
     assert(fs.existsSync(path.join(__dirname, 'test-runner.js')), 'test-runner.js is missing');
 });
 
+const DOCS_ROOT = path.join(__dirname, '..', 'docs');
+const resolveDocs = (file) => path.join(DOCS_ROOT, file);
+
 test('adava-website-reference.md exists', () => {
-    assert(fs.existsSync(resolveRoot('adava-website-reference.md')), 'adava-website-reference.md is missing');
+    assert(fs.existsSync(resolveDocs('reference/adava-website-reference.md')), 'adava-website-reference.md is missing');
 });
 
 test('favicon.svg exists', () => {
-    assert(fs.existsSync(resolveRoot('favicon.svg')), 'favicon.svg is missing');
+    assert(fs.existsSync(resolveRoot('images/favicon.svg')), 'favicon.svg is missing');
 });
 
 test('favicon.png exists', () => {
-    assert(fs.existsSync(resolveRoot('favicon.png')), 'favicon.png is missing');
+    assert(fs.existsSync(resolveRoot('images/favicon.png')), 'favicon.png is missing');
 });
 
 test('adava-icon.svg logo exists', () => {
