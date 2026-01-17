@@ -2315,15 +2315,12 @@ summary.faq-question::-webkit-details-marker {
 .world-map-image {
     width: 100%;
     height: auto;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    opacity: 0.9;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
 .world-map-image:hover {
-    opacity: 1;
-    transform: scale(1.02);
+    opacity: 0.9;
 }
 
 /* Global Locations */
