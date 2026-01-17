@@ -134,12 +134,12 @@
     --magenta: #c026d3;
     --cyan: #06b6d4;
     
-    /* School colors */
-    --mit-blue: #5ba3e0;
-    --stanford-green: #34d399;
-    --oxford-green: #34d399;
-    --cambridge-pink: #f472b6;
-    --harvard-purple: #c084fc;
+    /* School colors - Official brand colors */
+    --mit-blue: #A31F34;       /* MIT Cardinal Red */
+    --stanford-green: #8C1515;  /* Stanford Cardinal Red */
+    --oxford-green: #002147;    /* Oxford Blue */
+    --cambridge-pink: #A3C1AD;  /* Cambridge Blue */
+    --harvard-purple: #A51C30;  /* Harvard Crimson */
     
     /* CTA - Teal/Green (original Adava palette) */
     --cta-teal: #25877D;
@@ -386,15 +386,18 @@ h3 { font-size: 1.25rem; }
 }
 
 .nav-cta {
-    background: var(--cta-teal) !important;
-    color: #000 !important;
+    background: rgba(37, 135, 125, 0.2) !important;  /* Semi-transparent teal */
+    color: var(--cta-teal) !important;  /* Green text */
     padding: 10px 20px !important;
     border-radius: 6px;
+    border: 2px solid var(--cta-teal) !important;  /* Border in same green */
     font-weight: 600 !important;
 }
 
 .nav-cta:hover {
-    background: var(--cta-teal-hover) !important;
+    background: rgba(37, 135, 125, 0.3) !important;  /* Slightly more opaque on hover */
+    border-color: var(--cta-teal-hover) !important;
+    color: var(--cta-teal-hover) !important;
 }
 
 /* Mobile Navigation Toggle */
@@ -777,11 +780,11 @@ h3 { font-size: 1.25rem; }
     font-weight: 700;
 }
 
-.company.google { color: #5ba3e0; }
-.company.apple { color: #c0c5ca; }
-.company.meta { color: #5ba3e0; }
-.company.amazon { color: #34d399; }
-.company.microsoft { color: #5ba3e0; }
+.company.google { color: #4285F4; }    /* Google Blue */
+.company.apple { color: #555555; }     /* Apple Gray */
+.company.meta { color: #0668E1; }      /* Meta Blue */
+.company.amazon { color: #FF9900; }    /* Amazon Orange */
+.company.microsoft { color: #00A4EF; } /* Microsoft Blue */
 
 /* Scroll Indicator */
 .scroll-indicator {
