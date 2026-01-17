@@ -215,6 +215,60 @@ npm run test:ux
 
 ---
 
+## 🔥 CRITICAL: LESSONS LEARNED - READ THIS FIRST! 🔥
+
+**⚠️ See `LESSONS-LEARNED-DEBUGGING.md` for detailed insights from real debugging sessions.**
+
+### Quick Reference - Common Issues:
+
+#### 1. **Node.js Compatibility - PRODUCTION RUNS NODE 8.10.0**
+```javascript
+// ❌ BREAKS ON NODE 8 - DO NOT USE:
+options?.encoding          // Optional chaining
+value ?? 'default'         // Nullish coalescing
+
+// ✅ USE NODE 8 COMPATIBLE SYNTAX:
+options && options.encoding
+value !== null && value !== undefined ? value : 'default'
+```
+
+**Server Node version:** 8.10.0 (2018)  
+**Check before deploying:** `ssh lucas@adavauniversity.org "node --version"`
+
+#### 2. **Z-Index Layering for Backgrounds**
+```css
+/* ✅ CORRECT */
+#network-bg, canvas, .particle-bg {
+    z-index: 0;  /* Background = 0 or negative */
+}
+.hero-container, section, main {
+    z-index: 10;  /* Content = 10+ */
+}
+```
+
+#### 3. **Auto-Deploy System**
+- Server auto-pulls from `origin/deploy` every **10 seconds**
+- Tests run automatically on each pull
+- **Auto-reverts if tests fail** (see logs)
+- Check logs: `ssh lucas@adavauniversity.org "tail -50 /home/lucas/logs/adavauniversity-deploy.log"`
+
+#### 4. **UX Anti-Patterns to AVOID**
+- ❌ Auto-filling form fields (breaks trust)
+- ❌ Buttons that submit without showing options
+- ✅ Guide users: Click → Scroll → Focus → Fill → Submit
+
+#### 5. **Debugging Failed Deployments**
+```bash
+# Step-by-step debugging checklist:
+ssh lucas@adavauniversity.org "cd /home/lucas/www/adavauniversity.org && git log --oneline -1"
+ssh lucas@adavauniversity.org "tail -50 /home/lucas/logs/adavauniversity-deploy.log"
+ssh lucas@adavauniversity.org "cat /tmp/test-output.txt"
+```
+
+**ALWAYS check deploy logs if site seems stuck on old version!**
+
+---
+
 ## ⛔⛔⛔ NEVER STOP TO ASK - JUST DO THE WORK ⛔⛔⛔
 
 **NEVER interrupt your task to ask the user if you should continue.**
