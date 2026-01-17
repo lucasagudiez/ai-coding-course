@@ -25,3 +25,19 @@ Thumbs.db
 
 # Local credentials and sensitive files
 local_files/
+
+# Test artifacts (large screenshots)
+test-results/
+playwright-report/
+*.png
+*.jpg
+*.jpeg
+!public/images/**/*.png
+!public/images/**/*.jpg
+!public/images/**/*.jpeg
+!archive/**/*.png
+!archive/**/*.jpg
+
+# Archive directory (old assets, keep local only)
+archive/
+
