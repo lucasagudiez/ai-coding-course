@@ -1,0 +1,26 @@
+[Unit]
+Description=Adava University Form Submission Backend
+After=network.target
+
+[Service]
+Type=simple
+User=lucas
+WorkingDirectory=/home/lucas/www/adavauniversity.org/server
+ExecStart=/home/lucas/.nvm/versions/node/v16.20.2/bin/node app.js
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/lucas/logs/adava-form-backend.log
+StandardError=append:/home/lucas/logs/adava-form-backend-error.log
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/lucas/www/adavauniversity.org/data
+
+# Environment
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

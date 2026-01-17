@@ -1039,25 +1039,143 @@
         });
 
         // ============================================
-        // APPLY NOW BUTTONS - Scroll to cohorts section and focus input
+        // FORM SUBMISSION HANDLER
         // ============================================
-        document.querySelectorAll('.cta-form, .cohort-form').forEach(form => {
+        async function submitForm(form) {
+            const nameInput = form.querySelector('input[type="text"]');
+            const emailInput = form.querySelector('input[type="email"]');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Validate inputs
+            if (!nameInput.value.trim() || !emailInput.value.trim()) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Check if form is in cohorts section to determine cohort
+            const cohortCard = form.closest('.cohort-card');
+            let cohort = 'General Application';
+            if (cohortCard) {
+                const cohortTitle = cohortCard.querySelector('h3');
+                if (cohortTitle) {
+                    cohort = cohortTitle.textContent.trim();
+                }
+            }
+            
+            // Prepare data
+            const formData = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                cohort: cohort,
+                timestamp: new Date().toISOString(),
+                scholarshipCode: document.getElementById('scholarship-code')?.value || ''
+            };
+            
+            // Update UI to "Sending..."
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            nameInput.disabled = true;
+            emailInput.disabled = true;
+            
+            try {
+                // Determine API endpoint based on environment
+                const apiEndpoint = window.location.hostname === 'localhost' 
+                    ? 'http://127.0.0.1:3001/api/submit'
+                    : '/api/submit';
+                
+                // Send to backend
+                const response = await fetch(apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                // Success! Update UI
+                submitBtn.textContent = '✓ Application Sent!';
+                submitBtn.classList.remove('pulse-glow');
+                submitBtn.classList.add('btn-success');
+                
+                // Gray out inputs
+                nameInput.style.opacity = '0.5';
+                emailInput.style.opacity = '0.5';
+                nameInput.style.backgroundColor = '#1a1a2e';
+                emailInput.style.backgroundColor = '#1a1a2e';
+                
+                // Show success message
+                const successMsg = document.createElement('p');
+                successMsg.className = 'form-success-message';
+                successMsg.textContent = '✓ Thank you! We\'ll contact you within 24 hours.';
+                successMsg.style.color = '#10b981';
+                successMsg.style.marginTop = '1rem';
+                successMsg.style.textAlign = 'center';
+                form.appendChild(successMsg);
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                
+                // Restore button
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                nameInput.disabled = false;
+                emailInput.disabled = false;
+                
+                // Show error with email fallback
+                const errorMsg = document.createElement('p');
+                errorMsg.className = 'form-error-message';
+                errorMsg.innerHTML = `
+                    <strong>⚠️ Submission failed</strong><br>
+                    Please email us directly at <a href="mailto:adavauniversity@gmail.com" style="color: #f59e0b;">adavauniversity@gmail.com</a>
+                `;
+                errorMsg.style.color = '#ef4444';
+                errorMsg.style.marginTop = '1rem';
+                errorMsg.style.textAlign = 'center';
+                errorMsg.style.padding = '1rem';
+                errorMsg.style.background = 'rgba(239, 68, 68, 0.1)';
+                errorMsg.style.borderRadius = '8px';
+                form.appendChild(errorMsg);
+                
+                // Remove error message after 10 seconds
+                setTimeout(() => {
+                    errorMsg.remove();
+                }, 10000);
+            }
+        }
+        
+        // ============================================
+        // APPLY NOW BUTTONS - Handle CTA forms vs cohort forms differently
+        // ============================================
+        document.querySelectorAll('.cta-form').forEach(form => {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                // Scroll to the cohorts section (where users pick dates)
+                // CTA forms: Scroll to cohorts section first
                 const cohortsSection = document.getElementById('cohorts');
                 if (cohortsSection) {
                     cohortsSection.scrollIntoView({ behavior: 'smooth' });
                     
-                    // After scrolling, focus on the first cohort form input (name field)
+                    // After scrolling, focus on the first cohort form input
                     setTimeout(() => {
                         const firstCohortInput = cohortsSection.querySelector('.cohort-form input[type="text"]');
                         if (firstCohortInput) {
                             firstCohortInput.focus();
                         }
-                    }, 500); // Wait for smooth scroll to complete
+                    }, 500);
                 }
+            });
+        });
+        
+        // Cohort forms: Actually submit the application
+        document.querySelectorAll('.cohort-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await submitForm(form);
             });
         });
 

@@ -1,0 +1,3 @@
+timestamp,name,email,cohort,scholarshipCode,ipAddress
+2026-01-17T00:11:42.447Z,Test User,test@example.com,February Cohort,TEST123,127.0.0.1
+2026-01-17T00:13:46.570Z,Test Success User,success@example.com,Spring Cohort,,127.0.0.1
