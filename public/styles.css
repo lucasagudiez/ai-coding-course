@@ -3850,7 +3850,7 @@ canvas.confetti-canvas {
     gap: 30px;
     max-width: 1400px;
     margin: 0 auto;
-    flex-wrap: nowrap; /* Keep all three posters side by side */
+    flex-wrap: nowrap; /* Keep all three posters side by side on desktop */
 }
 
 .project-link {
@@ -3913,6 +3913,13 @@ canvas.confetti-canvas {
     color: var(--cta-teal);
 }
 
+/* Tablet/Medium Screen Responsive */
+@media (max-width: 1023px) {
+    .projects-grid {
+        flex-wrap: wrap; /* Allow wrapping on tablet and below */
+    }
+}
+
 /* Mobile Responsive */
 @media (max-width: 767px) {
     .certificates-section,
@@ -3933,6 +3940,7 @@ canvas.confetti-canvas {
     .projects-grid {
         flex-direction: column;
         align-items: center;
+        flex-wrap: wrap; /* Allow wrapping on mobile */
     }
 
     .project-image {
