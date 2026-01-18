@@ -485,19 +485,14 @@ h3 { font-size: 1.25rem; }
     gap: clamp(0.5rem, 2vw, 2rem);
     align-items: center;
     max-width: 100%; /* Prevent overflow */
+    overflow: hidden; /* Hide items that wrap to second line */
+    height: 2.5rem; /* Fixed height for single line */
 }
 
 /* Show on larger screens (768px+) */
 @media (min-width: 768px) {
     .nav-links {
         display: flex;
-    }
-}
-
-/* Hide Apply Now button in nav on smaller screens to keep nav single line */
-@media (max-width: 900px) {
-    .nav-cta {
-        display: none !important;
     }
 }
 
