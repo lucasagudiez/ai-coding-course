@@ -3519,7 +3519,7 @@ canvas.confetti-canvas {
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    background: white;
+    background: transparent; /* No white background */
 }
 
 .project-link:hover {
@@ -3533,6 +3533,7 @@ canvas.confetti-canvas {
     width: 100%; /* Fill container */
     height: auto;
     transition: all 0.3s ease;
+    background: transparent; /* No white background */
 }
 
 /* State-Rewards is taller, so needs smaller width for same area */
@@ -3549,10 +3550,22 @@ canvas.confetti-canvas {
 
 /* Mobile Responsive */
 
-/* GLightbox Custom Styling - Ensure white backgrounds are preserved */
+/* GLightbox Custom Styling - No white backgrounds or padding */
 .glightbox-clean .gslide-image img {
-    background: white !important;
-    padding: 20px;
-    border-radius: 10px;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0;
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+/* Ensure lightbox container has dark background */
+.glightbox-clean .gslide-media {
+    background: transparent !important;
+}
+
+.glightbox-clean .ginner-container {
+    background: transparent !important;
 }
 
