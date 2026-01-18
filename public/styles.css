@@ -974,6 +974,12 @@ h3 { font-size: 1.25rem; }
     box-sizing: border-box;
 }
 
+.cta-form .btn {
+    flex: 1 1 clamp(120px, 20vw, 160px); /* Make button flexible too */
+    min-width: 120px;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
 .cta-note {
     text-align: center;
     font-size: 0.9rem;
