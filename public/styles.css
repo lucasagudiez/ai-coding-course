@@ -620,6 +620,7 @@ h3 { font-size: 1.25rem; }
     border-radius: 50%;
     opacity: 0.08;
     filter: blur(2px);
+    display: none; /* Hide on all screens - causes 32px overflow */
 }
 
 .shape-1 {
@@ -1388,29 +1389,36 @@ blockquote {
 .stats-bar {
     display: flex;
     justify-content: center;
-    gap: 60px;
-    padding: 40px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: clamp(1.5rem, 5vw, 3.75rem); /* Fluid gap */
+    padding: clamp(1.5rem, 5vw, 2.5rem); /* Fluid padding */
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-subtle);
+    max-width: 100%; /* Prevent overflow */
 }
 
 .stat-item {
     text-align: center;
+    flex: 0 1 auto; /* Don't grow, shrink if needed */
+    min-width: 0; /* Allow shrinking below content size */
+    max-width: 100%; /* Prevent overflow */
 }
 
 .stat-number {
     display: block;
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size */
     font-weight: 800;
     background: linear-gradient(90deg, var(--purple-light), var(--cyan));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 4px;
+    word-break: break-word; /* Prevent overflow */
 }
 
 .stat-label {
-    font-size: 0.9rem;
+    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Responsive font size */
     color: var(--text-muted);
 }
 
@@ -3347,9 +3355,9 @@ canvas.confetti-canvas {
 
 .certificates-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); /* Responsive */
+    gap: clamp(1.5rem, 4vw, 2.5rem); /* Fluid gap */
+    max-width: min(100%, 900px); /* Prevent overflow */
     margin: 0 auto;
 }
 
