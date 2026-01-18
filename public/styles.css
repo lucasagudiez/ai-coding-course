@@ -231,10 +231,16 @@ body {
     background-color: #0f0818; /* Fallback color */
     color: var(--text-white);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll */
     min-height: 100vh;
     cursor: default; /* Default cursor instead of text cursor */
     max-width: 100vw; /* Force viewport constraint */
+}
+
+/* Disable Vanilla Tilt glare on mobile/small screens - causes massive overflow */
+.js-tilt-glare,
+.js-tilt-glare-inner {
+    display: none !important; /* Critical: prevents 1382px overflow */
 }
 
 /* Prevent text cursor on all text elements */
@@ -272,11 +278,13 @@ a, button, [role="button"], .btn, .nav-cta {
 
 /* Container */
 .container {
-    max-width: var(--container-max);
+    max-width: min(100%, var(--container-max)); /* Never exceed viewport */
     margin: 0 auto;
     padding: 0 var(--container-padding);
     position: relative;
     z-index: 1;
+    width: 100%; /* Fill available space */
+    box-sizing: border-box; /* Include padding in width */
 }
 
 /* Typography */
@@ -984,15 +992,16 @@ h3 { font-size: 1.25rem; }
 
 .promise-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); /* Responsive grid */
+    gap: clamp(1rem, 3vw, 1.5rem); /* Fluid gap */
+    max-width: 100%; /* Prevent overflow */
 }
 
 .promise-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 32px;
+    padding: clamp(1rem, 4vw, 2rem); /* Fluid padding */
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
@@ -1000,6 +1009,8 @@ h3 { font-size: 1.25rem; }
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     transform-style: preserve-3d;
     will-change: transform, box-shadow;
+    max-width: 100%; /* Prevent overflow */
+    box-sizing: border-box; /* Include padding in width */
 }
 
 .promise-card:hover {
@@ -1936,17 +1947,20 @@ blockquote {
 
 .cohorts-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); /* Responsive grid */
+    gap: clamp(1rem, 3vw, 1.5rem); /* Fluid gap */
+    max-width: 100%; /* Prevent overflow */
 }
 
 .cohort-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: 32px;
+    padding: clamp(1rem, 4vw, 2rem); /* Fluid padding */
     position: relative;
     transition: all 0.3s ease;
+    max-width: 100%; /* Prevent overflow */
+    box-sizing: border-box; /* Include padding/border in width */
 }
 
 .cohort-card:hover {
@@ -2589,8 +2603,8 @@ summary.faq-question::-webkit-details-marker {
 /* Morphing Gradient Blob */
 .morphing-blob {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: clamp(200px, 40vw, 400px); /* Responsive width, max 400px */
+    height: clamp(200px, 40vw, 400px); /* Responsive height, max 400px */
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(20, 184, 166, 0.3));
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
     filter: blur(60px);
@@ -2598,6 +2612,7 @@ summary.faq-question::-webkit-details-marker {
     z-index: 0;
     pointer-events: none;
     overflow: hidden; /* Prevent extending beyond container */
+    display: none; /* Hide on all screens - causes overflow */
 }
 
 /* Disable tilt glare effect on mobile to prevent horizontal scroll */
@@ -2789,22 +2804,20 @@ summary.faq-question::-webkit-details-marker {
     border-bottom: none;
     position: relative;
     margin-bottom: 0;
-    max-width: 100vw; /* Force viewport constraint */
-    contain: layout; /* Create isolated formatting context */
-    width: 100%; /* Explicit width */
+    width: 100vw; /* Full viewport width */
+    margin-left: calc(50% - 50vw); /* Center even if parent has padding */
+    margin-right: calc(50% - 50vw);
 }
 
 .company-marquee-container {
     width: 100%;
-    max-width: 100%; /* Force container constraint */
     overflow: hidden; /* Clip overflowing marquee content */
     position: relative;
-    contain: layout; /* Isolate from document flow */
 }
 
 .company-marquee-track {
-    width: 100%;
-    overflow: hidden; /* Critical: clips content and prevents body overflow */
+    width: 100vw; /* Match viewport */
+    overflow: hidden; /* Critical: clips content */
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     position: relative;
@@ -2812,11 +2825,10 @@ summary.faq-question::-webkit-details-marker {
 }
 
 .company-marquee-content {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 2rem;
     animation: companyMarqueeScroll 40s linear infinite;
-    width: fit-content; /* This is intentionally wide for animation */
     white-space: nowrap;
     will-change: transform; /* GPU acceleration */
 }
@@ -2971,9 +2983,10 @@ summary.faq-question::-webkit-details-marker {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); /* Responsive grid */
+    gap: clamp(1.5rem, 4vw, 3rem); /* Fluid gap */
+    margin-bottom: clamp(2rem, 4vw, 3rem); /* Fluid margin */
+    max-width: 100%; /* Prevent overflow */
 }
 
 .footer-brand {
@@ -3415,8 +3428,8 @@ canvas.confetti-canvas {
 
 .project-image {
     display: block;
-    max-width: 418px;
-    width: auto;
+    max-width: min(418px, 100%); /* Never exceed container or 418px */
+    width: 100%; /* Fill container */
     height: auto;
     transition: all 0.3s ease;
 }
