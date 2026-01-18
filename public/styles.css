@@ -450,41 +450,47 @@ h3 { font-size: 1.25rem; }
     transform: translateY(-9px) rotate(-45deg);
 }
 
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: flex;
-    }
-    
-    .nav-links {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(15, 8, 24, 0.98);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 32px;
-        z-index: 999;
-        padding: 80px 24px;
-    }
-    
-    .nav-links.nav-open {
-        display: flex;
-    }
-    
-    .nav-links a {
-        font-size: 1.5rem;
-        color: var(--text-white);
-    }
-    
-    .nav-cta {
-        margin-top: 16px;
-    }
+/* Navigation toggle - uses CSS to show/hide based on available space */
+.nav-toggle {
+    display: flex; /* Always present, visibility controlled by layout */
+    order: 99; /* Moves to end on wide screens */
+}
+
+/* Nav links - responsive without media queries */
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2vw, 2rem);
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: min(100%, 500px);
+}
+
+/* Mobile overlay activated by JS class */
+.nav-links.nav-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 8, 24, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 2rem);
+    z-index: 999;
+    padding: clamp(3rem, 10vw, 5rem) var(--container-padding);
+}
+
+.nav-links a {
+    font-size: clamp(1rem, 2.5vw + 0.25rem, 1.25rem);
+    color: var(--text-white);
+}
+
+.nav-cta {
+    margin-top: clamp(0.25rem, 1vw, 1rem);
 }
 
 /* Buttons */
@@ -619,20 +625,6 @@ h3 { font-size: 1.25rem; }
     animation: float-slow 30s ease-in-out infinite reverse;
 }
 
-@media (max-width: 768px) {
-    /* Constrain floating shapes to viewport on mobile */
-    .shape-1 {
-        width: 150px;
-        height: 150px;
-        left: -25px;
-    }
-    
-    .shape-2 {
-        width: 100px;
-        height: 100px;
-        right: -10px;
-    }
-}
 
 .shape-3 {
     width: 150px;
@@ -902,11 +894,6 @@ h3 { font-size: 1.25rem; }
     }
 }
 
-@media (max-width: 768px) {
-    .scroll-indicator {
-        display: none;
-    }
-}
 
 /* CTA Section */
 .cta-section {
@@ -1663,12 +1650,6 @@ blockquote {
     grid-column: 2;
 }
 
-@media (max-width: 900px) {
-    .certificate-showcase {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-    }
-}
 
 /* Curriculum Section */
 .curriculum-section {
@@ -2417,15 +2398,6 @@ summary.faq-question::-webkit-details-marker {
     color: var(--text-muted);
 }
 
-@media (max-width: 768px) {
-    .map-stats {
-        gap: 30px;
-    }
-    
-    .map-stat-number {
-        font-size: 1.5rem;
-    }
-}
 
 /* ============================================
    LEGAL SECTIONS (PRIVACY & TERMS)
@@ -2491,69 +2463,10 @@ summary.faq-question::-webkit-details-marker {
    ============================================ */
 
 /* Extra Large Desktop (1440px+) */
-@media (min-width: 1440px) {
-    :root {
-        --container-max: 1200px;
-    }
-    
-    .hero-title {
-        font-size: 4rem;
-    }
-    
-    .credential-box {
-        max-width: 800px;
-        padding: 40px 60px;
-    }
-}
 
 /* Large Desktop (1024px - 1439px) */
-@media (max-width: 1439px) and (min-width: 1025px) {
-    .instructors-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
 
 /* Tablet Landscape / Small Desktop (768px - 1024px) */
-@media (max-width: 1024px) {
-    .instructors-grid,
-    .curriculum-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .cohorts-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    .cohort-card {
-        max-width: 100%;
-    }
-    
-    .mentorship-grid {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    
-    .promise-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-    
-    .promise-card {
-        padding: 24px 16px;
-    }
-    
-    .testimonials-grid {
-        max-width: 900px;
-        margin: 0 auto;
-    }
-}
 
 /* ============================================
    CUSTOM CURSOR
@@ -2596,309 +2509,18 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Hide custom cursor on touch devices */
-@media (hover: none) {
-    .custom-cursor,
-    .cursor-dot {
-        display: none;
-    }
-}
 
 /* Tablet Portrait (768px) */
-@media (max-width: 768px) {
-    .custom-cursor,
-    .cursor-dot {
-        display: none;
-    }
-    
-    .nav-links {
-        display: none;
-    }
-    
-    .hero {
-        padding-top: 100px;
-        padding-bottom: 60px;
-    }
-    
-    .cta-form {
-        flex-direction: column;
-    }
-    
-    .promise-grid,
-    .mentorship-grid,
-    .instructors-grid,
-    .curriculum-grid,
-    .admissions-info,
-    .cohorts-grid {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .promise-card,
-    .mentorship-card,
-    .instructor-card,
-    .day-card,
-    .admission-card {
-        text-align: center;
-    }
-    
-    .mentorship-card h3,
-    .mentorship-card p {
-        text-align: left;
-    }
-    
-    .day-card ul {
-        text-align: left;
-    }
-    
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .testimonials-grid .testimonial-card.featured {
-        grid-column: span 1;
-    }
-    
-    .stats-bar {
-        flex-direction: column;
-        gap: 24px;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .testimonial-header {
-        flex-direction: column;
-        align-items: flex-start;
-        flex-wrap: wrap;  /* Allow wrapping on mobile */
-    }
-    
-    .salary-badge {
-        margin-left: 0;
-    }
-    
-    .guarantee-box {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .credential-box {
-        padding: 24px;
-    }
-    
-    .credential-schools {
-        font-size: 1.1rem;
-    }
-    
-    /* Schedule grid - make cells smaller on tablet */
-    .schedule-header span,
-    .schedule-row span {
-        font-size: 0.75rem;
-        padding: 6px 2px;
-    }
-    
-    .section-header {
-        margin-bottom: 40px;
-    }
-    
-    :root {
-        --section-padding: 60px 0;
-    }
-}
 
 /* Tablet Small (600px - 767px) */
-@media (max-width: 767px) and (min-width: 600px) {
-    .promise-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        max-width: 100%;
-    }
-    
-    .promise-card {
-        padding: 20px 12px;
-    }
-    
-    .promise-card h3 {
-        font-size: 1rem;
-    }
-    
-    .promise-card p {
-        font-size: 0.85rem;
-    }
-}
 
 /* Mobile Large (481px - 767px) */
-@media (max-width: 767px) and (min-width: 481px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-    
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .testimonials-grid .testimonial-card.featured {
-        grid-column: span 1;
-    }
-}
 
 /* Mobile Medium (481px - 599px) */
-@media (max-width: 599px) and (min-width: 481px) {
-    .promise-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-    }
-}
 
 /* Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-    .container {
-        padding: 0 16px;
-    }
-    
-    .hero {
-        padding: 80px 16px 40px;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    h2 {
-        font-size: 1.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .credential-box {
-        padding: 20px 16px;
-    }
-    
-    .credential-intro {
-        font-size: 0.95rem;
-    }
-    
-    .credential-schools {
-        font-size: 1rem;
-    }
-    
-    .credential-companies {
-        font-size: 0.9rem;
-    }
-    
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .project-card {
-        padding: 20px;
-    }
-    
-    /* Schedule grid - Stack vertically on mobile for readability */
-    .schedule-grid {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .schedule-header,
-    .schedule-row {
-        gap: 6px;
-        min-width: 320px; /* Allow horizontal scroll if needed */
-    }
-    
-    .schedule-header span,
-    .schedule-row span {
-        font-size: 0.75rem; /* Increased from 0.65rem - more readable */
-        padding: 8px 4px; /* Increased padding for better touch targets */
-    }
-    
-    .cohort-card {
-        padding: 20px;
-    }
-    
-    .cohort-dates {
-        padding: 12px;
-    }
-    
-    .btn {
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
-    
-    .form-input {
-        padding: 12px 14px;
-        font-size: 0.95rem;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
-    }
-    
-    .admission-card {
-        padding: 24px 16px;
-    }
-    
-    .amount {
-        font-size: 2.5rem;
-    }
-    
-    blockquote {
-        font-size: 0.9rem;
-    }
-    
-    .testimonial-content {
-        padding: 20px;
-    }
-}
 
 /* Extra Small Mobile (max-width: 375px) */
-@media (max-width: 375px) {
-    h1 {
-        font-size: 1.75rem;
-    }
-    
-    h2 {
-        font-size: 1.35rem;
-    }
-    
-    .credential-schools {
-        font-size: 0.9rem;
-    }
-    
-    /* Schedule grid - More readable on very small screens */
-    .schedule-header span,
-    .schedule-row span {
-        font-size: 0.7rem; /* Increased from 0.6rem */
-        padding: 6px 2px; /* Better spacing */
-        line-height: 1.3;
-    }
-    
-    /* Allow horizontal scrolling for calendar on tiny screens */
-    .schedule-grid {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 8px;
-    }
-    
-    .instructor-card {
-        padding: 20px;
-    }
-    
-    .instructor-bio {
-        font-size: 0.8rem;
-    }
-}
 
 
 /* ============================================
@@ -2978,29 +2600,6 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Disable tilt glare effect on mobile to prevent horizontal scroll */
-@media (max-width: 768px) {
-    .js-tilt-glare,
-    .js-tilt-glare-inner {
-        display: none !important;
-    }
-    
-    .morphing-blob {
-        display: none; /* Hide morphing blob on mobile - causes horizontal scroll */
-    }
-    
-    /* Constrain floating shapes to viewport on mobile */
-    .shape-1 {
-        width: 150px;
-        height: 150px;
-        left: -25px;
-    }
-    
-    .shape-2 {
-        width: 100px;
-        height: 100px;
-        right: -10px;
-    }
-}
 
 @keyframes morphBlob {
     0%, 100% {
@@ -3177,19 +2776,6 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Back to Top Button Responsive */
-@media (max-width: 768px) {
-    .back-to-top-btn {
-        left: 16px;
-        bottom: 16px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .back-to-top-btn svg {
-        width: 20px;
-        height: 20px;
-    }
-}
 
 /* ============================================
    COMPANY NAMES MARQUEE
@@ -3257,24 +2843,6 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Company Marquee Responsive */
-@media (max-width: 768px) {
-    .company-marquee-section {
-        padding: 1rem 0;
-    }
-    
-    .company-marquee-content {
-        gap: 1.5rem;
-        animation-duration: 30s;
-    }
-    
-    .company-name {
-        font-size: 0.9rem;
-    }
-    
-    .company-separator {
-        font-size: 1rem;
-    }
-}
 
 /* ============================================
    COMPANY LOGOS MARQUEE
@@ -3391,19 +2959,6 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Scroll to Top Button Responsive */
-@media (max-width: 768px) {
-    .scroll-to-top {
-        bottom: 20px;
-        right: 20px;
-        width: 45px;
-        height: 45px;
-    }
-    
-    .scroll-to-top svg {
-        width: 20px;
-        height: 20px;
-    }
-}
 
 .footer-grid {
     display: grid;
@@ -3548,57 +3103,7 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* Footer Responsive */
-@media (max-width: 992px) {
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-    }
-    
-    .footer-brand {
-        grid-column: 1 / -1;
-        max-width: 100%;
-        text-align: center;
-    }
-    
-    .footer-logo {
-        justify-content: center;
-    }
-}
 
-@media (max-width: 576px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .footer-links h4 {
-        margin-top: 1rem;
-    }
-    
-    .footer-social {
-        justify-content: center;
-    }
-    
-    .footer-bottom {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-    
-    .footer-legal {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-    }
-    
-    .marquee-content {
-        gap: 2.5rem;
-    }
-    
-    .logo-item {
-        font-size: 1.1rem;
-    }
-}
 
 /* ============================================
    FORM VALIDATION STYLES
@@ -3918,39 +3423,8 @@ canvas.confetti-canvas {
 }
 
 /* Tablet/Medium Screen Responsive */
-@media (max-width: 1023px) {
-    .projects-grid {
-        flex-wrap: wrap; /* Allow wrapping on tablet and below */
-    }
-}
 
 /* Mobile Responsive */
-@media (max-width: 767px) {
-    .certificates-section,
-    .student-projects-section {
-        padding: 60px 0;
-    }
-
-    .certificates-section h2,
-    .student-projects-section h2 {
-        font-size: 2rem;
-    }
-
-    .certificates-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .projects-grid {
-        flex-direction: column;
-        align-items: center;
-        flex-wrap: wrap; /* Allow wrapping on mobile */
-    }
-
-    .project-image {
-        max-width: 100%;
-    }
-}
 
 /* GLightbox Custom Styling - Ensure white backgrounds are preserved */
 .glightbox-clean .gslide-image img {

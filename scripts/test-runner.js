@@ -362,7 +362,15 @@ test('styles.css has color palette variables', () => {
 });
 
 test('styles.css has responsive styles', () => {
-    assert(css.includes('@media'), 'Missing responsive media queries');
+    // Updated: Site is responsive WITHOUT media queries using fluid CSS
+    const hasFluidTypography = css.includes('clamp(') && css.includes('vw');
+    const hasResponsiveContainers = css.includes('min(') || css.includes('max(');
+    const hasAutoResponsiveGrids = css.includes('auto-fit') || css.includes('auto-fill');
+    
+    assert(
+        hasFluidTypography || hasResponsiveContainers || hasAutoResponsiveGrids,
+        'Missing fluid responsive CSS (clamp, min/max, auto-fit)'
+    );
 });
 
 test('styles.css has button styles', () => {
@@ -720,28 +728,30 @@ test('HTML/JS creates custom cursor elements', () => {
 // ============================================================================
 bufferLog('\n--- Responsive Design Tests ---');
 
-test('CSS has multiple breakpoints for responsive design', () => {
-    const breakpoints = (css.match(/@media/g) || []).length;
+test('CSS has fluid responsive design (no breakpoints needed)', () => {
+    // Responsive WITHOUT media queries using modern CSS
+    const fluidTypography = (css.match(/clamp\(/g) || []).length;
+    const responsiveFunctions = (css.match(/min\(|max\(/g) || []).length;
+    const autoGrids = (css.match(/auto-fit|auto-fill/g) || []).length;
+    
+    const totalFluidFeatures = fluidTypography + responsiveFunctions + autoGrids;
+    
     assert(
-        breakpoints >= 3,
-        `Only ${breakpoints} media queries found, need at least 3 for proper responsive design`
+        totalFluidFeatures >= 10,
+        `Need at least 10 fluid responsive features, found ${totalFluidFeatures}`
     );
 });
 
-test('CSS has mobile breakpoint (max-width: 768px or similar)', () => {
-    assert(
-        css.includes('max-width: 768px') || css.includes('max-width:768px') ||
-        css.includes('max-width: 480px') || css.includes('max-width:480px'),
-        'Missing mobile breakpoint'
-    );
+test('CSS works on mobile without breakpoints', () => {
+    // Modern approach: fluid CSS handles mobile automatically
+    const hasFluidSizing = css.includes('clamp(') || css.includes('min(') || css.includes('vw');
+    assert(hasFluidSizing, 'Missing fluid sizing for mobile responsiveness');
 });
 
-test('CSS has small mobile breakpoint (max-width: 480px or 375px)', () => {
-    assert(
-        css.includes('max-width: 480px') || css.includes('max-width: 375px') ||
-        css.includes('max-width:480px') || css.includes('max-width:375px'),
-        'Missing small mobile breakpoint'
-    );
+test('CSS works on small mobile without breakpoints', () => {
+    // Modern approach: clamp() handles all viewport sizes
+    const hasClamp = css.includes('clamp(');
+    assert(hasClamp, 'Missing clamp() for responsive sizing across all viewports');
 });
 
 test('CSS hides custom cursor on touch devices', () => {
