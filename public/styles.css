@@ -324,7 +324,7 @@ h3 { font-size: 1.25rem; }
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 16px 0;
+    padding: 20px 0;
     background: rgba(15, 8, 24, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -481,13 +481,11 @@ h3 { font-size: 1.25rem; }
 /* Nav links - hide on small screens to prevent overflow */
 .nav-links {
     display: none; /* Hidden on mobile, hamburger menu will show overlay */
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Keep items on single line */
     gap: clamp(0.5rem, 2vw, 2rem);
     align-items: center;
     max-width: 100%; /* Prevent overflow */
-    overflow: hidden; /* Hide items that wrap to second line */
-    min-height: 3rem; /* Enough height for button */
-    max-height: 3rem; /* Limit to single line */
+    overflow: hidden; /* Hide items that don't fit */
 }
 
 /* Show on larger screens (768px+) */
