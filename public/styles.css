@@ -486,7 +486,8 @@ h3 { font-size: 1.25rem; }
     align-items: center;
     max-width: 100%; /* Prevent overflow */
     overflow: hidden; /* Hide items that wrap to second line */
-    height: 2.5rem; /* Fixed height for single line */
+    min-height: 3rem; /* Enough height for button */
+    max-height: 3rem; /* Limit to single line */
 }
 
 /* Show on larger screens (768px+) */
