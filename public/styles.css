@@ -4,6 +4,16 @@
    Purple/magenta gradients with teal/green CTAs
    ============================================ */
 
+/* Global box-sizing and overflow prevention */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 /* Toast Notification */
 .toast-notification {
     position: fixed;
@@ -278,11 +288,14 @@ a, button, [role="button"], .btn, .nav-cta {
 
 /* Container */
 .container {
-    max-width: min(100%, var(--container-max)); /* Never exceed viewport */
+    max-width: 100%; /* Never exceed viewport */
+    width: 100%;
     margin: 0 auto;
     padding: 0 var(--container-padding);
     position: relative;
     z-index: 1;
+    box-sizing: border-box;
+}
     width: 100%; /* Fill available space */
     box-sizing: border-box; /* Include padding in width */
 }
@@ -580,6 +593,19 @@ h3 { font-size: 1.25rem; }
 .form-input:focus {
     outline: none;
     border-color: var(--purple-light);
+}
+
+/* Disabled form inputs */
+.form-input:disabled {
+    opacity: 0.5;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input:disabled::placeholder {
+    color: rgba(255, 255, 255, 0.2);
 }
 
 /* Hero Section */
@@ -932,14 +958,20 @@ h3 { font-size: 1.25rem; }
 
 .cta-form {
     display: flex;
-    gap: 12px;
-    max-width: 850px;
+    flex-wrap: wrap;
+    justify-content: center; /* Center wrapped items */
+    gap: clamp(8px, 2vw, 12px);
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto 16px;
+    box-sizing: border-box;
 }
 
 .cta-form .form-input {
-    flex: 1;
-    min-width: 100px;
+    flex: 1 1 clamp(140px, 30vw, 200px);
+    min-width: 0; /* Allow flex items to shrink below content size */
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .cta-note {
@@ -1816,6 +1848,9 @@ blockquote {
     align-items: baseline;
     justify-content: center;
     gap: 4px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .currency {
@@ -1937,6 +1972,8 @@ blockquote {
 
 .scholarship-box {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center; /* Center wrapped items */
     gap: 12px;
     max-width: 400px;
     margin: 0 auto 24px;
@@ -1963,17 +2000,24 @@ blockquote {
 
 .cohorts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); /* Responsive grid */
-    gap: clamp(1rem, 3vw, 1.5rem); /* Fluid gap */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); /* Responsive grid, smaller min */
+    gap: clamp(0.75rem, 2.5vw, 1.5rem); /* Fluid gap */
     max-width: 100%; /* Prevent overflow */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .cohort-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: clamp(1rem, 4vw, 2rem); /* Fluid padding */
+    padding: clamp(0.75rem, 3vw, 2rem); /* Even smaller padding on tiny screens */
     position: relative;
+    box-sizing: border-box;
+    min-width: 0; /* Allow shrinking */
+    width: 100%;
+    max-width: 100%;
+}
     transition: all 0.3s ease;
     max-width: 100%; /* Prevent overflow */
     box-sizing: border-box; /* Include padding/border in width */
@@ -2057,8 +2101,8 @@ blockquote {
 .schedule-header,
 .schedule-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(4px, 1.5vw, 8px);
     text-align: center;
 }
 
@@ -2073,10 +2117,15 @@ blockquote {
 }
 
 .schedule-row span {
-    padding: 8px 4px;
+    padding: clamp(6px, 2vw, 8px) clamp(2px, 1vw, 4px);
     background: rgba(139, 92, 246, 0.1);
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Allow wrapping on very small screens */
+    word-break: break-word;
+    min-width: 0;
 }
 
 .schedule-row.classes span {
@@ -2090,11 +2139,14 @@ blockquote {
     flex-direction: column;
     gap: 12px;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0; /* Remove any padding that could cause overflow */
 }
 
 .cohort-form .form-input {
     width: 100%;
-    min-width: 320px;
+    min-width: 0; /* Allow shrinking below content size */
     max-width: 100%;
     box-sizing: border-box;
 }
@@ -2317,22 +2369,28 @@ summary.faq-question::-webkit-details-marker {
     letter-spacing: 0.05em;
 }
 
+/* World Map Section with White Background */
+.world-map-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px);
+    margin: clamp(40px, 8vw, 80px) auto;
+    max-width: min(100% - clamp(20px, 4vw, 40px), 1400px);
+    border-radius: clamp(12px, 2vw, 24px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
 /* World Map Container */
 .world-map-container {
     max-width: 1200px;
-    margin: 60px auto 40px;
-    padding: 0 20px;
+    margin: 0 auto;
 }
 
 .world-map-image {
     width: 100%;
     height: auto;
-    opacity: 0.7;
+    opacity: 1;
     transition: opacity 0.3s ease;
-}
-
-.world-map-image:hover {
-    opacity: 0.9;
+    display: block;
 }
 
 /* Global Locations */
@@ -2999,31 +3057,54 @@ summary.faq-question::-webkit-details-marker {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); /* Responsive grid */
-    gap: clamp(1.5rem, 4vw, 3rem); /* Fluid gap */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); /* Smaller min for mobile */
+    gap: clamp(1.25rem, 3.5vw, 3rem); /* Smaller gap on mobile */
     margin-bottom: clamp(2rem, 4vw, 3rem); /* Fluid margin */
     max-width: 100%; /* Prevent overflow */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .footer-brand {
-    max-width: 320px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    min-width: 0; /* Allow flex item to shrink */
 }
 
 .footer-logo {
     display: flex;
+    align-items: center;
+    gap: clamp(8px, 2vw, 12px);
+    margin-bottom: 20px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0; /* Allow flex item to shrink */
+}
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1rem;
 }
 
 .footer-logo-icon {
-    width: 60px; /* Increased from 40px */
-    height: 50px; /* Increased from 40px */
+    max-width: 45px !important; /* Absolute maximum to prevent overflow */
+    width: 100% !important; /* Take full available width up to max-width */
+    height: auto !important; /* Maintain aspect ratio */
+    flex-shrink: 1; /* Allow shrinking */
+    min-width: 0;
+    object-fit: contain;
 }
 
 .footer-logo-text-img {
-    height: 50px;
+    height: clamp(30px, 10vw, 50px); /* Fluid height */
     width: auto;
+    max-width: 100%; /* Never exceed container */
+    flex-shrink: 1; /* Allow shrinking */
+    min-width: 0; /* Allow shrinking below intrinsic size */
+    object-fit: contain;
 }
 
 .footer-logo-text {
@@ -3113,7 +3194,9 @@ summary.faq-question::-webkit-details-marker {
 
 .footer-bottom {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center; /* Center wrapped items */
+    gap: 1rem; /* Add gap for wrapped items */
     align-items: center;
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -3121,6 +3204,8 @@ summary.faq-question::-webkit-details-marker {
 
 .footer-legal {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center; /* Center wrapped items */
     gap: 2rem;
 }
 
