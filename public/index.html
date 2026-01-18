@@ -13,6 +13,9 @@
     <!-- GLightbox - Modern Lightbox for images -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css">
     
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="fonts/fonts.css">
+    
     <link rel="stylesheet" href="styles.css">
     
     <!-- Vue.js 3 Production (fast) -->
@@ -140,7 +143,7 @@
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
                     {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
                 </button>
-                <div v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</div>
+                <div v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</div>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
@@ -289,7 +292,7 @@
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
                     {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
                 </button>
-                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
+                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
@@ -557,7 +560,7 @@
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
                     {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
                 </button>
-                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 140px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
+                <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
             <p class="cta-note">It only takes a few minutes to apply! No coding experience required.</p>
         </div>
@@ -684,8 +687,8 @@
                         </div>
                     </div>
                     <form class="cohort-form" @submit.prevent="submitCohortForm('february-daily')">
-                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" @input="nameError = false">
-                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" @input="emailError = false">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'february-daily'" @input="nameError = false">
+                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'february-daily'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
                         </button>
@@ -728,8 +731,8 @@
                         </div>
                     </div>
                     <form class="cohort-form" @submit.prevent="submitCohortForm('spring-weekly')">
-                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" @input="nameError = false">
-                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" @input="emailError = false">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="nameError = false">
+                        <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
                         </button>
@@ -765,10 +768,10 @@
                 <p class="section-subtitle">Receive your certificate of completion</p>
             </div>
             <div class="certificates-grid">
-                <a href="images/certificates/aifluency.png" target="_blank" class="certificate-link" data-aos="fade-up">
+                <a href="images/certificates/aifluency.png" class="certificate-link glightbox" data-gallery="certificates" data-aos="fade-up">
                     <img src="images/certificates/aifluency.png" alt="Adava University Certificate of Completion" class="certificate-image">
                 </a>
-                <a href="images/certificates/award.png" target="_blank" class="certificate-link" data-aos="fade-up" data-aos-delay="100">
+                <a href="images/certificates/award.png" class="certificate-link glightbox" data-gallery="certificates" data-aos="fade-up" data-aos-delay="100">
                     <img src="images/certificates/award.png" alt="Certificate Award" class="certificate-image">
                 </a>
             </div>
@@ -924,9 +927,11 @@
                 </div>
             </div>
             
-            <!-- World Map -->
-            <div class="world-map-container" data-aos="fade-up" data-aos-delay="500">
-                <img src="images/backgrounds/world-map.png" alt="Adava University Global Reach" class="world-map-image">
+            <!-- World Map with White Background -->
+            <div class="world-map-section" data-aos="fade-up" data-aos-delay="500">
+                <div class="world-map-container">
+                    <img src="images/backgrounds/world-map.jpg" alt="Adava University Global Reach" class="world-map-image">
+                </div>
             </div>
             
             <div class="global-locations" data-aos="fade-up" data-aos-delay="400">
@@ -1005,7 +1010,7 @@
                 <!-- Brand Section -->
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="images/adava-a-icon.png" alt="Adava" class="footer-logo-icon">
+                        <img src="images/adava-a-icon.png" alt="Adava" class="footer-logo-icon" style="max-width: 45px; width: 100%; height: auto;">
                         <img src="images/adava-text.png" alt="ADAVA UNIVERSITY" class="footer-logo-text-img">
                     </div>
                     <p class="footer-tagline">
@@ -1585,7 +1590,9 @@
             selector: '.glightbox',
             touchNavigation: true,
             loop: true,
-            autoplayVideos: false
+            autoplayVideos: false,
+            width: '90vw',
+            height: 'auto'
         });
 
         // Initialize Vanilla Tilt on all cards with data-tilt - subtle effect
