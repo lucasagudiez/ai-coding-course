@@ -494,6 +494,13 @@ h3 { font-size: 1.25rem; }
     }
 }
 
+/* Hide Apply Now button in nav on smaller screens to keep nav single line */
+@media (max-width: 900px) {
+    .nav-cta {
+        display: none !important;
+    }
+}
+
 /* Mobile overlay activated by JS class */
 .nav-links.nav-open {
     position: fixed;
