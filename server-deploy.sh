@@ -59,8 +59,8 @@ else
     exit 1
 fi
 
-# Verify critical files exist
-if [ ! -f "index.html" ] || [ ! -f "styles.css" ]; then
+# Verify critical files exist in public/
+if [ ! -f "public/index.html" ] || [ ! -f "public/styles.css" ]; then
     echo "$(date): ❌ Critical files missing - reverting" >> "$LOG_FILE"
     git reset --hard "$LAST_WORKING_COMMIT"
     exit 1

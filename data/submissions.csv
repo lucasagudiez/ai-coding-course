@@ -1,3 +1,9 @@
 timestamp,name,email,cohort,scholarshipCode,ipAddress
 2026-01-17T00:11:42.447Z,Test User,test@example.com,February Cohort,TEST123,127.0.0.1
 2026-01-17T00:13:46.570Z,Test Success User,success@example.com,Spring Cohort,,127.0.0.1
+2026-01-18T18:09:23.499Z,Curl Test User,curltest@example.com,February Daily,CURLTEST,127.0.0.1
+2026-01-18T18:09:31.509Z,CTA Lead Test,ctalead@example.com,CTA Lead,,127.0.0.1
+2026-01-18T18:12:39.879Z,Spring Weekly Student,spring@example.com,Spring Weekly Cohort (Starting March 29),SPRING50,127.0.0.1
+2026-01-18T18:18:29.190Z,Hero CTA User,herocta@example.com,CTA Lead,,127.0.0.1
+2026-01-18T18:18:29.205Z,Feb Daily Student,febdaily@example.com,February Daily Cohort,DAILY2024,127.0.0.1
+2026-01-18T18:18:29.214Z,Spring Weekly Student,springweekly@example.com,Spring Weekly Cohort,WEEKLY2024,127.0.0.1
