@@ -3526,6 +3526,9 @@ canvas.confetti-canvas {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     background: transparent; /* No white background */
+    flex: 1 1 calc(33.333% - 1.875rem); /* Aim for 3 per row, accounting for gap */
+    min-width: min(280px, 100%); /* Minimum width before wrapping */
+    max-width: 100%; /* Never exceed container */
 }
 
 .project-link:hover {
