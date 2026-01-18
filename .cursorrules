@@ -213,8 +213,11 @@ ls -la
 # Quick validation (after small UI tweaks):
 npm run test:ux:smoke
 
-# Thorough testing (after significant UI changes):
-npm run test:ux
+# Comprehensive UI quality testing:
+npm run test:ux:quality
+
+# Full test suite (before commits):
+npm run test:full
 ```
 
 ### Test Tiers (by speed and importance)
@@ -222,11 +225,16 @@ npm run test:ux
 | Tier | Command | Time | When |
 |------|---------|------|------|
 | **Unit** | `npm test` | **~1s** | Every commit (automatic) |
-| **Smoke** | `npm run test:ux:smoke` | **~5s** | After UI changes, before PRs |
+| **Smoke** | `npm run test:ux:smoke` | **~5s** | After UI changes |
+| **Overflow** | `npm run test:ux:overflow` | **~10s** | After CSS changes |
+| **Alignment** | `npm run test:ux:alignment` | **~8s** | After layout changes |
+| **Quality** | `npm run test:ux:quality` | **~15s** | Detects "ugly" issues |
 | **Full UX** | `npm run test:ux` | **~20s** | After significant UI changes |
-| **All Tests** | `npm run test:full` | **~25s** | Before release |
+| **All Tests** | `npm run test:full` | **~40s** | Before release/deployment |
 
 ### WHAT TESTS COVER:
+
+#### Unit Tests (`npm test`)
 | Area | Tests |
 |------|-------|
 | File existence | index.html, styles.css, reference docs |
@@ -241,11 +249,112 @@ npm run test:ux
 | Accessibility | Semantic HTML, form labels |
 | UI Effects | Glassmorphism, animations, tilt |
 
+#### UX Quality Tests (CRITICAL - See `docs/UI-QUALITY-TESTS.md`)
+
+**1. OVERFLOW DETECTION** (`npm run test:ux:overflow`)
+- ✅ Elements extending beyond viewport (right/left)
+- ✅ Text nodes overflowing using `getClientRects()`
+- ✅ Hidden content (scrollWidth > clientWidth)
+- ✅ Sub-pixel precision detection
+- ✅ Tests 7 viewport sizes (375px to 1440px)
+
+**2. ALIGNMENT DETECTION** (`npm run test:ux:alignment`)
+- ✅ Containers not centered when should be
+- ✅ Last row of wrapped flex items left-aligned
+- ✅ Uneven left/right margins
+- ✅ Project posters alignment
+
+**3. COMPREHENSIVE UI QUALITY** (`npm run test:ux:quality`)
+- ✅ **Awkward wrapping** (buttons/items wrapping alone on last row)
+- ✅ **Alignment issues** (off-center containers)
+- ✅ **Overflow problems** (content beyond viewport)
+- ✅ **Spacing inconsistencies** (uneven gaps between items)
+- ✅ **Visual imbalance** (cramped text, poor distribution)
+
+### ⛔ RESPONSIVE DESIGN RULES - NO BREAKPOINTS ⛔
+
+**CRITICAL: All responsive design MUST work WITHOUT media queries or breakpoints.**
+
+#### WHY NO BREAKPOINTS:
+1. **Fluid design** works at ANY viewport size, not just specific widths
+2. **Less code** to maintain and debug
+3. **Better UX** with smooth transitions between sizes
+4. **Modern CSS** is powerful enough (clamp, minmax, flexbox, grid)
+
+#### APPROVED RESPONSIVE TECHNIQUES:
+```css
+/* ✅ GOOD: Fluid sizing */
+font-size: clamp(1rem, 2vw, 1.5rem);
+width: min(90%, 1200px);
+gap: clamp(8px, 2vw, 20px);
+
+/* ✅ GOOD: Flexible layouts */
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+
+/* ✅ GOOD: Grid auto-fit */
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+/* ✅ GOOD: Intrinsic sizing */
+max-width: 100%;
+box-sizing: border-box;
+min-width: 0;
+
+/* ✅ GOOD: Wrapping behavior */
+word-break: break-word;
+overflow-wrap: break-word;
+
+/* ❌ FORBIDDEN: Media queries */
+@media (max-width: 768px) { /* NEVER USE THIS */ }
+@media (min-width: 1024px) { /* NEVER USE THIS */ }
+```
+
+#### TESTING RESPONSIVE DESIGN:
+1. **Automated tests** check 7 viewport sizes automatically
+2. **No manual breakpoint testing** needed
+3. **Tests MUST pass** at ALL viewport sizes
+4. **Visual verification** using browser screenshots
+
+#### COMMON RESPONSIVE PATTERNS:
+```css
+/* Flexible form inputs */
+.form-input {
+    flex: 1 1 clamp(200px, 30vw, 400px);
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Wrapping buttons with flex */
+.cta-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 12px);
+}
+
+/* Responsive containers */
+.container {
+    width: min(90%, 1200px);
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 3rem);
+}
+
+/* Flexible grids */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+}
+```
+
 ### Rules
 1. **Run tests before every commit** - Automated via pre-commit hook
 2. **Test count can ONLY increase** - Never decrease number of tests
 3. **Commits are BLOCKED if tests fail**
 4. **Test results are automatically added to commit messages**
+5. **NO MEDIA QUERIES ALLOWED** - Use fluid CSS techniques only
+6. **Tests must pass at ALL viewport sizes** - Not just mobile/desktop
 
 **ADD THE TEST IMMEDIATELY. NOT "LATER". NOW.**
 
