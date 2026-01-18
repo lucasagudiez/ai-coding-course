@@ -15,6 +15,7 @@ createApp({
             formSent: false,
             formError: false,
             formErrorMessage: '',
+            submittedCohort: null, // Track which cohort form was submitted
             
             // Input validation errors
             nameError: false,
@@ -152,13 +153,10 @@ createApp({
                 // Success!
                 this.cohortFormSubmitting = false;
                 this.formSent = true;
+                this.submittedCohort = cohort; // Mark which cohort form was submitted
                 
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    this.name = '';
-                    this.email = '';
-                    this.formSent = false;
-                }, 3000);
+                // Note: Only THIS form's inputs remain disabled after successful submission
+                // Other cohort forms remain editable
                 
             } catch (error) {
                 console.error('Form submission error:', error);

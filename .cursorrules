@@ -44,14 +44,15 @@ sudo systemctl reload nginx
    - ❌ NEVER use: support@, legal@, privacy@, etc.
    - ✅ ONLY use: adavauniversity@gmail.com
 
-2. **Em dashes (—):** NEVER use em dashes in copy
-   - ❌ NEVER use: —
-   - ✅ ALWAYS use: regular dash (-) or rewrite without dash
+2. **Dashes:** NEVER use any dashes in copy (em dash or regular dash)
+   - ❌ NEVER use: — (em dash)
+   - ❌ NEVER use: - (regular dash)
+   - ✅ ALWAYS: Rewrite without dashes or use alternative punctuation
 
 3. **Typography:** Keep copy clean and readable
-   - Use hyphens (-) for compound words
    - Use colons (:) for lists and explanations
-   - Avoid fancy punctuation
+   - Use commas for compound thoughts
+   - Avoid fancy punctuation and dashes
 
 ## ⛔ GIT WORKFLOW - WORK ON BRANCHES DIRECTLY ⛔
 
@@ -285,17 +286,15 @@ echo "🌐 http://localhost:8888"
 
 **⚠️ See `LESSONS-LEARNED-DEBUGGING.md` for detailed insights from real debugging sessions.**
 
-## 🌐 BROWSER TAB ASSIGNMENT (MULTI-AGENT COORDINATION)
-
-**THIS PROJECT'S TAB:** https://adavauniversity.org
+## 🌐 BROWSER TAB COORDINATION (MULTI-AGENT WORKSPACE)
 
 When working on this project:
-1. **ALWAYS** check which tab you're in: `browser_tabs({ action: "list" })`
-2. **ALWAYS** use the Adava University tab (URL: adavauniversity.org)
-3. **IF** tab changed: Select your tab using `browser_tabs({ action: "select", index: X })`
-4. **NEVER** close or navigate away from other agents' tabs
+1. **Check existing tabs** before creating new ones: `browser_tabs({ action: "list" })`
+2. **Create new tab if needed** for testing: `browser_tabs({ action: "new" })`
+3. **NEVER** close or navigate away from other agents' tabs
+4. **Be mindful** that other agents may be using other tabs for other projects
 
-See `.cursor/TAB-ASSIGNMENTS.md` for full multi-agent coordination protocol.
+Multiple agents may be working on different projects simultaneously, so tab management requires coordination.
 
 ---
 
