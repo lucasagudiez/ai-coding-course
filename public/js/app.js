@@ -85,7 +85,13 @@ createApp({
             this.ctaMessage = '';
             
             try {
-                await fetch('http://localhost:3001/api/submit', {
+                // Use relative URL for production (nginx proxies to backend)
+                // Use absolute URL for development (direct backend connection)
+                const apiUrl = window.location.hostname === 'adavauniversity.org' 
+                    ? '/api/submit' 
+                    : 'http://localhost:3001/api/submit';
+                
+                await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -135,7 +141,13 @@ createApp({
             this.formSent = false;
             
             try {
-                const response = await fetch('http://localhost:3001/api/submit', {
+                // Use relative URL for production (nginx proxies to backend)
+                // Use absolute URL for development (direct backend connection)
+                const apiUrl = window.location.hostname === 'adavauniversity.org' 
+                    ? '/api/submit' 
+                    : 'http://localhost:3001/api/submit';
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
