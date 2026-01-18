@@ -597,15 +597,15 @@ h3 { font-size: 1.25rem; }
 
 /* Disabled form inputs */
 .form-input:disabled {
-    opacity: 0.5;
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.75;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.2);
     cursor: not-allowed;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.65);
 }
 
 .form-input:disabled::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 /* Hero Section */
