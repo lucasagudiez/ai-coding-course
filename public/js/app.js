@@ -85,14 +85,14 @@ createApp({
             this.ctaMessage = '';
             
             try {
-                await fetch('/api/submit', {
+                await fetch('http://localhost:3001/api/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: this.name,
                         email: this.email,
-                        type: 'cta-lead',
-                        scholarshipCode: this.scholarshipCode
+                        cohort: 'CTA Lead',
+                        scholarshipCode: this.scholarshipCode || ''
                     })
                 });
                 
@@ -135,14 +135,14 @@ createApp({
             this.formSent = false;
             
             try {
-                const response = await fetch('/api/submit', {
+                const response = await fetch('http://localhost:3001/api/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: this.name,
                         email: this.email,
                         cohort: cohort,
-                        scholarshipCode: this.scholarshipCode
+                        scholarshipCode: this.scholarshipCode || ''
                     })
                 });
                 
