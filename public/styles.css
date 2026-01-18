@@ -234,6 +234,7 @@ body {
     overflow-x: hidden;
     min-height: 100vh;
     cursor: default; /* Default cursor instead of text cursor */
+    max-width: 100vw; /* Force viewport constraint */
 }
 
 /* Prevent text cursor on all text elements */
@@ -2783,24 +2784,31 @@ summary.faq-question::-webkit-details-marker {
 .company-marquee-section {
     background: linear-gradient(180deg, rgba(15, 8, 24, 0.95) 0%, rgba(5, 2, 8, 0.98) 100%);
     padding: 1.5rem 0;
-    overflow: hidden;
+    overflow: hidden; /* Prevents horizontal scroll */
     border-top: 1px solid rgba(139, 92, 246, 0.15);
     border-bottom: none;
     position: relative;
     margin-bottom: 0;
+    max-width: 100vw; /* Force viewport constraint */
+    contain: layout; /* Create isolated formatting context */
+    width: 100%; /* Explicit width */
 }
 
 .company-marquee-container {
     width: 100%;
-    overflow: hidden;
+    max-width: 100%; /* Force container constraint */
+    overflow: hidden; /* Clip overflowing marquee content */
     position: relative;
+    contain: layout; /* Isolate from document flow */
 }
 
 .company-marquee-track {
     width: 100%;
-    overflow: hidden;
+    overflow: hidden; /* Critical: clips content and prevents body overflow */
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    position: relative;
+    height: 40px; /* Fixed height */
 }
 
 .company-marquee-content {
@@ -2808,8 +2816,9 @@ summary.faq-question::-webkit-details-marker {
     align-items: center;
     gap: 2rem;
     animation: companyMarqueeScroll 40s linear infinite;
-    width: fit-content;
+    width: fit-content; /* This is intentionally wide for animation */
     white-space: nowrap;
+    will-change: transform; /* GPU acceleration */
 }
 
 @keyframes companyMarqueeScroll {
