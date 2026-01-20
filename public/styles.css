@@ -1338,20 +1338,38 @@ img.instructor-avatar {
 }
 
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1.25rem, 3vw, 2rem); /* Slightly larger gap */
+    max-width: min(100%, 1400px); /* Prevent overflow */
+    margin: 0 auto;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    width: 100%;
 }
 
 .project-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: 24px;
+    padding: clamp(24px, 4vw, 32px); /* More generous padding */
     text-align: center;
     transition: all 0.3s;
     opacity: 1 !important;
     transform: scale(1) !important;
+    flex: 1 1 100%; /* Full width on mobile */
+    max-width: 100%; /* Full width on mobile */
+    min-width: 0; /* Allow flex shrinking */
+    box-sizing: border-box;
+}
+
+/* Ensure 2x2 grid layout on desktop */
+@media (min-width: 900px) {
+    .project-card {
+        flex: 0 1 calc(50% - 1rem); /* 2 cards per row, accounting for gap */
+        max-width: calc(50% - 1rem); /* 2 cards per row */
+        min-width: 280px; /* Minimum width for proper card appearance */
+    }
 }
 
 .project-card:hover {
@@ -2589,6 +2607,63 @@ summary.faq-question::-webkit-details-marker {
 }
 
 /* ============================================
+   COMPANY LOGOS MARQUEE
+   ============================================ */
+
+.company-logos-marquee {
+    background: linear-gradient(180deg, rgba(15, 8, 24, 0.95) 0%, rgba(5, 2, 8, 0.98) 100%);
+    padding: 2rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(139, 92, 246, 0.15);
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.company-logos-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.company-logos-track {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    animation: companyLogosScroll 30s linear infinite;
+    white-space: nowrap;
+    will-change: transform;
+    width: fit-content;
+}
+
+.company-logo {
+    color: #6b7280; /* Gray color */
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+}
+
+.company-logo:hover {
+    opacity: 1;
+}
+
+@keyframes companyLogosScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 
@@ -3558,16 +3633,6 @@ canvas.confetti-canvas {
     color: var(--text-muted);
     max-width: 700px;
     margin: 0 auto;
-}
-
-.projects-grid {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: clamp(1rem, 3vw, 1.875rem); /* Fluid gap */
-    max-width: min(100%, 1400px); /* Prevent overflow */
-    margin: 0 auto;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .project-link {
