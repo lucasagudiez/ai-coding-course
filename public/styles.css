@@ -288,7 +288,7 @@ a, button, [role="button"], .btn, .nav-cta {
 
 /* Container */
 .container {
-    max-width: 100%; /* Never exceed viewport */
+    max-width: var(--container-max);
     width: 100%;
     margin: 0 auto;
     padding: 0 var(--container-padding);
@@ -324,7 +324,7 @@ h3 { font-size: 1.25rem; }
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 20px 0;
+    padding: 12px 0;
     background: rgba(15, 8, 24, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -343,7 +343,7 @@ h3 { font-size: 1.25rem; }
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     text-decoration: none;
 }
 
@@ -367,14 +367,17 @@ h3 { font-size: 1.25rem; }
 }
 
 .logo-icon {
-    width: 60px; /* Increased from 42px */
-    height: 50px; /* Increased from 35px */
+    width: 32px;
+    height: 28px;
     flex-shrink: 0;
 }
 
 .logo-text-img {
-    height: 50px;
-    width: auto;
+    height: 50px !important;
+    width: auto !important;
+    max-width: 147px !important;
+    object-fit: contain;
+    display: block;
 }
 
 .logo-text-group {
@@ -1203,18 +1206,61 @@ h3 { font-size: 1.25rem; }
     z-index: 1;
 }
 
+.instructors-section .container {
+    max-width: min(100% - var(--container-padding) * 2, 1400px); /* Wider container for instructors */
+}
+
 .instructors-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); /* Responsive grid */
-    gap: clamp(1rem, 3vw, 1.5rem); /* Fluid gap */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); /* Wider minimum width */
+    gap: clamp(1rem, 3vw, 1.5rem); /* Reduced gap to give more space to cards */
     max-width: 100%; /* Prevent overflow */
+    align-items: stretch; /* Make all cards same height */
+}
+
+/* Responsive breakpoints for different zoom levels */
+/* Very small screens / high zoom (60-65%) */
+@media (min-width: 600px) {
+    .instructors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small-medium screens / medium zoom (75-90%) */
+@media (min-width: 900px) {
+    .instructors-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Medium-large screens / normal zoom (100%) */
+@media (min-width: 1200px) {
+    .instructors-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(1.25rem, 2.5vw, 1.75rem); /* Reduced gap for wider cards */
+    }
+}
+
+/* Large screens / low zoom (125%) */
+@media (min-width: 1600px) {
+    .instructors-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Very large screens / very low zoom (175%) */
+@media (min-width: 2000px) {
+    .instructors-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: clamp(1.5rem, 3vw, 2rem);
+    }
 }
 
 .instructor-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 28px;
+    padding: clamp(32px, 5vw, 40px); /* Increased padding for wider appearance */
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
@@ -1222,6 +1268,10 @@ h3 { font-size: 1.25rem; }
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     transform-style: preserve-3d;
     will-change: transform, box-shadow;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Fill grid cell height */
+    min-width: 0; /* Allow flex shrinking */
 }
 
 .instructor-card:hover {
@@ -1277,6 +1327,7 @@ img.instructor-avatar {
     color: var(--text-muted);
     font-size: 0.85rem;
     line-height: 1.6;
+    flex: 1; /* Push bio to fill remaining space, making all cards same height */
 }
 
 /* Projects Section */

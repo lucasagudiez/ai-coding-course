@@ -22,7 +22,7 @@ module.exports = defineConfig({
     
     /* HYPER PARALLEL - use all CPU cores */
     fullyParallel: true,
-    workers: isCI ? 4 : cpuCount, // All cores locally
+    workers: isCI ? 4 : (cpuCount > 0 ? cpuCount : 4), // All cores locally, fallback to 4
     
     forbidOnly: isCI,
     retries: 0, // No retries for speed
