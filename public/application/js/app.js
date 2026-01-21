@@ -42,11 +42,17 @@ new Vue({
     },
     
     mounted() {
+        // Load state from StateManager (URL > Server > Local)
+        this.loadSavedState();
+        
         // Get URL parameters (passed from landing page)
         const urlParams = new URLSearchParams(window.location.search);
-        this.formData.cohort = urlParams.get('cohort') || 'February 2026';
-        this.formData.name = urlParams.get('name') || '';
-        this.formData.email = urlParams.get('email') || '';
+        this.formData.cohort = urlParams.get('cohort') || this.formData.cohort || 'February 2026';
+        this.formData.name = urlParams.get('name') || this.formData.name || '';
+        this.formData.email = urlParams.get('email') || this.formData.email || '';
+        
+        // Set up watchers for auto-save
+        this.setupAutoSave();
         
         // Start social proof pings
         this.startSocialProof();
@@ -59,9 +65,44 @@ new Vue({
         
         // Setup exit intent
         document.addEventListener('mouseleave', this.handleMouseLeave);
+        
+        // Track progress
+        StateManager.trackProgress('application', this.progress);
     },
     
     methods: {
+        // Load saved state from StateManager
+        async loadSavedState() {
+            const savedState = await StateManager.getMergedState();
+            
+            // Merge saved data into formData
+            if (savedState) {
+                Object.keys(this.formData).forEach(key => {
+                    if (savedState[key]) {
+                        this.formData[key] = savedState[key];
+                    }
+                });
+                
+                // Update progress
+                this.updateProgress();
+            }
+        },
+        
+        // Setup auto-save watchers
+        setupAutoSave() {
+            // Watch each form field
+            this.$watch('formData', (newValue) => {
+                if (newValue.email) {
+                    StateManager.autoSave(newValue.email, {
+                        ...newValue,
+                        page: 'application',
+                        progress: this.progress,
+                        sections: this.sections
+                    });
+                }
+            }, { deep: true });
+        },
+        
         updateProgress() {
             // Calculate progress based on filled fields
             let filled = 3; // name, email, cohort (pre-filled)
