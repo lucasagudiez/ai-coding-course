@@ -1,0 +1,24 @@
+# API Keys for Adava University
+# DO NOT COMMIT TO PUBLIC REPOS
+# Add this file to .gitignore
+
+# Square Payment Gateway
+# Dashboard: https://developer.squareup.com/apps
+
+# SANDBOX (for testing - use test cards)
+square_sandbox:
+  application_id: sandbox-sq0idb-51AxZAaIW4wr4x51PivPfg
+  access_token: EAAAlzxNmZLF_Sj-sZEINS7xwy_JEXbFevMJ9rvyJQIhrvWWM6r9cLjyxEPbSm4S
+  location_id: PENDING  # Get from Square Dashboard → Credentials → Locations (Sandbox mode)
+  environment: sandbox
+
+# PRODUCTION (for real payments - DO NOT USE until fully tested)
+square_production:
+  application_id: sq0idp-8DEnXsW8Vm2TyUBzJ_FoBw
+  access_token: EAAAl8riPfrtwMa59VUGN-0fJc7gq1Oez-TQjkV_cTdm-uCwNZWAR-jreTSpcQ6c
+  location_id: PENDING  # Get from Square Dashboard → Credentials → Locations (Production mode)
+  environment: production
+
+# OpenAI API (for LLM personalization)
+# Get key at: https://platform.openai.com/api-keys
+openai: YOUR_OPENAI_KEY_HERE
