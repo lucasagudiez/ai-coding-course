@@ -1,0 +1,30 @@
+{
+  "email": "quick@test.com",
+  "data": {
+    "name": "Quick Test",
+    "email": "quick@test.com",
+    "ctaFormSubmitting": false,
+    "ctaFormSent": false,
+    "ctaMessage": "",
+    "cohortFormSubmitting": false,
+    "formSent": false,
+    "formError": false,
+    "formErrorMessage": "",
+    "submittedCohort": null,
+    "nameError": false,
+    "emailError": false,
+    "toast": {
+      "show": false,
+      "message": "",
+      "type": "error"
+    },
+    "scholarshipCode": "",
+    "scholarshipApplied": false,
+    "scholarshipError": false,
+    "mobileMenuOpen": false,
+    "scrollY": 173,
+    "page": "landing"
+  },
+  "lastUpdated": "2026-01-21T06:32:30.299Z",
+  "createdAt": "2026-01-21T06:32:30.299Z"
+}
