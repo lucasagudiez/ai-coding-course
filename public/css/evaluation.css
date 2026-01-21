@@ -42,10 +42,26 @@ body {
     margin-bottom: 60px;
 }
 
-.logo {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 30px;
+.evaluation-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.evaluation-header .logo-icon {
+    width: 32px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.evaluation-header .logo-text-img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: 147px !important;
+    object-fit: contain;
+    display: block;
 }
 
 .evaluation-header h1 {

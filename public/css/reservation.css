@@ -38,10 +38,26 @@ body {
     text-align: center;
 }
 
-.logo {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
+.header-content .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.header-content .logo-icon {
+    width: 32px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.header-content .logo-text-img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: 147px !important;
+    object-fit: contain;
+    display: block;
 }
 
 .reservation-header h1 {

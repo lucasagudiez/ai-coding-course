@@ -36,6 +36,29 @@ body {
     padding: 2rem 1rem;
 }
 
+/* Header Logo */
+.app-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.app-header .logo-icon {
+    width: 32px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.app-header .logo-text-img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: 147px !important;
+    object-fit: contain;
+    display: block;
+}
+
 /* Scarcity Bar */
 .scarcity-bar {
     background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
