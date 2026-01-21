@@ -38,11 +38,18 @@ const EvaluationPage = {
                 if (savedProgress) {
                     try {
                         const progress = JSON.parse(savedProgress);
-                        email = progress.application.email;
+                        email = progress.application?.email || progress.email;
                     } catch (e) {
                         console.error('Error parsing saved progress:', e);
                     }
                 }
+            }
+            
+            // If still no email, try to load from server session
+            // by checking if there's any email stored in cookies or try common emails
+            if (!email) {
+                // Check if there's a saved email in a simpler localStorage key
+                email = localStorage.getItem('applicantEmail');
             }
             
             // If still no email, redirect to application

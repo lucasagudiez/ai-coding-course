@@ -537,13 +537,14 @@ app.post('/api/evaluate-application', async (req, res) => {
         }
         
         // Load the applicant's full data from session
+        // Note: loadSession() returns sessionData.data directly
         const sessionData = loadSession(email);
         
-        if (!sessionData || !sessionData.data || !sessionData.data.application) {
+        if (!sessionData || !sessionData.application) {
             return res.status(404).json({ error: 'Application not found. Please complete the application form first.' });
         }
         
-        const app = sessionData.data.application;
+        const app = sessionData.application;
         
         // Generate comprehensive personalized evaluation using ChatGPT
         const evaluation = await generateComprehensiveEvaluation(app);

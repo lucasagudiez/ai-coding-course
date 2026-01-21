@@ -351,13 +351,16 @@ const ApplicationForm = {
         },
         
         async saveToSession() {
-            // Save to localStorage
+            // Save to localStorage (detailed format)
             const applicationData = {
                 application: this.form,
                 cohort: this.cohort,
                 timestamp: new Date().toISOString()
             };
             localStorage.setItem('application_progress', JSON.stringify(applicationData));
+            
+            // Also save email separately for easy access
+            localStorage.setItem('applicantEmail', this.form.email);
             
             // Save to server session
             try {

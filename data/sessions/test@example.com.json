@@ -1,7 +1,7 @@
 {
   "email": "test@example.com",
   "data": {
-    "name": "Quick Test",
+    "name": "Test User",
     "email": "test@example.com",
     "ctaFormSubmitting": false,
     "ctaFormSent": false,
@@ -22,9 +22,9 @@
     "scholarshipApplied": false,
     "scholarshipError": false,
     "mobileMenuOpen": false,
-    "scrollY": 3,
+    "scrollY": 1,
     "page": "landing"
   },
-  "lastUpdated": "2026-01-21T07:24:11.334Z",
+  "lastUpdated": "2026-01-21T08:19:14.042Z",
   "createdAt": "2026-01-21T04:15:06.861Z"
 }
