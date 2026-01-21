@@ -13,18 +13,49 @@
     
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <div id="app">
+        <!-- Sticky Urgency Header -->
+        <div class="sticky-urgency-bar" v-show="showStickyBar">
+            <div class="sticky-content">
+                <span class="sticky-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="sticky-text">
+                    <strong>{{ spotsRemaining }} Seats Left</strong> in February Cohort · Applications close in 2 days
+                </span>
+                <button class="sticky-btn" @click="scrollToPayment">Secure Spot Now</button>
+            </div>
+        </div>
+
         <div class="app-container">
-            <!-- Urgency Bar -->
-            <div class="urgency-bar">
-                <div class="urgency-content">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <strong>{{ spotsRemaining }} seats remaining</strong> in February 2026 Cohort
+            <!-- Scarcity Bar with Visual -->
+            <div class="scarcity-bar">
+                <div class="scarcity-content">
+                    <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                    <small>Applications reviewed within 48 hours</small>
+                </div>
+                <div class="seats-visual">
+                    <div class="seat-grid">
+                        <div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
+                        <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+                    </div>
+                    <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+                </div>
+            </div>
+
+            <!-- Graduate Counter -->
+            <div class="graduate-counter">
+                <div class="counter-stat">
+                    <div class="counter-number">{{ graduateCount }}+</div>
+                    <div class="counter-label">Students Graduated</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">{{ employedCount }}%</div>
+                    <div class="counter-label">Now Employed in Tech</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">${{ avgSalary }}K</div>
+                    <div class="counter-label">Average Starting Salary</div>
                 </div>
             </div>
 
@@ -34,158 +65,838 @@
                 <p class="subtitle">10-Day AI Coding Program · Taught by Engineers & Researchers from MIT • Stanford • Oxford • Cambridge • Harvard</p>
             </div>
 
-            <!-- Progress (starts at 25% since they already entered name/email/cohort) -->
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+            <!-- Authority Logos -->
+            <div class="authority-logos">
+                <p class="authority-label">Trusted by professionals from:</p>
+                <div class="logo-grid">
+                    <div class="authority-logo">Google</div>
+                    <div class="authority-logo">Apple</div>
+                    <div class="authority-logo">Meta</div>
+                    <div class="authority-logo">Amazon</div>
+                    <div class="authority-logo">Microsoft</div>
+                    <div class="authority-logo">Tesla</div>
                 </div>
-                <p class="progress-text">{{ progress }}% complete</p>
             </div>
 
-            <!-- Application Form -->
-            <form @submit.prevent="submitApplication" class="application-form">
-                <!-- Pre-filled from landing page -->
-                <div class="form-section">
-                    <h3>Contact Information</h3>
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" v-model="formData.name" readonly>
+            <!-- Value Stack -->
+            <div class="value-stack">
+                <h3><i class="fas fa-graduation-cap"></i> Program Components & Market Value</h3>
+                <div class="value-item">
+                    <span>10-Day Intensive: Build Apps with AI</span>
+                    <span class="value-price">~$8,000</span>
+                </div>
+                <div class="value-item">
+                    <span>Instructor Support & Code Reviews</span>
+                    <span class="value-price">~$3,000</span>
+                </div>
+                <div class="value-item">
+                    <span>3 Portfolio Projects</span>
+                    <span class="value-price">~$2,500</span>
+                </div>
+                <div class="value-item">
+                    <span>Alumni Network + Job Board + Weekly Q&A</span>
+                    <span class="value-price">~$2,000</span>
+                </div>
+                <div class="value-item">
+                    <span>Lifetime Access to All Updates</span>
+                    <span class="value-price">~$1,500</span>
+                </div>
+                <div class="value-total">
+                    <div><span class="strike">Combined Market Value: ~$17,000</span></div>
+                    <div class="big-number">Program Tuition: $590</div>
+                    <small style="color: rgba(255, 255, 255, 0.6);">AI-powered approach makes this possible at 97% lower cost</small>
+                </div>
+            </div>
+
+            <!-- Comparison -->
+            <div class="comparison-box">
+                <h4>Compare Your Options:</h4>
+                <div class="comparison-table">
+                    <div class="comparison-row header-row">
+                        <div class="comparison-cell">Option</div>
+                        <div class="comparison-cell">Time</div>
+                        <div class="comparison-cell">Cost</div>
+                        <div class="comparison-cell">Success Rate</div>
+                        <div class="comparison-cell">Job Support</div>
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" v-model="formData.email" readonly>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> Traditional Bootcamp</div>
+                        <div class="comparison-cell">12-24 weeks</div>
+                        <div class="comparison-cell">$12K-$18K</div>
+                        <div class="comparison-cell">~40%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
                     </div>
-                    <div class="form-group">
-                        <label>Selected Cohort</label>
-                        <input type="text" v-model="formData.cohort" readonly>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> CS Degree</div>
+                        <div class="comparison-cell">4 years</div>
+                        <div class="comparison-cell">$80K-$200K</div>
+                        <div class="comparison-cell">~50%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> Self-Learning</div>
+                        <div class="comparison-cell">6mo-3yrs</div>
+                        <div class="comparison-cell">Free (time)</div>
+                        <div class="comparison-cell">~5%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
+                    </div>
+                    <div class="comparison-row winner-row">
+                        <div class="comparison-cell"><i class="fas fa-check-circle winner-icon"></i> <strong>Adava AI Coding</strong></div>
+                        <div class="comparison-cell"><strong>10 days</strong></div>
+                        <div class="comparison-cell winner-price"><strong>$590</strong></div>
+                        <div class="comparison-cell"><strong>High</strong></div>
+                        <div class="comparison-cell"><i class="fas fa-check winner-icon"></i></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Background -->
-                <div class="form-section">
-                    <h3>Background</h3>
-                    <div class="form-group">
-                        <label>Current Role/Occupation</label>
-                        <input type="text" v-model="formData.occupation" @input="updateProgress" placeholder="e.g., Software Engineer, Student, Career Changer" required>
+            <!-- Strategy #31: Testimonial Snippets -->
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Went from zero coding knowledge to building AI apps in 10 days. Now earning $145K at Tesla."</p>
+                    <div class="testimonial-author">
+                        <strong>Marcus T.</strong>
+                        <span>Mechanical Engineer → AI Developer</span>
                     </div>
-                    <div class="form-group">
-                        <label>Programming Experience</label>
-                        <select v-model="formData.programmingExperience" @change="updateProgress" required>
-                            <option value="">Select...</option>
-                            <option value="none">None</option>
-                            <option value="beginner">Beginner (some basics)</option>
-                            <option value="intermediate">Intermediate (can build simple apps)</option>
-                            <option value="advanced">Advanced (professional experience)</option>
-                        </select>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Best investment I ever made. The AI tools alone saved me 200+ hours on my freelance projects."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah K.</strong>
+                        <span>Doctor → Med Tech Founder</span>
                     </div>
-                    <div class="form-group">
-                        <label>Which AI coding tools have you used? (select all that apply)</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" value="cursor" v-model="formData.aiTools"> Cursor</label>
-                            <label><input type="checkbox" value="claude" v-model="formData.aiTools"> Claude (Anthropic)</label>
-                            <label><input type="checkbox" value="gpt4" v-model="formData.aiTools"> GPT-4 (OpenAI)</label>
-                            <label><input type="checkbox" value="codex" v-model="formData.aiTools"> Codex</label>
-                            <label><input type="checkbox" value="lovable" v-model="formData.aiTools"> Lovable.dev</label>
-                            <label><input type="checkbox" value="v0" v-model="formData.aiTools"> v0.dev</label>
-                            <label><input type="checkbox" value="replit" v-model="formData.aiTools"> Replit AI</label>
-                            <label><input type="checkbox" value="none" v-model="formData.aiTools"> None yet</label>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"I was skeptical about the $590, but recovered it in my first week freelancing. Now it feels like I stole it."</p>
+                    <div class="testimonial-author">
+                        <strong>Alex R.</strong>
+                        <span>Marketing → Full Stack Developer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy #32: Guarantee Badges -->
+            <div class="guarantee-badge-container">
+                <div class="guarantee-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>100% Money Back Guarantee</h4>
+                        <p>Not admitted? Automatic refund. No questions asked.</p>
+                    </div>
+                </div>
+                <div class="guarantee-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>48 Hour Response Time</h4>
+                        <p>Fast review. Most applicants hear back within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-bar">
+                <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+            </div>
+            <p class="progress-text">
+                {{ progressMessage }}
+            </p>
+
+            <!-- Selective Banner -->
+            <div class="selective-banner">
+                <h3><i class="fas fa-shield-alt"></i> Why We Need Your Information</h3>
+                <p>Your responses help us verify whether we can legitimately help you achieve your goals. We want to ensure this program is the right fit for your specific situation and that you'll get real value from the AI coding approach.</p>
+            </div>
+
+            <!-- Strategy #33: Specific Outcomes -->
+            <div class="outcomes-grid">
+                <h3><i class="fas fa-trophy"></i> What You'll Achieve in 10 Days</h3>
+                <div class="outcome-items">
+                    <div class="outcome-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Build 3 portfolio apps (e-commerce, chatbot, dashboard)</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Master AI tools (Cursor, Claude, GPT Codex, v0.dev)</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-rocket"></i>
+                        <span>Deploy live apps that impress employers</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Create job-ready resume and portfolio</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy #34: Pain Points Addressed -->
+            <div class="pain-points-section">
+                <h3><i class="fas fa-heartbeat"></i> We Solve These Problems</h3>
+                <div class="pain-grid">
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">Traditional bootcamps take 6 months and cost $15K+</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">Learn in 10 days for $590</span>
+                    </div>
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">Coding syntax is overwhelming and confusing</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">AI writes the code for you</span>
+                    </div>
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">No time for full-time education</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">2 hours/day fits any schedule</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy #35: Social Proof Stats -->
+            <div class="stats-banner">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Students Worldwide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-label">Job Placement Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$94K</div>
+                    <div class="stat-label">Average Starting Salary</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9/5</div>
+                    <div class="stat-label">Student Rating</div>
+                </div>
+            </div>
+
+            <!-- Strategy #36: Bonus Stack -->
+            <div class="bonus-stack">
+                <h3><i class="fas fa-gift"></i> Included Free with Your Application</h3>
+                <div class="bonus-items">
+                    <div class="bonus-item">
+                        <div class="bonus-value">$299 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Lifetime Community Access</h4>
+                                <p>Private Slack with 500+ alumni and weekly Q&A sessions</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$199 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-video"></i>
+                            <div>
+                                <h4>All Course Recordings</h4>
+                                <p>Lifetime access to all lectures, workshops, and updates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$149 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-file-code"></i>
+                            <div>
+                                <h4>Premium Code Templates</h4>
+                                <p>50+ production-ready templates and starter kits</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$99 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-certificate"></i>
+                            <div>
+                                <h4>Certificate of Completion</h4>
+                                <p>Professional certificate for LinkedIn and resume</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-total">
+                    <span class="total-label">Total Bonus Value:</span>
+                    <span class="total-value">$746</span>
+                    <span class="total-price">Your Price: Just $590</span>
+                </div>
+            </div>
+
+            <!-- What Happens Next Timeline -->
+            <div class="timeline-section">
+                <h3><i class="fas fa-route"></i> What Happens Next</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Submit Application ($10)</h4>
+                            <p>Complete this form and pay $10 application fee. Takes 8-12 minutes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>AI + Human Review</h4>
+                            <p>Our admissions team evaluates your application within 24-48 hours.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h4>Acceptance Decision</h4>
+                            <p>If accepted, you'll receive an invitation to confirm your spot for $590.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h4>Program Starts</h4>
+                            <p>February cohort begins. Transform your career in 10 days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick FAQ -->
+            <div class="faq-section">
+                <h3><i class="fas fa-question-circle"></i> Common Questions</h3>
+                <div class="faq-item" @click="toggleFaq(0)">
+                    <div class="faq-question">
+                        <span>Is the $10 really refundable?</span>
+                        <i class="fas" :class="faqOpen[0] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[0]">
+                        Yes. If not admitted, your $10 is automatically refunded within 48 hours.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(1)">
+                    <div class="faq-question">
+                        <span>What if I'm accepted but change my mind?</span>
+                        <i class="fas" :class="faqOpen[1] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[1]">
+                        No obligation. The $590 is only charged if you confirm your spot.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(2)">
+                    <div class="faq-question">
+                        <span>Do I need coding experience?</span>
+                        <i class="fas" :class="faqOpen[2] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[2]">
+                        No. 60% of graduates started from zero. The program is designed for all levels.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(3)">
+                    <div class="faq-question">
+                        <span>What's the time commitment?</span>
+                        <i class="fas" :class="faqOpen[3] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[3]">
+                        2 hours per day for 10 days. Live sessions are recorded for flexibility.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
+                <!-- Basic Info - Always Visible -->
+                <div class="form-section" data-section="basic" v-show="sections.basic">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Basic Information</h2>
+                    <p class="section-description">Let's start with the essentials</p>
+
+                    <div class="form-group">
+                        <label for="form-name">Full Name</label>
+                        <input id="form-name" type="text" v-model="form.name" required placeholder="Jane Smith" @input="updateProgress">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-email">Email</label>
+                        <input id="form-email" type="email" v-model="form.email" required placeholder="jane@example.com" @input="updateProgress">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-phone">Phone</label>
+                        <input id="form-phone" type="tel" v-model="form.phone" required placeholder="+1 (555) 000-0000" @input="updateProgress">
+                    </div>
+                    
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('basic')" 
+                            :disabled="!isSectionComplete('basic')"
+                            v-if="!sections.background">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Background - Revealed after Basic -->
+                <div class="form-section" data-section="background" v-show="sections.background">
+                    <h2 class="section-title"><i class="fas fa-briefcase"></i> Your Background</h2>
+                    <p class="section-description">Helps us customize your experience</p>
+
+                    <div class="form-group">
+                        <label for="form-background">Current Status</label>
+                        <select id="form-background" v-model="form.background" required @change="updateProgress">
+                            <option value="">Select...</option>
+                            <option value="student">Student</option>
+                            <option value="professional">Working professional</option>
+                            <option value="career-changer">Switching careers</option>
+                            <option value="entrepreneur">Entrepreneur/Founder</option>
+                            <option value="freelancer">Freelancer</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <small class="field-helper">We've trained professionals, students, and career-changers successfully. Your background helps us customize your path.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-experience">Coding Experience</label>
+                        <select id="form-experience" v-model="form.experience" required @change="updateProgress">
+                            <option value="">Select...</option>
+                            <option value="never">Never written code</option>
+                            <option value="tried">Tried tutorials before</option>
+                            <option value="some">Know basics</option>
+                            <option value="intermediate">Can build simple apps</option>
+                            <option value="advanced">Professional developer</option>
+                        </select>
+                        <small class="field-helper">60% of our students start from zero. Those with experience learn to build 10x faster with AI.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-aitools">Which AI coding tools have you used? (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-cursor" v-model="form.aiTools" value="cursor" @change="updateProgress">
+                                <label for="tool-cursor">Cursor</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-claude" v-model="form.aiTools" value="claude" @change="updateProgress">
+                                <label for="tool-claude">Claude (Anthropic)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-gpt" v-model="form.aiTools" value="gpt-codex" @change="updateProgress">
+                                <label for="tool-gpt">GPT-4 / Codex</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-lovable" v-model="form.aiTools" value="lovable" @change="updateProgress">
+                                <label for="tool-lovable">Lovable.dev</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-v0" v-model="form.aiTools" value="v0" @change="updateProgress">
+                                <label for="tool-v0">v0.dev (Vercel)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-replit" v-model="form.aiTools" value="replit" @change="updateProgress">
+                                <label for="tool-replit">Replit AI</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-windsurf" v-model="form.aiTools" value="windsurf" @change="updateProgress">
+                                <label for="tool-windsurf">Windsurf (Codeium)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-bolt" v-model="form.aiTools" value="bolt" @change="updateProgress">
+                                <label for="tool-bolt">Bolt.new (StackBlitz)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tool-none" v-model="form.aiTools" value="none" @change="updateProgress">
+                                <label for="tool-none">Never used AI for coding</label>
+                            </div>
+                        </div>
+                        <small class="field-helper">We'll teach you ALL these tools from scratch. Checking "never used" is fine - you'll be ahead of 99% of developers after graduation.</small>
+                    </div>
+                    
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('background')" 
+                            :disabled="!isSectionComplete('background')"
+                            v-if="!sections.goals">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="benefit-callout" v-show="sections.background">
+                    <h4><i class="fas fa-chart-line"></i> Real Graduate Outcomes</h4>
+                    <p>Marcus (Mechanical Engineer) landed $145K at Tesla, Dr Sarah secured $165K at Epic Systems.</p>
+                </div>
+
+                <div class="future-pacing" v-show="sections.background">
+                    <h4>Picture This: 6 Months From Now</h4>
+                    <p>You're building apps with AI, working remotely, earning top salary. It started with 10 days and $590.</p>
                 </div>
 
                 <!-- Goals -->
-                <div class="form-section">
-                    <h3>Your Goals</h3>
-                    <div class="form-group">
-                        <label>Why are you applying now, and not before or in the future?</label>
-                        <textarea v-model="formData.whyNow" @input="updateProgress" rows="4" placeholder="e.g., Career change, need new skills for current role, want to build a product..." required></textarea>
-                        <small>Be specific. Most accepted applicants write 2 to 3 sentences.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>What do you want to build or achieve after this program?</label>
-                        <textarea v-model="formData.goals" @input="updateProgress" rows="4" placeholder="e.g., Build a SaaS product, get a developer job, automate my current work..." required></textarea>
-                    </div>
-                </div>
+                <div class="form-section" data-section="goals" v-show="sections.goals">
+                    <h2 class="section-title"><i class="fas fa-bullseye"></i> Your Goals</h2>
+                    <p class="section-description">Let's make this real</p>
 
-                <!-- Optional Professional Details -->
-                <div class="form-section optional-section">
-                    <h3>Optional: Help Us Evaluate Your Application</h3>
-                    <p class="section-note">These fields help us understand if we can best support your goals.</p>
                     <div class="form-group">
-                        <label>LinkedIn Profile</label>
-                        <input type="url" v-model="formData.linkedin" @input="updateProgress" placeholder="https://linkedin.com/in/yourprofile">
-                    </div>
-                    <div class="form-group">
-                        <label>Portfolio or GitHub</label>
-                        <input type="url" v-model="formData.portfolio" @input="updateProgress" placeholder="https://github.com/yourusername">
-                    </div>
-                    <div class="form-group">
-                        <label>Website</label>
-                        <input type="url" v-model="formData.website" @input="updateProgress" placeholder="https://yourwebsite.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Resume/CV (optional)</label>
-                        <input type="file" @change="handleFileUpload" accept=".pdf,.doc,.docx">
-                    </div>
-                </div>
-
-                <!-- Payment Section -->
-                <div class="payment-section">
-                    <h3><i class="fas fa-lock"></i> Application Fee: $10</h3>
-                    <p class="payment-note">
-                        This fee filters only serious applicants and allows us to thoroughly review each application. 
-                        The $10 will be deducted from your $590 program fee if accepted. 
-                        If not admitted, you'll receive an automatic refund within 48 hours.
-                    </p>
-                    
-                    <div class="pricing-breakdown">
-                        <div class="pricing-line">
-                            <span>Application Fee (Today)</span>
-                            <span class="price-amount">$10</span>
-                        </div>
-                        <div class="pricing-line total">
-                            <span>Program Fee (If Accepted & Confirmed)</span>
-                            <span class="price-amount">$580</span>
-                        </div>
-                        <div class="pricing-line total-final">
-                            <span><strong>Total Program Cost</strong></span>
-                            <span class="price-amount"><strong>$590</strong></span>
-                        </div>
+                        <label for="form-goal">Primary Goal</label>
+                        <select id="form-goal" v-model="form.goal" required @change="updateProgress">
+                            <option value="">Select...</option>
+                            <option value="job">Get a tech job</option>
+                            <option value="career-switch">Switch careers into tech</option>
+                            <option value="level-up">Level up my skills</option>
+                            <option value="startup">Build my own product/startup</option>
+                            <option value="freelance">Start freelancing</option>
+                            <option value="automate">Automate my current job</option>
+                            <option value="curiosity">Personal growth</option>
+                        </select>
                     </div>
 
-                    <!-- Card Input -->
                     <div class="form-group">
-                        <label>Card Information</label>
-                        <div id="card-element" class="card-input"></div>
-                        <div id="card-errors" role="alert" class="error-message"></div>
+                        <label for="form-motivation">Why are you applying now, and not before or in the future?</label>
+                        <textarea id="form-motivation" v-model="form.motivation" required placeholder="e.g., Career change, need new skills for current role, want to build a product..." @input="updateProgress"></textarea>
+                        <small class="field-helper">Be specific about your timing and goals. Most accepted applicants write 2-3 sentences about their current situation and what they want to achieve.</small>
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                        <span v-if="!isSubmitting">
-                            <i class="fas fa-lock"></i> Submit Application
-                        </span>
-                        <span v-else>
-                            <i class="fas fa-spinner fa-spin"></i> Processing...
-                        </span>
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('goals')" 
+                            :disabled="!isSectionComplete('goals')"
+                            v-if="!sections.commitment">
+                        Continue <i class="fas fa-arrow-right"></i>
                     </button>
-                    <p class="charge-notice">Your card will be charged $10.00 when you submit this application.</p>
+                </div>
+
+                <div class="benefit-callout" v-show="sections.goals">
+                    <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
+                    <p>Build E-commerce platform with payments, AI chatbot, and SaaS dashboard. Real apps that impress interviewers.</p>
+                </div>
+
+                <!-- Commitment -->
+                <div class="form-section" data-section="commitment" v-show="sections.commitment">
+                    <h2 class="section-title"><i class="fas fa-calendar-check"></i> Time Commitment</h2>
+                    <p class="section-description">2 hours/day for 10 days</p>
+
+                    <div class="form-group">
+                        <label for="form-commitment">Live Session Attendance</label>
+                        <select id="form-commitment" v-model="form.commitment" required @change="updateProgress">
+                            <option value="">Select...</option>
+                            <option value="yes-all">Yes, I can attend all sessions</option>
+                            <option value="yes-most">Yes, most sessions</option>
+                            <option value="flexible">Need to watch recordings</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-source">How did you find us?</label>
+                        <select id="form-source" v-model="form.source" required @change="updateProgress">
+                            <option value="">Select...</option>
+                            <option value="google">Google search</option>
+                            <option value="social">Social media</option>
+                            <option value="friend">Friend/family referral</option>
+                            <option value="ad">Advertisement</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('commitment')" 
+                            :disabled="!isSectionComplete('commitment')"
+                            v-if="!sections.professional">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="benefit-callout" v-show="sections.commitment">
+                    <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
+                    <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
+                </div>
+
+                <!-- Personalized Strength Preview -->
+                <div class="strength-preview" v-show="sections.commitment && form.goal && form.experience">
+                    <div class="preview-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Your Application Strength</h4>
+                    </div>
+                    <div class="strength-bars">
+                        <div class="strength-item">
+                            <span class="strength-label">Motivation & Clarity</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: motivationScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ motivationScore }}%</span>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-label">Experience Level</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: experienceScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ experienceScore }}%</span>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-label">Time Commitment</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: commitmentScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ commitmentScore }}%</span>
+                        </div>
+                    </div>
+                    <div class="strength-footer" v-if="overallScore >= 80">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Strong candidate profile! Your responses show {{ overallScore }}% alignment with successful graduates.</span>
+                    </div>
+                    <div class="strength-footer warning" v-else-if="overallScore >= 60">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Good start! Adding more detail to your responses will strengthen your application.</span>
+                    </div>
+                </div>
+
+                <!-- Optional Professional Fields -->
+                <div class="form-section optional-section" data-section="professional" v-show="sections.professional">
+                    <h2 class="section-title">
+                        <i class="fas fa-star"></i> Strengthen Your Application 
+                        <span class="optional-badge">Optional</span>
+                    </h2>
+                    <p class="section-description">Not required, but applicants who include these details have higher acceptance rates.</p>
+
+                    <div class="form-group">
+                        <label for="form-linkedin">
+                            LinkedIn Profile 
+                            <span class="optional-label">(Recommended)</span>
+                        </label>
+                        <input type="url" id="form-linkedin" v-model="form.linkedin" placeholder="https://linkedin.com/in/yourname" @input="updateProgress">
+                        <small class="field-helper">Helps us understand your professional background and career trajectory.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-portfolio">
+                            Portfolio / GitHub 
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <input type="url" id="form-portfolio" v-model="form.portfolio" placeholder="https://github.com/yourname or your portfolio URL" @input="updateProgress">
+                        <small class="field-helper">Show us any past work (coding projects, designs, writing, or other creative work).</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-website">
+                            Personal Website 
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <input type="url" id="form-website" v-model="form.website" placeholder="https://yourwebsite.com" @input="updateProgress">
+                        <small class="field-helper">Your blog, portfolio site, or professional website.</small>
+                    </div>
+
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('professional')" 
+                            v-if="!sections.payment">
+                        Continue to Payment <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="value-reminder">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</span>
+                </div>
+
+                <!-- Guarantee Stack - Before Payment -->
+                <div class="guarantee-stack" v-show="sections.payment">
+                    <h3><i class="fas fa-shield-check"></i> Our Guarantees to You</h3>
+                    <div class="guarantee-grid">
+                        <div class="guarantee-item">
+                            <i class="fas fa-undo-alt"></i>
+                            <h4>$10 Fully Refundable</h4>
+                            <p>Not admitted? Instant refund within 48 hours.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-ban"></i>
+                            <h4>No Hidden Charges</h4>
+                            <p>$590 only if you choose to confirm after acceptance.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-infinity"></i>
+                            <h4>Lifetime Access</h4>
+                            <p>All updates, community, and resources. Forever.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Job Support</h4>
+                            <p>Resume reviews, interview prep, job board access.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="trust-badges" v-show="sections.payment">
+                    <div class="trust-row">
+                        <div class="trust-badge">
+                            <i class="fas fa-lock"></i>
+                            <span>256-bit SSL Encrypted</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Bank-Level Security</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>PCI Compliant</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Privacy Protected</span>
+                        </div>
+                    </div>
+                    <p class="trust-statement">Trusted by 500+ students worldwide. Join alumni at Google, Apple, Meta, Tesla, Amazon.</p>
+                </div>
+
+                <!-- Payment -->
+                <div class="payment-section" data-section="payment" v-show="sections.payment">
+                    <h2><i class="fas fa-lock"></i> Application Fee: $10</h2>
+                    <div class="fee-explanation">
+                        <p><strong>Why $10?</strong> This ensures only serious applicants and allows us to review each application thoroughly. The $10 will be deducted from your $590 program fee if accepted. If not admitted, you'll receive an automatic refund within 48 hours.</p>
+                    </div>
+                    
+                    <div class="payment-info-compact">
+                        <p class="fee-explanation">
+                            Refundable if not admitted. Ensures serious applicants only.
+                        </p>
+                    </div>
+
+                    <!-- ROI Breakdown -->
+                    <div class="roi-breakdown">
+                        <h4><i class="fas fa-calculator"></i> Return on Investment</h4>
+                        <div class="roi-item">
+                            <span class="roi-label">Your Investment:</span>
+                            <span class="roi-value">$590</span>
+                        </div>
+                        <div class="roi-item">
+                            <span class="roi-label">Average Graduate Salary:</span>
+                            <span class="roi-value">$94,000/year</span>
+                        </div>
+                        <div class="roi-item highlight">
+                            <span class="roi-label">Investment as % of Salary:</span>
+                            <span class="roi-value">0.6%</span>
+                        </div>
+                        <p class="roi-note">If you land just ONE client or job, you've made 10x to 100x return on your $590 investment.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-card">Card Number</label>
+                        <input id="form-card" type="text" v-model="form.cardNumber" required placeholder="4242 4242 4242 4242" maxlength="19" @input="updateProgress">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="form-expiry">Expiry</label>
+                            <input id="form-expiry" type="text" v-model="form.expiry" required placeholder="MM/YY" maxlength="5" @input="updateProgress">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-cvc">CVC</label>
+                            <input id="form-cvc" type="text" v-model="form.cvc" required placeholder="123" maxlength="4" @input="updateProgress">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" :disabled="!isComplete">
+                        <i class="fas fa-paper-plane"></i> Submit Application
+                    </button>
+                    
+                    <p class="charge-notice">By clicking "Submit Application", your card will be charged $10.00</p>
+
+                    <!-- Risk Reversal Box -->
+                    <div class="risk-reversal-box">
+                        <div class="risk-icon">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div class="risk-content">
+                            <h4>Zero Risk Guarantee</h4>
+                            <p>Not admitted? Automatic $10 refund. No forms, no waiting. Accepted but changed your mind? No pressure. The $580 remaining program fee is only charged if you decide to join after acceptance.</p>
+                        </div>
+                    </div>
+
+                    <p class="guarantee">
+                        <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Bank-level security<br>
+                        <i class="fas fa-undo"></i> Full refund if not admitted · Processed within 48 hours
+                    </p>
                 </div>
             </form>
 
-            <!-- Social Proof Pings -->
-            <div class="social-proof-ping" v-for="(ping, index) in activePings" :key="index" :style="{ bottom: (index * 80 + 20) + 'px' }">
-                <div class="ping-content">
-                    <i class="fas fa-user-circle"></i>
-                    <div class="ping-text">
-                        <strong>{{ ping.name }}</strong> from {{ ping.location }} just applied
-                        <div class="urgency">{{ ping.urgency }}</div>
+            <!-- Exit Intent Popup -->
+            <div class="exit-intent-modal" v-if="showExitIntent" @click.self="showExitIntent = false">
+                <div class="exit-modal-content">
+                    <button class="exit-modal-close" @click="showExitIntent = false">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <h2><i class="fas fa-hand-paper"></i> Wait! Before You Go...</h2>
+                    
+                    <div class="exit-testimonial">
+                        <p class="exit-quote">"I was about to close the tab too. Best decision I made was completing this application. Now I'm at Tesla making $145K."</p>
+                        <p class="exit-author">Marcus J., Mechanical Engineer → Software Developer</p>
                     </div>
+                    
+                    <div class="exit-reminder">
+                        <h3>Remember:</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Only $10 to apply</li>
+                            <li><i class="fas fa-check-circle"></i> Fully refundable if not admitted</li>
+                            <li><i class="fas fa-check-circle"></i> Zero risk to you</li>
+                            <li><i class="fas fa-check-circle"></i> 3 spots left in February cohort</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="exit-cta-btn" @click="showExitIntent = false">
+                        <i class="fas fa-arrow-left"></i> Continue My Application
+                    </button>
+                    
+                    <p class="exit-disclaimer">Most accepted applicants complete the form in under 10 minutes</p>
+                </div>
+            </div>
+
+            <!-- Social Proof Ping -->
+            <div class="social-proof-ping" v-if="showPing">
+                <div class="ping-content">
+                    <div class="ping-avatar">{{ currentPing.initials }}</div>
+                    <div class="ping-text">
+                        <div class="ping-name">{{ currentPing.name }}</div>
+                        <div class="ping-action">{{ currentPing.action }}</div>
+                        <div class="ping-urgency">{{ currentPing.urgency }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading-overlay" v-if="loading">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Processing Your Application...</div>
+                    <p class="loading-subtext">Evaluating program fit</p>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="qualification-result" v-if="qualificationMessage">
+                <h3><i class="fas fa-check-circle"></i> Excellent! Strong Application</h3>
+                <p v-html="qualificationMessage"></p>
+                
+                <div class="next-steps">
+                    <h4>What Happens Next:</h4>
+                    <ul>
+                        <li>Confirmation email sent to {{ form.email }}</li>
+                        <li>Committee review within 24 to 48 hours</li>
+                        <li>Decision notification via email</li>
+                        <li>If admitted: 7-day window to pay $590 tuition</li>
+                        <li>If not admitted: Automatic $10 refund</li>
+                        <li>Cohort begins {{ cohort || 'February 3rd, 2026' }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script src="js/app.js"></script>
 </body>
 </html>
