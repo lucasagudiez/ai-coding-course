@@ -190,32 +190,40 @@ body {
 /* Form */
 .form-section {
     background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 1.5rem;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 .section-title {
     color: var(--primary-purple);
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
 }
 
 .section-description {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.625rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
@@ -232,13 +240,14 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
     color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
+    font-weight: 400;
 }
 
 .form-group input:focus,
@@ -246,7 +255,23 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-teal);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+/* Readonly inputs should look filled, not disabled */
+.form-group input:read-only {
+    background: rgba(162, 89, 255, 0.12);
+    border-color: rgba(162, 89, 255, 0.4);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: default;
+}
+
+.form-group input:read-only:focus {
+    background: rgba(162, 89, 255, 0.15);
+    border-color: rgba(162, 89, 255, 0.6);
+    box-shadow: 0 0 0 3px rgba(162, 89, 255, 0.15);
 }
 
 .form-group textarea {
@@ -258,7 +283,7 @@ body {
 .continue-btn {
     width: 100%;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--primary-purple) 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, var(--primary-purple) 0%, #8b3dff 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -266,28 +291,36 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
+    box-shadow: 0 4px 16px rgba(162, 89, 255, 0.3);
 }
 
 .continue-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(162, 89, 255, 0.4);
+    box-shadow: 0 8px 24px rgba(162, 89, 255, 0.45);
+    background: linear-gradient(135deg, #8b3dff 0%, var(--primary-purple) 100%);
+}
+
+.continue-btn:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .continue-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
+    background: rgba(162, 89, 255, 0.3);
+    box-shadow: none;
 }
 
 /* Continue Buttons */
 .continue-btn {
     width: 100%;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--primary-purple) 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, var(--primary-purple) 0%, #8b3dff 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -295,21 +328,29 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
+    box-shadow: 0 4px 16px rgba(162, 89, 255, 0.3);
 }
 
 .continue-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(162, 89, 255, 0.4);
+    box-shadow: 0 8px 24px rgba(162, 89, 255, 0.45);
+    background: linear-gradient(135deg, #8b3dff 0%, var(--primary-purple) 100%);
+}
+
+.continue-btn:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .continue-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
+    background: rgba(162, 89, 255, 0.3);
+    box-shadow: none;
 }
 
 /* Optional Section */
@@ -432,25 +473,75 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.checkbox-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.75rem;
+.checkbox-group, .checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
 }
 
+.checkbox-group label, .checkbox-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.checkbox-group label:hover, .checkbox-grid label:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.checkbox-group label input[type="checkbox"], .checkbox-grid label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-teal);
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* Legacy checkbox-item support */
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.checkbox-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .checkbox-item input[type="checkbox"] {
-    width: auto;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-teal);
+    flex-shrink: 0;
 }
 
 .checkbox-item label {
     margin: 0;
     cursor: pointer;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    flex: 1;
 }
 
 /* Benefit Callouts */

@@ -3,8 +3,25 @@
   "data": {
     "name": "Test User",
     "email": "test@example.com",
-    "page": "landing"
+    "cohort": "February 2026",
+    "phone": "+1234567890",
+    "status": "",
+    "codingExperience": "",
+    "aiTools": [],
+    "primaryGoal": "",
+    "whyNow": "",
+    "liveAttendance": "",
+    "referralSource": "",
+    "page": "application",
+    "progress": 40,
+    "sections": {
+      "contact": true,
+      "background": false,
+      "goals": false,
+      "commitment": false,
+      "payment": false
+    }
   },
-  "lastUpdated": "2026-01-21T04:15:06.860Z",
+  "lastUpdated": "2026-01-21T04:25:07.275Z",
   "createdAt": "2026-01-21T04:15:06.861Z"
 }
