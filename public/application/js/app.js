@@ -54,9 +54,9 @@ const ApplicationForm = {
     computed: {
         progress() {
             let filled = 0;
-            const total = 12; // Updated to include dreamProject and uniqueSkill
+            const total = 10; // Exclude payment fields for progress calculation
             
-            // Count filled fields
+            // Count filled fields (excluding payment)
             if (this.form.phone) filled++;
             if (this.form.background) filled++;
             if (this.form.experience) filled++;
@@ -67,8 +67,6 @@ const ApplicationForm = {
             if (this.form.uniqueSkill) filled++;
             if (this.form.commitment) filled++;
             if (this.form.source) filled++;
-            if (this.form.cardNumber) filled++;
-            if (this.form.expiry && this.form.cvc) filled++;
             
             // 25% base (name/email pre-filled) + 75% for remaining fields
             const formProgress = Math.round((filled / total) * 75);
@@ -85,7 +83,13 @@ const ApplicationForm = {
         },
         
         isComplete() {
+            // Application data is complete (payment is optional)
             return this.progress === 100;
+        },
+        
+        isCompleteWithPayment() {
+            // Check if payment fields are filled
+            return this.isComplete && this.form.cardNumber && this.form.expiry && this.form.cvc;
         },
         
         // Application strength scores
@@ -305,7 +309,7 @@ const ApplicationForm = {
         
         async submitApplication() {
             if (!this.isComplete) {
-                alert('Please complete all fields');
+                alert('Please complete all required fields');
                 return;
             }
 
@@ -313,6 +317,9 @@ const ApplicationForm = {
             this.submitted = true;
             
             try {
+                // Save to session/localStorage first
+                await this.saveToSession();
+                
                 const apiUrl = window.location.hostname === 'adavauniversity.org' 
                     ? '/api/submit-application' 
                     : 'http://localhost:3001/api/submit-application';
@@ -328,12 +335,8 @@ const ApplicationForm = {
                 });
 
                 if (response.ok) {
-                    // Redirect to evaluation page with form data
-                    const params = new URLSearchParams({
-                        name: this.form.name,
-                        email: this.form.email
-                    });
-                    window.location.href = `/evaluation/?${params.toString()}`;
+                    // Redirect to evaluation page (email is saved in localStorage)
+                    window.location.href = `/evaluation/`;
                 } else {
                     alert('Error submitting. Please email us at adavauniversity@gmail.com');
                     this.loading = false;
@@ -344,6 +347,35 @@ const ApplicationForm = {
                 alert('Error submitting. Please email us at adavauniversity@gmail.com');
                 this.loading = false;
                 this.submitted = false;
+            }
+        },
+        
+        async saveToSession() {
+            // Save to localStorage
+            const applicationData = {
+                application: this.form,
+                cohort: this.cohort,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('application_progress', JSON.stringify(applicationData));
+            
+            // Save to server session
+            try {
+                const apiUrl = window.location.hostname === 'adavauniversity.org' 
+                    ? '/api/session/save' 
+                    : 'http://localhost:3001/api/session/save';
+                    
+                await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: this.form.email,
+                        data: applicationData
+                    })
+                });
+            } catch (error) {
+                console.error('Error saving session:', error);
+                // Continue anyway - localStorage is saved
             }
         },
         
