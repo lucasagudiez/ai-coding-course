@@ -31,9 +31,9 @@ body {
 }
 
 .app-container {
-    max-width: 700px;
+    max-width: min(90vw, 900px);
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 1rem);
 }
 
 /* Header Logo */
