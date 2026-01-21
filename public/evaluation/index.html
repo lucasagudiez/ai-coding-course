@@ -56,20 +56,42 @@
             <div class="result-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h1 class="result-title">You've Been Pre-Selected!</h1>
-            <p class="result-subtitle">You're a top match for our February cohort</p>
+            <h1 class="result-title">{{ applicantData.name }}, You've Been Pre-Selected!</h1>
+            <p class="result-subtitle">You're a top match for our {{ applicantData.cohort }} cohort</p>
 
             <div class="result-reasons">
                 <h3>Why You're a Great Fit:</h3>
                 <ul>
-                    <li><i class="fas fa-star"></i> Your background aligns perfectly with our AI-first approach</li>
-                    <li><i class="fas fa-star"></i> Your goals match what our graduates achieve</li>
-                    <li><i class="fas fa-star"></i> You have the commitment level we look for</li>
+                    <li v-for="(reason, index) in personalizedReasons" :key="index">
+                        <i class="fas fa-star"></i> {{ reason }}
+                    </li>
                 </ul>
             </div>
 
+            <!-- Relevant Projects for Your Field -->
+            <div class="relevant-projects" v-if="relevantProjects.length > 0">
+                <h3>🚀 What You'll Build:</h3>
+                <div class="project-list">
+                    <div v-for="(project, index) in relevantProjects" :key="index" class="project-item">
+                        <i class="fas fa-code"></i> {{ project }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matched Testimonial -->
+            <div class="matched-testimonial" v-if="matchedTestimonial">
+                <h3>Someone Like You Succeeded:</h3>
+                <div class="testimonial-box">
+                    <p class="quote">"{{ matchedTestimonial.quote }}"</p>
+                    <div class="testimonial-author">
+                        <strong>{{ matchedTestimonial.name }}</strong>
+                        <span>{{ matchedTestimonial.background }} → {{ matchedTestimonial.afterAdava }}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="urgency-box">
-                <p><strong>⚡ Only 3 spots remaining</strong> in February cohort</p>
+                <p><strong>⚡ Only 3 spots remaining</strong> in {{ applicantData.cohort }} cohort</p>
                 <p>Reserve your spot now before they're gone</p>
             </div>
 

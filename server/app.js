@@ -8,18 +8,26 @@
  * - No SQL (uses CSV)
  * - CORS configured
  * - Request size limits
+ * - LLM personalization with OpenAI
  */
 
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
+const OpenAI = require('openai');
 
 const app = express();
 const PORT = 3001;
 const CSV_FILE = path.join(__dirname, '../data/submissions.csv');
 const APPLICATIONS_CSV = path.join(__dirname, '../data/applications.csv');
 const DATA_DIR = path.join(__dirname, '../data');
+
+// Initialize OpenAI
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -278,6 +286,125 @@ app.post('/api/submit-application', (req, res) => {
         });
     }
 });
+
+/**
+ * POST /api/personalize
+ * LLM-powered personalization for evaluation page
+ */
+app.post('/api/personalize', async (req, res) => {
+    try {
+        const { type, applicantData } = req.body;
+        
+        if (!type || !applicantData) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+        
+        let result;
+        
+        if (type === 'fit_reasons') {
+            result = await generateFitReasons(applicantData);
+        } else if (type === 'testimonial') {
+            result = await generateTestimonial(applicantData);
+        } else {
+            return res.status(400).json({ error: 'Invalid type' });
+        }
+        
+        res.json(result);
+    } catch (error) {
+        console.error('LLM personalization error:', error);
+        // Return fallback data if LLM fails
+        if (req.body.type === 'fit_reasons') {
+            res.json({
+                reasons: [
+                    `Your background gives you unique insights that will accelerate your learning`,
+                    `Your goals align perfectly with what our graduates achieve`,
+                    `You'll adopt the AI-first approach effectively`
+                ]
+            });
+        } else {
+            res.json({
+                testimonial: {
+                    name: 'Alex R.',
+                    background: 'Career Changer',
+                    afterAdava: 'Full-Stack Developer ($94K)',
+                    quote: 'The AI coding approach made it possible to switch careers in just 10 days.'
+                }
+            });
+        }
+    }
+});
+
+async function generateFitReasons(applicantData) {
+    const prompt = `You are an enthusiastic admissions counselor for Adava University's AI Coding Program.
+
+Applicant Profile:
+- Name: ${applicantData.name}
+- Current Role: ${applicantData.occupation || 'professional'}
+- Coding Experience: ${applicantData.experience || 'beginner'}
+- Primary Goal: ${applicantData.goal || 'career change'}
+
+Generate 3 specific, personalized reasons why this applicant is a PERFECT fit for our 10-day AI coding program.
+
+Requirements:
+1. Reference their SPECIFIC background/occupation
+2. Connect to what they'll learn (AI-powered coding, no syntax needed)
+3. Show how it aligns with their stated goal
+4. Be enthusiastic but authentic (not over-the-top salesy)
+5. Keep each reason to 1-2 sentences max
+
+Return ONLY a JSON object with this format:
+{
+  "reasons": [
+    "Reason 1 text here",
+    "Reason 2 text here",
+    "Reason 3 text here"
+  ]
+}`;
+
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 300
+    });
+    
+    const content = completion.choices[0].message.content;
+    return JSON.parse(content);
+}
+
+async function generateTestimonial(applicantData) {
+    const prompt = `Based on this applicant's profile, create a realistic testimonial from a past Adava graduate with a SIMILAR background.
+
+Applicant:
+- Occupation: ${applicantData.occupation || 'professional'}
+- Goal: ${applicantData.goal || 'career change'}
+- Experience: ${applicantData.experience || 'beginner'}
+
+Create a testimonial that:
+1. Has a similar starting point
+2. Shows realistic outcome (specific job title, recognizable company, salary range $85K-$165K)
+3. Mentions specific AI tools or projects
+4. Feels authentic, not generic
+5. Is brief (2-3 sentences max)
+
+Return ONLY a JSON object with this format:
+{
+  "name": "FirstName L.",
+  "background": "Previous profession",
+  "afterAdava": "Current role at Company ($XXK)",
+  "quote": "1-2 sentence testimonial"
+}`;
+
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.8,
+        max_tokens: 200
+    });
+    
+    const content = completion.choices[0].message.content;
+    return { testimonial: JSON.parse(content) };
+}
 
 // 404 handler
 app.use((req, res) => {

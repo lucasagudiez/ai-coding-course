@@ -1,423 +1,222 @@
-// Application Form Logic
-const ApplicationForm = {
-    data() {
-        return {
-            loading: false,
-            submitted: false,
-            qualificationMessage: '',
+// Initialize Vue app
+new Vue({
+    el: '#app',
+    data: {
+        spotsRemaining: 3,
+        showStickyBar: false,
+        showExitIntent: false,
+        isSubmitting: false,
+        progress: 25, // Start at 25% (name/email/cohort pre-filled)
+        
+        // Section visibility for progressive disclosure
+        sections: {
+            contact: true,      // Always visible first
+            background: false,
+            goals: false,
+            commitment: false,
+            payment: false
+        },
+        
+        // Form data
+        formData: {
+            name: '',
+            email: '',
             cohort: '',
-            spotsRemaining: 3,  // Only 3 spots left - high scarcity
-            showPing: false,
-            currentPing: {},
-            showExitIntent: false,  // Exit intent popup
-            showStickyBar: false,   // Sticky urgency header
-            faqOpen: [false, false, false, false], // FAQ state
-            // Dynamic counters
-            graduateCount: 500,
-            employedCount: 87,
-            avgSalary: 94,
-            // Section visibility for progressive disclosure
-            sections: {
-                basic: true,      // Always visible
-                background: false,
-                goals: false,
-                commitment: false,
-                professional: false, // New optional section
-                payment: false
-            },
-            form: {
-                name: '',
-                email: '',
-                phone: '',
-                background: '',
-                experience: '',
-                aiTools: [],
-                goal: '',
-                motivation: '',
-                commitment: '',
-                source: '',
-                cohort: '',
-                // New optional professional fields
-                linkedin: '',
-                portfolio: '',
-                website: '',
-                // Payment fields
-                cardNumber: '',
-                expiry: '',
-                cvc: ''
-            }
-        };
-    },
-    
-    computed: {
-        progress() {
-            let filled = 0;
-            const total = 10; // Adjusted for correct calculation
-            
-            // Count filled fields
-            if (this.form.phone) filled++;
-            if (this.form.background) filled++;
-            if (this.form.experience) filled++;
-            if (this.form.aiTools.length > 0) filled++;
-            if (this.form.goal) filled++;
-            if (this.form.motivation) filled++;
-            if (this.form.commitment) filled++;
-            if (this.form.source) filled++;
-            if (this.form.cardNumber) filled++;
-            if (this.form.expiry && this.form.cvc) filled++;
-            
-            // 25% base (name/email pre-filled) + 75% for remaining fields
-            const formProgress = Math.round((filled / total) * 75);
-            return 25 + formProgress;
+            phone: '',
+            status: '',
+            codingExperience: '',
+            aiTools: [],
+            primaryGoal: '',
+            whyNow: '',
+            liveAttendance: '',
+            referralSource: ''
         },
         
-        progressMessage() {
-            const p = this.progress;
-            if (p <= 25) return "You're 25% complete - great start! (Most applicants spend 8-12 minutes on this form)";
-            if (p <= 50) return "Halfway there! You're investing in your future. (Accepted applicants average 87% completion rate)";
-            if (p <= 75) return "Almost done! You've put in significant effort - finishing now maximizes your chances.";
-            if (p < 100) return "You're nearly complete! (Applicants who finish have 3x higher acceptance rates)";
-            return "Application complete! You're in the top tier of applicants.";
-        },
+        // Social proof pings
+        activePings: [],
         
-        isComplete() {
-            return this.progress === 100;
-        },
-        
-        // Application strength scores
-        motivationScore() {
-            const len = (this.form.motivation || '').length;
-            if (len >= 200) return 95;
-            if (len >= 150) return 85;
-            if (len >= 100) return 75;
-            if (len >= 50) return 60;
-            return 40;
-        },
-        
-        experienceScore() {
-            const exp = this.form.experience;
-            if (exp === 'advanced') return 95;
-            if (exp === 'intermediate') return 85;
-            if (exp === 'some') return 75;
-            if (exp === 'tried') return 70;
-            if (exp === 'never') return 80; // Beginners are welcome
-            return 50;
-        },
-        
-        commitmentScore() {
-            const comm = this.form.commitment;
-            if (comm === 'yes-all') return 95;
-            if (comm === 'yes-most') return 75;
-            return 40;
-        },
-        
-        overallScore() {
-            if (!this.form.goal || !this.form.experience) return 0;
-            return Math.round((this.motivationScore + this.experienceScore + this.commitmentScore) / 3);
-        }
+        // Graduate counter
+        graduateCount: 500,
+        employedCount: 87,
+        avgSalary: 94
     },
     
     mounted() {
-        const params = new URLSearchParams(window.location.search);
-        this.cohort = params.get('cohort') || '';
-        this.form.name = params.get('name') || '';
-        this.form.email = params.get('email') || '';
-        
-        // Load saved progress from localStorage
-        this.loadProgress();
-        
-        // Animate counters on load
-        this.animateCounters();
+        // Get URL parameters (passed from landing page)
+        const urlParams = new URLSearchParams(window.location.search);
+        this.formData.cohort = urlParams.get('cohort') || 'February 2026';
+        this.formData.name = urlParams.get('name') || '';
+        this.formData.email = urlParams.get('email') || '';
         
         // Start social proof pings
         this.startSocialProof();
         
-        // Exit intent detection
-        this.initExitIntent();
+        // Animate counters
+        this.animateCounters();
         
-        // Sticky header on scroll
-        this.initStickyHeader();
+        // Setup scroll listener for sticky bar
+        window.addEventListener('scroll', this.handleScroll);
         
-        // Auto-save progress every 10 seconds
-        setInterval(() => {
-            this.saveProgress();
-        }, 10000);
+        // Setup exit intent
+        document.addEventListener('mouseleave', this.handleMouseLeave);
     },
     
     methods: {
         updateProgress() {
-            // Auto-progress tracking
-            this.saveProgress(); // Save on every update
-        },
-        
-        saveProgress() {
-            // Save form data to localStorage (excluding payment info)
-            const progressData = {
-                form: {
-                    background: this.form.background,
-                    experience: this.form.experience,
-                    aiTools: this.form.aiTools,
-                    goal: this.form.goal,
-                    motivation: this.form.motivation,
-                    commitment: this.form.commitment,
-                    source: this.form.source,
-                    linkedin: this.form.linkedin,
-                    portfolio: this.form.portfolio,
-                    website: this.form.website,
-                    phone: this.form.phone
-                },
-                sections: this.sections,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('adava_application_progress', JSON.stringify(progressData));
-        },
-        
-        loadProgress() {
-            const saved = localStorage.getItem('adava_application_progress');
-            if (!saved) return;
+            // Calculate progress based on filled fields
+            let filled = 3; // name, email, cohort (pre-filled)
+            let total = 10; // Total required fields
             
-            try {
-                const data = JSON.parse(saved);
-                // Only load if saved within last 24 hours
-                const hoursSince = (Date.now() - data.timestamp) / (1000 * 60 * 60);
-                if (hoursSince < 24) {
-                    // Restore form data
-                    Object.assign(this.form, data.form);
-                    // Restore section visibility
-                    Object.assign(this.sections, data.sections);
-                }
-            } catch (e) {
-                console.error('Failed to load progress:', e);
-            }
-        },
-        
-        animateCounters() {
-            // Animate graduate count from 0 to 500
-            this.animateNumber('graduateCount', 0, 500, 2000);
-            // Animate employed % from 0 to 87
-            this.animateNumber('employedCount', 0, 87, 2000);
-            // Animate salary from 0 to 94
-            this.animateNumber('avgSalary', 0, 94, 2000);
-        },
-        
-        animateNumber(prop, start, end, duration) {
-            const startTime = Date.now();
-            const range = end - start;
+            if (this.formData.phone) filled++;
+            if (this.formData.status) filled++;
+            if (this.formData.codingExperience) filled++;
+            if (this.formData.aiTools.length > 0) filled++;
+            if (this.formData.primaryGoal) filled++;
+            if (this.formData.whyNow) filled++;
+            if (this.formData.liveAttendance) filled++;
+            if (this.formData.referralSource) filled++;
             
-            const timer = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                // Easing function (easeOutQuad)
-                const easeProgress = progress * (2 - progress);
-                this[prop] = Math.floor(start + range * easeProgress);
-                
-                if (progress >= 1) {
-                    clearInterval(timer);
-                    this[prop] = end;
-                }
-            }, 16); // ~60fps
+            this.progress = Math.max(25, Math.round((filled / total) * 100));
         },
         
-        toggleFaq(index) {
-            this.faqOpen[index] = !this.faqOpen[index];
-            // Force Vue reactivity
-            this.$set(this.faqOpen, index, this.faqOpen[index]);
-        },
-        
-        // Progressive section unlocking
-        completeSection(currentSection) {
-            const sectionOrder = ['basic', 'background', 'goals', 'commitment', 'professional', 'payment'];
-            const currentIndex = sectionOrder.indexOf(currentSection);
-            if (currentIndex < sectionOrder.length - 1) {
+        completeSection(sectionName) {
+            // Mark current section as complete and show next
+            const sectionOrder = ['contact', 'background', 'goals', 'commitment', 'payment'];
+            const currentIndex = sectionOrder.indexOf(sectionName);
+            
+            if (currentIndex >= 0 && currentIndex < sectionOrder.length - 1) {
                 const nextSection = sectionOrder[currentIndex + 1];
                 this.sections[nextSection] = true;
                 
-                // Scroll to next section with smooth animation
+                // Scroll to the next section
                 this.$nextTick(() => {
-                    setTimeout(() => {
-                        const nextEl = document.querySelector(`[data-section="${nextSection}"]`);
-                        if (nextEl) {
-                            // Scroll with offset for better visibility
-                            const yOffset = -20; // 20px from top
-                            const y = nextEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                            window.scrollTo({ top: y, behavior: 'smooth' });
-                        }
-                    }, 150); // Small delay for Vue to render
+                    const nextElement = document.querySelector(`[data-section="${nextSection}"]`) || 
+                                      document.querySelector('.form-section:not([v-show])');
+                    if (nextElement) {
+                        setTimeout(() => {
+                            nextElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 100);
+                    }
                 });
             }
         },
         
-        // Check if section is complete
-        isSectionComplete(section) {
-            switch(section) {
-                case 'basic':
-                    return this.form.name && this.form.email && this.form.phone;
-                case 'background':
-                    return this.form.background && this.form.experience && this.form.aiTools.length > 0;
-                case 'goals':
-                    return this.form.goal && this.form.motivation;
-                case 'commitment':
-                    return this.form.commitment && this.form.source;
-                case 'professional':
-                    return true; // Optional, always complete
-                case 'payment':
-                    return this.form.cardNumber && this.form.expiry && this.form.cvc;
-                default:
-                    return false;
+        async submitApplication() {
+            if (this.isSubmitting) return;
+            
+            this.isSubmitting = true;
+            
+            try {
+                // Submit to backend
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:3001/api/application'
+                    : '/api/application';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...this.formData,
+                        amount: 10 // $10 application fee
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Application submission failed');
+                }
+                
+                const result = await response.json();
+                
+                // Redirect to evaluation page with query params
+                window.location.href = `/evaluation/?name=${encodeURIComponent(this.formData.name)}&cohort=${encodeURIComponent(this.formData.cohort)}&occupation=${encodeURIComponent(this.formData.status)}&experience=${encodeURIComponent(this.formData.codingExperience)}&goal=${encodeURIComponent(this.formData.primaryGoal)}`;
+                
+            } catch (error) {
+                alert('Error: ' + error.message);
+                this.isSubmitting = false;
+            }
+        },
+        
+        scrollToPayment() {
+            const paymentSection = document.querySelector('.payment-section');
+            if (paymentSection) {
+                paymentSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        
+        handleScroll() {
+            this.showStickyBar = window.scrollY > 300;
+        },
+        
+        handleMouseLeave(e) {
+            // Show exit intent if mouse leaves top of page and user hasn't submitted
+            if (e.clientY <= 0 && !this.isSubmitting && !this.showExitIntent) {
+                this.showExitIntent = true;
             }
         },
         
         startSocialProof() {
-            const pings = [
-                { name: 'Sarah M.', initials: 'SM', action: 'just applied from New York', urgency: 'Only 3 spots remain' },
-                { name: 'Michael K.', initials: 'MK', action: 'just applied from San Francisco', urgency: '3 seats left in cohort' },
-                { name: 'Jennifer L.', initials: 'JL', action: 'just applied from Austin', urgency: 'February cohort nearly full' },
-                { name: 'David P.', initials: 'DP', action: 'just applied from Seattle', urgency: '3 spots remaining' },
-                { name: 'Lisa R.', initials: 'LR', action: 'just applied from Boston', urgency: 'Last 3 seats available' },
-                { name: 'James T.', initials: 'JT', action: 'just applied from Chicago', urgency: 'Only 3 spots left' }
+            const names = ['Sarah M.', 'David K.', 'Jessica L.', 'Michael T.', 'Emily R.', 'James W.', 'Ashley P.', 'Chris D.'];
+            const locations = ['San Francisco', 'New York', 'Austin', 'Seattle', 'Boston', 'Chicago', 'Los Angeles', 'Denver'];
+            const urgencyMessages = [
+                'Only 3 spots remain!',
+                'Last 3 seats available!',
+                '3 seats left in February cohort'
             ];
             
-            const showRandomPing = () => {
-                this.currentPing = pings[Math.floor(Math.random() * pings.length)];
-                this.showPing = true;
-                
-                setTimeout(() => {
-                    this.showPing = false;
-                }, 5000);
-            };
-            
-            // Show first ping after 10 seconds
-            setTimeout(showRandomPing, 10000);
-            
-            // Then every 20-40 seconds
             setInterval(() => {
-                const delay = 20000 + Math.random() * 20000;
-                setTimeout(showRandomPing, delay);
-            }, 40000);
-        },
-        
-        async submitApplication() {
-            if (!this.isComplete) {
-                alert('Please complete all fields');
-                return;
-            }
-
-            this.loading = true;
-            this.submitted = true;
-            
-            try {
-                const apiUrl = window.location.hostname === 'adavauniversity.org' 
-                    ? '/api/submit-application' 
-                    : 'http://localhost:3001/api/submit-application';
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        ...this.form,
-                        cohort: this.cohort,
-                        aiTools: this.form.aiTools.join(', ')
-                    })
-                });
-
-                if (response.ok) {
-                    await this.generateQualification();
-                } else {
-                    alert('Error submitting. Please email us at adavauniversity@gmail.com');
-                    this.loading = false;
-                    this.submitted = false;
+                if (this.activePings.length < 3) {
+                    const ping = {
+                        name: names[Math.floor(Math.random() * names.length)],
+                        location: locations[Math.floor(Math.random() * locations.length)],
+                        urgency: urgencyMessages[Math.floor(Math.random() * urgencyMessages.length)]
+                    };
+                    
+                    this.activePings.push(ping);
+                    
+                    setTimeout(() => {
+                        this.activePings.shift();
+                    }, 5000);
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error submitting. Please email us at adavauniversity@gmail.com');
-                this.loading = false;
-                this.submitted = false;
-            }
+            }, 8000);
         },
         
-        async generateQualification() {
-            await new Promise(resolve => setTimeout(resolve, 3000));
+        animateCounters() {
+            // Animate graduate counter
+            const targetGraduate = 500;
+            const targetEmployed = 87;
+            const targetSalary = 94;
             
-            let message = `Based on your application, you're an <strong>excellent match</strong> for our February cohort. Here's why:<br><br>`;
+            let currentGraduate = 0;
+            let currentEmployed = 0;
+            let currentSalary = 0;
             
-            const reasons = [];
+            const duration = 2000;
+            const steps = 60;
+            const interval = duration / steps;
             
-            if (this.form.background === 'professional') {
-                reasons.push('<strong>Professional Experience:</strong> You understand real problems. We\'ll show you how to solve them with AI - 10x faster than traditional coding.');
-            } else if (this.form.background === 'career-changer') {
-                reasons.push('<strong>Career Transition:</strong> Learn AI-powered development in weeks, not years. Skip the traditional learning curve entirely.');
-            } else if (this.form.background === 'student') {
-                reasons.push('<strong>Student Advantage:</strong> You\'ll graduate with skills most developers won\'t have for years. AI coding is the future.');
-            } else if (this.form.background === 'entrepreneur') {
-                reasons.push('<strong>Founder Mindset:</strong> Build MVPs 10x faster. Validate ideas in days using AI to generate your entire codebase.');
-            }
-            
-            if (this.form.experience === 'never' || this.form.experience === 'tried') {
-                reasons.push('<strong>Clean Slate:</strong> Perfect. You\'ll learn AI-powered development from day one. No bad coding habits to unlearn.');
-            } else if (this.form.experience === 'advanced') {
-                reasons.push('<strong>Technical Background:</strong> Your knowledge + AI tools = 10-20x productivity. You already think like a developer.');
-            } else {
-                reasons.push('<strong>Perfect Starting Point:</strong> Enough foundation to understand concepts. Not stuck in old coding patterns.');
-            }
-            
-            if (this.form.goal === 'job' || this.form.goal === 'career-switch') {
-                reasons.push('<strong>Career Goals:</strong> Companies are desperately hiring AI-augmented developers. Our grads average $94K starting salaries.');
-            } else if (this.form.goal === 'startup') {
-                reasons.push('<strong>Startup Path:</strong> AI cuts development time by 80%. Ship in weeks what used to take months.');
-            }
-            
-            message += reasons.slice(0, 3).join('<br><br>');
-            message += '<br><br><strong style="color: #14b8a6;">Preliminary Assessment: Strong Candidate</strong><br>You\'re exactly who we look for. Expect your decision within 24-48 hours.';
-            
-            this.qualificationMessage = message;
-            this.loading = false;
-        },
-        
-        initExitIntent() {
-            let exitIntentShown = false;
-            
-            document.addEventListener('mouseleave', (e) => {
-                // Only trigger if mouse leaves from top of page and not already shown and form not submitted
-                if (e.clientY < 10 && !exitIntentShown && !this.submitted && this.progress > 25) {
-                    this.showExitIntent = true;
-                    exitIntentShown = true;
+            const timer = setInterval(() => {
+                currentGraduate += targetGraduate / steps;
+                currentEmployed += targetEmployed / steps;
+                currentSalary += targetSalary / steps;
+                
+                this.graduateCount = Math.min(Math.floor(currentGraduate), targetGraduate);
+                this.employedCount = Math.min(Math.floor(currentEmployed), targetEmployed);
+                this.avgSalary = Math.min(Math.floor(currentSalary), targetSalary);
+                
+                if (currentGraduate >= targetGraduate) {
+                    clearInterval(timer);
+                    this.graduateCount = targetGraduate;
+                    this.employedCount = targetEmployed;
+                    this.avgSalary = targetSalary;
                 }
-            });
-        },
-        
-        initStickyHeader() {
-            window.addEventListener('scroll', () => {
-                // Show sticky bar after scrolling down 300px and form not submitted
-                this.showStickyBar = window.scrollY > 300 && !this.submitted;
-            });
-        },
-        
-        scrollToPayment() {
-            // Scroll to payment section or reveal it
-            if (!this.sections.payment) {
-                // If payment not visible, complete all sections to reveal it
-                this.sections.background = true;
-                this.sections.goals = true;
-                this.sections.commitment = true;
-                this.sections.professional = true;
-                this.sections.payment = true;
-            }
-            
-            setTimeout(() => {
-                const paymentSection = document.querySelector('.payment-section');
-                if (paymentSection) {
-                    paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 100);
+            }, interval);
         }
+    },
+    
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
+        document.removeEventListener('mouseleave', this.handleMouseLeave);
     }
-};
-
-// Initialize Vue app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new Vue({
-        el: '#app',
-        ...ApplicationForm
-    });
 });

@@ -41,3 +41,5 @@ playwright-report/
 # Archive directory (old assets, keep local only)
 archive/
 
+api_keys.yaml
+.env
