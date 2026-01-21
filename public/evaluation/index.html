@@ -58,6 +58,12 @@
 
         <!-- Result Phase -->
         <div class="result-container" v-if="showResult">
+            <!-- Scarcity reminder -->
+            <div class="scarcity-reminder" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 12px 20px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
+                <strong><i class="fas fa-exclamation-circle"></i> 3 Seats Remaining in February Cohort</strong>
+                <span style="margin-left: 15px; opacity: 0.9;">Applications close in 2 days</span>
+            </div>
+            
             <div class="result-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
@@ -114,8 +120,8 @@
                 <div v-for="(item, index) in nextSteps" :key="index" class="timeline-item">
                     <div class="timeline-number">{{ index + 1 }}</div>
                     <div class="timeline-content">
-                        <h4>{{ item.step }}</h4>
-                        <p>{{ item.time }}</p>
+                        <h4>{{ item.step || item.title }}</h4>
+                        <p>{{ item.time || item.description }}</p>
                     </div>
                 </div>
             </div>
@@ -124,10 +130,10 @@
                 <p><strong>Program starts:</strong> February 3rd, 2026</p>
                 <p><strong>Spots remaining:</strong> Only 3 of 30 seats left</p>
                 <button class="reserve-btn" @click="goToReservation">
-                    Secure Your Spot Now ($580)
+                    Secure Your Spot Now
                     <i class="fas fa-arrow-right"></i>
                 </button>
-                <p class="cta-note">Your $10 application fee will be deducted from the total</p>
+                <p class="cta-note">Reserve your seat with $580 (your $10 application fee will be deducted)</p>
             </div>
 
             <div class="guarantee-reminder">
