@@ -1,0 +1,534 @@
+/* Application Form Styles */
+
+:root {
+    --primary-purple: #a259ff;
+    --primary-teal: #14b8a6;
+    --bg-dark: #0f0f1a;
+    --bg-card: rgba(26, 26, 46, 0.8);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Scarcity Bar */
+.scarcity-bar {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+}
+
+.scarcity-bar strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.scarcity-bar small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Header */
+.app-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.app-header h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-header .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Cards */
+.value-stack,
+.comparison-box,
+.selective-banner,
+.payment-section {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.value-stack h3,
+.comparison-box h4,
+.selective-banner h3 {
+    color: var(--primary-teal);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.value-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.value-item:last-of-type {
+    border-bottom: none;
+}
+
+.value-price {
+    color: var(--primary-teal);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.value-total {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.strike {
+    text-decoration: line-through;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+.big-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-teal);
+    margin: 0.5rem 0;
+}
+
+/* Comparison */
+.comparison-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.comparison-item .label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comparison-item .price.winner {
+    color: var(--primary-teal);
+    font-weight: 700;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.progress-text .highlight {
+    color: var(--primary-teal);
+    font-weight: 600;
+}
+
+/* Form */
+.form-section {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    color: var(--primary-purple);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-teal);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: auto;
+}
+
+.checkbox-item label {
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Benefit Callouts */
+.benefit-callout,
+.future-pacing {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(162, 89, 255, 0.1) 100%);
+    border: 1px solid rgba(20, 184, 166, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.benefit-callout h4,
+.future-pacing h4 {
+    color: var(--primary-teal);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.benefit-callout p,
+.future-pacing p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Payment Section */
+.payment-section {
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+    border: 2px solid var(--primary-teal);
+}
+
+.payment-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.payment-info .price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-teal);
+    margin: 1rem 0;
+}
+
+.payment-info .description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.payment-breakdown {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.payment-breakdown p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.payment-breakdown .highlight {
+    color: var(--primary-teal);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, #0d9488 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(20, 184, 166, 0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.guarantee {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+    line-height: 1.8;
+}
+
+/* Loading & Result */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 15, 26, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-teal);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.loading-subtext {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.qualification-result {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--primary-teal);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+}
+
+.qualification-result h3 {
+    color: var(--primary-teal);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.next-steps {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.next-steps h4 {
+    color: var(--primary-purple);
+    margin-bottom: 1rem;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding: 0;
+}
+
+.next-steps li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.next-steps li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-teal);
+    font-weight: 700;
+}
+
+/* Social Proof Pings */
+.social-proof-ping {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: slideInUp 0.5s ease;
+    z-index: 100;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.ping-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ping-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.ping-text {
+    flex: 1;
+}
+
+.ping-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.ping-action {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 1rem;
+    }
+    
+    .value-stack,
+    .comparison-box,
+    .selective-banner,
+    .payment-section,
+    .form-section {
+        padding: 1.5rem;
+    }
+    
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .social-proof-ping {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+}
