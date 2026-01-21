@@ -10,34 +10,53 @@ const fs = require('fs');
 const path = require('path');
 
 // Simple component registry - just paths and selectors
+// Each component can be tested across multiple pages (application, evaluation, reservation)
 const COMPONENTS = {
     'scarcity-bar': {
         standalone: '/components/standalone/scarcity-bar.html',
-        integrated: [{ page: '/application/', selector: '.scarcity-bar' }]
+        integrated: [
+            { page: '/application/', selector: '.scarcity-bar' }
+        ]
     },
     'graduate-counter': {
         standalone: '/components/standalone/graduate-counter.html',
-        integrated: [{ page: '/application/', selector: '.graduate-counter' }]
+        integrated: [
+            { page: '/application/', selector: '.graduate-counter' }
+        ]
     },
     'authority-logos': {
         standalone: '/components/standalone/authority-logos.html',
-        integrated: [{ page: '/application/', selector: '.authority-logos' }]
+        integrated: [
+            { page: '/application/', selector: '.authority-logos' }
+        ]
     },
     'value-stack': {
         standalone: '/components/standalone/value-stack.html',
-        integrated: [{ page: '/application/', selector: '.value-stack' }]
+        integrated: [
+            { page: '/application/', selector: '.value-stack' },
+            { page: '/reservation/', selector: '.value-stack' }
+        ]
     },
     'testimonial-carousel': {
         standalone: '/components/standalone/testimonial-carousel.html',
-        integrated: [{ page: '/application/', selector: '.testimonial-carousel' }]
+        integrated: [
+            { page: '/application/', selector: '.testimonial-carousel' },
+            { page: '/reservation/', selector: '.testimonial-carousel' }
+        ]
     },
     'guarantee-badges': {
         standalone: '/components/standalone/guarantee-badges.html',
-        integrated: [{ page: '/application/', selector: '.guarantee-badge-container' }]
+        integrated: [
+            { page: '/application/', selector: '.guarantee-badge-container' },
+            { page: '/reservation/', selector: '.guarantee-badge-container' }
+        ]
     },
     'faq-section': {
         standalone: '/components/standalone/faq-section.html',
-        integrated: [{ page: '/application/', selector: '.faq-section' }]
+        integrated: [
+            { page: '/application/', selector: '.faq-section' },
+            { page: '/reservation/', selector: '.faq-section' }
+        ]
     }
 };
 
