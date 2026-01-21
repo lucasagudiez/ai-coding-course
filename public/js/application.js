@@ -9,6 +9,8 @@ const ApplicationForm = {
             spotsRemaining: 3,  // Only 3 spots left - high scarcity
             showPing: false,
             currentPing: {},
+            showExitIntent: false,  // Exit intent popup
+            showStickyBar: false,   // Sticky urgency header
             // Section visibility for progressive disclosure
             sections: {
                 basic: true,      // Always visible
@@ -86,6 +88,12 @@ const ApplicationForm = {
         
         // Start social proof pings
         this.startSocialProof();
+        
+        // Exit intent detection
+        this.initExitIntent();
+        
+        // Sticky header on scroll
+        this.initStickyHeader();
     },
     
     methods: {
@@ -235,6 +243,44 @@ const ApplicationForm = {
             
             this.qualificationMessage = message;
             this.loading = false;
+        },
+        
+        initExitIntent() {
+            let exitIntentShown = false;
+            
+            document.addEventListener('mouseleave', (e) => {
+                // Only trigger if mouse leaves from top of page and not already shown and form not submitted
+                if (e.clientY < 10 && !exitIntentShown && !this.submitted && this.progress > 25) {
+                    this.showExitIntent = true;
+                    exitIntentShown = true;
+                }
+            });
+        },
+        
+        initStickyHeader() {
+            window.addEventListener('scroll', () => {
+                // Show sticky bar after scrolling down 300px and form not submitted
+                this.showStickyBar = window.scrollY > 300 && !this.submitted;
+            });
+        },
+        
+        scrollToPayment() {
+            // Scroll to payment section or reveal it
+            if (!this.sections.payment) {
+                // If payment not visible, complete all sections to reveal it
+                this.sections.background = true;
+                this.sections.goals = true;
+                this.sections.commitment = true;
+                this.sections.professional = true;
+                this.sections.payment = true;
+            }
+            
+            setTimeout(() => {
+                const paymentSection = document.querySelector('.payment-section');
+                if (paymentSection) {
+                    paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
         }
     }
 };

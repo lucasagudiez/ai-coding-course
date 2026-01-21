@@ -16,6 +16,17 @@
 </head>
 <body>
     <div id="app">
+        <!-- Sticky Urgency Header -->
+        <div class="sticky-urgency-bar" v-show="showStickyBar">
+            <div class="sticky-content">
+                <span class="sticky-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="sticky-text">
+                    <strong>{{ spotsRemaining }} Seats Left</strong> in February Cohort · Applications close in 2 days
+                </span>
+                <button class="sticky-btn" @click="scrollToPayment">Secure Spot Now</button>
+            </div>
+        </div>
+
         <div class="app-container">
             <!-- Scarcity Bar -->
             <div class="scarcity-bar">
@@ -409,6 +420,38 @@
                     </p>
                 </div>
             </form>
+
+            <!-- Exit Intent Popup -->
+            <div class="exit-intent-modal" v-if="showExitIntent" @click.self="showExitIntent = false">
+                <div class="exit-modal-content">
+                    <button class="exit-modal-close" @click="showExitIntent = false">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <h2><i class="fas fa-hand-paper"></i> Wait! Before You Go...</h2>
+                    
+                    <div class="exit-testimonial">
+                        <p class="exit-quote">"I was about to close the tab too. Best decision I made was completing this application. Now I'm at Tesla making $145K."</p>
+                        <p class="exit-author">Marcus J., Mechanical Engineer → Software Developer</p>
+                    </div>
+                    
+                    <div class="exit-reminder">
+                        <h3>Remember:</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Only $1 to apply</li>
+                            <li><i class="fas fa-check-circle"></i> Fully refundable if not admitted</li>
+                            <li><i class="fas fa-check-circle"></i> Zero risk to you</li>
+                            <li><i class="fas fa-check-circle"></i> 3 spots left in February cohort</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="exit-cta-btn" @click="showExitIntent = false">
+                        <i class="fas fa-arrow-left"></i> Continue My Application
+                    </button>
+                    
+                    <p class="exit-disclaimer">Most accepted applicants complete the form in under 10 minutes</p>
+                </div>
+            </div>
 
             <!-- Social Proof Ping -->
             <div class="social-proof-ping" v-if="showPing">
