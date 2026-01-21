@@ -42,7 +42,7 @@ The server has an auto-deploy script at `/home/lucas/auto-deploy-adavauniversity
 ### Deploy Command
 
 ```bash
-./deploy.sh
+./scripts/deploy.sh
 ```
 
 This script:
@@ -260,7 +260,7 @@ git push origin deploy  # Manual push - no tests!
 
 **Do**:
 ```bash
-./deploy.sh             # Runs all tests first
+./scripts/deploy.sh             # Runs all tests first
 ```
 
 ### 3. Check Server Logs
