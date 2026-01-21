@@ -16,9 +16,15 @@
     box-sizing: border-box;
 }
 
+html {
+    background: #0a0a14;
+    min-height: 100vh;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+    background-attachment: fixed;
     color: var(--text-primary);
     min-height: 100vh;
     line-height: 1.6;
@@ -356,7 +362,32 @@ body {
     line-height: 1.5;
 }
 
-/* Fee Justification */
+/* Payment Section - Compact */
+.payment-info-compact {
+    background: rgba(20, 184, 166, 0.08);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.fee-explanation {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.acceptance-stat {
+    display: block;
+    color: var(--primary-teal);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Fee Justification (old - remove if not needed) */
 .fee-justification {
     background: rgba(20, 184, 166, 0.1);
     border: 1px solid rgba(20, 184, 166, 0.3);

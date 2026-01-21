@@ -64,15 +64,15 @@
                 <h4>Compare Your Options:</h4>
                 <div class="comparison-item">
                     <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Traditional Bootcamp</span>
-                    <span class="price">$12K-$18K (12-24 weeks)</span>
+                    <span class="price">$12K to $18K (12 to 24 weeks)</span>
                 </div>
                 <div class="comparison-item">
                     <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Computer Science Degree</span>
-                    <span class="price">$80K-$200K (4 years)</span>
+                    <span class="price">$80K to $200K (4 years)</span>
                 </div>
                 <div class="comparison-item">
-                    <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Self-Learning Online</span>
-                    <span class="price">6 months - 3 years</span>
+                    <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Self Learning Online</span>
+                    <span class="price">6 months to 3 years</span>
                 </div>
                 <div class="comparison-item">
                     <span class="label"><i class="fas fa-check-circle" style="color: #14b8a6;"></i> Adava AI Coding</span>
@@ -306,7 +306,7 @@
                             <span class="optional-label">(Optional)</span>
                         </label>
                         <input type="url" id="form-portfolio" v-model="form.portfolio" placeholder="https://github.com/yourname or your portfolio URL" @input="updateProgress">
-                        <small class="field-helper">Show us any past work - coding projects, designs, writing, or other creative work.</small>
+                        <small class="field-helper">Show us any past work (coding projects, designs, writing, or other creative work).</small>
                     </div>
 
                     <div class="form-group">
@@ -315,7 +315,7 @@
                             <span class="optional-label">(Optional)</span>
                         </label>
                         <input type="url" id="form-website" v-model="form.website" placeholder="https://yourwebsite.com" @input="updateProgress">
-                        <small class="field-helper">Optional: Your blog, portfolio site, or professional website.</small>
+                        <small class="field-helper">Your blog, portfolio site, or professional website.</small>
                     </div>
                 </div>
 
@@ -328,30 +328,10 @@
                 <div class="payment-section">
                     <h2><i class="fas fa-lock"></i> Application Fee: $1</h2>
                     
-                    <!-- Fee Justification -->
-                    <div class="fee-justification">
-                        <h4>Why we charge $1 to apply:</h4>
-                        <ul class="justification-list">
-                            <li><i class="fas fa-check"></i> <strong>Personal Review:</strong> Our admissions team individually evaluates every application</li>
-                            <li><i class="fas fa-check"></i> <strong>Serious Candidates:</strong> Filters casual browsers, ensuring committed applicants</li>
-                            <li><i class="fas fa-check"></i> <strong>Zero Risk:</strong> Fully refundable if not admitted within 48 hours</li>
-                        </ul>
-                        <p class="acceptance-rate">Last cohort: 847 applications → 187 admitted (22% acceptance rate)</p>
-                    </div>
-                    
-                    <div class="payment-info">
-                        <div class="price">$1.00</div>
-                        <p class="description">Refundable if not admitted</p>
-                    </div>
-
-                    <div class="payment-breakdown">
-                        <p style="display: block; text-align: center; margin-bottom: 1rem;">
-                            <span style="font-size: 1.1rem; color: var(--text-primary);">Application Fee Today:</span>
-                            <span class="highlight" style="display: block; font-size: 1.8rem; margin-top: 0.5rem;">$1.00</span>
-                        </p>
-                        <p style="display: block; text-align: left;">
-                            <strong style="color: #14b8a6;">No automatic charges:</strong> 
-                            If admitted, you'll get a payment link for $590 tuition (7 days to decide); if not admitted, automatic $1 refund within 48 hours.
+                    <div class="payment-info-compact">
+                        <p class="fee-explanation">
+                            Refundable if not admitted. Ensures serious applicants only.
+                            <span class="acceptance-stat">(22% acceptance rate)</span>
                         </p>
                     </div>
 
@@ -414,7 +394,7 @@
                     <h4>What Happens Next:</h4>
                     <ul>
                         <li>Confirmation email sent to {{ form.email }}</li>
-                        <li>Committee review within 24-48 hours</li>
+                        <li>Committee review within 24 to 48 hours</li>
                         <li>Decision notification via email</li>
                         <li>If admitted: 7-day window to pay $590 tuition</li>
                         <li>If not admitted: Automatic $1 refund</li>
