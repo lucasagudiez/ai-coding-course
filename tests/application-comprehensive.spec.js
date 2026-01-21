@@ -33,8 +33,11 @@ test.describe('Application Form - Comprehensive Tests', () => {
     // === CONTENT TESTS ===
     test('has correct instructor credentials', async ({ page }) => {
         const subtitle = page.locator('.app-header .subtitle');
-        await expect(subtitle).toContainText('Google, Apple, Meta, Amazon, and Microsoft');
-        await expect(subtitle).toContainText('MIT, Stanford, Harvard, Oxford, and Cambridge');
+        await expect(subtitle).toContainText('Engineers & Researchers from MIT');
+        await expect(subtitle).toContainText('Stanford');
+        await expect(subtitle).toContainText('Oxford');
+        await expect(subtitle).toContainText('Cambridge');
+        await expect(subtitle).toContainText('Harvard');
     });
 
     test('all text blocks are concise (max 2 sentences)', async ({ page }) => {
@@ -292,5 +295,131 @@ test.describe('Application Form - Comprehensive Tests', () => {
         await page.waitForLoadState('networkidle');
         
         expect(errors.length).toBe(0);
+    });
+
+    // === NEW FEATURE TESTS ===
+    
+    test('comparison table renders correctly', async ({ page }) => {
+        await expect(page.locator('.comparison-table')).toBeVisible();
+        await expect(page.locator('.comparison-row.header-row')).toBeVisible();
+        await expect(page.locator('.comparison-row.winner-row')).toBeVisible();
+        
+        // Check all options are present
+        await expect(page.locator('.comparison-table')).toContainText('Traditional Bootcamp');
+        await expect(page.locator('.comparison-table')).toContainText('CS Degree');
+        await expect(page.locator('.comparison-table')).toContainText('Self-Learning');
+        await expect(page.locator('.comparison-table')).toContainText('Adava AI Coding');
+        
+        // Check winner row is highlighted
+        const winnerRow = page.locator('.comparison-row.winner-row');
+        await expect(winnerRow).toContainText('$590');
+        await expect(winnerRow).toContainText('10 days');
+    });
+    
+    test('timeline section renders correctly', async ({ page }) => {
+        await expect(page.locator('.timeline-section')).toBeVisible();
+        await expect(page.locator('.timeline-section h3')).toContainText('What Happens Next');
+        
+        // Check all 4 timeline items
+        const timelineItems = page.locator('.timeline-item');
+        await expect(timelineItems).toHaveCount(4);
+        
+        // Check markers are numbered 1-4
+        const markers = page.locator('.timeline-marker');
+        await expect(markers.nth(0)).toContainText('1');
+        await expect(markers.nth(1)).toContainText('2');
+        await expect(markers.nth(2)).toContainText('3');
+        await expect(markers.nth(3)).toContainText('4');
+        
+        // Check content
+        await expect(page.locator('.timeline-section')).toContainText('Submit Application');
+        await expect(page.locator('.timeline-section')).toContainText('AI + Human Review');
+        await expect(page.locator('.timeline-section')).toContainText('Acceptance Decision');
+        await expect(page.locator('.timeline-section')).toContainText('Program Starts');
+    });
+    
+    test('ROI breakdown renders correctly', async ({ page }) => {
+        // Payment section is initially hidden, need to progress through form
+        // Basic section
+        await page.locator('input[type="tel"]').fill('+1 555 123 4567');
+        await page.locator('button:has-text("Continue")').first().click();
+        await page.waitForTimeout(500);
+        
+        // Background section
+        await page.locator('select#form-background').selectOption('professional');
+        await page.locator('select#form-experience').selectOption('professional');
+        await page.locator('#tool-cursor').check();
+        await page.locator('button:has-text("Continue")').nth(1).click();
+        await page.waitForTimeout(500);
+        
+        // Goals section
+        await page.locator('select#form-goal').selectOption('job');
+        await page.locator('textarea#form-motivation').fill('I want to learn AI coding');
+        await page.locator('button:has-text("Continue")').nth(2).click();
+        await page.waitForTimeout(500);
+        
+        // Commitment section
+        await page.locator('select#form-commitment').selectOption('yes-all');
+        await page.locator('select#form-source').selectOption('google');
+        await page.locator('button:has-text("Continue")').nth(3).click();
+        await page.waitForTimeout(500);
+        
+        // Professional section
+        await page.locator('button:has-text("Continue")').nth(4).click();
+        await page.waitForTimeout(500);
+        
+        // Now ROI should be visible
+        await expect(page.locator('.roi-breakdown')).toBeVisible();
+        await expect(page.locator('.roi-breakdown h4')).toContainText('Return on Investment');
+        
+        // Check key values
+        await expect(page.locator('.roi-breakdown')).toContainText('$590');
+        await expect(page.locator('.roi-breakdown')).toContainText('$94,000');
+        await expect(page.locator('.roi-breakdown')).toContainText('0.6%');
+        
+        // Check highlight item
+        await expect(page.locator('.roi-item.highlight')).toBeVisible();
+    });
+    
+    test('FAQ section renders and toggles correctly', async ({ page }) => {
+        await expect(page.locator('.faq-section')).toBeVisible();
+        await expect(page.locator('.faq-section h3')).toContainText('Common Questions');
+        
+        // Check all 4 FAQ items
+        const faqItems = page.locator('.faq-item');
+        await expect(faqItems).toHaveCount(4);
+        
+        // Check questions
+        await expect(page.locator('.faq-section')).toContainText('Is the $1 really refundable?');
+        await expect(page.locator('.faq-section')).toContainText('What if I\'m accepted but change my mind?');
+        await expect(page.locator('.faq-section')).toContainText('Do I need coding experience?');
+        await expect(page.locator('.faq-section')).toContainText('What\'s the time commitment?');
+        
+        // Test toggle functionality - first FAQ should be closed
+        const firstFaqAnswer = page.locator('.faq-answer').first();
+        await expect(firstFaqAnswer).toBeHidden();
+        
+        // Click to open
+        await page.locator('.faq-item').first().click();
+        await expect(firstFaqAnswer).toBeVisible();
+        
+        // Click to close
+        await page.locator('.faq-item').first().click();
+        await expect(firstFaqAnswer).toBeHidden();
+    });
+    
+    test('all new sections are responsive on mobile', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 844 }); // iPhone 14 Pro
+        
+        // Check no horizontal overflow
+        const bodyScrollWidth = await page.evaluate(() => document.body.scrollWidth);
+        const bodyClientWidth = await page.evaluate(() => document.body.clientWidth);
+        expect(bodyScrollWidth).toBeLessThanOrEqual(bodyClientWidth + 5);
+        
+        // Check all new sections are visible
+        await expect(page.locator('.comparison-table')).toBeVisible();
+        await expect(page.locator('.timeline-section')).toBeVisible();
+        await expect(page.locator('.roi-breakdown')).toBeVisible();
+        await expect(page.locator('.faq-section')).toBeVisible();
     });
 });
