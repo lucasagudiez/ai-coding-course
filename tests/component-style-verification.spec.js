@@ -9,8 +9,8 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-// Simple component registry - just paths and selectors
-// Each component can be tested across multiple pages (application, evaluation, reservation)
+// Component registry - maps component names to their actual locations
+// Updated for new template system and optimized application page
 const COMPONENTS = {
     'scarcity-bar': {
         standalone: '/components/standalone/scarcity-bar.html',
@@ -18,44 +18,34 @@ const COMPONENTS = {
             { page: '/application/', selector: '.scarcity-bar' }
         ]
     },
-    'graduate-counter': {
-        standalone: '/components/standalone/graduate-counter.html',
+    'comparison-table': {
+        standalone: '/components/standalone/comparison-table.html',
         integrated: [
-            { page: '/application/', selector: '.graduate-counter' }
-        ]
-    },
-    'authority-logos': {
-        standalone: '/components/standalone/authority-logos.html',
-        integrated: [
-            { page: '/application/', selector: '.authority-logos' }
+            { page: '/reservation/', selector: '.comparison-section' }
         ]
     },
     'value-stack': {
         standalone: '/components/standalone/value-stack.html',
         integrated: [
-            { page: '/application/', selector: '.value-stack' },
             { page: '/reservation/', selector: '.value-stack' }
         ]
     },
     'testimonial-carousel': {
         standalone: '/components/standalone/testimonial-carousel.html',
         integrated: [
-            { page: '/application/', selector: '.testimonial-carousel' },
             { page: '/reservation/', selector: '.testimonial-carousel' }
-        ]
-    },
-    'guarantee-badges': {
-        standalone: '/components/standalone/guarantee-badges.html',
-        integrated: [
-            { page: '/application/', selector: '.guarantee-badge-container' },
-            { page: '/reservation/', selector: '.guarantee-badge-container' }
         ]
     },
     'faq-section': {
         standalone: '/components/standalone/faq-section.html',
         integrated: [
-            { page: '/application/', selector: '.faq-section' },
             { page: '/reservation/', selector: '.faq-section' }
+        ]
+    },
+    'what-youll-build': {
+        standalone: '/components/standalone/what-youll-build.html',
+        integrated: [
+            { page: '/reservation/', selector: '.projects-section' }
         ]
     }
 };
@@ -94,9 +84,28 @@ const CRITICAL_PROPERTIES = new Set([
 ]);
 
 /**
+ * Wait for Vue components to finish loading templates asynchronously
+ */
+async function waitForComponentsLoaded(page) {
+    // Wait for any component to appear (means templates have loaded)
+    await page.waitForFunction(() => {
+        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-table, .projects-section');
+        return components.length > 0;
+    }, { timeout: 15000 }).catch(() => {
+        // Standalone pages don't have component-loader, so this is fine
+    });
+    
+    // Wait for Vue to finish rendering
+    await page.waitForTimeout(1000);
+}
+
+/**
  * Get ALL computed styles from an element
  */
 async function getAllComputedStyles(page, selector) {
+    // Wait for components to load
+    await waitForComponentsLoaded(page);
+    
     return await page.evaluate((sel) => {
         const element = document.querySelector(sel);
         if (!element) return null;

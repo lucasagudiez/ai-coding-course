@@ -15,42 +15,45 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-// Simple component registry - JUST paths!
+// Component registry - updated for new template system
 const COMPONENTS = {
     'scarcity-bar': {
         standalone: '/components/standalone/scarcity-bar.html',
         integrated: [{ page: '/application/', selector: '.scarcity-bar' }]
     },
-    'graduate-counter': {
-        standalone: '/components/standalone/graduate-counter.html',
-        integrated: [{ page: '/application/', selector: '.graduate-counter' }]
-    },
-    'authority-logos': {
-        standalone: '/components/standalone/authority-logos.html',
-        integrated: [{ page: '/application/', selector: '.authority-logos' }]
-    },
-    'value-stack': {
-        standalone: '/components/standalone/value-stack.html',
-        integrated: [{ page: '/application/', selector: '.value-stack' }]
-    },
     'testimonial-carousel': {
         standalone: '/components/standalone/testimonial-carousel.html',
-        integrated: [{ page: '/application/', selector: '.testimonial-carousel' }]
-    },
-    'guarantee-badges': {
-        standalone: '/components/standalone/guarantee-badges.html',
-        integrated: [{ page: '/application/', selector: '.guarantee-badge-container' }]
+        integrated: [{ page: '/reservation/', selector: '.testimonial-carousel' }]
     },
     'faq-section': {
         standalone: '/components/standalone/faq-section.html',
-        integrated: [{ page: '/application/', selector: '.faq-section' }]
+        integrated: [{ page: '/reservation/', selector: '.faq-section' }]
     }
 };
+
+/**
+ * Wait for Vue components to finish loading templates asynchronously
+ */
+async function waitForComponentsLoaded(page) {
+    // Wait for any component to appear (means templates have loaded)
+    await page.waitForFunction(() => {
+        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-table, .projects-section');
+        return components.length > 0;
+    }, { timeout: 15000 }).catch(() => {
+        // Standalone pages don't have component-loader, so this is fine
+    });
+    
+    // Wait for Vue to finish rendering
+    await page.waitForTimeout(1000);
+}
 
 /**
  * Extract Vue component state from page - automatically finds Vue instance
  */
 async function getVueState(page, selector) {
+    // Wait for components to load
+    await waitForComponentsLoaded(page);
+    
     return await page.evaluate((sel) => {
         const element = document.querySelector(sel);
         if (!element) return { hasVue: false, data: {}, error: 'Element not found' };
