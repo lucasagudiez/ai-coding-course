@@ -48,18 +48,29 @@ else
 fi
 echo ""
 
-# Step 3: Push main branch
+# Step 3: Update cache-busting version
 echo "═══════════════════════════════════════════════════════════════"
-echo "  STEP 3: Pushing to main..."
+echo "  STEP 3: Updating cache-busting version..."
+echo "═══════════════════════════════════════════════════════════════"
+cd "$MAIN_DIR"
+node scripts/update-cache-version.js
+git add public/index.html public/application/index.html public/evaluation/index.html public/reservation/index.html 2>/dev/null || true
+git diff --cached --quiet || git commit -m "chore: update cache-busting version [skip ci]"
+echo "✅ Cache version updated"
+echo ""
+
+# Step 4: Push main branch
+echo "═══════════════════════════════════════════════════════════════"
+echo "  STEP 4: Pushing to main..."
 echo "═══════════════════════════════════════════════════════════════"
 cd "$MAIN_DIR"
 git push origin main
 echo "✅ Main pushed"
 echo ""
 
-# Step 4: Update deploy worktree and push
+# Step 5: Update deploy worktree and push
 echo "═══════════════════════════════════════════════════════════════"
-echo "  STEP 4: Updating deploy branch..."
+echo "  STEP 5: Updating deploy branch..."
 echo "═══════════════════════════════════════════════════════════════"
 cd "$DEPLOY_WORKTREE"
 git fetch origin

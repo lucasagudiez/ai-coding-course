@@ -9,14 +9,14 @@
 square_sandbox:
   application_id: sandbox-sq0idb-51AxZAaIW4wr4x51PivPfg
   access_token: EAAAlzxNmZLF_Sj-sZEINS7xwy_JEXbFevMJ9rvyJQIhrvWWM6r9cLjyxEPbSm4S
-  location_id: PENDING  # Get from Square Dashboard → Credentials → Locations (Sandbox mode)
+  location_id: LM3C1QVBTJA5J
   environment: sandbox
 
 # PRODUCTION (for real payments - DO NOT USE until fully tested)
 square_production:
   application_id: sq0idp-8DEnXsW8Vm2TyUBzJ_FoBw
   access_token: EAAAl8riPfrtwMa59VUGN-0fJc7gq1Oez-TQjkV_cTdm-uCwNZWAR-jreTSpcQ6c
-  location_id: PENDING  # Get from Square Dashboard → Credentials → Locations (Production mode)
+  location_id: LGKFR26ZTVPGP
   environment: production
 
 # OpenAI API (for LLM personalization)
