@@ -11,6 +11,7 @@ const ApplicationForm = {
             currentPing: {},
             showExitIntent: false,  // Exit intent popup
             showStickyBar: false,   // Sticky urgency header
+            faqOpen: [false, false, false, false], // FAQ state
             // Section visibility for progressive disclosure
             sections: {
                 basic: true,      // Always visible
@@ -99,6 +100,12 @@ const ApplicationForm = {
     methods: {
         updateProgress() {
             // Auto-progress tracking
+        },
+        
+        toggleFaq(index) {
+            this.faqOpen[index] = !this.faqOpen[index];
+            // Force Vue reactivity
+            this.$set(this.faqOpen, index, this.faqOpen[index]);
         },
         
         // Progressive section unlocking
