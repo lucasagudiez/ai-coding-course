@@ -432,11 +432,6 @@
                     </button>
                 </div>
 
-                <div class="benefit-callout" v-show="sections.background">
-                    <h4><i class="fas fa-chart-line"></i> Real Graduate Outcomes</h4>
-                    <p>Marcus (Mechanical Engineer) landed $145K at Tesla, Dr Sarah secured $165K at Epic Systems.</p>
-                </div>
-
                 <div class="future-pacing" v-show="sections.background">
                     <h4>Picture This: 6 Months From Now</h4>
                     <p>You're building apps with AI, working remotely, earning top salary. It started with 10 days and $590.</p>
@@ -475,11 +470,6 @@
                     </button>
                 </div>
 
-                <div class="benefit-callout" v-show="sections.goals">
-                    <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
-                    <p>Build E-commerce platform with payments, AI chatbot, and SaaS dashboard. Real apps that impress interviewers.</p>
-                </div>
-
                 <!-- Commitment -->
                 <div class="form-section" data-section="commitment" v-show="sections.commitment">
                     <h2 class="section-title"><i class="fas fa-calendar-check"></i> Time Commitment</h2>
@@ -515,11 +505,6 @@
                             v-if="!sections.professional">
                         Continue <i class="fas fa-arrow-right"></i>
                     </button>
-                </div>
-
-                <div class="benefit-callout" v-show="sections.commitment">
-                    <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
-                    <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
                 </div>
 
                 <!-- Personalized Strength Preview -->
@@ -599,13 +584,8 @@
                     <button type="button" class="continue-btn" 
                             @click="completeSection('professional')" 
                             v-if="!sections.payment">
-                        Continue to Payment <i class="fas fa-arrow-right"></i>
+                        Continue to Application Processing <i class="fas fa-arrow-right"></i>
                     </button>
-                </div>
-
-                <div class="value-reminder">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</span>
                 </div>
 
                 <!-- Guarantee Stack - Before Payment -->
@@ -661,33 +641,9 @@
                 <!-- Payment -->
                 <div class="payment-section" data-section="payment" v-show="sections.payment">
                     <h2><i class="fas fa-lock"></i> Application Fee: $10</h2>
-                    <div class="fee-explanation">
-                        <p><strong>Why $10?</strong> This ensures only serious applicants and allows us to review each application thoroughly. The $10 will be deducted from your $590 program fee if accepted. If not admitted, you'll receive an automatic refund within 48 hours.</p>
-                    </div>
-                    
-                    <div class="payment-info-compact">
-                        <p class="fee-explanation">
-                            Refundable if not admitted. Ensures serious applicants only.
-                        </p>
-                    </div>
-
-                    <!-- ROI Breakdown -->
-                    <div class="roi-breakdown">
-                        <h4><i class="fas fa-calculator"></i> Return on Investment</h4>
-                        <div class="roi-item">
-                            <span class="roi-label">Your Investment:</span>
-                            <span class="roi-value">$590</span>
-                        </div>
-                        <div class="roi-item">
-                            <span class="roi-label">Average Graduate Salary:</span>
-                            <span class="roi-value">$94,000/year</span>
-                        </div>
-                        <div class="roi-item highlight">
-                            <span class="roi-label">Investment as % of Salary:</span>
-                            <span class="roi-value">0.6%</span>
-                        </div>
-                        <p class="roi-note">If you land just ONE client or job, you've made 10x to 100x return on your $590 investment.</p>
-                    </div>
+                    <p class="fee-explanation">
+                        Refundable if not admitted. This $10 application fee ensures serious applicants and will be deducted from your $590 program fee if accepted.
+                    </p>
 
                     <div class="form-group">
                         <label for="form-card">Card Number</label>
@@ -709,18 +665,7 @@
                         <i class="fas fa-paper-plane"></i> Submit Application
                     </button>
                     
-                    <p class="charge-notice">By clicking "Submit Application", your card will be charged $10.00</p>
-
-                    <!-- Risk Reversal Box -->
-                    <div class="risk-reversal-box">
-                        <div class="risk-icon">
-                            <i class="fas fa-shield-check"></i>
-                        </div>
-                        <div class="risk-content">
-                            <h4>Zero Risk Guarantee</h4>
-                            <p>Not admitted? Automatic $10 refund. No forms, no waiting. Accepted but changed your mind? No pressure. The $580 remaining program fee is only charged if you decide to join after acceptance.</p>
-                        </div>
-                    </div>
+                    <p class="charge-notice">Your card will be charged $10.00. Fully refundable if not admitted.</p>
 
                     <p class="guarantee">
                         <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Bank-level security<br>

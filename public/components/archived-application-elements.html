@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Removed Application Elements - Saved for Later Use</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a14;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00d4aa;
+        }
+        
+        .intro {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 4px solid #00d4aa;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+        }
+        
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #a259ff;
+            border-bottom: 2px solid rgba(162, 89, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .component-note {
+            background: rgba(255, 107, 107, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #ff6b6b;
+            font-size: 0.9rem;
+        }
+        
+        /* Original styles from application page */
+        .benefit-callout {
+            background: linear-gradient(135deg, #00d4aa 0%, #00a686 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.2);
+        }
+        
+        .benefit-callout h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .benefit-callout i {
+            font-size: 1.3rem;
+        }
+        
+        .benefit-callout p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .value-reminder {
+            background: rgba(255, 215, 0, 0.15);
+            border-left: 4px solid #ffd700;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .value-reminder i {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+        
+        .risk-reversal-box {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .risk-icon {
+            font-size: 2rem;
+            color: #00d4aa;
+        }
+        
+        .risk-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #00d4aa;
+        }
+        
+        .risk-content p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .roi-breakdown {
+            background: rgba(162, 89, 255, 0.1);
+            border: 1px solid rgba(162, 89, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .roi-breakdown h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #a259ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .roi-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .roi-item.highlight {
+            background: rgba(0, 212, 170, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-bottom: none;
+            margin-top: 10px;
+        }
+        
+        .roi-item.highlight .roi-value {
+            color: #00d4aa;
+            font-size: 1.3rem;
+        }
+        
+        .roi-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .roi-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .roi-note {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-style: italic;
+        }
+        
+        .code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #00d4aa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-archive"></i> Archived Application Elements</h1>
+        
+        <div class="intro">
+            <p><strong>Purpose:</strong> These components were removed from the application form to reduce friction and improve conversion rates. They are preserved here with full styling for potential future use in other pages (landing, evaluation, etc.)</p>
+            <p style="margin-top: 10px;"><strong>Removed:</strong> January 21, 2026</p>
+            <p style="margin-top: 5px;"><strong>Reason:</strong> Too much content, adding friction instead of value during application process</p>
+        </div>
+        
+        <!-- BENEFIT CALLOUTS (Green Boxes) -->
+        <div class="section">
+            <h2>Benefit Callout Boxes (Green)</h2>
+            <div class="component-note">
+                <strong>Original Location:</strong> Scattered throughout form sections<br>
+                <strong>Original Purpose:</strong> Reinforce value during application<br>
+                <strong>Why Removed:</strong> Experts say these add friction and distract from completing the form. Better to focus on clear, concise information.
+            </div>
+            
+            <h3 style="margin: 30px 0 15px; color: rgba(255,255,255,0.7);">Real Graduate Outcomes</h3>
+            <div class="benefit-callout">
+                <h4><i class="fas fa-chart-line"></i> Real Graduate Outcomes</h4>
+                <p>Marcus (Mechanical Engineer) landed $145K at Tesla, Dr Sarah secured $165K at Epic Systems.</p>
+            </div>
+            
+            <h3 style="margin: 30px 0 15px; color: rgba(255,255,255,0.7);">Portfolio-Quality Projects</h3>
+            <div class="benefit-callout">
+                <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
+                <p>Build E-commerce platform with payments, AI chatbot, and SaaS dashboard. Real apps that impress interviewers.</p>
+            </div>
+            
+            <h3 style="margin: 30px 0 15px; color: rgba(255,255,255,0.7);">Lifetime Access</h3>
+            <div class="benefit-callout">
+                <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
+                <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
+            </div>
+        </div>
+        
+        <!-- VALUE REMINDER -->
+        <div class="section">
+            <h2>Value Reminder Box (Yellow)</h2>
+            <div class="component-note">
+                <strong>Original Location:</strong> Before payment section<br>
+                <strong>Original Purpose:</strong> Remind applicant of curriculum value<br>
+                <strong>Why Removed:</strong> Unnecessary explanation at this stage - they've already decided to apply
+            </div>
+            
+            <div class="value-reminder">
+                <i class="fas fa-lightbulb"></i>
+                <span>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</span>
+            </div>
+        </div>
+        
+        <!-- RISK REVERSAL BOX -->
+        <div class="section">
+            <h2>Risk Reversal / Zero Risk Guarantee Box</h2>
+            <div class="component-note">
+                <strong>Original Location:</strong> Payment section, after submit button<br>
+                <strong>Original Purpose:</strong> Reduce anxiety about $10 fee<br>
+                <strong>Why Removed:</strong> Too wordy. The simple refund statement in charge notice is enough.
+            </div>
+            
+            <div class="risk-reversal-box">
+                <div class="risk-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="risk-content">
+                    <h4>Zero Risk Guarantee</h4>
+                    <p>Not admitted? Automatic $10 refund. No forms, no waiting. Accepted but changed your mind? No pressure. The $580 remaining program fee is only charged if you decide to join after acceptance.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI BREAKDOWN -->
+        <div class="section">
+            <h2>ROI Breakdown / Return on Investment Calculator</h2>
+            <div class="component-note">
+                <strong>Original Location:</strong> Payment section, before card fields<br>
+                <strong>Original Purpose:</strong> Justify $590 investment with math<br>
+                <strong>Why Removed:</strong> TOO LONG for payment page. Creates friction. They already know the value (saw it on landing page). At payment stage, just need to complete transaction quickly.
+            </div>
+            
+            <div class="roi-breakdown">
+                <h4><i class="fas fa-calculator"></i> Return on Investment</h4>
+                <div class="roi-item">
+                    <span class="roi-label">Your Investment:</span>
+                    <span class="roi-value">$590</span>
+                </div>
+                <div class="roi-item">
+                    <span class="roi-label">Average Graduate Salary:</span>
+                    <span class="roi-value">$94,000/year</span>
+                </div>
+                <div class="roi-item highlight">
+                    <span class="roi-label">Investment as % of Salary:</span>
+                    <span class="roi-value">0.6%</span>
+                </div>
+                <p class="roi-note">If you land just ONE client or job, you've made 10x to 100x return on your $590 investment.</p>
+            </div>
+        </div>
+        
+        <!-- USAGE NOTES -->
+        <div class="section" style="background: rgba(0, 212, 170, 0.05); border: 2px solid rgba(0, 212, 170, 0.3);">
+            <h2 style="color: #00d4aa;">💡 Future Use Cases</h2>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <strong style="color: #00d4aa;">Landing Page:</strong> ROI breakdown and benefit callouts work great here
+                </li>
+                <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <strong style="color: #00d4aa;">Evaluation Page:</strong> Risk reversal box might reduce anxiety after rejection
+                </li>
+                <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <strong style="color: #00d4aa;">Acceptance Page:</strong> Value reminder could work when asking for $590 payment
+                </li>
+                <li style="padding: 10px 0;">
+                    <strong style="color: #00d4aa;">Misc Elements Page:</strong> Keep as component library for A/B testing
+                </li>
+            </ul>
+            
+            <p style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                <strong>To use these components:</strong> Copy the HTML + CSS classes. All styles are self-contained and use Adava color scheme (green for CTAs/trust, purple for brand).
+            </p>
+        </div>
+        
+        <!-- CSS CLASSES REFERENCE -->
+        <div class="section">
+            <h2>CSS Classes Reference</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead style="background: rgba(255,255,255,0.1);">
+                    <tr>
+                        <th style="padding: 10px; text-align: left; border: 1px solid rgba(255,255,255,0.1);">Class</th>
+                        <th style="padding: 10px; text-align: left; border: 1px solid rgba(255,255,255,0.1);">Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);"><span class="code">.benefit-callout</span></td>
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);">Green box with icon and short benefit statement</td>
+                    </tr>
+                    <tr style="border: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);"><span class="code">.value-reminder</span></td>
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);">Yellow box with lightbulb icon for tips/reminders</td>
+                    </tr>
+                    <tr style="border: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);"><span class="code">.risk-reversal-box</span></td>
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);">Teal box with shield icon for guarantee messaging</td>
+                    </tr>
+                    <tr style="border: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);"><span class="code">.roi-breakdown</span></td>
+                        <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.1);">Purple box with calculator showing ROI math</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
