@@ -1,4 +1,12 @@
 // Application Form Logic
+
+// Helper: Get API URL (production uses relative, dev uses absolute)
+function getApiUrl(endpoint) {
+    return window.location.hostname === 'adavauniversity.org' 
+        ? endpoint 
+        : `http://localhost:3001${endpoint}`;
+}
+
 const ApplicationForm = {
     data() {
         return {
@@ -159,25 +167,9 @@ const ApplicationForm = {
         },
         
         saveProgress() {
-            // Save form data to localStorage (excluding payment info)
+            // Save entire form data to localStorage (generic, no manual field listing)
             const progressData = {
-                form: {
-                    name: this.form.name,
-                    email: this.form.email,
-                    phone: this.form.phone,
-                    background: this.form.background,
-                    experience: this.form.experience,
-                    aiTools: this.form.aiTools,
-                    goal: this.form.goal,
-                    motivation: this.form.motivation,
-                    dreamProject: this.form.dreamProject,
-                    uniqueSkill: this.form.uniqueSkill,
-                    commitment: this.form.commitment,
-                    source: this.form.source,
-                    linkedin: this.form.linkedin,
-                    portfolio: this.form.portfolio,
-                    website: this.form.website
-                },
+                form: this.form, // Save everything generically
                 sections: this.sections,
                 timestamp: Date.now()
             };
@@ -327,11 +319,7 @@ const ApplicationForm = {
                 // Save to session/localStorage first
                 await this.saveToSession();
                 
-                const apiUrl = window.location.hostname === 'adavauniversity.org' 
-                    ? '/api/submit-application' 
-                    : 'http://localhost:3001/api/submit-application';
-
-                const response = await fetch(apiUrl, {
+                const response = await fetch(getApiUrl('/api/submit-application'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -371,11 +359,7 @@ const ApplicationForm = {
             
             // Save to server session
             try {
-                const apiUrl = window.location.hostname === 'adavauniversity.org' 
-                    ? '/api/session/save' 
-                    : 'http://localhost:3001/api/session/save';
-                    
-                await fetch(apiUrl, {
+                await fetch(getApiUrl('/api/session/save'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

@@ -1,4 +1,12 @@
 // Evaluation Page Logic with Real ChatGPT Integration
+
+// Helper: Get API URL (production uses relative, dev uses absolute)
+function getApiUrl(endpoint) {
+    return window.location.hostname === 'adavauniversity.org' 
+        ? endpoint 
+        : `http://localhost:3001${endpoint}`;
+}
+
 const EvaluationPage = {
     data() {
         return {
@@ -75,11 +83,7 @@ const EvaluationPage = {
             
             try {
                 // Call the API
-                const apiUrl = window.location.hostname === 'adavauniversity.org' 
-                    ? '/api/evaluate-application' 
-                    : 'http://localhost:3001/api/evaluate-application';
-                
-                const response = await fetch(apiUrl, {
+                const response = await fetch(getApiUrl('/api/evaluate-application'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
