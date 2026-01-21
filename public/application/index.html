@@ -16,6 +16,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Square Web Payment SDK -->
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
+    
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     
@@ -348,29 +351,50 @@
                         <p class="breakdown-line"><strong>Total Program Cost:</strong> $590</p>
                         <p class="breakdown-line"><strong>You Pay Now:</strong> $10 (application review)</p>
                         <p class="breakdown-line"><strong>You Pay If Accepted:</strong> $580 (to reserve spot)</p>
-                        <p class="breakdown-note"> This $10 will be deducted from the $590 total</p>
-                        <p class="breakdown-note"> Fully refundable if not admitted</p>
+                        <p class="breakdown-note"><i class="fas fa-info-circle"></i> This $10 will be deducted from the $590 total</p>
+                        <p class="breakdown-note"><i class="fas fa-undo"></i> Fully refundable if not admitted</p>
                     </div>
 
+                    <!-- Square Card Input Container -->
                     <div class="form-group">
-                        <label for="form-card">Card Number</label>
-                        <input id="form-card" type="text" v-model="form.cardNumber" required placeholder="4242 4242 4242 4242" maxlength="19" @input="updateProgress">
+                        <label>Card Information</label>
+                        <div id="square-card-container" style="min-height: 90px;"></div>
+                        <p class="payment-security" style="font-size: 12px; color: #888; margin-top: 8px;">
+                            <i class="fas fa-lock"></i> Secured by Square · Your card info never touches our servers
+                        </p>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label for="form-expiry">Expiry</label>
-                            <input id="form-expiry" type="text" v-model="form.expiry" required placeholder="MM/YY" maxlength="5" @input="updateProgress">
-                        </div>
-                        <div class="form-group">
-                            <label for="form-cvc">CVC</label>
-                            <input id="form-cvc" type="text" v-model="form.cvc" required placeholder="123" maxlength="4" @input="updateProgress">
-                        </div>
+                    <!-- Payment Error Display -->
+                    <div v-if="paymentError" class="payment-error" style="background: #ff4444; color: white; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                        <i class="fas fa-exclamation-circle"></i> {{ paymentError }}
                     </div>
 
-                    <button type="submit" class="submit-btn" :disabled="!isComplete">
-                        <i class="fas fa-paper-plane"></i> Submit Application - $10
+                    <!-- Authorization Checkbox -->
+                    <div class="form-group">
+                        <label style="display: flex; align-items: start; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" v-model="authorizePayment" style="margin-top: 4px;">
+                            <span style="font-size: 14px;">
+                                I authorize Adava University to charge my card $10 now for application review, 
+                                and if accepted, charge $580 for the program fee. I understand the $10 is 
+                                fully refundable if not admitted.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button 
+                        type="button" 
+                        class="submit-btn" 
+                        @click="submitApplicationWithPayment"
+                        :disabled="!isComplete || !authorizePayment || loading"
+                    >
+                        <i class="fas fa-lock"></i>
+                        <span v-if="!loading">Pay $10 & Submit Application</span>
+                        <span v-else><i class="fas fa-spinner fa-spin"></i> Processing Payment...</span>
                     </button>
+                    
+                    <p class="payment-note" style="text-align: center; font-size: 13px; color: #888; margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i> Your card will be saved securely to charge the $580 program fee if you're accepted
+                    </p>
                     
                     <div class="security-badges">
                         <span><i class="fas fa-lock"></i> 256-bit SSL</span>

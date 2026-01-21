@@ -1,0 +1,19 @@
+# Adava University Backend Environment Variables
+# Copy this to .env and fill in your values
+
+# OpenAI API (for LLM personalization)
+OPENAI_API_KEY=sk-your-openai-api-key-here
+
+# Square Payment Gateway
+# Get these from: https://developer.squareup.com/
+SQUARE_ACCESS_TOKEN=your-square-access-token-here
+SQUARE_ENVIRONMENT=sandbox
+# SQUARE_ENVIRONMENT=production  # Use this for live payments
+
+# Square Application ID (also needed in frontend)
+# Put this same value in: public/application/js/app.js (line ~419)
+SQUARE_APPLICATION_ID=sandbox-sq0idb-your-app-id-here
+SQUARE_LOCATION_ID=your-location-id-here
+
+# Server Configuration
+PORT=3001

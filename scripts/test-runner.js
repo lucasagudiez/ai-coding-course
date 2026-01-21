@@ -173,7 +173,7 @@ test('instructor images directory exists with all instructors', () => {
 bufferLog('\n--- HTML Structure Tests ---');
 
 test('index.html includes styles.css', () => {
-    assert(html.includes('href="styles.css"'), 'Missing styles.css link');
+    assert(html.includes('href="styles.css"') || html.match(/href="styles\.css\?v=/), 'Missing styles.css link');
 });
 
 test('index.html has DOCTYPE', () => {

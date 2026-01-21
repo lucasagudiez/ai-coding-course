@@ -25,6 +25,11 @@ const ApplicationForm = {
                 professional: false, // New optional section
                 payment: false
             },
+            // Square payment
+            squarePayments: null,
+            squareCard: null,
+            paymentError: '',
+            authorizePayment: false,
             form: {
                 name: '',
                 email: '',
@@ -42,11 +47,8 @@ const ApplicationForm = {
                 // New optional professional fields
                 linkedin: '',
                 portfolio: '',
-                website: '',
-                // Payment fields
-                cardNumber: '',
-                expiry: '',
-                cvc: ''
+                website: ''
+                // Removed cardNumber, expiry, cvc - now handled by Square
             }
         };
     },
@@ -83,13 +85,8 @@ const ApplicationForm = {
         },
         
         isComplete() {
-            // Application data is complete (payment is optional)
+            // Application data is complete (payment handled separately by Square)
             return this.progress === 100;
-        },
-        
-        isCompleteWithPayment() {
-            // Check if payment fields are filled
-            return this.isComplete && this.form.cardNumber && this.form.expiry && this.form.cvc;
         },
         
         // Application strength scores
@@ -145,6 +142,15 @@ const ApplicationForm = {
         
         // Sticky header on scroll
         this.initStickyHeader();
+        
+        // Watch for payment section to become visible, then initialize Square
+        this.$watch('sections.payment', (visible) => {
+            if (visible && !this.squarePayments) {
+                this.$nextTick(() => {
+                    this.initSquarePayment();
+                });
+            }
+        });
         
         // Auto-save progress every 10 seconds
         setInterval(() => {
@@ -397,6 +403,136 @@ const ApplicationForm = {
                     paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }, 100);
+        },
+        
+        // =============================================================================
+        // SQUARE PAYMENT INTEGRATION
+        // =============================================================================
+        
+        async initSquarePayment() {
+            try {
+                // Square Application ID (you'll set this in env or config)
+                const SQUARE_APP_ID = 'sandbox-sq0idb-YOUR_APP_ID_HERE'; // TODO: Replace with actual
+                const SQUARE_LOCATION_ID = 'YOUR_LOCATION_ID'; // TODO: Replace with actual
+                
+                console.log('Initializing Square payment form...');
+                
+                // Initialize Square Payments
+                this.squarePayments = Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                
+                // Create card payment form
+                this.squareCard = await this.squarePayments.card();
+                
+                // Attach to container
+                await this.squareCard.attach('#square-card-container');
+                
+                console.log('✅ Square payment form ready');
+                
+            } catch (error) {
+                console.error('Square initialization error:', error);
+                this.paymentError = 'Payment system failed to load. Please refresh the page.';
+            }
+        },
+        
+        async submitApplicationWithPayment() {
+            if (!this.isComplete) {
+                this.paymentError = 'Please complete all required fields first';
+                return;
+            }
+            
+            if (!this.authorizePayment) {
+                this.paymentError = 'Please authorize payment to continue';
+                return;
+            }
+            
+            this.loading = true;
+            this.paymentError = '';
+            
+            try {
+                // Step 1: Tokenize card with Square
+                console.log('Tokenizing card...');
+                const tokenResult = await this.squareCard.tokenize();
+                
+                if (tokenResult.status !== 'OK') {
+                    throw new Error(tokenResult.errors?.[0]?.message || 'Card validation failed');
+                }
+                
+                const paymentToken = tokenResult.token;
+                console.log('✅ Card tokenized');
+                
+                // Step 2: Send to backend to charge $10
+                console.log('Charging $10...');
+                const response = await fetch('http://127.0.0.1:3001/api/payment/charge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: paymentToken,
+                        amount: 1000, // $10.00 in cents
+                        note: 'Adava University - Application Fee',
+                        email: this.form.email,
+                        name: this.form.name
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Payment failed');
+                }
+                
+                console.log('✅ Payment successful:', result);
+                
+                // Step 3: Save payment info for later (reservation page)
+                StateManager.saveLocal('payment_info', {
+                    customer_id: result.customer_id,
+                    card_id: result.card_id,
+                    card_last_4: result.card_last_4,
+                    card_brand: result.card_brand,
+                    initial_payment_id: result.payment_id,
+                    timestamp: Date.now()
+                });
+                
+                // Step 4: Submit application data (existing logic)
+                await this.submitApplicationData();
+                
+                // Step 5: Show success and redirect
+                this.submitted = true;
+                this.loading = false;
+                
+                setTimeout(() => {
+                    window.location.href = '/evaluation/';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                this.paymentError = error.message || 'Payment failed. Please try again.';
+                this.loading = false;
+            }
+        },
+        
+        async submitApplicationData() {
+            // Submit application data to backend (existing endpoint)
+            try {
+                const response = await fetch('http://127.0.0.1:3001/api/submit-application', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...this.form,
+                        cohort: this.cohort,
+                        aiTools: this.form.aiTools.join(', ')
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save application');
+                }
+                
+                console.log('✅ Application data saved');
+                
+            } catch (error) {
+                console.error('Application save error:', error);
+                // Don't fail - payment already succeeded
+            }
         }
     }
 };

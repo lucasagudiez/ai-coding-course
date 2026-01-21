@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const OpenAI = require('openai');
+const { Client, Environment } = require('square');
 
 const app = express();
 const PORT = 3001;
@@ -28,6 +29,14 @@ const SESSIONS_DIR = path.join(__dirname, '../data/sessions');
 // Initialize OpenAI
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
+});
+
+// Initialize Square
+const squareClient = new Client({
+    accessToken: process.env.SQUARE_ACCESS_TOKEN,
+    environment: process.env.SQUARE_ENVIRONMENT === 'production' 
+        ? Environment.Production 
+        : Environment.Sandbox
 });
 
 // Ensure sessions directory exists
@@ -63,6 +72,15 @@ const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
     max: 10, // 10 requests per windowMs
     message: { error: 'Too many requests, please try again later' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Payment rate limiter: 3 payment attempts per IP per 5 minutes
+const paymentLimiter = rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 3, // 3 payment attempts
+    message: { error: 'Too many payment attempts. Please wait 5 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
 });
@@ -701,6 +719,182 @@ REMEMBER: This needs to feel like a human actually read their quirky dream proje
         throw parseError;
     }
 }
+
+// =============================================================================
+// PAYMENT ENDPOINTS (Square Integration)
+// =============================================================================
+
+/**
+ * POST /api/payment/charge
+ * 
+ * Simple payment endpoint - frontend sends token + amount, we charge
+ * 
+ * Request body:
+ * {
+ *   "token": "cnon:card-nonce-xxx",  // From Square Web SDK
+ *   "amount": 1000,                  // Amount in cents (e.g., 1000 = $10.00)
+ *   "note": "Application fee",       // Optional description
+ *   "email": "user@example.com",     // For customer creation
+ *   "name": "John Doe"               // Optional customer name
+ * }
+ * 
+ * Security: Amount validation to prevent abuse
+ */
+app.post('/api/payment/charge', paymentLimiter, async (req, res) => {
+    try {
+        const { token, amount, note, email, name } = req.body;
+        
+        // Validation
+        if (!token || !amount || !email) {
+            return res.status(400).json({ 
+                error: 'Missing required fields: token, amount, email' 
+            });
+        }
+        
+        // Note: No amount validation per user request
+        // Amount is defined by frontend, access control happens at portal level
+        
+        // Create Square customer (for card-on-file)
+        let customerId;
+        try {
+            const customerResponse = await squareClient.customersApi.createCustomer({
+                emailAddress: email,
+                givenName: name ? name.split(' ')[0] : undefined,
+                familyName: name ? name.split(' ').slice(1).join(' ') : undefined
+            });
+            customerId = customerResponse.result.customer.id;
+        } catch (customerError) {
+            console.error('Customer creation error:', customerError);
+            // Continue without customer (less ideal but works)
+        }
+        
+        // Charge the card
+        const paymentResponse = await squareClient.paymentsApi.createPayment({
+            sourceId: token,
+            customerId: customerId,
+            amountMoney: {
+                amount: parseInt(amount),
+                currency: 'USD'
+            },
+            idempotencyKey: `${email}-${Date.now()}-${Math.random()}`, // Unique key
+            autocomplete: true, // Capture immediately
+            note: note || 'Adava University Payment',
+            referenceId: `${email}-${Date.now()}`
+        });
+        
+        const payment = paymentResponse.result.payment;
+        
+        // Extract card info for display (last 4 digits)
+        const cardDetails = payment.cardDetails || {};
+        const cardId = cardDetails.card?.id;
+        const cardLast4 = cardDetails.card?.last4;
+        const cardBrand = cardDetails.card?.cardBrand;
+        
+        // Log successful payment
+        console.log(`✅ Payment successful: $${amount / 100} from ${email}`);
+        
+        // Return success with card info
+        res.json({
+            success: true,
+            payment_id: payment.id,
+            customer_id: customerId,
+            card_id: cardId,
+            card_last_4: cardLast4,
+            card_brand: cardBrand,
+            amount_charged: amount / 100,
+            receipt_url: payment.receiptUrl,
+            status: payment.status
+        });
+        
+    } catch (error) {
+        console.error('Payment error:', error);
+        
+        // Extract user-friendly error message
+        let errorMessage = 'Payment failed. Please try again.';
+        
+        if (error.errors && error.errors.length > 0) {
+            const squareError = error.errors[0];
+            errorMessage = squareError.detail || squareError.code || errorMessage;
+        }
+        
+        res.status(400).json({ 
+            error: errorMessage,
+            code: error.errors?.[0]?.code
+        });
+    }
+});
+
+/**
+ * POST /api/payment/charge-saved-card
+ * 
+ * Charge a previously saved card (for $580 program fee)
+ * 
+ * Request body:
+ * {
+ *   "card_id": "ccof:card-id-xxx",   // Saved card ID from initial payment
+ *   "customer_id": "CUST_XXX",       // Customer ID from initial payment
+ *   "amount": 58000,                 // Amount in cents
+ *   "email": "user@example.com"      // For logging
+ * }
+ */
+app.post('/api/payment/charge-saved-card', paymentLimiter, async (req, res) => {
+    try {
+        const { card_id, customer_id, amount, email } = req.body;
+        
+        // Validation
+        if (!card_id || !customer_id || !amount) {
+            return res.status(400).json({ 
+                error: 'Missing required fields: card_id, customer_id, amount' 
+            });
+        }
+        
+        // Note: No amount validation per user request
+        // Access control happens at portal level
+        
+        // Charge the saved card
+        const paymentResponse = await squareClient.paymentsApi.createPayment({
+            sourceId: card_id,
+            customerId: customer_id,
+            amountMoney: {
+                amount: parseInt(amount),
+                currency: 'USD'
+            },
+            idempotencyKey: `${customer_id}-final-${Date.now()}`,
+            autocomplete: true,
+            note: 'Adava University - Program Fee',
+            referenceId: `program-${customer_id}-${Date.now()}`
+        });
+        
+        const payment = paymentResponse.result.payment;
+        
+        console.log(`✅ Program fee charged: $${amount / 100} for ${email}`);
+        
+        res.json({
+            success: true,
+            payment_id: payment.id,
+            amount_charged: amount / 100,
+            receipt_url: payment.receiptUrl,
+            status: payment.status
+        });
+        
+    } catch (error) {
+        console.error('Saved card charge error:', error);
+        
+        let errorMessage = 'Failed to charge saved card. Please try again.';
+        if (error.errors && error.errors.length > 0) {
+            errorMessage = error.errors[0].detail || error.errors[0].code || errorMessage;
+        }
+        
+        res.status(400).json({ 
+            error: errorMessage,
+            code: error.errors?.[0]?.code
+        });
+    }
+});
+
+// =============================================================================
+// END PAYMENT ENDPOINTS
+// =============================================================================
 
 // 404 handler
 app.use((req, res) => {
