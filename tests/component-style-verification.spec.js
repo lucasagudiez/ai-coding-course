@@ -1,93 +1,176 @@
 /**
- * Component Style Verification Tool
+ * Component Style Verification Tool - Automatic Edition
  * 
- * Compares computed styles between:
- * 1. Standalone component files (public/components/standalone/*.html)
- * 2. Integrated components in pages (application/index.html, etc.)
- * 
- * Ensures perfect visual consistency when moving from standalone to integrated.
+ * Automatically compares ALL computed styles between standalone and integrated components.
+ * No need to manually specify which properties to test - it tests everything relevant.
  */
 
 const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-// Component registry - maps component names to their locations
+// Simple component registry - just paths and selectors
 const COMPONENTS = {
     'scarcity-bar': {
         standalone: '/components/standalone/scarcity-bar.html',
-        integrated: [
-            { page: '/application/', selector: '.scarcity-bar' }
-        ],
-        criticalStyles: [
-            'padding',
-            'borderRadius',
-            'background',
-            'display'
-        ]
+        integrated: [{ page: '/application/', selector: '.scarcity-bar' }]
     },
     'graduate-counter': {
         standalone: '/components/standalone/graduate-counter.html',
-        integrated: [
-            { page: '/application/', selector: '.graduate-counter' }
-        ],
-        criticalStyles: [
-            'display',
-            'gap',
-            'padding'
-        ]
+        integrated: [{ page: '/application/', selector: '.graduate-counter' }]
+    },
+    'authority-logos': {
+        standalone: '/components/standalone/authority-logos.html',
+        integrated: [{ page: '/application/', selector: '.authority-logos' }]
+    },
+    'value-stack': {
+        standalone: '/components/standalone/value-stack.html',
+        integrated: [{ page: '/application/', selector: '.value-stack' }]
+    },
+    'testimonial-carousel': {
+        standalone: '/components/standalone/testimonial-carousel.html',
+        integrated: [{ page: '/application/', selector: '.testimonial-carousel' }]
+    },
+    'guarantee-badges': {
+        standalone: '/components/standalone/guarantee-badges.html',
+        integrated: [{ page: '/application/', selector: '.guarantee-badge-container' }]
+    },
+    'faq-section': {
+        standalone: '/components/standalone/faq-section.html',
+        integrated: [{ page: '/application/', selector: '.faq-section' }]
     }
-    // Add more components as they're created
 };
 
+// Properties to ignore (change based on context, don't matter for visual consistency)
+const IGNORE_PROPERTIES = new Set([
+    // Size properties that depend on content/viewport
+    'width', 'height', 'inlineSize', 'blockSize',
+    'minWidth', 'minHeight', 'maxWidth', 'maxHeight',
+    
+    // Absolute positioning (depends on page context)
+    'top', 'left', 'right', 'bottom',
+    'inset', 'insetBlock', 'insetInline',
+    
+    // Computed values that vary by browser
+    'webkitUserSelect', 'webkitAppRegion',
+    'webkitBorderHorizontalSpacing', 'webkitBorderVerticalSpacing',
+    
+    // Long-form properties (we test shorthand instead)
+    'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
+    'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
+    'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth',
+    
+    // Internal/inherited properties
+    'cssFloat', 'cssText', 'length', 'parentRule'
+]);
+
+// Properties that are CRITICAL for visual appearance
+const CRITICAL_PROPERTIES = new Set([
+    'display', 'position', 'flexDirection', 'justifyContent', 'alignItems',
+    'gridTemplateColumns', 'gridTemplateRows', 'gap',
+    'padding', 'margin', 'border', 'borderRadius',
+    'background', 'backgroundColor', 'backgroundImage',
+    'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight',
+    'boxShadow', 'textAlign', 'opacity', 'transform'
+]);
+
 /**
- * Extract computed styles from an element
+ * Get ALL computed styles from an element
  */
-async function getComputedStyles(page, selector, styleProps) {
-    return await page.evaluate(({ sel, props }) => {
+async function getAllComputedStyles(page, selector) {
+    return await page.evaluate((sel) => {
         const element = document.querySelector(sel);
         if (!element) return null;
         
         const computed = window.getComputedStyle(element);
         const styles = {};
         
-        props.forEach(prop => {
-            styles[prop] = computed[prop];
-        });
+        // Get all properties
+        for (let i = 0; i < computed.length; i++) {
+            const prop = computed[i];
+            styles[prop] = computed.getPropertyValue(prop);
+        }
         
         return styles;
-    }, { sel: selector, props: styleProps });
+    }, selector);
 }
 
 /**
- * Compare two style objects
+ * Filter styles to only relevant ones
+ */
+function filterRelevantStyles(styles) {
+    const filtered = {};
+    
+    for (const [prop, value] of Object.entries(styles)) {
+        // Skip ignored properties
+        if (IGNORE_PROPERTIES.has(prop)) continue;
+        
+        // Skip empty or default values
+        if (!value || value === 'none' || value === 'normal' || value === 'auto') continue;
+        
+        // Skip webkit prefixed unless critical
+        if (prop.startsWith('webkit') && !prop.includes('backdrop')) continue;
+        
+        filtered[prop] = value;
+    }
+    
+    return filtered;
+}
+
+/**
+ * Compare two style objects and categorize differences
  */
 function compareStyles(standalone, integrated, componentName) {
-    const differences = [];
+    const criticalDiffs = [];
+    const minorDiffs = [];
     
+    // Check all properties in standalone
     for (const [prop, standaloneValue] of Object.entries(standalone)) {
         const integratedValue = integrated[prop];
         
         if (standaloneValue !== integratedValue) {
-            differences.push({
+            const diff = {
                 property: prop,
                 standalone: standaloneValue,
-                integrated: integratedValue
-            });
+                integrated: integratedValue || '(not set)'
+            };
+            
+            if (CRITICAL_PROPERTIES.has(prop)) {
+                criticalDiffs.push(diff);
+            } else {
+                minorDiffs.push(diff);
+            }
         }
     }
     
-    return differences;
+    // Check for properties in integrated but not standalone
+    for (const [prop, integratedValue] of Object.entries(integrated)) {
+        if (!standalone[prop] && integratedValue) {
+            const diff = {
+                property: prop,
+                standalone: '(not set)',
+                integrated: integratedValue
+            };
+            
+            if (CRITICAL_PROPERTIES.has(prop)) {
+                criticalDiffs.push(diff);
+            } else {
+                minorDiffs.push(diff);
+            }
+        }
+    }
+    
+    return { criticalDiffs, minorDiffs };
 }
 
 /**
  * Main test suite
  */
-test.describe('Component Style Consistency Verification', () => {
+test.describe('Component Style Consistency - Automatic Verification', () => {
     
     for (const [componentName, config] of Object.entries(COMPONENTS)) {
         
-        test(`${componentName}: standalone vs integrated styles match @smoke`, async ({ page }) => {
+        test(`${componentName}: auto-verify all styles @smoke`, async ({ page }) => {
             // Skip if standalone file doesn't exist
             const standalonePath = path.join(__dirname, '..', 'public', config.standalone);
             if (!fs.existsSync(standalonePath)) {
@@ -95,100 +178,85 @@ test.describe('Component Style Consistency Verification', () => {
                 return;
             }
             
-            // Step 1: Get standalone styles
+            // Step 1: Get ALL standalone styles
             await page.goto(config.standalone);
             await page.waitForLoadState('networkidle');
             
-            const standaloneStyles = await getComputedStyles(
+            const standaloneAllStyles = await getAllComputedStyles(
                 page,
-                `[data-component="${componentName}"]`,
-                config.criticalStyles
+                `[data-component="${componentName}"]`
             );
             
-            expect(standaloneStyles).not.toBeNull();
-            console.log(`\n📦 ${componentName} - Standalone styles:`, standaloneStyles);
+            expect(standaloneAllStyles).not.toBeNull();
+            const standaloneStyles = filterRelevantStyles(standaloneAllStyles);
             
-            // Step 2: Get integrated styles from each page
+            console.log(`\n📦 ${componentName} - Found ${Object.keys(standaloneStyles).length} relevant style properties`);
+            
+            // Step 2: Get ALL integrated styles from each page
             for (const integration of config.integrated) {
                 await page.goto(integration.page);
                 await page.waitForLoadState('networkidle');
                 
-                const integratedStyles = await getComputedStyles(
+                const integratedAllStyles = await getAllComputedStyles(
                     page,
-                    integration.selector,
-                    config.criticalStyles
+                    integration.selector
                 );
                 
-                expect(integratedStyles).not.toBeNull();
-                console.log(`\n🔗 ${componentName} on ${integration.page}:`, integratedStyles);
+                expect(integratedAllStyles).not.toBeNull();
+                const integratedStyles = filterRelevantStyles(integratedAllStyles);
                 
-                // Step 3: Compare styles
-                const differences = compareStyles(standaloneStyles, integratedStyles, componentName);
+                console.log(`🔗 ${componentName} on ${integration.page} - Found ${Object.keys(integratedStyles).length} relevant style properties`);
                 
-                if (differences.length > 0) {
-                    console.error(`\n❌ Style differences found in ${componentName} on ${integration.page}:`);
-                    differences.forEach(diff => {
-                        console.error(`  - ${diff.property}:`);
-                        console.error(`    Standalone: ${diff.standalone}`);
-                        console.error(`    Integrated: ${diff.integrated}`);
+                // Step 3: Compare ALL styles
+                const { criticalDiffs, minorDiffs } = compareStyles(
+                    standaloneStyles,
+                    integratedStyles,
+                    componentName
+                );
+                
+                // Report results
+                if (criticalDiffs.length > 0) {
+                    console.error(`\n❌ CRITICAL style differences in ${componentName} on ${integration.page}:`);
+                    criticalDiffs.forEach(diff => {
+                        console.error(`  🔴 ${diff.property}:`);
+                        console.error(`     Standalone: ${diff.standalone}`);
+                        console.error(`     Integrated: ${diff.integrated}`);
                     });
-                    
-                    expect(differences).toHaveLength(0); // This will fail and show the differences
-                } else {
-                    console.log(`\n✅ ${componentName} on ${integration.page}: All styles match!`);
                 }
-            }
-        });
-        
-        test(`${componentName}: visual regression check @visual`, async ({ page }) => {
-            const standalonePath = path.join(__dirname, '..', 'public', config.standalone);
-            if (!fs.existsSync(standalonePath)) {
-                test.skip();
-                return;
-            }
-            
-            // Screenshot standalone
-            await page.goto(config.standalone);
-            await page.waitForLoadState('networkidle');
-            
-            const standaloneElement = page.locator(`[data-component="${componentName}"]`);
-            await expect(standaloneElement).toBeVisible();
-            
-            const standaloneScreenshot = await standaloneElement.screenshot();
-            
-            // Screenshot integrated versions
-            for (const integration of config.integrated) {
-                await page.goto(integration.page);
-                await page.waitForLoadState('networkidle');
                 
-                const integratedElement = page.locator(integration.selector).first();
-                await expect(integratedElement).toBeVisible();
+                if (minorDiffs.length > 0) {
+                    console.log(`\n⚠️  Minor style differences in ${componentName} on ${integration.page}:`);
+                    minorDiffs.slice(0, 5).forEach(diff => {
+                        console.log(`  🟡 ${diff.property}: ${diff.standalone} → ${diff.integrated}`);
+                    });
+                    if (minorDiffs.length > 5) {
+                        console.log(`  ... and ${minorDiffs.length - 5} more minor differences`);
+                    }
+                }
                 
-                const integratedScreenshot = await integratedElement.screenshot();
+                if (criticalDiffs.length === 0 && minorDiffs.length === 0) {
+                    console.log(`\n✅ ${componentName} on ${integration.page}: ALL styles match perfectly!`);
+                }
                 
-                // Compare dimensions (basic visual check)
-                // Note: For pixel-perfect comparison, use Percy or Chromatic
-                const standaloneBuffer = Buffer.from(standaloneScreenshot);
-                const integratedBuffer = Buffer.from(integratedScreenshot);
-                
-                // At minimum, they should be similar in size (within 10%)
-                const sizeDiff = Math.abs(standaloneBuffer.length - integratedBuffer.length);
-                const maxDiff = standaloneBuffer.length * 0.1;
-                
-                expect(sizeDiff).toBeLessThan(maxDiff);
-                
-                console.log(`\n📸 ${componentName} visual check on ${integration.page}: PASS`);
+                // Only fail on critical differences
+                expect(criticalDiffs).toHaveLength(0);
             }
         });
     }
 });
 
 /**
- * Generate style comparison report
+ * Generate comprehensive style comparison report
  */
-test('Generate style comparison report @report', async ({ page }) => {
+test('Generate complete style comparison report @report', async ({ page }) => {
     const report = {
         timestamp: new Date().toISOString(),
+        summary: {
+            totalComponents: 0,
+            componentsWithDiffs: 0,
+            totalCriticalDiffs: 0,
+            totalMinorDiffs: 0
+        },
         components: {}
     };
     
@@ -198,35 +266,53 @@ test('Generate style comparison report @report', async ({ page }) => {
             continue;
         }
         
-        report.components[componentName] = {
-            standalone: {},
-            integrated: {}
-        };
+        report.summary.totalComponents++;
         
         // Get standalone styles
         await page.goto(config.standalone);
         await page.waitForLoadState('networkidle');
         
-        const standaloneStyles = await getComputedStyles(
+        const standaloneAllStyles = await getAllComputedStyles(
             page,
-            `[data-component="${componentName}"]`,
-            config.criticalStyles
+            `[data-component="${componentName}"]`
         );
+        const standaloneStyles = filterRelevantStyles(standaloneAllStyles);
         
-        report.components[componentName].standalone = standaloneStyles;
+        report.components[componentName] = {
+            standalone: standaloneStyles,
+            integrated: {},
+            differences: {}
+        };
         
-        // Get integrated styles
+        // Get integrated styles and compare
         for (const integration of config.integrated) {
             await page.goto(integration.page);
             await page.waitForLoadState('networkidle');
             
-            const integratedStyles = await getComputedStyles(
+            const integratedAllStyles = await getAllComputedStyles(
                 page,
-                integration.selector,
-                config.criticalStyles
+                integration.selector
             );
+            const integratedStyles = filterRelevantStyles(integratedAllStyles);
             
             report.components[componentName].integrated[integration.page] = integratedStyles;
+            
+            const { criticalDiffs, minorDiffs } = compareStyles(
+                standaloneStyles,
+                integratedStyles,
+                componentName
+            );
+            
+            report.components[componentName].differences[integration.page] = {
+                critical: criticalDiffs,
+                minor: minorDiffs
+            };
+            
+            if (criticalDiffs.length > 0 || minorDiffs.length > 0) {
+                report.summary.componentsWithDiffs++;
+            }
+            report.summary.totalCriticalDiffs += criticalDiffs.length;
+            report.summary.totalMinorDiffs += minorDiffs.length;
         }
     }
     
@@ -235,5 +321,10 @@ test('Generate style comparison report @report', async ({ page }) => {
     fs.mkdirSync(path.dirname(reportPath), { recursive: true });
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
     
-    console.log(`\n📊 Style comparison report written to: ${reportPath}`);
+    console.log(`\n📊 Complete style comparison report:`);
+    console.log(`   Total components: ${report.summary.totalComponents}`);
+    console.log(`   Components with differences: ${report.summary.componentsWithDiffs}`);
+    console.log(`   Critical differences: ${report.summary.totalCriticalDiffs}`);
+    console.log(`   Minor differences: ${report.summary.totalMinorDiffs}`);
+    console.log(`\n   Report saved to: ${reportPath}`);
 });

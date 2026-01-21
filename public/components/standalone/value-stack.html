@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>value-stack Component - Standalone</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a14;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Component styles - COPY THESE TO main styles.css */
+        .value-stack {
+            /* Add your component styles here */
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+        }
+        
+        /* Dev tools */
+        .dev-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .dev-info h4 {
+            margin-bottom: 8px;
+            color: #00d4aa;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Dev Info -->
+        <div class="dev-info">
+            <h4>Component: value-stack</h4>
+            <div>Status: <span style="color: #00d4aa;">✓ Standalone</span></div>
+        </div>
+        
+        <!-- Component -->
+        <div class="value-stack" data-component="value-stack">
+            <h3>Component: value-stack</h3>
+            <p>Edit this component until it looks perfect!</p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple Vue instance for standalone testing
+        new Vue({
+            el: '#app',
+            data: {
+                // Add your component data here
+            }
+        });
+        
+        // Expose computed styles for testing
+        window.getComponentStyles = function() {
+            const component = document.querySelector('[data-component="value-stack"]');
+            const computed = window.getComputedStyle(component);
+            
+            return {
+                component: 'value-stack',
+                mode: 'standalone',
+                styles: {
+                    display: computed.display,
+                    padding: computed.padding,
+                    margin: computed.margin,
+                    background: computed.background,
+                    borderRadius: computed.borderRadius,
+                    color: computed.color
+                }
+            };
+        };
+        
+        console.log('value-stack - Standalone Mode');
+        console.log('Run window.getComponentStyles() to export styles for comparison');
+    </script>
+</body>
+</html>
