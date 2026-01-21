@@ -23,11 +23,18 @@ const PORT = 3001;
 const CSV_FILE = path.join(__dirname, '../data/submissions.csv');
 const APPLICATIONS_CSV = path.join(__dirname, '../data/applications.csv');
 const DATA_DIR = path.join(__dirname, '../data');
+const SESSIONS_DIR = path.join(__dirname, '../data/sessions');
 
 // Initialize OpenAI
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
+
+// Ensure sessions directory exists
+if (!fs.existsSync(SESSIONS_DIR)) {
+    fs.mkdirSync(SESSIONS_DIR, { recursive: true });
+    console.log('Created sessions directory');
+}
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -405,6 +412,105 @@ Return ONLY a JSON object with this format:
     const content = completion.choices[0].message.content;
     return { testimonial: JSON.parse(content) };
 }
+
+/**
+ * Session Management Functions
+ */
+function getSessionFilePath(email) {
+    // Sanitize email for filename
+    const sanitized = email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_');
+    return path.join(SESSIONS_DIR, `${sanitized}.json`);
+}
+
+function saveSession(email, data) {
+    try {
+        const filePath = getSessionFilePath(email);
+        const sessionData = {
+            email,
+            data,
+            lastUpdated: new Date().toISOString(),
+            createdAt: fs.existsSync(filePath) ? 
+                JSON.parse(fs.readFileSync(filePath, 'utf8')).createdAt : 
+                new Date().toISOString()
+        };
+        
+        fs.writeFileSync(filePath, JSON.stringify(sessionData, null, 2), 'utf8');
+        return true;
+    } catch (error) {
+        console.error('Error saving session:', error);
+        return false;
+    }
+}
+
+function loadSession(email) {
+    try {
+        const filePath = getSessionFilePath(email);
+        if (fs.existsSync(filePath)) {
+            const sessionData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            return sessionData.data;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error loading session:', error);
+        return null;
+    }
+}
+
+/**
+ * POST /api/session/save
+ * Save user session data
+ */
+app.post('/api/session/save', (req, res) => {
+    try {
+        const { email, data } = req.body;
+        
+        if (!email || !data) {
+            return res.status(400).json({ error: 'Email and data are required' });
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
+        
+        const success = saveSession(email, data);
+        
+        if (success) {
+            res.json({ success: true, message: 'Session saved' });
+        } else {
+            res.status(500).json({ error: 'Failed to save session' });
+        }
+    } catch (error) {
+        console.error('Session save error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+/**
+ * GET /api/session/load?email=user@example.com
+ * Load user session data
+ */
+app.get('/api/session/load', (req, res) => {
+    try {
+        const { email } = req.query;
+        
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
+        }
+        
+        const sessionData = loadSession(email);
+        
+        if (sessionData) {
+            res.json({ success: true, data: sessionData });
+        } else {
+            res.status(404).json({ success: false, message: 'No session found' });
+        }
+    } catch (error) {
+        console.error('Session load error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 // 404 handler
 app.use((req, res) => {
