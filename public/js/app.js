@@ -162,13 +162,8 @@ createApp({
                     throw new Error('Submission failed');
                 }
                 
-                // Success!
-                this.cohortFormSubmitting = false;
-                this.formSent = true;
-                this.submittedCohort = cohort; // Mark which cohort form was submitted
-                
-                // Note: Only THIS form's inputs remain disabled after successful submission
-                // Other cohort forms remain editable
+                // Success! Redirect to full application form
+                window.location.href = `application.html?cohort=${encodeURIComponent(cohort)}&name=${encodeURIComponent(this.name)}&email=${encodeURIComponent(this.email)}`;
                 
             } catch (error) {
                 console.error('Form submission error:', error);

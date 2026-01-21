@@ -18,6 +18,7 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 const PORT = 3001;
 const CSV_FILE = path.join(__dirname, '../data/submissions.csv');
+const APPLICATIONS_CSV = path.join(__dirname, '../data/applications.csv');
 const DATA_DIR = path.join(__dirname, '../data');
 
 // Ensure data directory exists
@@ -30,6 +31,13 @@ if (!fs.existsSync(CSV_FILE)) {
     const headers = 'timestamp,name,email,cohort,scholarshipCode,ipAddress\n';
     fs.writeFileSync(CSV_FILE, headers, 'utf8');
     console.log('Created CSV file with headers');
+}
+
+// Initialize applications CSV file
+if (!fs.existsSync(APPLICATIONS_CSV)) {
+    const headers = 'timestamp,name,email,phone,background,experience,aiTools,goal,motivation,commitment,source,cohort,ipAddress\n';
+    fs.writeFileSync(APPLICATIONS_CSV, headers, 'utf8');
+    console.log('Created applications CSV file with headers');
 }
 
 // Middleware
@@ -183,6 +191,84 @@ app.post('/api/submit', (req, res) => {
         console.error('Submission error:', error);
         res.status(500).json({ 
             error: 'Failed to process submission' 
+        });
+    }
+});
+
+// Full application submission endpoint
+app.post('/api/submit-application', (req, res) => {
+    try {
+        const { 
+            name, email, phone, background, experience, aiTools, goal, motivation,
+            commitment, source, cohort
+        } = req.body;
+        
+        // Validate required fields
+        if (!name || !email || !phone || !background || !experience || !goal || !motivation || !commitment || !source) {
+            return res.status(400).json({ 
+                error: 'Please fill in all required fields' 
+            });
+        }
+        
+        // Sanitize all inputs
+        const sanitized = {
+            name: sanitizeInput(name),
+            email: sanitizeInput(email),
+            phone: sanitizeInput(phone),
+            background: sanitizeInput(background),
+            experience: sanitizeInput(experience),
+            aiTools: sanitizeInput(aiTools || 'none'),
+            goal: sanitizeInput(goal),
+            motivation: sanitizeInput(motivation).substring(0, 1000),
+            commitment: sanitizeInput(commitment),
+            source: sanitizeInput(source),
+            cohort: sanitizeInput(cohort || 'Not specified')
+        };
+        
+        // Validate email format
+        if (!isValidEmail(sanitized.email)) {
+            return res.status(400).json({ 
+                error: 'Invalid email format' 
+            });
+        }
+        
+        // Get IP address
+        const ipAddress = req.headers['x-forwarded-for']?.split(',')[0].trim() || 
+                         req.socket.remoteAddress || 
+                         'unknown';
+        
+        // Create CSV row
+        const timestamp = new Date().toISOString();
+        const row = [
+            escapeCsvField(timestamp),
+            escapeCsvField(sanitized.name),
+            escapeCsvField(sanitized.email),
+            escapeCsvField(sanitized.phone),
+            escapeCsvField(sanitized.background),
+            escapeCsvField(sanitized.experience),
+            escapeCsvField(sanitized.aiTools),
+            escapeCsvField(sanitized.goal),
+            escapeCsvField(sanitized.motivation),
+            escapeCsvField(sanitized.commitment),
+            escapeCsvField(sanitized.source),
+            escapeCsvField(sanitized.cohort),
+            escapeCsvField(ipAddress)
+        ].join(',') + '\n';
+        
+        // Append to CSV file
+        fs.appendFileSync(APPLICATIONS_CSV, row, 'utf8');
+        
+        console.log(`[${timestamp}] New application: ${sanitized.name} <${sanitized.email}> - ${sanitized.cohort}`);
+        
+        res.json({ 
+            success: true, 
+            message: 'Application submitted successfully' 
+        });
+        
+    } catch (error) {
+        console.error('Application submission error:', error);
+        res.status(500).json({ 
+            error: 'Failed to process application' 
         });
     }
 });

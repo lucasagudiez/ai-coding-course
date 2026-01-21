@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application - Adava University</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .application-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0a0a14 0%, #1a0a2e 100%);
+            padding: 2rem 1.5rem;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .app-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .scarcity-bar {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .scarcity-bar strong {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .app-header h1 {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            background: linear-gradient(135deg, #a259ff 0%, #14b8a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .app-header .subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        .value-stack {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%);
+            border: 2px solid #14b8a6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .value-stack h3 {
+            color: #14b8a6;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .value-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .value-item:last-child {
+            border-bottom: none;
+        }
+
+        .value-item .value-price {
+            color: #14b8a6;
+            font-weight: 600;
+        }
+
+        .value-total {
+            background: rgba(20, 184, 166, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .value-total .big-number {
+            font-size: 2rem;
+            color: #14b8a6;
+            font-weight: bold;
+        }
+
+        .value-total .strike {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .social-proof-ping {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(20, 184, 166, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 300px;
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3);
+            animation: slideIn 0.5s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .social-proof-ping .ping-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .social-proof-ping .ping-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a259ff 0%, #14b8a6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .social-proof-ping .ping-text {
+            flex: 1;
+        }
+
+        .social-proof-ping .ping-name {
+            color: #14b8a6;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .social-proof-ping .ping-action {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.05);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a259ff 0%, #14b8a6 100%);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-text .highlight {
+            color: #14b8a6;
+            font-weight: 600;
+        }
+
+        .selective-banner {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%);
+            border: 2px solid rgba(20, 184, 166, 0.4);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .selective-banner h3 {
+            color: #14b8a6;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .selective-banner p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .comparison-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-box h4 {
+            color: #a259ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .comparison-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-item .label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-item .price {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .comparison-item .winner {
+            color: #14b8a6;
+            font-weight: 700;
+        }
+
+        .app-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: #a259ff;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: #14b8a6;
+        }
+
+        .section-description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #a259ff;
+            background: rgba(162, 89, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .benefit-callout {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(162, 89, 255, 0.1) 100%);
+            border-left: 3px solid #14b8a6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .benefit-callout h4 {
+            color: #14b8a6;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefit-callout p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .future-pacing {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+            border: 2px solid #a259ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .future-pacing h4 {
+            color: #a259ff;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .future-pacing p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+            border: 2px solid rgba(20, 184, 166, 0.5);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-section h2 {
+            color: #14b8a6;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .payment-info {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-info .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #14b8a6;
+            line-height: 1;
+        }
+
+        .payment-info .description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .fee-justification {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #14b8a6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .fee-justification h4 {
+            color: #14b8a6;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .fee-justification ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fee-justification li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            padding: 0.25rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .fee-justification li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #14b8a6;
+            font-weight: bold;
+        }
+
+        .section-accordion {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header:hover {
+            border-color: #14b8a6;
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.3) 0%, rgba(20, 184, 166, 0.3) 100%);
+        }
+
+        .section-header.completed {
+            border-color: #14b8a6;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(162, 89, 255, 0.15) 100%);
+        }
+
+        .section-header.active {
+            border-color: #a259ff;
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.3) 0%, rgba(20, 184, 166, 0.3) 100%);
+        }
+
+        .section-header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(162, 89, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #a259ff;
+            font-size: 1.125rem;
+        }
+
+        .section-header.completed .section-number {
+            background: rgba(20, 184, 166, 0.3);
+            color: #14b8a6;
+        }
+
+        .section-header.active .section-number {
+            background: #a259ff;
+            color: white;
+        }
+
+        .section-info h3 {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.125rem;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .section-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .section-icon {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .section-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .section-body.expanded {
+            max-height: 5000px;
+            padding-top: 1rem;
+        }
+
+        .file-upload {
+            position: relative;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            border-color: #a259ff;
+            background: rgba(162, 89, 255, 0.1);
+        }
+
+        .file-upload-label i {
+            font-size: 2rem;
+            color: #a259ff;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            color: #14b8a6;
+            font-size: 0.9rem;
+        }
+
+        .payment-breakdown {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-breakdown p {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .payment-breakdown .highlight {
+            color: #14b8a6;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #25877D 0%, #14b8a6 100%);
+            color: white;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4);
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(20, 184, 166, 0.6);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .guarantee {
+            text-align: center;
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(162, 89, 255, 0.2);
+            border-top-color: #14b8a6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #14b8a6;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtext {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .qualification-result {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(162, 89, 255, 0.2) 100%);
+            border: 2px solid #14b8a6;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .qualification-result h3 {
+            color: #14b8a6;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qualification-result p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .qualification-result .next-steps {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .qualification-result .next-steps h4 {
+            color: #a259ff;
+            margin-bottom: 0.75rem;
+        }
+
+        .qualification-result .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .qualification-result .next-steps li {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .qualification-result .next-steps li:before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #14b8a6;
+        }
+
+        @media (max-width: 768px) {
+            .app-form {
+                padding: 1.5rem;
+            }
+
+            .payment-section {
+                padding: 1.5rem;
+            }
+
+            .social-proof-ping {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="application-page">
+            <div class="app-container">
+                <!-- Scarcity Bar -->
+                <div class="cohort-capacity-bar">
+                    <div class="capacity-header">
+                        <span class="cohort-name">February 2026 Cohort</span>
+                        <span class="capacity-status">{{ 30 - spotsRemaining }} of 30 seats confirmed</span>
+                    </div>
+                    <div class="capacity-visual">
+                        <div class="capacity-fill" :style="{ width: ((30 - spotsRemaining) / 30 * 100) + '%' }"></div>
+                    </div>
+                    <p class="capacity-note">Limited to 30 students to maintain our 15:1 student-instructor ratio. Applications reviewed on rolling basis.</p>
+                </div>
+
+                <div class="app-header">
+                    <h1>Application for Admission</h1>
+                    <p class="subtitle">AI-First Software Development Intensive · 10-Day Program</p>
+                    <p class="instructors">Taught by engineers from MIT, Stanford, Google, Meta, Amazon, and Apple</p>
+                </div>
+
+                <!-- Program Components -->
+                <div class="program-components">
+                    <h3>Program Structure & Investment</h3>
+                    
+                    <div class="component-list">
+                        <div class="component-item">
+                            <div class="component-info">
+                                <h4>10-Day Intensive Curriculum</h4>
+                                <p>Daily live sessions with FAANG engineers covering AI-first development workflows</p>
+                            </div>
+                            <span class="market-value">~$8,000 market value</span>
+                        </div>
+                        
+                        <div class="component-item">
+                            <div class="component-info">
+                                <h4>1-on-1 Technical Mentorship</h4>
+                                <p>Personalized code reviews and career guidance from senior engineers</p>
+                            </div>
+                            <span class="market-value">~$3,000 market value</span>
+                        </div>
+                        
+                        <div class="component-item">
+                            <div class="component-info">
+                                <h4>Portfolio Project Development</h4>
+                                <p>Three production-grade projects with professional code review</p>
+                            </div>
+                            <span class="market-value">~$2,500 market value</span>
+                        </div>
+                        
+                        <div class="component-item">
+                            <div class="component-info">
+                                <h4>Alumni Network Access</h4>
+                                <p>Private community, weekly Q&A sessions, job board, continued support</p>
+                            </div>
+                            <span class="market-value">~$2,000 market value</span>
+                        </div>
+                    </div>
+                    
+                    <div class="investment-summary">
+                        <div class="market-comparison">
+                            <p class="market-note">*Combined market value of comparable services: ~$15,500</p>
+                            <p class="market-note">Traditional coding bootcamps: $12,000-$18,000 (12-24 weeks)</p>
+                        </div>
+                        <div class="program-tuition">
+                            <span class="tuition-label">Program Tuition:</span>
+                            <span class="tuition-amount">$590</span>
+                        </div>
+                        <p class="tuition-explanation">Our accelerated format and AI-first approach enables significantly lower costs while maintaining instructor quality and student outcomes.</p>
+                    </div>
+                </div>
+
+                <!-- Pathway Comparison -->
+                <div class="pathway-comparison">
+                    <h3>AI Development Learning Pathways</h3>
+                    <p class="comparison-intro">We designed our program to address gaps in traditional education models while leveraging modern AI tools. Here's how different approaches compare:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Pathway</th>
+                                <th>Duration</th>
+                                <th>Investment</th>
+                                <th>AI-First Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Traditional Bootcamp</td>
+                                <td>12-24 weeks</td>
+                                <td>$12,000-$18,000</td>
+                                <td>Limited</td>
+                            </tr>
+                            <tr>
+                                <td>CS Degree</td>
+                                <td>4 years</td>
+                                <td>$80,000-$200,000</td>
+                                <td>Minimal</td>
+                            </tr>
+                            <tr>
+                                <td>Self-Directed Learning</td>
+                                <td>Variable (6mo-3yr)</td>
+                                <td>$0-$500</td>
+                                <td>Depends on resources</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><strong>Adava AI-First Program</strong></td>
+                                <td><strong>10 days intensive</strong></td>
+                                <td><strong>$590</strong></td>
+                                <td><strong>Core curriculum</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p class="comparison-note"><em>Data based on industry averages and public program costs as of 2026. Each pathway has distinct advantages depending on individual circumstances and goals.</em></p>
+                </div>
+
+                <div class="application-progress-tracker">
+                    <div class="progress-header">
+                        <span>Application Progress</span>
+                        <span class="progress-percentage">{{ progress }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                    </div>
+                </div>
+
+                <div class="admissions-overview">
+                    <h3><i class="fas fa-shield-alt"></i> Selective Admissions Process</h3>
+                    <p>We maintain a ~30% acceptance rate to preserve small cohort sizes and ensure personalized instruction. Your responses help us evaluate program fit and determine how we can best support your learning objectives.</p>
+                    <p class="review-timeline"><strong>Review Timeline:</strong> Applications are reviewed within 24-48 hours of submission.</p>
+                </div>
+
+                <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-user"></i> Basic Information</h2>
+                        <p class="section-description">Contact details for application correspondence</p>
+
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" v-model="form.name" required placeholder="Jane Smith" @input="updateProgress">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" v-model="form.email" required placeholder="jane@example.com" @input="updateProgress">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" v-model="form.phone" required placeholder="+1 (555) 000-0000" @input="updateProgress">
+                        </div>
+                    </div>
+
+                    <!-- Background -->
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-briefcase"></i> Professional Background</h2>
+                        <p class="section-description">This information helps us understand your starting point and tailor instruction accordingly</p>
+
+                        <div class="form-group">
+                            <label>Current Status</label>
+                            <select v-model="form.background" required @change="updateProgress">
+                                <option value="">Select...</option>
+                                <option value="student">Student (high school or college)</option>
+                                <option value="professional">Working professional</option>
+                                <option value="career-changer">Career transition</option>
+                                <option value="entrepreneur">Entrepreneur/Founder</option>
+                                <option value="freelancer">Freelancer/Consultant</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Programming Experience Level</label>
+                            <select v-model="form.experience" required @change="updateProgress">
+                                <option value="">Select...</option>
+                                <option value="never">No prior coding experience</option>
+                                <option value="tried">Completed some tutorials</option>
+                                <option value="some">Familiar with basics</option>
+                                <option value="intermediate">Can build simple applications</option>
+                                <option value="advanced">Professional developer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>AI Coding Tools Experience (Select all that apply)</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-cursor" v-model="form.aiTools" value="cursor" @change="updateProgress">
+                                    <label for="tool-cursor">Cursor</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-claude" v-model="form.aiTools" value="claude" @change="updateProgress">
+                                    <label for="tool-claude">Claude (Anthropic)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-gpt" v-model="form.aiTools" value="gpt-codex" @change="updateProgress">
+                                    <label for="tool-gpt">GPT-4 / Codex</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-lovable" v-model="form.aiTools" value="lovable" @change="updateProgress">
+                                    <label for="tool-lovable">Lovable.dev</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-v0" v-model="form.aiTools" value="v0" @change="updateProgress">
+                                    <label for="tool-v0">v0.dev (Vercel)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-replit" v-model="form.aiTools" value="replit" @change="updateProgress">
+                                    <label for="tool-replit">Replit AI</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-windsurf" v-model="form.aiTools" value="windsurf" @change="updateProgress">
+                                    <label for="tool-windsurf">Windsurf (Codeium)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-bolt" v-model="form.aiTools" value="bolt" @change="updateProgress">
+                                    <label for="tool-bolt">Bolt.new (StackBlitz)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="tool-none" v-model="form.aiTools" value="none" @change="updateProgress">
+                                    <label for="tool-none">No prior experience with AI coding tools</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Goals -->
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                        <p class="section-description">Understanding your goals helps us provide relevant guidance and support</p>
+
+                        <div class="form-group">
+                            <label>Primary Objective</label>
+                            <select v-model="form.goal" required @change="updateProgress">
+                                <option value="">Select...</option>
+                                <option value="job">Secure employment in technology sector</option>
+                                <option value="career-switch">Transition into software development career</option>
+                                <option value="level-up">Advance current technical skills</option>
+                                <option value="startup">Develop own software product/venture</option>
+                                <option value="freelance">Begin independent consulting practice</option>
+                                <option value="automate">Improve efficiency in current role through automation</option>
+                                <option value="curiosity">Personal development and learning</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Motivation for Applying</label>
+                            <textarea v-model="form.motivation" required placeholder="What factors led you to apply to this program at this time?" @input="updateProgress"></textarea>
+                            <p class="field-help">Please describe your specific motivations and what you hope to achieve through this program.</p>
+                        </div>
+                    </div>
+
+                    <!-- Commitment -->
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-calendar-check"></i> Availability & Program Logistics</h2>
+                        <p class="section-description">Our intensive format requires approximately 2 hours daily for 10 consecutive days</p>
+
+                        <div class="form-group">
+                            <label>Live Session Attendance Capacity</label>
+                            <select v-model="form.commitment" required @change="updateProgress">
+                                <option value="">Select...</option>
+                                <option value="yes-all">Available for all live sessions</option>
+                                <option value="yes-most">Available for majority of sessions</option>
+                                <option value="flexible">Will utilize session recordings</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>How did you learn about this program?</label>
+                            <select v-model="form.source" required @change="updateProgress">
+                                <option value="">Select...</option>
+                                <option value="google">Search engine</option>
+                                <option value="social">Social media</option>
+                                <option value="friend">Personal referral</option>
+                                <option value="ad">Online advertisement</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Payment -->
+                    <div class="payment-section">
+                        <h2><i class="fas fa-lock"></i> Application Processing Fee</h2>
+                        
+                        <div class="fee-explanation-box">
+                            <h4>Why We Charge an Application Fee</h4>
+                            <p>Most selective programs charge $50-$250 for application processing. We've set our fee at $1 to remain accessible while maintaining program quality.</p>
+                            
+                            <div class="fee-breakdown">
+                                <p><strong>This nominal fee covers:</strong></p>
+                                <ul>
+                                    <li>Two-stage review process (AI screening + committee evaluation)</li>
+                                    <li>Personalized assessment of program fit</li>
+                                    <li>Administrative and payment processing costs</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="refund-policy">
+                                <h4><i class="fas fa-shield-alt"></i> Refund Policy</h4>
+                                <p>If your application is not accepted, your $1 fee is automatically refunded within 48 hours. No action required.</p>
+                            </div>
+                            
+                            <p class="context-note"><em>For context: Harvard Business School's MBA application fee is $250. Most coding bootcamps charge $100-$500. Our $1 fee maintains selective admissions while removing financial barriers to application.</em></p>
+                        </div>
+                        
+                        <div class="payment-info">
+                            <div class="price">$1.00</div>
+                            <p class="description">Application Processing Fee (Refundable if not admitted)</p>
+                        </div>
+
+                        <div class="payment-clarity">
+                            <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 1rem;">
+                                <strong style="color: #14b8a6;">No automatic charges.</strong> You are only paying $1 today for application processing.
+                            </p>
+                            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5;">
+                                If admitted, you will receive an enrollment invitation with program details and a payment link for the $590 tuition. You will have 7 days to review and decide whether to confirm your enrollment. If not admitted, your $1 is automatically refunded.
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" v-model="form.cardNumber" required placeholder="4242 4242 4242 4242" maxlength="19" @input="updateProgress">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Expiration Date</label>
+                                <input type="text" v-model="form.expiry" required placeholder="MM/YY" maxlength="5" @input="updateProgress">
+                            </div>
+                            <div class="form-group">
+                                <label>Security Code</label>
+                                <input type="text" v-model="form.cvc" required placeholder="123" maxlength="4" @input="updateProgress">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" :disabled="!isComplete">
+                            <i class="fas fa-paper-plane"></i> Submit Application
+                        </button>
+
+                        <p class="security-notice">
+                            <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Secure payment processing<br>
+                            <i class="fas fa-undo"></i> Full refund if not admitted · Processed within 48 hours
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Loading State -->
+                <div class="loading-overlay" v-if="loading">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Processing Application...</div>
+                        <p class="loading-subtext">Evaluating application completeness and program fit</p>
+                    </div>
+                </div>
+
+                <!-- Qualification Result -->
+                <div class="qualification-result" v-if="qualificationMessage">
+                    <h3><i class="fas fa-check-circle"></i> Application Submitted Successfully</h3>
+                    <p v-html="qualificationMessage"></p>
+                    
+                    <div class="next-steps">
+                        <h4>Application Review Process:</h4>
+                        <ul>
+                            <li>Confirmation email sent to {{ form.email }}</li>
+                            <li>Committee review within 24-48 hours</li>
+                            <li>Admission decision notification via email</li>
+                            <li>If admitted: 7-day enrollment window with $590 tuition payment link</li>
+                            <li>If not admitted: Automatic $1 refund within 48 hours</li>
+                            <li>Cohort begins {{ cohort || 'February 3rd, 2026' }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                loading: false,
+                submitted: false,
+                qualificationMessage: '',
+                cohort: '',
+                spotsRemaining: 23,
+                form: {
+                    name: '',
+                    email: '',
+                    phone: '',
+                    background: '',
+                    experience: '',
+                    aiTools: [],
+                    goal: '',
+                    motivation: '',
+                    commitment: '',
+                    source: '',
+                    // Optional fields
+                    linkedin: '',
+                    portfolio: '',
+                    resume: null,
+                    resumeName: '',
+                    currentSalary: '',
+                    targetSalary: '',
+                    location: '',
+                    education: '',
+                    // Payment
+                    cardNumber: '',
+                    expiry: '',
+                    cvc: ''
+                }
+            },
+            computed: {
+                progress() {
+                    let filled = 0;
+                    const total = 12;
+                    
+                    if (this.form.name) filled++;
+                    if (this.form.email) filled++;
+                    if (this.form.phone) filled++;
+                    if (this.form.background) filled++;
+                    if (this.form.experience) filled++;
+                    if (this.form.aiTools.length > 0) filled++;
+                    if (this.form.goal) filled++;
+                    if (this.form.motivation) filled++;
+                    if (this.form.commitment) filled++;
+                    if (this.form.source) filled++;
+                    if (this.form.cardNumber) filled++;
+                    if (this.form.expiry && this.form.cvc) filled++;
+                    
+                    return Math.round((filled / total) * 100);
+                },
+                isComplete() {
+                    return this.progress === 100;
+                },
+                canShowPayment() {
+                    // Only show payment after all required sections completed
+                    return this.isSectionCompleted(1) && 
+                           this.isSectionCompleted(2) && 
+                           this.isSectionCompleted(3) && 
+                           this.isSectionCompleted(4);
+                }
+            },
+            mounted() {
+                const params = new URLSearchParams(window.location.search);
+                this.cohort = params.get('cohort') || '';
+                this.form.name = params.get('name') || '';
+                this.form.email = params.get('email') || '';
+            },
+            methods: {
+                toggleSection(sectionNum) {
+                    if (this.activeSection === sectionNum) {
+                        this.activeSection = null;
+                    } else {
+                        this.activeSection = sectionNum;
+                    }
+                },
+                isSectionCompleted(sectionNum) {
+                    switch(sectionNum) {
+                        case 1: // Basic Info
+                            return this.form.name && this.form.email && this.form.phone;
+                        case 2: // Background
+                            return this.form.background && this.form.experience && this.form.aiTools.length > 0;
+                        case 3: // Goals
+                            return this.form.goal && this.form.motivation;
+                        case 4: // Commitment
+                            return this.form.commitment && this.form.source;
+                        case 5: // Optional (always completable)
+                            return true;
+                        default:
+                            return false;
+                    }
+                },
+                handleFileUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.form.resume = file;
+                        this.form.resumeName = file.name;
+                        this.updateProgress();
+                    }
+                },
+                updateProgress() {
+                    // Track completion for progress bar
+                },
+                async submitApplication() {
+                    if (!this.isComplete) {
+                        alert('Please complete all fields');
+                        return;
+                    }
+
+                    this.loading = true;
+                    this.submitted = true;
+                    
+                    try {
+                        const apiUrl = window.location.hostname === 'adavauniversity.org' 
+                            ? '/api/submit-application' 
+                            : 'http://localhost:3001/api/submit-application';
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                ...this.form,
+                                cohort: this.cohort,
+                                aiTools: this.form.aiTools.join(', ')
+                            })
+                        });
+
+                        if (response.ok) {
+                            await this.generateQualification();
+                        } else {
+                            alert('Error submitting. Please email us at adavauniversity@gmail.com');
+                            this.loading = false;
+                            this.submitted = false;
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Error submitting. Please email us at adavauniversity@gmail.com');
+                        this.loading = false;
+                        this.submitted = false;
+                    }
+                },
+                async generateQualification() {
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    
+                    let message = `Thank you for submitting your application. Based on your responses, our preliminary assessment indicates strong alignment with program objectives.<br><br>`;
+                    
+                    const factors = [];
+                    
+                    // Background evaluation
+                    if (this.form.background === 'professional') {
+                        factors.push('<strong>Professional Context:</strong> Your work experience provides valuable context for practical application of AI development methodologies.');
+                    } else if (this.form.background === 'career-changer') {
+                        factors.push('<strong>Career Transition:</strong> Your initiative in pursuing technical skill development aligns with successful program alumni profiles.');
+                    } else if (this.form.background === 'student') {
+                        factors.push('<strong>Academic Background:</strong> Early adoption of AI-first development approaches positions you advantageously for emerging industry standards.');
+                    } else if (this.form.background === 'entrepreneur') {
+                        factors.push('<strong>Entrepreneurial Perspective:</strong> Your product development objectives align well with our project-based curriculum.');
+                    }
+                    
+                    // Experience evaluation
+                    if (this.form.experience === 'never' || this.form.experience === 'tried') {
+                        factors.push('<strong>Learning Approach:</strong> Starting with modern AI workflows allows for development of optimal practices from the outset.');
+                    } else if (this.form.experience === 'advanced') {
+                        factors.push('<strong>Technical Foundation:</strong> Your existing development experience combined with AI-augmented workflows should yield significant productivity improvements.');
+                    } else {
+                        factors.push('<strong>Technical Foundation:</strong> Your current skill level provides a solid foundation for accelerated learning through AI-assisted methodologies.');
+                    }
+                    
+                    // AI tools experience
+                    if (this.form.aiTools.length === 0 || this.form.aiTools.includes('none')) {
+                        factors.push('<strong>AI Tools Training:</strong> You will receive comprehensive instruction in industry-standard AI development tools and workflows.');
+                    } else {
+                        factors.push(`<strong>AI Tools Experience:</strong> Your familiarity with ${this.form.aiTools.filter(t => t !== 'none').join(', ')} demonstrates proactive engagement with modern development approaches.`);
+                    }
+                    
+                    // Goal alignment
+                    if (this.form.goal === 'job' || this.form.goal === 'career-switch') {
+                        factors.push('<strong>Career Objectives:</strong> Your employment goals are well-supported by our alumni network and job placement resources.');
+                    } else if (this.form.goal === 'startup') {
+                        factors.push('<strong>Product Development:</strong> Our curriculum emphasizes practical application through building production-quality software, directly supporting your venture objectives.');
+                    } else if (this.form.goal === 'freelance') {
+                        factors.push('<strong>Independent Practice:</strong> The program provides foundational skills for establishing a successful consulting or freelance practice.');
+                    }
+                    
+                    // Add factors to message (limit to top 3)
+                    factors.slice(0, 3).forEach(factor => {
+                        message += `• ${factor}<br><br>`;
+                    });
+                    
+                    message += `Your application will undergo full committee review within 24-48 hours. You will receive a formal admission decision via email at <strong>${this.form.email}</strong>.`;
+                    
+                    this.qualificationMessage = message;
+                    this.loading = false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
