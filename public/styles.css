@@ -3642,7 +3642,7 @@ canvas.confetti-canvas {
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    background: transparent; /* No white background */
+    background: #ffffff; /* White background for poster images */
     flex: 1 1 calc(33.333% - 1.875rem); /* Aim for 3 per row, accounting for gap */
     min-width: min(280px, 100%); /* Minimum width before wrapping */
     max-width: 100%; /* Never exceed container */
@@ -3659,7 +3659,8 @@ canvas.confetti-canvas {
     width: 100%; /* Fill container */
     height: auto;
     transition: all 0.3s ease;
-    background: transparent; /* No white background */
+    background: #ffffff; /* White background for images */
+    padding: 0;
 }
 
 /* State-Rewards is taller, so needs smaller width for same area */
@@ -3676,11 +3677,11 @@ canvas.confetti-canvas {
 
 /* Mobile Responsive */
 
-/* GLightbox Custom Styling - No white backgrounds or padding */
+/* GLightbox Custom Styling - White background for poster images */
 .glightbox-clean .gslide-image img {
-    background: transparent !important;
-    padding: 0 !important;
-    border-radius: 0;
+    background: #ffffff !important; /* White background for poster images */
+    padding: 20px !important; /* Padding around images */
+    border-radius: 8px;
     max-width: 90vw;
     max-height: 90vh;
     object-fit: contain;
@@ -3688,7 +3689,7 @@ canvas.confetti-canvas {
 
 /* Ensure lightbox container has dark background */
 .glightbox-clean .gslide-media {
-    background: transparent !important;
+    background: rgba(0, 0, 0, 0.9) !important; /* Dark background for lightbox */
 }
 
 .glightbox-clean .ginner-container {
