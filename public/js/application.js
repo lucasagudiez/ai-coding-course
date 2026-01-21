@@ -9,6 +9,15 @@ const ApplicationForm = {
             spotsRemaining: 23,
             showPing: false,
             currentPing: {},
+            // Section visibility for progressive disclosure
+            sections: {
+                basic: true,      // Always visible
+                background: false,
+                goals: false,
+                commitment: false,
+                professional: false, // New optional section
+                payment: false
+            },
             form: {
                 name: '',
                 email: '',
@@ -20,6 +29,10 @@ const ApplicationForm = {
                 motivation: '',
                 commitment: '',
                 source: '',
+                // New optional fields
+                linkedinUrl: '',
+                portfolioUrl: '',
+                resumeFile: null,
                 cardNumber: '',
                 expiry: '',
                 cvc: ''
@@ -67,6 +80,44 @@ const ApplicationForm = {
     methods: {
         updateProgress() {
             // Auto-progress tracking
+        },
+        
+        // Progressive section unlocking
+        completeSection(currentSection) {
+            const sectionOrder = ['basic', 'background', 'goals', 'commitment', 'professional', 'payment'];
+            const currentIndex = sectionOrder.indexOf(currentSection);
+            if (currentIndex < sectionOrder.length - 1) {
+                const nextSection = sectionOrder[currentIndex + 1];
+                this.sections[nextSection] = true;
+                
+                // Scroll to next section
+                setTimeout(() => {
+                    const nextEl = document.querySelector(`[data-section="${nextSection}"]`);
+                    if (nextEl) {
+                        nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        },
+        
+        // Check if section is complete
+        isSectionComplete(section) {
+            switch(section) {
+                case 'basic':
+                    return this.form.name && this.form.email && this.form.phone;
+                case 'background':
+                    return this.form.background && this.form.experience && this.form.aiTools.length > 0;
+                case 'goals':
+                    return this.form.goal && this.form.motivation;
+                case 'commitment':
+                    return this.form.commitment && this.form.source;
+                case 'professional':
+                    return true; // Optional, always complete
+                case 'payment':
+                    return this.form.cardNumber && this.form.expiry && this.form.cvc;
+                default:
+                    return false;
+            }
         },
         
         startSocialProof() {
