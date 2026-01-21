@@ -12,6 +12,10 @@ const ApplicationForm = {
             showExitIntent: false,  // Exit intent popup
             showStickyBar: false,   // Sticky urgency header
             faqOpen: [false, false, false, false], // FAQ state
+            // Dynamic counters
+            graduateCount: 500,
+            employedCount: 87,
+            avgSalary: 94,
             // Section visibility for progressive disclosure
             sections: {
                 basic: true,      // Always visible
@@ -87,6 +91,12 @@ const ApplicationForm = {
         this.form.name = params.get('name') || '';
         this.form.email = params.get('email') || '';
         
+        // Load saved progress from localStorage
+        this.loadProgress();
+        
+        // Animate counters on load
+        this.animateCounters();
+        
         // Start social proof pings
         this.startSocialProof();
         
@@ -95,11 +105,86 @@ const ApplicationForm = {
         
         // Sticky header on scroll
         this.initStickyHeader();
+        
+        // Auto-save progress every 10 seconds
+        setInterval(() => {
+            this.saveProgress();
+        }, 10000);
     },
     
     methods: {
         updateProgress() {
             // Auto-progress tracking
+            this.saveProgress(); // Save on every update
+        },
+        
+        saveProgress() {
+            // Save form data to localStorage (excluding payment info)
+            const progressData = {
+                form: {
+                    background: this.form.background,
+                    experience: this.form.experience,
+                    aiTools: this.form.aiTools,
+                    goal: this.form.goal,
+                    motivation: this.form.motivation,
+                    commitment: this.form.commitment,
+                    source: this.form.source,
+                    linkedin: this.form.linkedin,
+                    portfolio: this.form.portfolio,
+                    website: this.form.website,
+                    phone: this.form.phone
+                },
+                sections: this.sections,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('adava_application_progress', JSON.stringify(progressData));
+        },
+        
+        loadProgress() {
+            const saved = localStorage.getItem('adava_application_progress');
+            if (!saved) return;
+            
+            try {
+                const data = JSON.parse(saved);
+                // Only load if saved within last 24 hours
+                const hoursSince = (Date.now() - data.timestamp) / (1000 * 60 * 60);
+                if (hoursSince < 24) {
+                    // Restore form data
+                    Object.assign(this.form, data.form);
+                    // Restore section visibility
+                    Object.assign(this.sections, data.sections);
+                }
+            } catch (e) {
+                console.error('Failed to load progress:', e);
+            }
+        },
+        
+        animateCounters() {
+            // Animate graduate count from 0 to 500
+            this.animateNumber('graduateCount', 0, 500, 2000);
+            // Animate employed % from 0 to 87
+            this.animateNumber('employedCount', 0, 87, 2000);
+            // Animate salary from 0 to 94
+            this.animateNumber('avgSalary', 0, 94, 2000);
+        },
+        
+        animateNumber(prop, start, end, duration) {
+            const startTime = Date.now();
+            const range = end - start;
+            
+            const timer = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function (easeOutQuad)
+                const easeProgress = progress * (2 - progress);
+                this[prop] = Math.floor(start + range * easeProgress);
+                
+                if (progress >= 1) {
+                    clearInterval(timer);
+                    this[prop] = end;
+                }
+            }, 16); // ~60fps
         },
         
         toggleFaq(index) {

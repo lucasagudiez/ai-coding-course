@@ -1427,3 +1427,170 @@ body {
     line-height: 1.6;
     animation: fadeIn 0.3s ease-out;
 }
+
+/* Trust Badges */
+.trust-badges {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(20, 20, 35, 0.4);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trust-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: rgba(162, 89, 255, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(162, 89, 255, 0.2);
+}
+
+.trust-badge i {
+    color: var(--primary-teal);
+    font-size: 1.1rem;
+}
+
+.trust-statement {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .trust-row {
+        gap: 0.75rem;
+    }
+    
+    .trust-badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Risk Reversal Box */
+.risk-reversal-box {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);
+    border: 2px solid rgba(20, 184, 166, 0.4);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.risk-icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, #20c997 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+}
+
+.risk-icon i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.risk-content h4 {
+    color: var(--primary-teal);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.risk-content p {
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+    .risk-reversal-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.25rem;
+    }
+    
+    .risk-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .risk-icon i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Graduate Counter */
+.graduate-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.counter-stat {
+    text-align: center;
+}
+
+.counter-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.counter-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .graduate-counter {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    
+    .counter-number {
+        font-size: 2rem;
+    }
+    
+    .counter-label {
+        font-size: 0.85rem;
+    }
+}

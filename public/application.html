@@ -34,6 +34,22 @@
                 <small>Applications reviewed within 48 hours</small>
             </div>
 
+            <!-- Graduate Counter -->
+            <div class="graduate-counter">
+                <div class="counter-stat">
+                    <div class="counter-number">{{ graduateCount }}+</div>
+                    <div class="counter-label">Students Graduated</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">{{ employedCount }}%</div>
+                    <div class="counter-label">Now Employed in Tech</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">${{ avgSalary }}K</div>
+                    <div class="counter-label">Average Starting Salary</div>
+                </div>
+            </div>
+
             <!-- Header -->
             <div class="app-header">
                 <h1>Application for Admission</h1>
@@ -479,6 +495,29 @@
                     </div>
                 </div>
 
+                <!-- Trust Badges -->
+                <div class="trust-badges" v-show="sections.payment">
+                    <div class="trust-row">
+                        <div class="trust-badge">
+                            <i class="fas fa-lock"></i>
+                            <span>256-bit SSL Encrypted</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Bank-Level Security</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>PCI Compliant</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Privacy Protected</span>
+                        </div>
+                    </div>
+                    <p class="trust-statement">Trusted by 500+ students worldwide. Join alumni at Google, Apple, Meta, Tesla, Amazon.</p>
+                </div>
+
                 <!-- Payment -->
                 <div class="payment-section" data-section="payment" v-show="sections.payment">
                     <h2><i class="fas fa-lock"></i> Application Fee: $1</h2>
@@ -528,6 +567,17 @@
                     </button>
                     
                     <p class="charge-notice">By clicking "Submit Application", your card will be charged $1.00</p>
+
+                    <!-- Risk Reversal Box -->
+                    <div class="risk-reversal-box">
+                        <div class="risk-icon">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div class="risk-content">
+                            <h4>Zero Risk Guarantee</h4>
+                            <p>Not admitted? Automatic $1 refund. No forms, no waiting. Accepted but changed your mind? No pressure. The $590 program fee is only charged if you decide to join after acceptance.</p>
+                        </div>
+                    </div>
 
                     <p class="guarantee">
                         <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Bank-level security<br>
