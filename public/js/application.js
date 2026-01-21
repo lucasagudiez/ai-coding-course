@@ -109,13 +109,18 @@ const ApplicationForm = {
                 const nextSection = sectionOrder[currentIndex + 1];
                 this.sections[nextSection] = true;
                 
-                // Scroll to next section
-                setTimeout(() => {
-                    const nextEl = document.querySelector(`[data-section="${nextSection}"]`);
-                    if (nextEl) {
-                        nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 100);
+                // Scroll to next section with smooth animation
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        const nextEl = document.querySelector(`[data-section="${nextSection}"]`);
+                        if (nextEl) {
+                            // Scroll with offset for better visibility
+                            const yOffset = -20; // 20px from top
+                            const y = nextEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                        }
+                    }, 150); // Small delay for Vue to render
+                });
             }
         },
         

@@ -229,7 +229,7 @@
                 </div>
 
                 <!-- Goals -->
-                <div class="form-section" v-show="sections.goals">
+                <div class="form-section" data-section="goals" v-show="sections.goals">
                     <h2 class="section-title"><i class="fas fa-bullseye"></i> Your Goals</h2>
                     <p class="section-description">Let's make this real</p>
 
@@ -267,7 +267,7 @@
                 </div>
 
                 <!-- Commitment -->
-                <div class="form-section" v-show="sections.commitment">
+                <div class="form-section" data-section="commitment" v-show="sections.commitment">
                     <h2 class="section-title"><i class="fas fa-calendar-check"></i> Time Commitment</h2>
                     <p class="section-description">2 hours/day for 10 days</p>
 
@@ -309,7 +309,7 @@
                 </div>
 
                 <!-- Optional Professional Fields -->
-                <div class="form-section optional-section" v-show="sections.professional">
+                <div class="form-section optional-section" data-section="professional" v-show="sections.professional">
                     <h2 class="section-title">
                         <i class="fas fa-star"></i> Strengthen Your Application 
                         <span class="optional-badge">Optional</span>
@@ -383,7 +383,7 @@
                 </div>
 
                 <!-- Payment -->
-                <div class="payment-section" v-show="sections.payment">
+                <div class="payment-section" data-section="payment" v-show="sections.payment">
                     <h2><i class="fas fa-lock"></i> Application Fee: $1</h2>
                     
                     <div class="payment-info-compact">
