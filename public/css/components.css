@@ -1,0 +1,536 @@
+/**
+ * Shared Component Styles
+ * Used across application, evaluation, and reservation pages
+ */
+
+/* =============================================================================
+   CSS VARIABLES (for components)
+   ============================================================================= */
+
+:root {
+    --primary-purple: #a259ff;
+    --primary-teal: #14b8a6;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+/* =============================================================================
+   SCARCITY BAR COMPONENT
+   ============================================================================= */
+
+.scarcity-bar {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+}
+
+.scarcity-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.scarcity-bar strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.scarcity-bar small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.seats-visual {
+    margin-top: 1rem;
+}
+
+.seat-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.seat {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.seat.taken {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.seat.available {
+    background: rgba(255, 255, 255, 0.9);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.seats-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* =============================================================================
+   GRADUATE COUNTER COMPONENT
+   ============================================================================= */
+
+.graduate-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.counter-stat {
+    text-align: center;
+}
+
+.counter-number {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.counter-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* =============================================================================
+   AUTHORITY LOGOS COMPONENT
+   ============================================================================= */
+
+.authority-logos {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(20, 20, 35, 0.4);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.authority-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.logo-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.authority-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.5rem 1.25rem;
+    background: rgba(162, 89, 255, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(162, 89, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.authority-logo:hover {
+    border-color: var(--primary-purple);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+/* =============================================================================
+   VALUE STACK COMPONENT
+   ============================================================================= */
+
+.value-stack {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.value-stack h3 {
+    color: var(--primary-teal);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.value-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.value-item:last-of-type {
+    border-bottom: none;
+}
+
+.value-price {
+    color: var(--primary-teal);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.value-total {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.strike {
+    text-decoration: line-through;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+.big-number {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0.5rem 0;
+}
+
+/* =============================================================================
+   TESTIMONIAL CAROUSEL COMPONENT
+   ============================================================================= */
+
+.testimonial-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.testimonial-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-purple);
+    box-shadow: 0 12px 40px rgba(162, 89, 255, 0.2);
+}
+
+.quote-icon {
+    color: var(--primary-purple);
+    font-size: 2rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.testimonial-author strong {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.testimonial-author span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* =============================================================================
+   GUARANTEE BADGES COMPONENT
+   ============================================================================= */
+
+.guarantee-badge-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.guarantee-badge {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(20, 184, 166, 0.03) 100%);
+    border: 2px solid rgba(20, 184, 166, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.guarantee-badge:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-teal);
+    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.2);
+}
+
+.badge-icon {
+    color: var(--primary-teal);
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.badge-content h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.badge-content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* =============================================================================
+   FAQ SECTION COMPONENT
+   ============================================================================= */
+
+.faq-section {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.faq-section h3 {
+    color: var(--primary-purple);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.faq-item {
+    background: rgba(26, 26, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: var(--primary-purple);
+    background: rgba(162, 89, 255, 0.08);
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    gap: 1rem;
+}
+
+.faq-question i {
+    color: var(--primary-purple);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.faq-answer {
+    padding: 0 1.25rem 1rem 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================================================
+   TIMELINE SECTION COMPONENT (if needed on reservation)
+   ============================================================================= */
+
+.timeline-section {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-section h3 {
+    color: var(--primary-teal);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 1.25rem;
+    bottom: 1.25rem;
+    width: 2px;
+    background: linear-gradient(180deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-marker {
+    position: relative;
+    z-index: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(162, 89, 255, 0.4);
+}
+
+.timeline-content {
+    flex: 1;
+    padding-top: 0.25rem;
+}
+
+.timeline-content h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.timeline-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+@media (max-width: 767px) {
+    .graduate-counter {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .logo-grid {
+        gap: 1rem;
+    }
+    
+    .authority-logo {
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+    }
+    
+    .testimonial-carousel {
+        grid-template-columns: 1fr;
+    }
+    
+    .guarantee-badge-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline {
+        padding-left: 1rem;
+    }
+    
+    .timeline::before {
+        left: 0.75rem;
+    }
+    
+    .timeline-marker {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.9rem;
+    }
+}

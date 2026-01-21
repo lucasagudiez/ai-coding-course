@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="../images/favicon.png">
     
     <!-- Styles -->
+    <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/reservation.css">
     
     <!-- Font Awesome -->
@@ -26,31 +27,24 @@
     <div id="app">
         <!-- Header -->
         <div class="reservation-header">
-            <img src="../images/adava-icon.svg" alt="Adava" class="logo">
-            <h1>Complete Your Reservation</h1>
-            <p class="urgency"><i class="fas fa-fire"></i> 3 spots remaining in February cohort</p>
+            <div class="header-content">
+                <img src="../images/adava-icon.svg" alt="Adava" class="logo">
+                <h1>Complete Your Reservation</h1>
+                <p class="urgency"><i class="fas fa-fire"></i> 3 spots remaining in February cohort</p>
+            </div>
         </div>
 
         <div class="reservation-container">
             
-            <!-- Outcomes Section Component -->
+            <!-- Value Stack Component (Outcomes) -->
             <outcomes-section></outcomes-section>
-            
-            <!-- Stats Banner Component -->
-            <stats-banner></stats-banner>
-            
-            <!-- Value Stack Component -->
-            <value-stack></value-stack>
             
             <!-- Testimonial Carousel Component -->
             <testimonial-carousel></testimonial-carousel>
             
-            <!-- Bonus Stack Component -->
-            <bonus-stack></bonus-stack>
-            
             <!-- Guarantee Badges Component -->
             <guarantee-badges></guarantee-badges>
-            
+
             <!-- Payment Section -->
             <section class="final-payment-section">
                 <div class="payment-container">
@@ -153,9 +147,6 @@
                 </div>
             </section>
 
-            <!-- Timeline Section Component -->
-            <timeline-section></timeline-section>
-            
             <!-- FAQ Section Component -->
             <faq-section :faq-open="faqOpen" :toggle-faq="toggleFaq"></faq-section>
         </div>

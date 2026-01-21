@@ -196,3 +196,118 @@ Vue.component('faq-section', {
     `,
     props: ['faqOpen', 'toggleFaq']
 });
+
+// Outcomes Section Component (for reservation page)
+Vue.component('outcomes-section', {
+    template: `
+        <div class="value-stack">
+            <h3><i class="fas fa-graduation-cap"></i> Program Components & Market Value</h3>
+            <div class="value-item">
+                <span>10-Day Intensive: Build Apps with AI</span>
+                <span class="value-price">~$8,000</span>
+            </div>
+            <div class="value-item">
+                <span>Instructor Support & Code Reviews</span>
+                <span class="value-price">~$3,000</span>
+            </div>
+            <div class="value-item">
+                <span>3 Portfolio Projects</span>
+                <span class="value-price">~$2,500</span>
+            </div>
+            <div class="value-item">
+                <span>Alumni Network + Job Board + Weekly Q&A</span>
+                <span class="value-price">~$2,000</span>
+            </div>
+            <div class="value-item">
+                <span>Lifetime Access to All Updates</span>
+                <span class="value-price">~$1,500</span>
+            </div>
+            <div class="value-total">
+                <div><span class="strike">Combined Market Value: ~$17,000</span></div>
+                <div class="big-number">Program Tuition: $590</div>
+                <small style="color: rgba(255, 255, 255, 0.6);">AI-powered approach makes this possible at 97% lower cost</small>
+            </div>
+        </div>
+    `
+});
+
+// Stats Banner Component (for reservation page)
+Vue.component('stats-banner', {
+    template: `
+        <div class="graduate-counter">
+            <div class="counter-stat">
+                <div class="counter-number">500+</div>
+                <div class="counter-label">Students Graduated</div>
+            </div>
+            <div class="counter-stat">
+                <div class="counter-number">87%</div>
+                <div class="counter-label">Job Placement Rate</div>
+            </div>
+            <div class="counter-stat">
+                <div class="counter-number">$94K</div>
+                <div class="counter-label">Average Starting Salary</div>
+            </div>
+        </div>
+    `
+});
+
+// Bonus Stack Component (for reservation page)
+Vue.component('bonus-stack', {
+    template: `
+        <div class="value-stack">
+            <h3><i class="fas fa-gift"></i> Included Free</h3>
+            <div class="value-item">
+                <span><strong>Lifetime Community Access</strong> - Private Slack + Weekly Q&A</span>
+                <span class="value-price">$299</span>
+            </div>
+            <div class="value-item">
+                <span><strong>All Course Recordings</strong> - Lifetime access to updates</span>
+                <span class="value-price">$199</span>
+            </div>
+            <div class="value-item">
+                <span><strong>Premium Templates</strong> - 50+ production-ready starter kits</span>
+                <span class="value-price">$149</span>
+            </div>
+            <div class="value-item">
+                <span><strong>Certificate</strong> - Professional credential for LinkedIn</span>
+                <span class="value-price">$99</span>
+            </div>
+            <div class="value-total">
+                <div><span>Total Bonus Value:</span> <span class="big-number" style="font-size: 1.5rem;">$746</span></div>
+            </div>
+        </div>
+    `
+});
+
+// Timeline Section Component (for reservation page)
+Vue.component('timeline-section', {
+    template: `
+        <div class="timeline-section">
+            <h3><i class="fas fa-calendar-check"></i> What Happens Next</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h4>Payment Confirmation (Instant)</h4>
+                        <p>You'll receive a confirmation email with your login credentials and welcome materials.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h4>Join Pre-Program Community (Immediately)</h4>
+                        <p>Access our Slack workspace, meet your cohort, and get prep resources.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h4>Program Begins (February 3rd, 2026)</h4>
+                        <p>First live session at 6:00 PM ET. Build your first AI-powered app on Day 1.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+});
+
