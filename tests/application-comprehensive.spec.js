@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 // Test Configuration
-const TEST_URL = 'http://localhost:8888/application.html?cohort=February%202026&name=Test%20User&email=test@example.com';
+const TEST_URL = 'http://localhost:8888/application/?cohort=February%202026&name=Test%20User&email=test@example.com';
 
 test.describe('Application Form - Comprehensive Tests', () => {
     

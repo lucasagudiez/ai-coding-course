@@ -71,7 +71,7 @@ test.describe('Application Page Tests', () => {
     });
 
     test('form pre-fills from URL parameters', async ({ page }) => {
-        await page.goto('http://localhost:8888/application.html?cohort=February&name=Jane%20Smith&email=jane@example.com');
+        await page.goto('http://localhost:8888/application/?cohort=February&name=Jane%20Smith&email=jane@example.com');
         
         await expect(page.locator('input[type="text"]').first()).toHaveValue('Jane Smith');
         await expect(page.locator('input[type="email"]')).toHaveValue('jane@example.com');

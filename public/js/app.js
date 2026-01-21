@@ -163,7 +163,7 @@ createApp({
                 }
                 
                 // Success! Redirect to full application form
-                window.location.href = `application.html?cohort=${encodeURIComponent(cohort)}&name=${encodeURIComponent(this.name)}&email=${encodeURIComponent(this.email)}`;
+                window.location.href = `application/?cohort=${encodeURIComponent(cohort)}&name=${encodeURIComponent(this.name)}&email=${encodeURIComponent(this.email)}`;
                 
             } catch (error) {
                 console.error('Form submission error:', error);
