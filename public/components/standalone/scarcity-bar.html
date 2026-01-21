@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scarcity Bar Component - Standalone</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a14;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Component styles - COPY THESE TO main styles.css */
+        .scarcity-bar {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .scarcity-content {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .scarcity-content strong {
+            color: white;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .scarcity-content strong i {
+            margin-right: 8px;
+        }
+        
+        .scarcity-content small {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+        
+        .seats-visual {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(15px, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .seat {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .seat.taken {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .seat.available {
+            background: #00d4aa;
+            box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95); }
+        }
+        
+        .seats-label {
+            text-align: center;
+            color: #00d4aa;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        
+        /* Dev tools */
+        .dev-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .dev-info h4 {
+            margin-bottom: 8px;
+            color: #00d4aa;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Dev Info -->
+        <div class="dev-info">
+            <h4>Component: scarcity-bar</h4>
+            <div>Props: spotsRemaining = {{ spotsRemaining }}</div>
+            <div>Status: <span style="color: #00d4aa;">✓ Standalone</span></div>
+        </div>
+        
+        <!-- Component -->
+        <div class="scarcity-bar" data-component="scarcity-bar">
+            <div class="scarcity-content">
+                <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                <small>Applications reviewed within 48 hours</small>
+            </div>
+            <div class="seats-visual">
+                <div class="seat-grid">
+                    <div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
+                    <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+                </div>
+                <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple Vue instance for standalone testing
+        new Vue({
+            el: '#app',
+            data: {
+                spotsRemaining: 3
+            }
+        });
+        
+        // Expose computed styles for testing
+        window.getComponentStyles = function() {
+            const component = document.querySelector('[data-component="scarcity-bar"]');
+            const computed = window.getComputedStyle(component);
+            
+            return {
+                component: 'scarcity-bar',
+                mode: 'standalone',
+                styles: {
+                    // Layout
+                    display: computed.display,
+                    padding: computed.padding,
+                    margin: computed.margin,
+                    
+                    // Visual
+                    background: computed.background,
+                    backgroundColor: computed.backgroundColor,
+                    borderRadius: computed.borderRadius,
+                    boxShadow: computed.boxShadow,
+                    
+                    // Size
+                    width: computed.width,
+                    height: computed.height,
+                    
+                    // Typography (for nested elements if needed)
+                    fontSize: computed.fontSize,
+                    fontFamily: computed.fontFamily,
+                    color: computed.color
+                }
+            };
+        };
+        
+        console.log('Scarcity Bar - Standalone Mode');
+        console.log('Run window.getComponentStyles() to export styles for comparison');
+    </script>
+</body>
+</html>
