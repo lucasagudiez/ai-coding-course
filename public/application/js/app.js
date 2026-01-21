@@ -411,9 +411,9 @@ const ApplicationForm = {
         
         async initSquarePayment() {
             try {
-                // Square Application ID (you'll set this in env or config)
-                const SQUARE_APP_ID = 'sandbox-sq0idb-YOUR_APP_ID_HERE'; // TODO: Replace with actual
-                const SQUARE_LOCATION_ID = 'YOUR_LOCATION_ID'; // TODO: Replace with actual
+                // Square Sandbox Credentials
+                const SQUARE_APP_ID = 'sandbox-sq0idb-51AxZAaIW4wr4x51PivPfg';
+                const SQUARE_LOCATION_ID = 'LM3C1QVBTJA5J';
                 
                 console.log('Initializing Square payment form...');
                 
