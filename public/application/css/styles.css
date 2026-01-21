@@ -160,6 +160,18 @@ body {
 }
 
 /* Progress Bar */
+/* Progress bar - sticky at top */
+.progress-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, #0a0a14 0%, #0a0a14 85%, rgba(10, 10, 20, 0) 100%);
+    padding: 1rem 0;
+    margin: -1rem -2rem 1rem -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
 .progress-bar {
     width: 100%;
     height: 8px;

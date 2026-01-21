@@ -45,13 +45,15 @@
                 <p class="subtitle">10-Day AI Coding Program · Taught by Engineers & Researchers from MIT • Stanford • Oxford • Cambridge • Harvard</p>
             </div>
 
-            <!-- Progress -->
-            <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+            <!-- Progress - Sticky at top -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                </div>
+                <p class="progress-text">
+                    {{ progressMessage }}
+                </p>
             </div>
-            <p class="progress-text">
-                {{ progressMessage }}
-            </p>
 
             <!-- Form -->
             <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
