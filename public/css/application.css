@@ -1840,3 +1840,392 @@ body {
         height: 14px;
     }
 }
+
+/* ========================================
+   BATCH STRATEGIES #31-36 CSS
+   ======================================== */
+
+/* Strategy #31: Testimonial Carousel */
+.testimonial-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.testimonial-card {
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%);
+    border: 1px solid rgba(162, 89, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(162, 89, 255, 0.2);
+}
+
+.quote-icon {
+    color: var(--primary-purple);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.testimonial-text {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+}
+
+.testimonial-author strong {
+    color: var(--primary-teal);
+    font-size: 0.95rem;
+}
+
+.testimonial-author span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Strategy #32: Guarantee Badges */
+.guarantee-badge-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.guarantee-badge {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: rgba(20, 184, 166, 0.08);
+    border: 2px solid rgba(20, 184, 166, 0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.badge-icon {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, #20c997 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+}
+
+.badge-icon i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.badge-content h4 {
+    color: var(--primary-teal);
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.badge-content p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Strategy #33: Specific Outcomes */
+.outcomes-grid {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.outcomes-grid h3 {
+    color: var(--primary-purple);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.outcome-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.outcome-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(162, 89, 255, 0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(162, 89, 255, 0.2);
+}
+
+.outcome-item i {
+    font-size: 1.5rem;
+    color: var(--primary-teal);
+    flex-shrink: 0;
+}
+
+.outcome-item span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Strategy #34: Pain Points */
+.pain-points-section {
+    background: linear-gradient(135deg, rgba(255, 59, 48, 0.08) 0%, rgba(162, 89, 255, 0.08) 100%);
+    border: 1px solid rgba(255, 59, 48, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.pain-points-section h3 {
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.pain-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.pain-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(20, 20, 35, 0.6);
+    border-radius: 10px;
+}
+
+.pain-item .fa-times-circle {
+    color: #ff3b30;
+    font-size: 1.2rem;
+}
+
+.pain-item .fa-check-circle {
+    color: var(--primary-teal);
+    font-size: 1.2rem;
+}
+
+.pain-item .fa-arrow-right {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.pain-before {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: line-through;
+}
+
+.pain-after {
+    color: var(--primary-teal);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Strategy #35: Social Proof Stats Banner */
+.stats-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%);
+    border-radius: 16px;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Strategy #36: Bonus Stack */
+.bonus-stack {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(162, 89, 255, 0.1) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.bonus-stack h3 {
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.bonus-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bonus-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: rgba(20, 20, 35, 0.6);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.bonus-value {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #0f0f1a;
+    font-weight: 700;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.bonus-content {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.bonus-content i {
+    color: var(--primary-teal);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.bonus-content h4 {
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.bonus-content p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.bonus-total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(162, 89, 255, 0.15) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.total-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.total-value {
+    color: #ffd700;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
+.total-price {
+    color: var(--primary-teal);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .testimonial-carousel {
+        grid-template-columns: 1fr;
+    }
+    
+    .guarantee-badge {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .pain-item {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .pain-item .fa-arrow-right {
+        transform: rotate(90deg);
+    }
+    
+    .stats-banner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .bonus-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .bonus-total {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
