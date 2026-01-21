@@ -37,7 +37,7 @@
                     <span class="value-price">~$8,000</span>
                 </div>
                 <div class="value-item">
-                    <span>1-on-1 Mentorship from Top Engineers</span>
+                    <span>Instructor Support & Code Reviews</span>
                     <span class="value-price">~$3,000</span>
                 </div>
                 <div class="value-item">
@@ -245,7 +245,7 @@
                 </div>
 
                 <!-- Goals -->
-                <div class="form-section">
+                <div class="form-section" v-show="sections.goals">
                     <h2 class="section-title"><i class="fas fa-bullseye"></i> Your Goals</h2>
                     <p class="section-description">Let's make this real</p>
 
@@ -268,6 +268,13 @@
                         <textarea id="form-motivation" v-model="form.motivation" required placeholder="e.g., Career change, need new skills for current role, want to build a product..." @input="updateProgress"></textarea>
                         <small class="field-helper">Be specific about your timing and goals. Most accepted applicants write 2-3 sentences about their current situation and what they want to achieve.</small>
                     </div>
+
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('goals')" 
+                            :disabled="!isSectionComplete('goals')"
+                            v-if="!sections.commitment">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
 
                 <div class="benefit-callout">
@@ -276,7 +283,7 @@
                 </div>
 
                 <!-- Commitment -->
-                <div class="form-section">
+                <div class="form-section" v-show="sections.commitment">
                     <h2 class="section-title"><i class="fas fa-calendar-check"></i> Time Commitment</h2>
                     <p class="section-description">2 hours/day for 10 days</p>
 
@@ -303,6 +310,13 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
+
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('commitment')" 
+                            :disabled="!isSectionComplete('commitment')"
+                            v-if="!sections.professional">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
 
                 <div class="benefit-callout">
@@ -311,7 +325,7 @@
                 </div>
 
                 <!-- Optional Professional Fields -->
-                <div class="form-section optional-section">
+                <div class="form-section optional-section" v-show="sections.professional">
                     <h2 class="section-title">
                         <i class="fas fa-star"></i> Strengthen Your Application 
                         <span class="optional-badge">Optional</span>
@@ -344,6 +358,12 @@
                         <input type="url" id="form-website" v-model="form.website" placeholder="https://yourwebsite.com" @input="updateProgress">
                         <small class="field-helper">Your blog, portfolio site, or professional website.</small>
                     </div>
+
+                    <button type="button" class="continue-btn" 
+                            @click="completeSection('professional')" 
+                            v-if="!sections.payment">
+                        Continue to Payment <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
 
                 <div class="value-reminder">
@@ -352,13 +372,12 @@
                 </div>
 
                 <!-- Payment -->
-                <div class="payment-section">
+                <div class="payment-section" v-show="sections.payment">
                     <h2><i class="fas fa-lock"></i> Application Fee: $1</h2>
                     
                     <div class="payment-info-compact">
                         <p class="fee-explanation">
                             Refundable if not admitted. Ensures serious applicants only.
-                            <span class="acceptance-stat">(22% acceptance rate)</span>
                         </p>
                     </div>
 
