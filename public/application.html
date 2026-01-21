@@ -94,33 +94,6 @@
                 <p>We maintain high acceptance standards to preserve small cohort sizes and ensure quality instruction. Most qualified applicants hear back within 48 hours.</p>
             </div>
 
-            <!-- Guarantee Stack -->
-            <div class="guarantee-stack">
-                <h3><i class="fas fa-shield-check"></i> Our Guarantees to You</h3>
-                <div class="guarantee-grid">
-                    <div class="guarantee-item">
-                        <i class="fas fa-undo-alt"></i>
-                        <h4>$1 Fully Refundable</h4>
-                        <p>Not admitted? Instant refund within 48 hours.</p>
-                    </div>
-                    <div class="guarantee-item">
-                        <i class="fas fa-ban"></i>
-                        <h4>No Hidden Charges</h4>
-                        <p>$590 only if you choose to confirm after acceptance.</p>
-                    </div>
-                    <div class="guarantee-item">
-                        <i class="fas fa-infinity"></i>
-                        <h4>Lifetime Access</h4>
-                        <p>All updates, community, and resources. Forever.</p>
-                    </div>
-                    <div class="guarantee-item">
-                        <i class="fas fa-briefcase"></i>
-                        <h4>Job Support</h4>
-                        <p>Resume reviews, interview prep, job board access.</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Form -->
             <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
                 <!-- Basic Info - Always Visible -->
@@ -234,12 +207,12 @@
                     </button>
                 </div>
 
-                <div class="benefit-callout">
+                <div class="benefit-callout" v-show="sections.background">
                     <h4><i class="fas fa-chart-line"></i> Real Graduate Outcomes</h4>
                     <p>Marcus (Mechanical Engineer) landed $145K at Tesla, Dr Sarah secured $165K at Epic Systems.</p>
                 </div>
 
-                <div class="future-pacing">
+                <div class="future-pacing" v-show="sections.background">
                     <h4>Picture This: 6 Months From Now</h4>
                     <p>You're building apps with AI, working remotely, earning top salary. It started with 10 days and $590.</p>
                 </div>
@@ -277,7 +250,7 @@
                     </button>
                 </div>
 
-                <div class="benefit-callout">
+                <div class="benefit-callout" v-show="sections.goals">
                     <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
                     <p>Build E-commerce platform with payments, AI chatbot, and SaaS dashboard. Real apps that impress interviewers.</p>
                 </div>
@@ -319,7 +292,7 @@
                     </button>
                 </div>
 
-                <div class="benefit-callout">
+                <div class="benefit-callout" v-show="sections.commitment">
                     <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
                     <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
                 </div>
@@ -369,6 +342,33 @@
                 <div class="value-reminder">
                     <i class="fas fa-lightbulb"></i>
                     <span>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</span>
+                </div>
+
+                <!-- Guarantee Stack - Before Payment -->
+                <div class="guarantee-stack" v-show="sections.payment">
+                    <h3><i class="fas fa-shield-check"></i> Our Guarantees to You</h3>
+                    <div class="guarantee-grid">
+                        <div class="guarantee-item">
+                            <i class="fas fa-undo-alt"></i>
+                            <h4>$1 Fully Refundable</h4>
+                            <p>Not admitted? Instant refund within 48 hours.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-ban"></i>
+                            <h4>No Hidden Charges</h4>
+                            <p>$590 only if you choose to confirm after acceptance.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-infinity"></i>
+                            <h4>Lifetime Access</h4>
+                            <p>All updates, community, and resources. Forever.</p>
+                        </div>
+                        <div class="guarantee-item">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Job Support</h4>
+                            <p>Resume reviews, interview prep, job board access.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Payment -->
