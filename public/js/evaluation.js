@@ -37,43 +37,20 @@ new Vue({
         relevantProjects: []
     },
     mounted() {
-        // Load state from StateManager to get full applicant data
         this.loadApplicantData();
-        
-        // Track progress
-        StateManager.trackProgress('evaluation', 75); // 75% - submitted application
-        
+        StateManager.trackProgress('evaluation', 75);
         this.startEvaluation();
     },
     methods: {
-        // Load applicant data from StateManager
         async loadApplicantData() {
-            // Get from URL first (highest priority)
-            const params = new URLSearchParams(window.location.search);
-            this.applicantData.name = params.get('name') || '';
-            this.applicantData.cohort = params.get('cohort') || '';
-            this.applicantData.occupation = params.get('occupation') || params.get('status') || '';
-            this.applicantData.experience = params.get('experience') || params.get('codingExperience') || '';
-            this.applicantData.goal = params.get('goal') || params.get('primaryGoal') || '';
+            const state = await StateManager.getMergedState();
             
-            // If any missing, try to load from StateManager
-            if (!this.applicantData.name || !this.applicantData.cohort) {
-                const savedState = await StateManager.getMergedState();
-                if (savedState) {
-                    this.applicantData.name = this.applicantData.name || savedState.name || 'Applicant';
-                    this.applicantData.cohort = this.applicantData.cohort || savedState.cohort || 'February 2026';
-                    this.applicantData.occupation = this.applicantData.occupation || savedState.status || savedState.occupation || 'professional';
-                    this.applicantData.experience = this.applicantData.experience || savedState.codingExperience || savedState.experience || 'beginner';
-                    this.applicantData.goal = this.applicantData.goal || savedState.primaryGoal || savedState.goal || 'career-change';
-                }
-            }
+            // Generic copy - merge ALL fields from state into applicantData
+            Object.assign(this.applicantData, state);
             
-            // Ensure defaults
-            if (!this.applicantData.name) this.applicantData.name = 'Applicant';
-            if (!this.applicantData.cohort) this.applicantData.cohort = 'February 2026';
-            if (!this.applicantData.occupation) this.applicantData.occupation = 'professional';
-            if (!this.applicantData.experience) this.applicantData.experience = 'beginner';
-            if (!this.applicantData.goal) this.applicantData.goal = 'career-change';
+            // Set defaults only if still missing
+            this.applicantData.name = this.applicantData.name || 'Applicant';
+            this.applicantData.cohort = this.applicantData.cohort || 'February 2026';
         },
         
         async startEvaluation() {

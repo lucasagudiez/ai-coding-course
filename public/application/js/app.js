@@ -45,12 +45,6 @@ new Vue({
         // Load state from StateManager (URL > Server > Local)
         this.loadSavedState();
         
-        // Get URL parameters (passed from landing page)
-        const urlParams = new URLSearchParams(window.location.search);
-        this.formData.cohort = urlParams.get('cohort') || this.formData.cohort || 'February 2026';
-        this.formData.name = urlParams.get('name') || this.formData.name || '';
-        this.formData.email = urlParams.get('email') || this.formData.email || '';
-        
         // Set up watchers for auto-save
         this.setupAutoSave();
         
@@ -73,19 +67,13 @@ new Vue({
     methods: {
         // Load saved state from StateManager
         async loadSavedState() {
-            const savedState = await StateManager.getMergedState();
+            const state = await StateManager.getMergedState();
             
-            // Merge saved data into formData
-            if (savedState) {
-                Object.keys(this.formData).forEach(key => {
-                    if (savedState[key]) {
-                        this.formData[key] = savedState[key];
-                    }
-                });
-                
-                // Update progress
-                this.updateProgress();
-            }
+            // Generic merge - copy ALL fields from state into formData
+            Object.assign(this.formData, state);
+            
+            // Update progress
+            this.updateProgress();
         },
         
         // Setup auto-save watchers

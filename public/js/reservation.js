@@ -10,15 +10,12 @@ new Vue({
         cohort: 'February 2026'
     },
     async mounted() {
-        // Load applicant data from StateManager
-        const savedState = await StateManager.getMergedState();
-        if (savedState) {
-            this.applicantName = savedState.name || this.applicantName;
-            this.cohort = savedState.cohort || this.cohort;
-        }
+        const state = await StateManager.getMergedState();
         
-        // Track progress
-        StateManager.trackProgress('reservation', 90); // 90% - ready for final payment
+        // Generic copy - merge ALL fields
+        Object.assign(this.$data, state);
+        
+        StateManager.trackProgress('reservation', 90);
     },
     methods: {
         async submitReservation() {

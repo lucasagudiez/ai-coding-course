@@ -40,10 +40,9 @@ createApp({
     },
     
     async mounted() {
-        // Load saved state from StateManager
-        const savedState = await StateManager.getMergedState();
-        if (savedState.name) this.name = savedState.name;
-        if (savedState.email) this.email = savedState.email;
+        // Load saved state from StateManager - generic merge
+        const state = await StateManager.getMergedState();
+        Object.assign(this.$data, state);
         
         // Track scroll for animations
         window.addEventListener('scroll', () => {
@@ -53,33 +52,20 @@ createApp({
         // Set up watchers for auto-save
         this.$watch('name', (newValue) => {
             if (newValue && this.email) {
-                StateManager.autoSave(this.email, {
-                    name: this.name,
-                    email: this.email,
-                    page: 'landing'
-                });
+                StateManager.autoSave(this.email, { ...this.$data, page: 'landing' });
             }
         });
         
         this.$watch('email', (newValue) => {
             if (newValue) {
-                // Save email to cookie immediately
                 StateManager.saveUserEmail(newValue);
-                
-                // Auto-save full state
                 if (this.name) {
-                    StateManager.autoSave(newValue, {
-                        name: this.name,
-                        email: newValue,
-                        page: 'landing'
-                    });
+                    StateManager.autoSave(newValue, { ...this.$data, page: 'landing' });
                 }
             }
         });
         
-        // Track that user visited landing page
-        StateManager.trackProgress('landing', 50); // 50% = filled name/email
-        
+        StateManager.trackProgress('landing', 50);
         console.log('Adava University Vue app mounted');
     },
     
