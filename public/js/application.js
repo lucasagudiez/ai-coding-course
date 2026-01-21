@@ -82,6 +82,38 @@ const ApplicationForm = {
         
         isComplete() {
             return this.progress === 100;
+        },
+        
+        // Application strength scores
+        motivationScore() {
+            const len = (this.form.motivation || '').length;
+            if (len >= 200) return 95;
+            if (len >= 150) return 85;
+            if (len >= 100) return 75;
+            if (len >= 50) return 60;
+            return 40;
+        },
+        
+        experienceScore() {
+            const exp = this.form.experience;
+            if (exp === 'advanced') return 95;
+            if (exp === 'intermediate') return 85;
+            if (exp === 'some') return 75;
+            if (exp === 'tried') return 70;
+            if (exp === 'never') return 80; // Beginners are welcome
+            return 50;
+        },
+        
+        commitmentScore() {
+            const comm = this.form.commitment;
+            if (comm === 'yes-all') return 95;
+            if (comm === 'yes-most') return 75;
+            return 40;
+        },
+        
+        overallScore() {
+            if (!this.form.goal || !this.form.experience) return 0;
+            return Math.round((this.motivationScore + this.experienceScore + this.commitmentScore) / 3);
         }
     },
     

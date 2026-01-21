@@ -28,10 +28,19 @@
         </div>
 
         <div class="app-container">
-            <!-- Scarcity Bar -->
+            <!-- Scarcity Bar with Visual -->
             <div class="scarcity-bar">
-                <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort (of 30 total)</strong>
-                <small>Applications reviewed within 48 hours</small>
+                <div class="scarcity-content">
+                    <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                    <small>Applications reviewed within 48 hours</small>
+                </div>
+                <div class="seats-visual">
+                    <div class="seat-grid">
+                        <div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
+                        <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+                    </div>
+                    <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+                </div>
             </div>
 
             <!-- Graduate Counter -->
@@ -54,6 +63,19 @@
             <div class="app-header">
                 <h1>Application for Admission</h1>
                 <p class="subtitle">10-Day AI Coding Program · Taught by Engineers & Researchers from MIT • Stanford • Oxford • Cambridge • Harvard</p>
+            </div>
+
+            <!-- Authority Logos -->
+            <div class="authority-logos">
+                <p class="authority-label">Trusted by professionals from:</p>
+                <div class="logo-grid">
+                    <div class="authority-logo">Google</div>
+                    <div class="authority-logo">Apple</div>
+                    <div class="authority-logo">Meta</div>
+                    <div class="authority-logo">Amazon</div>
+                    <div class="authority-logo">Microsoft</div>
+                    <div class="authority-logo">Tesla</div>
+                </div>
             </div>
 
             <!-- Value Stack -->
@@ -419,6 +441,45 @@
                 <div class="benefit-callout" v-show="sections.commitment">
                     <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
                     <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
+                </div>
+
+                <!-- Personalized Strength Preview -->
+                <div class="strength-preview" v-show="sections.commitment && form.goal && form.experience">
+                    <div class="preview-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Your Application Strength</h4>
+                    </div>
+                    <div class="strength-bars">
+                        <div class="strength-item">
+                            <span class="strength-label">Motivation & Clarity</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: motivationScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ motivationScore }}%</span>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-label">Experience Level</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: experienceScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ experienceScore }}%</span>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-label">Time Commitment</span>
+                            <div class="strength-bar">
+                                <div class="strength-fill" :style="{width: commitmentScore + '%'}"></div>
+                            </div>
+                            <span class="strength-value">{{ commitmentScore }}%</span>
+                        </div>
+                    </div>
+                    <div class="strength-footer" v-if="overallScore >= 80">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Strong candidate profile! Your responses show {{ overallScore }}% alignment with successful graduates.</span>
+                    </div>
+                    <div class="strength-footer warning" v-else-if="overallScore >= 60">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Good start! Adding more detail to your responses will strengthen your application.</span>
+                    </div>
                 </div>
 
                 <!-- Optional Professional Fields -->
