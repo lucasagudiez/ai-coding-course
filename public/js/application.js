@@ -29,10 +29,12 @@ const ApplicationForm = {
                 motivation: '',
                 commitment: '',
                 source: '',
-                // New optional fields
-                linkedinUrl: '',
-                portfolioUrl: '',
-                resumeFile: null,
+                cohort: '',
+                // New optional professional fields
+                linkedin: '',
+                portfolio: '',
+                website: '',
+                // Payment fields
                 cardNumber: '',
                 expiry: '',
                 cvc: ''
@@ -60,6 +62,15 @@ const ApplicationForm = {
             // 25% base (name/email pre-filled) + 75% for remaining fields
             const formProgress = Math.round((filled / total) * 75);
             return 25 + formProgress;
+        },
+        
+        progressMessage() {
+            const p = this.progress;
+            if (p <= 25) return "You're 25% complete - great start! (Most applicants spend 8-12 minutes on this form)";
+            if (p <= 50) return "Halfway there! You're investing in your future. (Accepted applicants average 87% completion rate)";
+            if (p <= 75) return "Almost done! You've put in significant effort - finishing now maximizes your chances.";
+            if (p < 100) return "You're nearly complete! (Applicants who finish have 3x higher acceptance rates)";
+            return "Application complete! You're in the top tier of applicants.";
         },
         
         isComplete() {

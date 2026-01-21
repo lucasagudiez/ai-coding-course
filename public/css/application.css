@@ -277,6 +277,85 @@ body {
     cursor: not-allowed;
 }
 
+/* Continue Buttons */
+.continue-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.continue-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(162, 89, 255, 0.4);
+}
+
+.continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Optional Section */
+.optional-section {
+    border: 2px solid rgba(255, 193, 7, 0.3);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, rgba(255, 193, 7, 0.02) 100%);
+}
+
+.optional-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.optional-label {
+    font-size: 0.85rem;
+    color: rgba(255, 193, 7, 0.8);
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Value Reminder */
+.value-reminder {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+    border-left: 4px solid var(--primary-teal);
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.value-reminder i {
+    color: var(--primary-teal);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.value-reminder span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 /* Fee Justification */
 .fee-justification {
     background: rgba(20, 184, 166, 0.1);

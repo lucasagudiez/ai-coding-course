@@ -85,9 +85,7 @@
                 <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             </div>
             <p class="progress-text">
-                <span v-if="progress < 50">You're <span class="highlight">{{ progress }}%</span> complete - keep going!</span>
-                <span v-else-if="progress < 100">Almost there! <span class="highlight">{{ progress }}%</span> done</span>
-                <span v-else><i class="fas fa-check-circle"></i> Ready to submit!</span>
+                {{ progressMessage }}
             </p>
 
             <!-- Selective Banner -->
@@ -283,6 +281,47 @@
                 <div class="benefit-callout">
                     <h4><i class="fas fa-infinity"></i> Lifetime Access</h4>
                     <p>Private community, weekly Q&A with top engineers, all future updates, job board. Pay once, benefit forever.</p>
+                </div>
+
+                <!-- Optional Professional Fields -->
+                <div class="form-section optional-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-star"></i> Strengthen Your Application 
+                        <span class="optional-badge">Optional</span>
+                    </h2>
+                    <p class="section-description">Not required, but applicants who include these details have higher acceptance rates.</p>
+
+                    <div class="form-group">
+                        <label for="form-linkedin">
+                            LinkedIn Profile 
+                            <span class="optional-label">(Recommended)</span>
+                        </label>
+                        <input type="url" id="form-linkedin" v-model="form.linkedin" placeholder="https://linkedin.com/in/yourname" @input="updateProgress">
+                        <small class="field-helper">Helps us understand your professional background and career trajectory.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-portfolio">
+                            Portfolio / GitHub 
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <input type="url" id="form-portfolio" v-model="form.portfolio" placeholder="https://github.com/yourname or your portfolio URL" @input="updateProgress">
+                        <small class="field-helper">Show us any past work - coding projects, designs, writing, or other creative work.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-website">
+                            Personal Website 
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <input type="url" id="form-website" v-model="form.website" placeholder="https://yourwebsite.com" @input="updateProgress">
+                        <small class="field-helper">Optional: Your blog, portfolio site, or professional website.</small>
+                    </div>
+                </div>
+
+                <div class="value-reminder">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</span>
                 </div>
 
                 <!-- Payment -->

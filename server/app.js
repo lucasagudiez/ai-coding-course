@@ -35,7 +35,7 @@ if (!fs.existsSync(CSV_FILE)) {
 
 // Initialize applications CSV file
 if (!fs.existsSync(APPLICATIONS_CSV)) {
-    const headers = 'timestamp,name,email,phone,background,experience,aiTools,goal,motivation,commitment,source,cohort,ipAddress\n';
+    const headers = 'timestamp,name,email,phone,background,experience,aiTools,goal,motivation,commitment,source,cohort,linkedin,portfolio,website,ipAddress\n';
     fs.writeFileSync(APPLICATIONS_CSV, headers, 'utf8');
     console.log('Created applications CSV file with headers');
 }
@@ -200,10 +200,10 @@ app.post('/api/submit-application', (req, res) => {
     try {
         const { 
             name, email, phone, background, experience, aiTools, goal, motivation,
-            commitment, source, cohort
+            commitment, source, cohort, linkedin, portfolio, website
         } = req.body;
         
-        // Validate required fields
+        // Validate required fields (optional fields: linkedin, portfolio, website)
         if (!name || !email || !phone || !background || !experience || !goal || !motivation || !commitment || !source) {
             return res.status(400).json({ 
                 error: 'Please fill in all required fields' 
@@ -217,12 +217,15 @@ app.post('/api/submit-application', (req, res) => {
             phone: sanitizeInput(phone),
             background: sanitizeInput(background),
             experience: sanitizeInput(experience),
-            aiTools: sanitizeInput(aiTools || 'none'),
+            aiTools: Array.isArray(aiTools) ? aiTools.map(sanitizeInput).join(';') : sanitizeInput(aiTools || 'none'),
             goal: sanitizeInput(goal),
             motivation: sanitizeInput(motivation).substring(0, 1000),
             commitment: sanitizeInput(commitment),
             source: sanitizeInput(source),
-            cohort: sanitizeInput(cohort || 'Not specified')
+            cohort: sanitizeInput(cohort || 'Not specified'),
+            linkedin: sanitizeInput(linkedin || ''),
+            portfolio: sanitizeInput(portfolio || ''),
+            website: sanitizeInput(website || '')
         };
         
         // Validate email format
@@ -252,6 +255,9 @@ app.post('/api/submit-application', (req, res) => {
             escapeCsvField(sanitized.commitment),
             escapeCsvField(sanitized.source),
             escapeCsvField(sanitized.cohort),
+            escapeCsvField(sanitized.linkedin),
+            escapeCsvField(sanitized.portfolio),
+            escapeCsvField(sanitized.website),
             escapeCsvField(ipAddress)
         ].join(',') + '\n';
         
