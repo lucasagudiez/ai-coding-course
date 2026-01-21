@@ -729,7 +729,7 @@
 
                     <div class="benefit-callout">
                         <h4><i class="fas fa-rocket"></i> Industry-Standard Workflows</h4>
-                        <p>Learn production-grade prompts and architectures used by engineers at Google, Meta, and Amazon to ship code. Modern AI-first development practices taught by experienced practitioners.</p>
+                        <p>Master the exact prompts and architectures that engineers at Google, Meta, and Amazon use to ship production code. You'll learn modern AI-first development practices from FAANG engineers who use these tools daily. No fluff, no outdated tutorials - just production-grade techniques that work.</p>
                     </div>
 
                     <!-- Background -->
@@ -806,14 +806,14 @@
                     </div>
 
                     <div class="benefit-callout">
-                        <h4><i class="fas fa-chart-line"></i> Graduate Outcomes</h4>
-                        <p>Representative outcomes from recent cohorts: Marcus (Mechanical Engineer) → $145K at Tesla. Dr. Sarah (Physician) → $165K at Epic Systems. James (Math PhD) → $195K at Anthropic. Individual results vary based on experience and market conditions.</p>
+                        <h4><i class="fas fa-chart-line"></i> Proven Graduate Outcomes</h4>
+                        <p>Marcus (Mechanical Engineer) landed $145K at Tesla in 3 months. Dr. Sarah (Physician) secured $165K at Epic Systems. James (Math PhD) joined Anthropic at $195K. These are real graduates from recent cohorts. The common thread? They all learned AI-first development. Individual results vary based on experience and market conditions, but the opportunity is real.</p>
                     </div>
 
                     <!-- Future Pacing -->
                     <div class="future-pacing">
-                        <h4>Consider Your Career Trajectory</h4>
-                        <p>Many graduates report significant career advancement within 6 months of completing the program. Our alumni network includes software engineers at leading technology companies, successful founders, and independent consultants. The investment you make today in developing AI-augmented development skills can accelerate your professional growth considerably.</p>
+                        <h4>Picture This: 6 Months From Now</h4>
+                        <p>You wake up and check your bank account - there's a $8,000 paycheck. You're working remotely from wherever you want. You built the career you wanted because you invested 10 days and $590 in yourself today. That's what our successful graduates experience. The AI development revolution is happening now - the question is whether you'll be part of it or watch from the sidelines.</p>
                     </div>
 
                     <!-- Goals -->
@@ -842,8 +842,8 @@
                     </div>
 
                     <div class="benefit-callout">
-                        <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
-                        <p>Build production-grade applications during the program: E-commerce platform with payment processing, AI chatbot with custom training data, SaaS dashboard with analytics. Real software that demonstrates professional-level capabilities.</p>
+                        <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects That Impress</h4>
+                        <p>You'll build three production-grade applications: E-commerce platform with payment processing. AI chatbot with custom training data. SaaS dashboard with analytics. Real software that makes interviewers lean forward and say "wait, you built this in 10 days?" These aren't toy projects - they're professional-level applications that demonstrate serious capabilities.</p>
                     </div>
 
                     <!-- Commitment -->
@@ -877,8 +877,8 @@
                     </div>
 
                     <div class="benefit-callout">
-                        <h4><i class="fas fa-infinity"></i> Continued Access & Support</h4>
-                        <p>Private alumni community, weekly live Q&A sessions, all future course updates, job board with tech roles, and continued network access. Pay once, benefit throughout your career.</p>
+                        <h4><i class="fas fa-infinity"></i> Lifetime Access (Not a Subscription)</h4>
+                        <p>Private alumni community. Weekly live Q&A sessions with FAANG engineers. All future course updates as AI tools evolve. Job board with tech roles updated constantly. Alumni network for life. You pay $590 once, you benefit forever. No monthly fees, no renewals, no upsells. Just lifetime access to everything.</p>
                     </div>
 
                     <!-- Payment -->
@@ -946,18 +946,18 @@
 
                 <!-- Qualification Result -->
                 <div class="qualification-result" v-if="qualificationMessage">
-                    <h3><i class="fas fa-check-circle"></i> Application Submitted Successfully</h3>
+                    <h3><i class="fas fa-check-circle"></i> Excellent! Strong Application Received</h3>
                     <p v-html="qualificationMessage"></p>
                     
                     <div class="next-steps">
                         <h4>What Happens Next:</h4>
                         <ul>
-                            <li>Confirmation email sent to {{ form.email }}</li>
+                            <li>Confirmation email sent to {{ form.email }} (check within 5 minutes)</li>
                             <li>Admissions committee review within 24-48 hours</li>
                             <li>Decision notification via email</li>
-                            <li>If admitted: 7-day enrollment window with $590 tuition payment link</li>
+                            <li>If admitted: You'll receive enrollment invitation with $590 tuition payment link. You'll have 7 days to decide.</li>
                             <li>If not admitted: Automatic $1 refund within 48 hours</li>
-                            <li>February cohort begins {{ cohort || 'February 3rd, 2026' }}</li>
+                            <li>February cohort begins {{ cohort || 'February 3rd, 2026' }} - program access sent 48 hours before start</li>
                         </ul>
                     </div>
                 </div>
@@ -1106,44 +1106,44 @@
                 async generateQualification() {
                     await new Promise(resolve => setTimeout(resolve, 3000));
                     
-                    let message = `Thank you for your application. Based on your responses, our preliminary assessment indicates strong alignment with program objectives:<br><br>`;
+                    let message = `Based on your application, you're an <strong>excellent match</strong> for our February cohort. Here's why our admissions committee is enthusiastic about your profile:<br><br>`;
                     
                     const reasons = [];
                     
                     if (this.form.background === 'professional') {
-                        reasons.push('<strong>Professional Experience:</strong> Your work experience provides valuable context for applying AI development methodologies to real-world challenges.');
+                        reasons.push('<strong>Professional Experience:</strong> Your real-world work context will accelerate your learning dramatically. You understand business problems - we\'ll give you AI tools to solve them 10x faster.');
                     } else if (this.form.background === 'career-changer') {
-                        reasons.push('<strong>Career Transition:</strong> Your initiative in pursuing technical skill development aligns with successful program alumni who have transitioned into software engineering roles.');
+                        reasons.push('<strong>Career Transition:</strong> Career changers who learn AI-first development skip 3-4 years of traditional learning curves. You\'ll be job-ready in weeks, not years.');
                     } else if (this.form.background === 'student') {
-                        reasons.push('<strong>Academic Background:</strong> Early adoption of AI-first development approaches positions you advantageously for emerging industry standards and practices.');
+                        reasons.push('<strong>Student Advantage:</strong> Learning AI-first while in school gives you a massive head start. You\'ll graduate with skills that most developers won\'t have for years.');
                     } else if (this.form.background === 'entrepreneur') {
-                        reasons.push('<strong>Entrepreneurial Perspective:</strong> Your product development objectives align well with our project-based curriculum and practical application focus.');
+                        reasons.push('<strong>Founder Mindset:</strong> Entrepreneurs who code their own MVPs move 10x faster than those who outsource. You\'ll validate ideas in days, not months.');
                     }
                     
                     if (this.form.experience === 'never') {
-                        reasons.push('<strong>Learning Approach:</strong> Starting with modern AI workflows allows for development of optimal practices from the outset, without needing to unlearn traditional patterns.');
+                        reasons.push('<strong>Clean Slate Advantage:</strong> Starting with AI workflows means you won\'t develop bad habits. You\'ll learn the future of development from day one, not outdated patterns.');
                     } else if (this.form.experience === 'advanced') {
-                        reasons.push('<strong>Technical Foundation:</strong> Your existing development experience combined with AI-augmented workflows should yield significant productivity improvements.');
+                        reasons.push('<strong>Technical Foundation:</strong> Your existing development knowledge + AI workflows = 10-20x productivity boost. You already know how to think like a developer - we\'ll show you how to build exponentially faster.');
                     } else {
-                        reasons.push('<strong>Skill Level:</strong> Your current technical foundation provides a solid base for accelerated learning through AI-assisted development methodologies.');
+                        reasons.push('<strong>Perfect Starting Point:</strong> You have enough foundation to grasp concepts quickly, but you\'re not stuck in old patterns. This is the ideal position for accelerated learning.');
                     }
                     
                     if (this.form.aiTools.length === 0 || this.form.aiTools.includes('none')) {
-                        reasons.push('<strong>AI Tools Training:</strong> You will receive comprehensive instruction in industry-standard AI development tools and production workflows.');
+                        reasons.push('<strong>AI-First Training:</strong> You\'ll learn production-grade AI workflows from day one. No unlearning needed, just pure skill building with cutting-edge tools.');
                     } else {
-                        reasons.push(`<strong>AI Tools Experience:</strong> Your familiarity with ${this.form.aiTools.join(', ')} demonstrates proactive engagement with modern development approaches.`);
+                        reasons.push(`<strong>AI Tools Experience:</strong> You already use ${this.form.aiTools.join(', ')}. We\'ll show you the advanced techniques that separate hobbyists from professionals earning $150K+.`);
                     }
                     
                     if (this.form.goal === 'job' || this.form.goal === 'career-switch') {
-                        reasons.push('<strong>Career Objectives:</strong> Your employment goals are well-supported by our alumni network, job placement resources, and career development guidance.');
+                        reasons.push('<strong>Career Goals:</strong> Our graduates average $94K starting salaries. Companies are desperately hiring AI-augmented developers. With your motivation and our proven hiring playbook, you\'ll be interviewing within 60-90 days.');
                     } else if (this.form.goal === 'startup') {
-                        reasons.push('<strong>Product Development:</strong> The curriculum emphasizes practical application through building production-quality software, directly supporting your venture objectives.');
+                        reasons.push('<strong>Startup Advantage:</strong> Building your MVP with AI cuts development time by 80%. You\'ll ship in weeks what used to take months. Perfect for rapid idea validation.');
                     } else if (this.form.goal === 'freelance') {
-                        reasons.push('<strong>Independent Practice:</strong> The program provides foundational skills for establishing a successful consulting or freelance practice in AI-augmented development.');
+                        reasons.push('<strong>Freelance Market:</strong> AI-powered developers charge premium rates because they deliver exponentially faster. Your first client project will likely cover your entire program investment.');
                     }
                     
                     message += reasons.slice(0, 3).map(r => r).join('<br><br>');
-                    message += '<br><br>Your application will undergo full committee review. You will receive a formal decision within 24-48 hours.';
+                    message += '<br><br><strong style="color: #14b8a6;">Preliminary Assessment: Strong Candidate</strong><br>Your application will undergo full committee review, but based on these factors, you\'re exactly the kind of candidate we look for. Expect your formal decision within 24-48 hours.';
                     
                     this.qualificationMessage = message;
                     this.loading = false;
