@@ -34,29 +34,40 @@ const EvaluationPage = {
             
             // If no email in URL, try localStorage
             if (!email) {
-                const savedProgress = localStorage.getItem('application_progress');
-                if (savedProgress) {
-                    try {
-                        const progress = JSON.parse(savedProgress);
-                        email = progress.application?.email || progress.email;
-                    } catch (e) {
-                        console.error('Error parsing saved progress:', e);
+                // First try the simple key
+                email = localStorage.getItem('applicantEmail');
+                
+                // If not found, try the progress data
+                if (!email) {
+                    const savedProgress = localStorage.getItem('adava_application_progress');
+                    if (savedProgress) {
+                        try {
+                            const progress = JSON.parse(savedProgress);
+                            email = progress.form?.email;
+                        } catch (e) {
+                            console.error('Error parsing saved progress:', e);
+                        }
+                    }
+                }
+                
+                // Last resort: try the old key name
+                if (!email) {
+                    const oldProgress = localStorage.getItem('application_progress');
+                    if (oldProgress) {
+                        try {
+                            const progress = JSON.parse(oldProgress);
+                            email = progress.application?.email || progress.email;
+                        } catch (e) {
+                            console.error('Error parsing old progress:', e);
+                        }
                     }
                 }
             }
             
-            // If still no email, try to load from server session
-            // by checking if there's any email stored in cookies or try common emails
+            // If no email found, just use a placeholder (evaluation should never redirect)
             if (!email) {
-                // Check if there's a saved email in a simpler localStorage key
-                email = localStorage.getItem('applicantEmail');
-            }
-            
-            // If still no email, redirect to application
-            // But don't show alert - just silently redirect
-            if (!email) {
-                window.location.href = '/application/';
-                return;
+                email = 'no-email-provided@example.com';
+                console.warn('No email found in localStorage or URL params, using placeholder');
             }
             
             // Start loading animation immediately

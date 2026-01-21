@@ -162,6 +162,9 @@ const ApplicationForm = {
             // Save form data to localStorage (excluding payment info)
             const progressData = {
                 form: {
+                    name: this.form.name,
+                    email: this.form.email,
+                    phone: this.form.phone,
                     background: this.form.background,
                     experience: this.form.experience,
                     aiTools: this.form.aiTools,
@@ -173,13 +176,17 @@ const ApplicationForm = {
                     source: this.form.source,
                     linkedin: this.form.linkedin,
                     portfolio: this.form.portfolio,
-                    website: this.form.website,
-                    phone: this.form.phone
+                    website: this.form.website
                 },
                 sections: this.sections,
                 timestamp: Date.now()
             };
             localStorage.setItem('adava_application_progress', JSON.stringify(progressData));
+            
+            // Also save email separately for easy access by evaluation page
+            if (this.form.email) {
+                localStorage.setItem('applicantEmail', this.form.email);
+            }
         },
         
         loadProgress() {
