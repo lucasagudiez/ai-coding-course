@@ -23,7 +23,7 @@ const VIEWPORTS = [
     { name: 'Desktop Large', width: 1440, height: 900 }
 ];
 
-test.describe('Comprehensive UI Quality Detection @smoke', () => {
+test.describe('Comprehensive UI Quality Detection @slow', () => {
     for (const viewport of VIEWPORTS) {
         test(`Detect all UI issues on ${viewport.name} (${viewport.width}px)`, async ({ page }) => {
             await page.setViewportSize({ width: viewport.width, height: viewport.height });

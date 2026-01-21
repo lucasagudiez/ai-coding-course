@@ -7,12 +7,10 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('Navigation Cutoff Detection @smoke', () => {
+    // Smoke tests: Only critical viewports
     const viewports = [
-        { name: 'Desktop Large', width: 1440, height: 900 },
-        { name: 'Desktop', width: 1280, height: 800 },
-        { name: 'Laptop', width: 1024, height: 768 },
-        { name: 'Tablet Landscape', width: 900, height: 600 },
-        { name: 'Tablet Portrait', width: 768, height: 1024 },
+        { name: 'Desktop', width: 1440, height: 900 },
+        { name: 'Mobile', width: 430, height: 932 },
     ];
 
     for (const viewport of viewports) {

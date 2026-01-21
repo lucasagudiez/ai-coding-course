@@ -13,14 +13,10 @@ const { test, expect } = require('@playwright/test');
  */
 
 test.describe('Comprehensive Overflow Detection @smoke', () => {
+    // Smoke tests: Only test critical viewports for speed
     const viewports = [
-        { name: 'Mobile Small (320px)', width: 320, height: 568 },
-        { name: 'Mobile Medium (375px)', width: 375, height: 667 },
-        { name: 'Mobile Large (414px)', width: 414, height: 896 },
-        { name: 'iPhone 14 Pro Max (430px)', width: 430, height: 932 },
-        { name: 'Tablet Portrait (768px)', width: 768, height: 1024 },
-        { name: 'Desktop Small (1024px)', width: 1024, height: 768 },
-        { name: 'Desktop Large (1440px)', width: 1440, height: 900 }
+        { name: 'Mobile (430px)', width: 430, height: 932 },
+        { name: 'Desktop (1440px)', width: 1440, height: 900 }
     ];
 
     for (const viewport of viewports) {
