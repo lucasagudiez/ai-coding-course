@@ -1,0 +1,52 @@
+/* authority-logos component styles */
+
+:root {
+    --primary-purple: #a259ff;
+    --primary-teal: #14b8a6;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+.authority-logos {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(20, 20, 35, 0.4);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.authority-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.logo-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.authority-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.5rem 1.25rem;
+    background: rgba(162, 89, 255, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(162, 89, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.authority-logo:hover {
+    border-color: var(--primary-purple);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}

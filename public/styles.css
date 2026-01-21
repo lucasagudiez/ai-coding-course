@@ -1863,7 +1863,7 @@ blockquote {
 }
 
 .day-card li::before {
-    content: '→';
+    content: '->';
     color: var(--purple-light);
     margin-right: 8px;
 }
@@ -2746,7 +2746,7 @@ summary.faq-question::-webkit-details-marker {
 
 
 /* ============================================
-   🔥 HIGH-TECH EFFECTS
+    HIGH-TECH EFFECTS
    ============================================ */
 
 /* Text Scramble Effect */
@@ -3449,7 +3449,7 @@ summary.faq-question::-webkit-details-marker {
 }
 
 .cta-button.success::before {
-    content: "✓ ";
+    content: " ";
 }
 
 /* ============================================

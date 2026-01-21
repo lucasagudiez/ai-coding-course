@@ -28,9 +28,22 @@ const EvaluationPage = {
     
     methods: {
         async startEvaluation() {
-            // Get email from URL params
+            // Get email from URL params OR localStorage (session state)
             const params = new URLSearchParams(window.location.search);
-            const email = params.get('email');
+            let email = params.get('email');
+            
+            // If no email in URL, try localStorage
+            if (!email) {
+                const savedProgress = localStorage.getItem('application_progress');
+                if (savedProgress) {
+                    try {
+                        const progress = JSON.parse(savedProgress);
+                        email = progress.email;
+                    } catch (e) {
+                        console.error('Error parsing saved progress:', e);
+                    }
+                }
+            }
             
             if (!email) {
                 alert('Missing application data. Please complete the application form first.');

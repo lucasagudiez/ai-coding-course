@@ -71,7 +71,7 @@
         });
 
         await Promise.all(promises);
-        console.log(`✅ Loaded ${componentNames.length} Vue components from HTML templates`);
+        console.log(` Loaded ${componentNames.length} Vue components from HTML templates`);
     }
 
     /**
@@ -88,35 +88,35 @@
                         testimonials: [
                             {
                                 name: "Sarah Chen",
-                                title: "Former Marketing Manager → Software Engineer at Stripe",
+                                title: "Former Marketing Manager -> Software Engineer at Stripe",
                                 quote: "I went from zero coding knowledge to landing a $140K job in 4 months. The AI tools made it possible.",
                                 salary: "$140K",
                                 image: "../images/avatars/sarah.jpg"
                             },
                             {
                                 name: "Michael Rodriguez",
-                                title: "Teacher → Full-Stack Developer at Shopify",
+                                title: "Teacher -> Full-Stack Developer at Shopify",
                                 quote: "Best investment I ever made. The program pays for itself in the first week of work.",
                                 salary: "$125K",
                                 image: "../images/avatars/michael.jpg"
                             },
                             {
                                 name: "Amanda Liu",
-                                title: "Nurse → AI Engineer at OpenAI",
+                                title: "Nurse -> AI Engineer at OpenAI",
                                 quote: "I built 3 portfolio projects in 10 days. Employers were blown away.",
                                 salary: "$165K",
                                 image: "../images/avatars/amanda.jpg"
                             },
                             {
                                 name: "David Park",
-                                title: "Sales Rep → Backend Engineer at Uber",
+                                title: "Sales Rep -> Backend Engineer at Uber",
                                 quote: "The mentorship was incredible. Real engineers from FAANG companies reviewed my code.",
                                 salary: "$135K",
                                 image: "../images/avatars/david.jpg"
                             },
                             {
                                 name: "Elena Popov",
-                                title: "Accountant → Data Scientist at Netflix",
+                                title: "Accountant -> Data Scientist at Netflix",
                                 quote: "I was skeptical about the 10-day timeline, but it actually works. I'm now making 3x my old salary.",
                                 salary: "$155K",
                                 image: "../images/avatars/elena.jpg"

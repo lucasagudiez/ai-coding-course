@@ -1,0 +1,54 @@
+/* guarantee-badges component styles */
+
+:root {
+    --primary-purple: #a259ff;
+    --primary-teal: #14b8a6;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+.guarantee-badge-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.guarantee-badge {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(20, 184, 166, 0.03) 100%);
+    border: 2px solid rgba(20, 184, 166, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.guarantee-badge:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-teal);
+    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.2);
+}
+
+.badge-icon {
+    color: var(--primary-teal);
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.badge-content h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.badge-content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}

@@ -80,17 +80,17 @@
             </div>
 
             <div class="relevant-projects" v-if="dreamProjectFeedback">
-                <h3>💡 About Your Dream Project:</h3>
+                <h3> About Your Dream Project:</h3>
                 <p class="feedback-text">{{ dreamProjectFeedback }}</p>
             </div>
 
             <div class="relevant-projects" v-if="uniqueSkillConnection">
-                <h3>🎨 Your Unique Advantage:</h3>
+                <h3> Your Unique Advantage:</h3>
                 <p class="feedback-text">{{ uniqueSkillConnection }}</p>
             </div>
 
             <div class="relevant-projects" v-if="projects.length > 0">
-                <h3>🚀 What You'll Build:</h3>
+                <h3> What You'll Build:</h3>
                 <div class="project-list">
                     <div v-for="(project, index) in projects" :key="index" class="project-item">
                         <i class="fas fa-code"></i> {{ project }}
@@ -104,13 +104,13 @@
                     <p class="quote">"{{ testimonial.quote }}"</p>
                     <div class="testimonial-author">
                         <strong>{{ testimonial.name }}</strong>
-                        <span>{{ testimonial.background }} → {{ testimonial.afterAdava }}</span>
+                        <span>{{ testimonial.background }} -> {{ testimonial.afterAdava }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="acceptance-box">
-                <h3>🎉 You're Accepted!</h3>
+                <h3> You're Accepted!</h3>
                 <p>Based on your exceptional application, you've been <strong>immediately accepted</strong> to our February 2026 cohort.</p>
                 <p>You're exactly the kind of motivated, creative person who thrives in our AI-first program.</p>
             </div>

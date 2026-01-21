@@ -12,4 +12,4 @@
 // This file exists only for backwards compatibility
 // and to serve as documentation of the component system.
 
-console.log('📦 components.js loaded - Vue components will be registered by component-loader.js');
+console.log(' components.js loaded - Vue components will be registered by component-loader.js');
