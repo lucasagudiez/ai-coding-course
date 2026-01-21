@@ -34,6 +34,8 @@ const ApplicationForm = {
                 aiTools: [],
                 goal: '',
                 motivation: '',
+                dreamProject: '',
+                uniqueSkill: '',
                 commitment: '',
                 source: '',
                 cohort: '',
@@ -52,7 +54,7 @@ const ApplicationForm = {
     computed: {
         progress() {
             let filled = 0;
-            const total = 10; // Adjusted for correct calculation
+            const total = 12; // Updated to include dreamProject and uniqueSkill
             
             // Count filled fields
             if (this.form.phone) filled++;
@@ -61,6 +63,8 @@ const ApplicationForm = {
             if (this.form.aiTools.length > 0) filled++;
             if (this.form.goal) filled++;
             if (this.form.motivation) filled++;
+            if (this.form.dreamProject) filled++;
+            if (this.form.uniqueSkill) filled++;
             if (this.form.commitment) filled++;
             if (this.form.source) filled++;
             if (this.form.cardNumber) filled++;
@@ -159,6 +163,8 @@ const ApplicationForm = {
                     aiTools: this.form.aiTools,
                     goal: this.form.goal,
                     motivation: this.form.motivation,
+                    dreamProject: this.form.dreamProject,
+                    uniqueSkill: this.form.uniqueSkill,
                     commitment: this.form.commitment,
                     source: this.form.source,
                     linkedin: this.form.linkedin,
@@ -256,7 +262,7 @@ const ApplicationForm = {
                 case 'background':
                     return this.form.background && this.form.experience && this.form.aiTools.length > 0;
                 case 'goals':
-                    return this.form.goal && this.form.motivation;
+                    return this.form.goal && this.form.motivation && this.form.dreamProject && this.form.uniqueSkill;
                 case 'commitment':
                     return this.form.commitment && this.form.source;
                 case 'professional':
@@ -322,7 +328,12 @@ const ApplicationForm = {
                 });
 
                 if (response.ok) {
-                    await this.generateQualification();
+                    // Redirect to evaluation page with form data
+                    const params = new URLSearchParams({
+                        name: this.form.name,
+                        email: this.form.email
+                    });
+                    window.location.href = `/evaluation/?${params.toString()}`;
                 } else {
                     alert('Error submitting. Please email us at adavauniversity@gmail.com');
                     this.loading = false;
@@ -334,44 +345,6 @@ const ApplicationForm = {
                 this.loading = false;
                 this.submitted = false;
             }
-        },
-        
-        async generateQualification() {
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            
-            let message = `Based on your application, you're an <strong>excellent match</strong> for our February cohort. Here's why:<br><br>`;
-            
-            const reasons = [];
-            
-            if (this.form.background === 'professional') {
-                reasons.push('<strong>Professional Experience:</strong> You understand real problems. We\'ll show you how to solve them with AI - 10x faster than traditional coding.');
-            } else if (this.form.background === 'career-changer') {
-                reasons.push('<strong>Career Transition:</strong> Learn AI-powered development in weeks, not years. Skip the traditional learning curve entirely.');
-            } else if (this.form.background === 'student') {
-                reasons.push('<strong>Student Advantage:</strong> You\'ll graduate with skills most developers won\'t have for years. AI coding is the future.');
-            } else if (this.form.background === 'entrepreneur') {
-                reasons.push('<strong>Founder Mindset:</strong> Build MVPs 10x faster. Validate ideas in days using AI to generate your entire codebase.');
-            }
-            
-            if (this.form.experience === 'never' || this.form.experience === 'tried') {
-                reasons.push('<strong>Clean Slate:</strong> Perfect. You\'ll learn AI-powered development from day one. No bad coding habits to unlearn.');
-            } else if (this.form.experience === 'advanced') {
-                reasons.push('<strong>Technical Background:</strong> Your knowledge + AI tools = 10-20x productivity. You already think like a developer.');
-            } else {
-                reasons.push('<strong>Perfect Starting Point:</strong> Enough foundation to understand concepts. Not stuck in old coding patterns.');
-            }
-            
-            if (this.form.goal === 'job' || this.form.goal === 'career-switch') {
-                reasons.push('<strong>Career Goals:</strong> Companies are desperately hiring AI-augmented developers. Our grads average $94K starting salaries.');
-            } else if (this.form.goal === 'startup') {
-                reasons.push('<strong>Startup Path:</strong> AI cuts development time by 80%. Ship in weeks what used to take months.');
-            }
-            
-            message += reasons.slice(0, 3).join('<br><br>');
-            message += '<br><br><strong style="color: #14b8a6;">Preliminary Assessment: Strong Candidate</strong><br>You\'re exactly who we look for. Expect your decision within 24-48 hours.';
-            
-            this.qualificationMessage = message;
-            this.loading = false;
         },
         
         initExitIntent() {

@@ -61,7 +61,7 @@
             <div class="result-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h1 class="result-title">Congratulations! You've Been Pre-Selected</h1>
+            <h1 class="result-title">{{ headline }}</h1>
             <p class="result-subtitle">You're a top match for our February 2026 cohort</p>
 
             <div class="result-reasons">
@@ -73,7 +73,17 @@
                 </ul>
             </div>
 
-            <div class="relevant-projects">
+            <div class="relevant-projects" v-if="dreamProjectFeedback">
+                <h3>💡 About Your Dream Project:</h3>
+                <p class="feedback-text">{{ dreamProjectFeedback }}</p>
+            </div>
+
+            <div class="relevant-projects" v-if="uniqueSkillConnection">
+                <h3>🎨 Your Unique Advantage:</h3>
+                <p class="feedback-text">{{ uniqueSkillConnection }}</p>
+            </div>
+
+            <div class="relevant-projects" v-if="projects.length > 0">
                 <h3>🚀 What You'll Build:</h3>
                 <div class="project-list">
                     <div v-for="(project, index) in projects" :key="index" class="project-item">
@@ -82,38 +92,24 @@
                 </div>
             </div>
 
-            <div class="matched-testimonial">
+            <div class="matched-testimonial" v-if="testimonial">
                 <h3>Someone Like You Succeeded:</h3>
                 <div class="testimonial-box">
-                    <p class="quote">"I went from mechanical engineer to software developer at Tesla in 6 months. The AI coding skills I learned gave me a massive advantage in interviews."</p>
+                    <p class="quote">"{{ testimonial.quote }}"</p>
                     <div class="testimonial-author">
-                        <strong>Marcus Johnson</strong>
-                        <span>Mechanical Engineer → Software Developer at Tesla ($145K)</span>
+                        <strong>{{ testimonial.name }}</strong>
+                        <span>{{ testimonial.background }} → {{ testimonial.afterAdava }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="next-steps">
+            <div class="next-steps" v-if="nextSteps.length > 0">
                 <h3>What Happens Next:</h3>
-                <div class="timeline-item">
-                    <div class="timeline-number">1</div>
+                <div v-for="(item, index) in nextSteps" :key="index" class="timeline-item">
+                    <div class="timeline-number">{{ index + 1 }}</div>
                     <div class="timeline-content">
-                        <h4>Final Review (24-48 hours)</h4>
-                        <p>Our admissions committee will review your application</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-number">2</div>
-                    <div class="timeline-content">
-                        <h4>Decision Email</h4>
-                        <p>You'll receive your admission decision via email</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-number">3</div>
-                    <div class="timeline-content">
-                        <h4>Secure Your Spot</h4>
-                        <p>If accepted, you'll have 7 days to pay the $580 remaining fee</p>
+                        <h4>{{ item.step }}</h4>
+                        <p>{{ item.time }}</p>
                     </div>
                 </div>
             </div>

@@ -462,6 +462,18 @@
                         <small class="field-helper">Be specific about your timing and goals. Most accepted applicants write 2-3 sentences about their current situation and what they want to achieve.</small>
                     </div>
 
+                    <div class="form-group">
+                        <label for="form-dream-project">If you could build ANY app/product in 10 days, what would it be?</label>
+                        <textarea id="form-dream-project" v-model="form.dreamProject" required placeholder="Describe your dream project. Be creative! What problem would it solve? Who would use it?" @input="updateProgress" rows="3"></textarea>
+                        <small class="field-helper">We'll help you build something real during the program. The weirder/more creative, the better!</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-unique-skill">What's one unique skill, hobby, or interest you have that most people don't?</label>
+                        <textarea id="form-unique-skill" v-model="form.uniqueSkill" required placeholder="e.g., I can juggle fire, I speak 5 languages, I'm a competitive chess player, I collect vintage synthesizers..." @input="updateProgress" rows="2"></textarea>
+                        <small class="field-helper">This helps us personalize your learning path and connect you with like-minded people.</small>
+                    </div>
+
                     <button type="button" class="continue-btn" 
                             @click="completeSection('goals')" 
                             :disabled="!isSectionComplete('goals')"

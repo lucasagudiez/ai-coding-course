@@ -254,6 +254,16 @@ body {
     gap: 15px;
 }
 
+.feedback-text {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #e0e0e0;
+    border-left: 4px solid #a259ff;
+}
+
 .project-item {
     display: flex;
     align-items: center;
