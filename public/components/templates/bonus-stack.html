@@ -1,4 +1,9 @@
-<div class="value-stack">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../css/components.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<!-- START_COMPONENT -->
+<div class="value-stack" data-component="bonus-stack">
 <h3><i class="fas fa-gift"></i> Included Free</h3>
 <div class="value-item">
 <span><strong>Lifetime Community Access</strong> - Private Slack + Weekly Q&A</span>
@@ -20,3 +25,13 @@
 <div><span>Total Bonus Value:</span> <span class="big-number" style="font-size: 1.5rem;">$746</span></div>
 </div>
 </div>
+<!-- END_COMPONENT -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.value-stack')) {
+        document.body.style = 'background:#0a0a14;padding:40px;color:white;font-family:sans-serif;max-width:1200px;margin:auto';
+        new Vue({ el: '.value-stack', data: {} });
+    }
+});
+</script>

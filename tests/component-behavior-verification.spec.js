@@ -15,18 +15,18 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-// Component registry - updated for new template system
+// Component registry - templates work both standalone AND as components!
 const COMPONENTS = {
     'scarcity-bar': {
-        standalone: '/components/standalone/scarcity-bar.html',
+        standalone: '/components/templates/scarcity-bar.html',
         integrated: [{ page: '/application/', selector: '.scarcity-bar' }]
     },
     'testimonial-carousel': {
-        standalone: '/components/standalone/testimonial-carousel.html',
+        standalone: '/components/templates/testimonial-carousel.html',
         integrated: [{ page: '/reservation/', selector: '.testimonial-carousel' }]
     },
     'faq-section': {
-        standalone: '/components/standalone/faq-section.html',
+        standalone: '/components/templates/faq-section.html',
         integrated: [{ page: '/reservation/', selector: '.faq-section' }]
     }
 };
@@ -37,7 +37,7 @@ const COMPONENTS = {
 async function waitForComponentsLoaded(page) {
     // Wait for any component to appear (means templates have loaded)
     await page.waitForFunction(() => {
-        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-table, .projects-section');
+        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-section, .projects-section');
         return components.length > 0;
     }, { timeout: 15000 }).catch(() => {
         // Standalone pages don't have component-loader, so this is fine

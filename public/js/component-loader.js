@@ -25,7 +25,8 @@
     };
 
     /**
-     * Fetch HTML template from file
+     * Fetch HTML template from file and extract component part
+     * Templates can be opened standalone (full HTML page) or fetched as component
      */
     async function fetchTemplate(url) {
         try {
@@ -33,7 +34,21 @@
             if (!response.ok) {
                 throw new Error(`Failed to load template: ${url}`);
             }
-            return await response.text();
+            const fullHtml = await response.text();
+            
+            // Extract only the component HTML (between markers)
+            const startMarker = '<!-- START_COMPONENT -->';
+            const endMarker = '<!-- END_COMPONENT -->';
+            const startIndex = fullHtml.indexOf(startMarker);
+            const endIndex = fullHtml.indexOf(endMarker);
+            
+            if (startIndex !== -1 && endIndex !== -1) {
+                // Extract component HTML between markers
+                return fullHtml.substring(startIndex + startMarker.length, endIndex).trim();
+            }
+            
+            // Fallback: return full HTML if markers not found
+            return fullHtml;
         } catch (error) {
             console.error(`Error loading template ${url}:`, error);
             return '[Component Load Error]';

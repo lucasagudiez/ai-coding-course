@@ -1,13 +1,28 @@
-<div class="scarcity-bar">
-<div class="scarcity-content">
-<strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
-<small>Applications reviewed within 48 hours</small>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../css/components.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<!-- START_COMPONENT -->
+<div class="scarcity-bar" data-component="scarcity-bar">
+    <div class="scarcity-content">
+        <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+        <small>Applications reviewed within 48 hours</small>
+    </div>
+    <div class="seats-visual">
+        <div class="seat-grid">
+            <div class="seat taken" v-for="n in (30 - spotsRemaining)" :key="'taken-' + n"></div>
+            <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+        </div>
+        <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+    </div>
 </div>
-<div class="seats-visual">
-<div class="seat-grid">
-<div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
-<div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
-</div>
-<p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
-</div>
-</div>
+<!-- END_COMPONENT -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.scarcity-bar')) {
+        document.body.style = 'background:#0a0a14;padding:40px;color:white;font-family:sans-serif;max-width:1200px;margin:auto';
+        new Vue({ el: '.scarcity-bar', data: { spotsRemaining: 3 } });
+    }
+});
+</script>

@@ -1,4 +1,9 @@
-<div class="testimonial-carousel">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../css/components.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<!-- START_COMPONENT -->
+<div class="testimonial-carousel" data-component="testimonial-carousel">
 <div class="testimonial-card">
 <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
 <p class="testimonial-text">"Went from zero coding knowledge to building AI apps in 10 days. Now earning $145K at Tesla."</p>
@@ -24,3 +29,13 @@
 </div>
 </div>
 </div>
+<!-- END_COMPONENT -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.testimonial-carousel')) {
+        document.body.style = 'background:#0a0a14;padding:40px;color:white;font-family:sans-serif;max-width:1200px;margin:auto';
+        new Vue({ el: '.testimonial-carousel', data: { currentIndex: 0 } });
+    }
+});
+</script>

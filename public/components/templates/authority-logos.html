@@ -1,4 +1,9 @@
-<div class="authority-logos">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../css/components.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<!-- START_COMPONENT -->
+<div class="authority-logos" data-component="authority-logos">
 <p class="authority-label">Trusted by professionals from:</p>
 <div class="logo-grid">
 <div class="authority-logo">Google</div>
@@ -9,3 +14,13 @@
 <div class="authority-logo">Tesla</div>
 </div>
 </div>
+<!-- END_COMPONENT -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.authority-logos')) {
+        document.body.style = 'background:#0a0a14;padding:40px;color:white;font-family:sans-serif;max-width:1200px;margin:auto';
+        new Vue({ el: '.authority-logos', data: {} });
+    }
+});
+</script>

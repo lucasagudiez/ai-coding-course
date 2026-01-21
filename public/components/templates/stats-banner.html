@@ -1,4 +1,9 @@
-<div class="graduate-counter">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../css/components.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<!-- START_COMPONENT -->
+<div class="graduate-counter" data-component="stats-banner">
 <div class="counter-stat">
 <div class="counter-number">500+</div>
 <div class="counter-label">Students Graduated</div>
@@ -12,3 +17,13 @@
 <div class="counter-label">Average Starting Salary</div>
 </div>
 </div>
+<!-- END_COMPONENT -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.graduate-counter')) {
+        document.body.style = 'background:#0a0a14;padding:40px;color:white;font-family:sans-serif;max-width:1200px;margin:auto';
+        new Vue({ el: '.graduate-counter', data: {} });
+    }
+});
+</script>

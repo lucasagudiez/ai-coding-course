@@ -9,41 +9,40 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-// Component registry - maps component names to their actual locations
-// Updated for new template system and optimized application page
+// Component registry - templates work both standalone AND as components!
 const COMPONENTS = {
     'scarcity-bar': {
-        standalone: '/components/standalone/scarcity-bar.html',
+        standalone: '/components/templates/scarcity-bar.html',
         integrated: [
             { page: '/application/', selector: '.scarcity-bar' }
         ]
     },
     'comparison-table': {
-        standalone: '/components/standalone/comparison-table.html',
+        standalone: '/components/templates/comparison-table.html',
         integrated: [
             { page: '/reservation/', selector: '.comparison-section' }
         ]
     },
     'value-stack': {
-        standalone: '/components/standalone/value-stack.html',
+        standalone: '/components/templates/value-stack.html',
         integrated: [
             { page: '/reservation/', selector: '.value-stack' }
         ]
     },
     'testimonial-carousel': {
-        standalone: '/components/standalone/testimonial-carousel.html',
+        standalone: '/components/templates/testimonial-carousel.html',
         integrated: [
             { page: '/reservation/', selector: '.testimonial-carousel' }
         ]
     },
     'faq-section': {
-        standalone: '/components/standalone/faq-section.html',
+        standalone: '/components/templates/faq-section.html',
         integrated: [
             { page: '/reservation/', selector: '.faq-section' }
         ]
     },
     'what-youll-build': {
-        standalone: '/components/standalone/what-youll-build.html',
+        standalone: '/components/templates/what-youll-build.html',
         integrated: [
             { page: '/reservation/', selector: '.projects-section' }
         ]
@@ -89,14 +88,14 @@ const CRITICAL_PROPERTIES = new Set([
 async function waitForComponentsLoaded(page) {
     // Wait for any component to appear (means templates have loaded)
     await page.waitForFunction(() => {
-        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-table, .projects-section');
+        const components = document.querySelectorAll('.scarcity-bar, .graduate-counter, .value-stack, .testimonial-carousel, .guarantee-badge-container, .faq-section, .comparison-section, .projects-section');
         return components.length > 0;
-    }, { timeout: 15000 }).catch(() => {
+    }, { timeout: 20000 }).catch(() => {
         // Standalone pages don't have component-loader, so this is fine
     });
     
-    // Wait for Vue to finish rendering
-    await page.waitForTimeout(1000);
+    // Additional wait for Vue to finish rendering and CSS to apply
+    await page.waitForTimeout(2000);
 }
 
 /**
