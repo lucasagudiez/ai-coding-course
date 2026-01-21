@@ -38,15 +38,16 @@ const EvaluationPage = {
                 if (savedProgress) {
                     try {
                         const progress = JSON.parse(savedProgress);
-                        email = progress.email;
+                        email = progress.application.email;
                     } catch (e) {
                         console.error('Error parsing saved progress:', e);
                     }
                 }
             }
             
+            // If still no email, redirect to application
+            // But don't show alert - just silently redirect
             if (!email) {
-                alert('Missing application data. Please complete the application form first.');
                 window.location.href = '/application/';
                 return;
             }
