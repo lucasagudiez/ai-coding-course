@@ -18,9 +18,6 @@
     
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    
-    <!-- Component Loader (loads BEFORE Vue mounts) -->
-    <script src="js/component-loader.js"></script>
 </head>
 <body>
     <div id="app">
@@ -36,11 +33,36 @@
         </div>
 
         <div class="app-container">
-            <!-- Scarcity Bar Component -->
-            <div id="component-scarcity-bar"></div>
+            <!-- Scarcity Bar with Visual -->
+            <div class="scarcity-bar">
+                <div class="scarcity-content">
+                    <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                    <small>Applications reviewed within 48 hours</small>
+                </div>
+                <div class="seats-visual">
+                    <div class="seat-grid">
+                        <div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
+                        <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+                    </div>
+                    <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+                </div>
+            </div>
 
-            <!-- Graduate Counter Component -->
-            <div id="component-graduate-counter"></div>
+            <!-- Graduate Counter -->
+            <div class="graduate-counter">
+                <div class="counter-stat">
+                    <div class="counter-number">{{ graduateCount }}+</div>
+                    <div class="counter-label">Students Graduated</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">{{ employedCount }}%</div>
+                    <div class="counter-label">Now Employed in Tech</div>
+                </div>
+                <div class="counter-stat">
+                    <div class="counter-number">${{ avgSalary }}K</div>
+                    <div class="counter-label">Average Starting Salary</div>
+                </div>
+            </div>
 
             <!-- Header -->
             <div class="app-header">
@@ -48,20 +70,140 @@
                 <p class="subtitle">10-Day AI Coding Program · Taught by Engineers & Researchers from MIT • Stanford • Oxford • Cambridge • Harvard</p>
             </div>
 
-            <!-- Authority Logos Component -->
-            <div id="component-authority-logos"></div>
+            <!-- Authority Logos -->
+            <div class="authority-logos">
+                <p class="authority-label">Trusted by professionals from:</p>
+                <div class="logo-grid">
+                    <div class="authority-logo">Google</div>
+                    <div class="authority-logo">Apple</div>
+                    <div class="authority-logo">Meta</div>
+                    <div class="authority-logo">Amazon</div>
+                    <div class="authority-logo">Microsoft</div>
+                    <div class="authority-logo">Tesla</div>
+                </div>
+            </div>
 
-            <!-- Value Stack Component -->
-            <div id="component-value-stack"></div>
+            <!-- Value Stack -->
+            <div class="value-stack">
+                <h3><i class="fas fa-graduation-cap"></i> Program Components & Market Value</h3>
+                <div class="value-item">
+                    <span>10-Day Intensive: Build Apps with AI</span>
+                    <span class="value-price">~$8,000</span>
+                </div>
+                <div class="value-item">
+                    <span>Instructor Support & Code Reviews</span>
+                    <span class="value-price">~$3,000</span>
+                </div>
+                <div class="value-item">
+                    <span>3 Portfolio Projects</span>
+                    <span class="value-price">~$2,500</span>
+                </div>
+                <div class="value-item">
+                    <span>Alumni Network + Job Board + Weekly Q&A</span>
+                    <span class="value-price">~$2,000</span>
+                </div>
+                <div class="value-item">
+                    <span>Lifetime Access to All Updates</span>
+                    <span class="value-price">~$1,500</span>
+                </div>
+                <div class="value-total">
+                    <div><span class="strike">Combined Market Value: ~$17,000</span></div>
+                    <div class="big-number">Program Tuition: $590</div>
+                    <small style="color: rgba(255, 255, 255, 0.6);">AI-powered approach makes this possible at 97% lower cost</small>
+                </div>
+            </div>
 
-            <!-- Comparison Table Component -->
-            <div id="component-comparison-table"></div>
+            <!-- Comparison -->
+            <div class="comparison-box">
+                <h4>Compare Your Options:</h4>
+                <div class="comparison-table">
+                    <div class="comparison-row header-row">
+                        <div class="comparison-cell">Option</div>
+                        <div class="comparison-cell">Time</div>
+                        <div class="comparison-cell">Cost</div>
+                        <div class="comparison-cell">Success Rate</div>
+                        <div class="comparison-cell">Job Support</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> Traditional Bootcamp</div>
+                        <div class="comparison-cell">12-24 weeks</div>
+                        <div class="comparison-cell">$12K-$18K</div>
+                        <div class="comparison-cell">~40%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> CS Degree</div>
+                        <div class="comparison-cell">4 years</div>
+                        <div class="comparison-cell">$80K-$200K</div>
+                        <div class="comparison-cell">~50%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><i class="fas fa-circle dim-icon"></i> Self-Learning</div>
+                        <div class="comparison-cell">6mo-3yrs</div>
+                        <div class="comparison-cell">Free (time)</div>
+                        <div class="comparison-cell">~5%</div>
+                        <div class="comparison-cell"><i class="fas fa-times text-muted"></i></div>
+                    </div>
+                    <div class="comparison-row winner-row">
+                        <div class="comparison-cell"><i class="fas fa-check-circle winner-icon"></i> <strong>Adava AI Coding</strong></div>
+                        <div class="comparison-cell"><strong>10 days</strong></div>
+                        <div class="comparison-cell winner-price"><strong>$590</strong></div>
+                        <div class="comparison-cell"><strong>High</strong></div>
+                        <div class="comparison-cell"><i class="fas fa-check winner-icon"></i></div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Testimonials Component -->
-            <div id="component-testimonials"></div>
+            <!-- Strategy #31: Testimonial Snippets -->
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Went from zero coding knowledge to building AI apps in 10 days. Now earning $145K at Tesla."</p>
+                    <div class="testimonial-author">
+                        <strong>Marcus T.</strong>
+                        <span>Mechanical Engineer → AI Developer</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Best investment I ever made. The AI tools alone saved me 200+ hours on my freelance projects."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah K.</strong>
+                        <span>Doctor → Med Tech Founder</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"I was skeptical about the $590, but recovered it in my first week freelancing. Now it feels like I stole it."</p>
+                    <div class="testimonial-author">
+                        <strong>Alex R.</strong>
+                        <span>Marketing → Full Stack Developer</span>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Guarantee Badges Component -->
-            <div id="component-guarantee-badges"></div>
+            <!-- Strategy #32: Guarantee Badges -->
+            <div class="guarantee-badge-container">
+                <div class="guarantee-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>100% Money Back Guarantee</h4>
+                        <p>Not admitted? Automatic refund. No questions asked.</p>
+                    </div>
+                </div>
+                <div class="guarantee-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>48 Hour Response Time</h4>
+                        <p>Fast review. Most applicants hear back within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Progress -->
             <div class="progress-bar">
@@ -77,23 +219,204 @@
                 <p>Your responses help us verify whether we can legitimately help you achieve your goals. We want to ensure this program is the right fit for your specific situation and that you'll get real value from the AI coding approach.</p>
             </div>
 
-            <!-- Outcomes Component -->
-            <div id="component-outcomes"></div>
+            <!-- Strategy #33: Specific Outcomes -->
+            <div class="outcomes-grid">
+                <h3><i class="fas fa-trophy"></i> What You'll Achieve in 10 Days</h3>
+                <div class="outcome-items">
+                    <div class="outcome-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Build 3 portfolio apps (e-commerce, chatbot, dashboard)</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Master AI tools (Cursor, Claude, GPT Codex, v0.dev)</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-rocket"></i>
+                        <span>Deploy live apps that impress employers</span>
+                    </div>
+                    <div class="outcome-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Create job-ready resume and portfolio</span>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Pain Points Component -->
-            <div id="component-pain-points"></div>
+            <!-- Strategy #34: Pain Points Addressed -->
+            <div class="pain-points-section">
+                <h3><i class="fas fa-heartbeat"></i> We Solve These Problems</h3>
+                <div class="pain-grid">
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">Traditional bootcamps take 6 months and cost $15K+</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">Learn in 10 days for $590</span>
+                    </div>
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">Coding syntax is overwhelming and confusing</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">AI writes the code for you</span>
+                    </div>
+                    <div class="pain-item">
+                        <i class="fas fa-times-circle"></i>
+                        <span class="pain-before">No time for full-time education</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <span class="pain-after">2 hours/day fits any schedule</span>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Stats Banner Component -->
-            <div id="component-stats-banner"></div>
+            <!-- Strategy #35: Social Proof Stats -->
+            <div class="stats-banner">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Students Worldwide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-label">Job Placement Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$94K</div>
+                    <div class="stat-label">Average Starting Salary</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9/5</div>
+                    <div class="stat-label">Student Rating</div>
+                </div>
+            </div>
 
-            <!-- Bonus Stack Component -->
-            <div id="component-bonus-stack"></div>
+            <!-- Strategy #36: Bonus Stack -->
+            <div class="bonus-stack">
+                <h3><i class="fas fa-gift"></i> Included Free with Your Application</h3>
+                <div class="bonus-items">
+                    <div class="bonus-item">
+                        <div class="bonus-value">$299 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Lifetime Community Access</h4>
+                                <p>Private Slack with 500+ alumni and weekly Q&A sessions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$199 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-video"></i>
+                            <div>
+                                <h4>All Course Recordings</h4>
+                                <p>Lifetime access to all lectures, workshops, and updates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$149 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-file-code"></i>
+                            <div>
+                                <h4>Premium Code Templates</h4>
+                                <p>50+ production-ready templates and starter kits</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <div class="bonus-value">$99 Value</div>
+                        <div class="bonus-content">
+                            <i class="fas fa-certificate"></i>
+                            <div>
+                                <h4>Certificate of Completion</h4>
+                                <p>Professional certificate for LinkedIn and resume</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-total">
+                    <span class="total-label">Total Bonus Value:</span>
+                    <span class="total-value">$746</span>
+                    <span class="total-price">Your Price: Just $590</span>
+                </div>
+            </div>
 
-            <!-- Timeline Component -->
-            <div id="component-timeline"></div>
+            <!-- What Happens Next Timeline -->
+            <div class="timeline-section">
+                <h3><i class="fas fa-route"></i> What Happens Next</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Submit Application ($10)</h4>
+                            <p>Complete this form and pay $10 application fee. Takes 8-12 minutes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>AI + Human Review</h4>
+                            <p>Our admissions team evaluates your application within 24-48 hours.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h4>Acceptance Decision</h4>
+                            <p>If accepted, you'll receive an invitation to confirm your spot for $590.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h4>Program Starts</h4>
+                            <p>February cohort begins. Transform your career in 10 days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- FAQ Component -->
-            <div id="component-faq"></div>
+            <!-- Quick FAQ -->
+            <div class="faq-section">
+                <h3><i class="fas fa-question-circle"></i> Common Questions</h3>
+                <div class="faq-item" @click="toggleFaq(0)">
+                    <div class="faq-question">
+                        <span>Is the $10 really refundable?</span>
+                        <i class="fas" :class="faqOpen[0] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[0]">
+                        Yes. If not admitted, your $10 is automatically refunded within 48 hours.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(1)">
+                    <div class="faq-question">
+                        <span>What if I'm accepted but change my mind?</span>
+                        <i class="fas" :class="faqOpen[1] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[1]">
+                        No obligation. The $590 is only charged if you confirm your spot.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(2)">
+                    <div class="faq-question">
+                        <span>Do I need coding experience?</span>
+                        <i class="fas" :class="faqOpen[2] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[2]">
+                        No. 60% of graduates started from zero. The program is designed for all levels.
+                    </div>
+                </div>
+                <div class="faq-item" @click="toggleFaq(3)">
+                    <div class="faq-question">
+                        <span>What's the time commitment?</span>
+                        <i class="fas" :class="faqOpen[3] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+                    <div class="faq-answer" v-show="faqOpen[3]">
+                        2 hours per day for 10 days. Live sessions are recorded for flexibility.
+                    </div>
+                </div>
+            </div>
 
             <!-- Form -->
             <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
