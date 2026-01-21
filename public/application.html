@@ -239,9 +239,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="form-motivation">Why are you applying now?</label>
-                        <textarea id="form-motivation" v-model="form.motivation" required placeholder="What's the real reason you're here today?" @input="updateProgress"></textarea>
-                        <small class="field-helper">Be honest - we're looking for genuine motivation. Most accepted applicants write 2-3 sentences about career goals, life changes, or specific projects they want to build.</small>
+                        <label for="form-motivation">Why are you applying now, and not before or in the future?</label>
+                        <textarea id="form-motivation" v-model="form.motivation" required placeholder="e.g., Career change, need new skills for current role, want to build a product..." @input="updateProgress"></textarea>
+                        <small class="field-helper">Be specific about your timing and goals. Most accepted applicants write 2-3 sentences about their current situation and what they want to achieve.</small>
                     </div>
                 </div>
 
@@ -350,6 +350,7 @@
                     <div class="ping-text">
                         <div class="ping-name">{{ currentPing.name }}</div>
                         <div class="ping-action">{{ currentPing.action }}</div>
+                        <div class="ping-urgency">{{ currentPing.urgency }}</div>
                     </div>
                 </div>
             </div>

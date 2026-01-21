@@ -590,6 +590,13 @@ body {
     color: var(--text-secondary);
 }
 
+.ping-urgency {
+    font-size: 0.8rem;
+    color: var(--primary-teal);
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .app-container {

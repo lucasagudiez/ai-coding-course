@@ -6,7 +6,7 @@ const ApplicationForm = {
             submitted: false,
             qualificationMessage: '',
             cohort: '',
-            spotsRemaining: 23,
+            spotsRemaining: 3,  // Only 3 spots left - high scarcity
             showPing: false,
             currentPing: {},
             // Section visibility for progressive disclosure
@@ -122,12 +122,12 @@ const ApplicationForm = {
         
         startSocialProof() {
             const pings = [
-                { name: 'Sarah M.', initials: 'SM', action: 'just applied from New York' },
-                { name: 'Michael K.', initials: 'MK', action: 'just applied from San Francisco' },
-                { name: 'Jennifer L.', initials: 'JL', action: 'just applied from Austin' },
-                { name: 'David P.', initials: 'DP', action: 'just applied from Seattle' },
-                { name: 'Lisa R.', initials: 'LR', action: 'just applied from Boston' },
-                { name: 'James T.', initials: 'JT', action: 'just applied from Chicago' }
+                { name: 'Sarah M.', initials: 'SM', action: 'just applied from New York', urgency: 'Only 3 spots remain' },
+                { name: 'Michael K.', initials: 'MK', action: 'just applied from San Francisco', urgency: '3 seats left in cohort' },
+                { name: 'Jennifer L.', initials: 'JL', action: 'just applied from Austin', urgency: 'February cohort nearly full' },
+                { name: 'David P.', initials: 'DP', action: 'just applied from Seattle', urgency: '3 spots remaining' },
+                { name: 'Lisa R.', initials: 'LR', action: 'just applied from Boston', urgency: 'Last 3 seats available' },
+                { name: 'James T.', initials: 'JT', action: 'just applied from Chicago', urgency: 'Only 3 spots left' }
             ];
             
             const showRandomPing = () => {
