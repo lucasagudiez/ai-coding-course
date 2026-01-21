@@ -173,6 +173,21 @@ const EvaluationPage = {
                     this.currentStep = 4;
                 }
             });
+        },
+        
+        goToReservation() {
+            // Get email from URL params
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('email');
+            const name = params.get('name');
+            
+            // Redirect to reservation page with user data
+            const reservationParams = new URLSearchParams({
+                email: email || '',
+                name: name || ''
+            });
+            
+            window.location.href = `/reservation/?${reservationParams.toString()}`;
         }
     }
 };

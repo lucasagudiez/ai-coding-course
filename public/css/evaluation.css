@@ -362,12 +362,68 @@ body {
     border-radius: 12px;
     text-align: center;
     margin-bottom: 30px;
-    border: 2px solid rgba(0, 212, 170, 0.3);
+    border: 2px solid rgba(162, 89, 255, 0.3);
+}
+
+/* Acceptance Box */
+.acceptance-box {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(162, 89, 255, 0.2) 100%);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 40px;
+    border: 2px solid rgba(20, 184, 166, 0.4);
+}
+
+.acceptance-box h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #14b8a6, #a259ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.acceptance-box p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.acceptance-box p:last-child {
+    margin-bottom: 0;
 }
 
 .cta-box p {
     font-size: 1.1rem;
     margin-bottom: 10px;
+}
+
+.reserve-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px 0 10px 0;
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3);
+}
+
+.reserve-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.5);
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+}
+
+.reserve-btn:active {
+    transform: translateY(0);
 }
 
 .cta-note {

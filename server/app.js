@@ -579,9 +579,9 @@ app.post('/api/evaluate-application', async (req, res) => {
                     quote: "The AI coding approach made it possible to switch careers in just 10 days."
                 },
                 nextSteps: [
-                    { step: "Review Decision", time: "You'll receive your final acceptance within 24-48 hours" },
-                    { step: "Confirm Your Spot", time: "If accepted, secure your seat with the remaining $580" },
-                    { step: "Start Learning", time: "February cohort begins - transform your career in 10 days" }
+                    { step: "Secure Your Spot Now", time: "Click the button above to reserve your seat with $580" },
+                    { step: "Join Pre-Program Community", time: "Get instant access to our Slack and prep materials" },
+                    { step: "Program Begins", time: "February 3rd, 2026 - 10 days that will transform your career" }
                 ]
             }
         });
@@ -607,7 +607,7 @@ async function generateComprehensiveEvaluation(applicantData) {
     // This prompt is CRITICAL - it's what makes generic LLM output feel human
     const prompt = `You are a senior admissions counselor at Adava University, an elite AI coding program taught by MIT/Stanford researchers.
 
-You've just reviewed this application:
+You've just reviewed this application and are IMMEDIATELY ACCEPTING them to the February cohort. They are a PERFECT fit.
 
 👤 APPLICANT: ${name}
 📋 BACKGROUND: ${background}
@@ -626,7 +626,7 @@ You've just reviewed this application:
 
 ---
 
-Your task: Create a HIGHLY PERSONALIZED acceptance message that shows you actually READ and THOUGHT about their specific answers.
+Your task: Create a HIGHLY PERSONALIZED IMMEDIATE ACCEPTANCE message that shows you actually READ and THOUGHT about their specific answers.
 
 CRITICAL REQUIREMENTS:
 1. Reference their SPECIFIC dream project by name/concept - show you read it
@@ -634,6 +634,8 @@ CRITICAL REQUIREMENTS:
 3. Quote or paraphrase their exact motivation back to them
 4. Be enthusiastic but authentic (not generic/robotic/salesy)
 5. Make them feel like YOU specifically reviewed their app (not an AI template)
+6. EMPHASIZE they are IMMEDIATELY ACCEPTED (no waiting for decision)
+7. URGENT: Only 3 spots left, they should reserve NOW
 
 Return ONLY a JSON object with this EXACT format:
 {
@@ -659,16 +661,16 @@ Return ONLY a JSON object with this EXACT format:
   },
   "nextSteps": [
     {
-      "step": "Review Decision",
-      "time": "Within 24-48 hours"
+      "step": "Secure Your Spot Now",
+      "time": "Click the button above to reserve your seat with $580"
     },
     {
-      "step": "Confirm Your Spot", 
-      "time": "Secure seat with remaining $580"
+      "step": "Join Pre-Program Community",
+      "time": "Get instant access to our Slack and prep materials"
     },
     {
-      "step": "Start Learning",
-      "time": "February cohort begins"
+      "step": "Program Begins",
+      "time": "February 3rd, 2026 - 10 days that will transform your career"
     }
   ]
 }

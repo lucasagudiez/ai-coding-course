@@ -103,8 +103,14 @@
                 </div>
             </div>
 
+            <div class="acceptance-box">
+                <h3>🎉 You're Accepted!</h3>
+                <p>Based on your exceptional application, you've been <strong>immediately accepted</strong> to our February 2026 cohort.</p>
+                <p>You're exactly the kind of motivated, creative person who thrives in our AI-first program.</p>
+            </div>
+
             <div class="next-steps" v-if="nextSteps.length > 0">
-                <h3>What Happens Next:</h3>
+                <h3>Next Steps:</h3>
                 <div v-for="(item, index) in nextSteps" :key="index" class="timeline-item">
                     <div class="timeline-number">{{ index + 1 }}</div>
                     <div class="timeline-content">
@@ -116,15 +122,19 @@
 
             <div class="cta-box">
                 <p><strong>Program starts:</strong> February 3rd, 2026</p>
-                <p><strong>Spots remaining:</strong> 3 of 30</p>
-                <p class="cta-note">Check your email in 24-48 hours for your decision</p>
+                <p><strong>Spots remaining:</strong> Only 3 of 30 seats left</p>
+                <button class="reserve-btn" @click="goToReservation">
+                    Secure Your Spot Now ($580)
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="cta-note">Your $10 application fee will be deducted from the total</p>
             </div>
 
             <div class="guarantee-reminder">
                 <i class="fas fa-shield-check"></i>
                 <div>
-                    <h4>Remember: Zero Risk</h4>
-                    <p>If not admitted, your $10 application fee will be automatically refunded within 48 hours. No forms, no waiting.</p>
+                    <h4>100% Money-Back Guarantee</h4>
+                    <p>If you complete the program and don't feel it was worth every penny, we'll refund your full $590. No questions asked.</p>
                 </div>
             </div>
         </div>
