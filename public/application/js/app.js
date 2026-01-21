@@ -1,12 +1,4 @@
 // Application Form Logic
-
-// Helper: Get API URL (production uses relative, dev uses absolute)
-function getApiUrl(endpoint) {
-    return window.location.hostname === 'adavauniversity.org' 
-        ? endpoint 
-        : `http://localhost:3001${endpoint}`;
-}
-
 const ApplicationForm = {
     data() {
         return {
@@ -167,33 +159,31 @@ const ApplicationForm = {
         },
         
         saveProgress() {
-            // Save entire form data to localStorage (generic, no manual field listing)
-            const progressData = {
-                form: this.form, // Save everything generically
+            // Use StateManager for generic data saving
+            StateManager.saveLocal('application_progress', {
+                form: this.form,
                 sections: this.sections,
                 timestamp: Date.now()
-            };
-            localStorage.setItem('adava_application_progress', JSON.stringify(progressData));
+            });
             
-            // Also save email separately for easy access by evaluation page
+            // Also save email separately for easy access
             if (this.form.email) {
-                localStorage.setItem('applicantEmail', this.form.email);
+                StateManager.saveLocal('applicantEmail', this.form.email);
             }
         },
         
         loadProgress() {
-            const saved = localStorage.getItem('adava_application_progress');
+            const saved = StateManager.loadLocal('application_progress');
             if (!saved) return;
             
             try {
-                const data = JSON.parse(saved);
                 // Only load if saved within last 24 hours
-                const hoursSince = (Date.now() - data.timestamp) / (1000 * 60 * 60);
+                const hoursSince = (Date.now() - saved.timestamp) / (1000 * 60 * 60);
                 if (hoursSince < 24) {
                     // Restore form data
-                    Object.assign(this.form, data.form);
+                    Object.assign(this.form, saved.form);
                     // Restore section visibility
-                    Object.assign(this.sections, data.sections);
+                    Object.assign(this.sections, saved.sections);
                 }
             } catch (e) {
                 console.error('Failed to load progress:', e);
@@ -308,7 +298,7 @@ const ApplicationForm = {
         
         async submitApplication() {
             if (!this.isComplete) {
-                alert('Please complete all required fields');
+                StateManager.showError('Please complete all required fields', false);
                 return;
             }
 
@@ -319,7 +309,7 @@ const ApplicationForm = {
                 // Save to session/localStorage first
                 await this.saveToSession();
                 
-                const response = await fetch(getApiUrl('/api/submit-application'), {
+                const response = await fetch(StateManager.getApiUrl('/api/submit-application'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -333,33 +323,31 @@ const ApplicationForm = {
                     // Redirect to evaluation page (email is saved in localStorage)
                     window.location.href = `/evaluation/`;
                 } else {
-                    alert('Error submitting. Please email us at adavauniversity@gmail.com');
+                    StateManager.showError('Error submitting.');
                     this.loading = false;
                     this.submitted = false;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error submitting. Please email us at adavauniversity@gmail.com');
+                StateManager.showError('Error submitting.');
                 this.loading = false;
                 this.submitted = false;
             }
         },
         
         async saveToSession() {
-            // Save to localStorage (detailed format)
+            // Save to localStorage using StateManager
             const applicationData = {
                 application: this.form,
                 cohort: this.cohort,
                 timestamp: new Date().toISOString()
             };
-            localStorage.setItem('application_progress', JSON.stringify(applicationData));
-            
-            // Also save email separately for easy access
-            localStorage.setItem('applicantEmail', this.form.email);
+            StateManager.saveLocal('application_progress', applicationData);
+            StateManager.saveLocal('applicantEmail', this.form.email);
             
             // Save to server session
             try {
-                await fetch(getApiUrl('/api/session/save'), {
+                await fetch(StateManager.getApiUrl('/api/session/save'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

@@ -1,10 +1,3 @@
-// Helper: Get API URL (production uses relative, dev uses absolute)
-function getApiUrl(endpoint) {
-    return window.location.hostname === 'adavauniversity.org' 
-        ? endpoint 
-        : `http://localhost:3001${endpoint}`;
-}
-
 const { createApp } = Vue;
 
 createApp({
@@ -115,7 +108,7 @@ createApp({
             try {
                 // Use relative URL for production (nginx proxies to backend)
                 // Use absolute URL for development (direct backend connection)
-                await fetch(getApiUrl('/api/submit'), {
+                await fetch(StateManager.getApiUrl('/api/submit'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -167,7 +160,7 @@ createApp({
             try {
                 // Use relative URL for production (nginx proxies to backend)
                 // Use absolute URL for development (direct backend connection)
-                const response = await fetch(getApiUrl('/api/submit'), {
+                const response = await fetch(StateManager.getApiUrl('/api/submit'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

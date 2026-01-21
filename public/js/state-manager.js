@@ -11,6 +11,27 @@ const StateManager = {
     API_URL: window.location.hostname === 'localhost' 
         ? 'http://localhost:3001/api/session'
         : '/api/session',
+    SUPPORT_EMAIL: 'adavauniversity@gmail.com',
+    
+    /**
+     * Get API URL (production uses relative, dev uses absolute)
+     * DRY helper to avoid repeating this logic everywhere
+     */
+    getApiUrl(endpoint) {
+        return window.location.hostname === 'adavauniversity.org' 
+            ? endpoint 
+            : `http://localhost:3001${endpoint}`;
+    },
+    
+    /**
+     * Show error message to user (DRY helper)
+     */
+    showError(message, includeSupport = true) {
+        const fullMessage = includeSupport 
+            ? `${message} Please email us at ${this.SUPPORT_EMAIL}` 
+            : message;
+        alert(fullMessage);
+    },
     
     /**
      * Set a cookie

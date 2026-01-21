@@ -1,12 +1,4 @@
 // Evaluation Page Logic with Real ChatGPT Integration
-
-// Helper: Get API URL (production uses relative, dev uses absolute)
-function getApiUrl(endpoint) {
-    return window.location.hostname === 'adavauniversity.org' 
-        ? endpoint 
-        : `http://localhost:3001${endpoint}`;
-}
-
 const EvaluationPage = {
     data() {
         return {
@@ -36,46 +28,20 @@ const EvaluationPage = {
     
     methods: {
         async startEvaluation() {
-            // Get email from URL params OR localStorage (session state)
+            // Get email using StateManager (checks multiple sources)
             const params = new URLSearchParams(window.location.search);
-            let email = params.get('email');
+            let email = params.get('email') || StateManager.loadLocal('applicantEmail');
             
-            // If no email in URL, try localStorage
+            // Try loading from saved progress
             if (!email) {
-                // First try the simple key
-                email = localStorage.getItem('applicantEmail');
-                
-                // If not found, try the progress data
-                if (!email) {
-                    const savedProgress = localStorage.getItem('adava_application_progress');
-                    if (savedProgress) {
-                        try {
-                            const progress = JSON.parse(savedProgress);
-                            email = progress.form?.email;
-                        } catch (e) {
-                            console.error('Error parsing saved progress:', e);
-                        }
-                    }
-                }
-                
-                // Last resort: try the old key name
-                if (!email) {
-                    const oldProgress = localStorage.getItem('application_progress');
-                    if (oldProgress) {
-                        try {
-                            const progress = JSON.parse(oldProgress);
-                            email = progress.application?.email || progress.email;
-                        } catch (e) {
-                            console.error('Error parsing old progress:', e);
-                        }
-                    }
-                }
+                const progress = StateManager.loadLocal('application_progress');
+                email = progress?.form?.email || progress?.application?.email;
             }
             
-            // If no email found, just use a placeholder (evaluation should never redirect)
+            // If no email found, use placeholder (evaluation never redirects)
             if (!email) {
                 email = 'no-email-provided@example.com';
-                console.warn('No email found in localStorage or URL params, using placeholder');
+                console.warn('No email found, using placeholder');
             }
             
             // Start loading animation immediately
@@ -83,7 +49,7 @@ const EvaluationPage = {
             
             try {
                 // Call the API
-                const response = await fetch(getApiUrl('/api/evaluate-application'), {
+                const response = await fetch(StateManager.getApiUrl('/api/evaluate-application'), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
