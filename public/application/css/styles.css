@@ -1787,9 +1787,9 @@ body {
 
 .seat-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 6px;
-    max-width: 600px;
+    max-width: 250px;
     margin: 0 auto 0.75rem;
 }
 
@@ -1831,8 +1831,9 @@ body {
 
 @media (max-width: 600px) {
     .seat-grid {
-        grid-template-columns: repeat(auto-fill, minmax(14px, 1fr));
+        grid-template-columns: repeat(6, 1fr);
         gap: 4px;
+        max-width: 200px;
     }
     
     .seat {
