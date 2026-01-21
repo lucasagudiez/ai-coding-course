@@ -152,6 +152,14 @@ const ApplicationForm = {
             }
         });
         
+        // Initialize Square immediately after mount (delayed slightly for DOM to be ready)
+        setTimeout(() => {
+            if (!this.squarePayments) {
+                console.log('Calling initSquarePayment from setTimeout...');
+                this.initSquarePayment();
+            }
+        }, 500);
+        
         // Auto-save progress every 10 seconds
         setInterval(() => {
             this.saveProgress();
@@ -327,7 +335,7 @@ const ApplicationForm = {
 
                 if (response.ok) {
                     // Redirect to evaluation page (email is saved in localStorage)
-                    window.location.href = `/evaluation/`;
+                    window.location.href = `/public/evaluation/`;
                 } else {
                     StateManager.showError('Error submitting.');
                     this.loading = false;
@@ -411,14 +419,22 @@ const ApplicationForm = {
         
         async initSquarePayment() {
             try {
-                // Square Sandbox Credentials
-                const SQUARE_APP_ID = 'sandbox-sq0idb-51AxZAaIW4wr4x51PivPfg';
-                const SQUARE_LOCATION_ID = 'LM3C1QVBTJA5J';
+                // Get credentials from environment config
+                const SQUARE_APP_ID = window.ENV_CONFIG.square.appId;
+                const SQUARE_LOCATION_ID = window.ENV_CONFIG.square.locationId;
                 
-                console.log('Initializing Square payment form...');
+                console.log(`Initializing Square payment form in ${window.ENV_CONFIG.environment} mode...`);
+                console.log('App ID:', SQUARE_APP_ID.substring(0, 20) + '...');
+                console.log('Location ID:', SQUARE_LOCATION_ID);
                 
-                // Initialize Square Payments
-                this.squarePayments = Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                // Square SDK auto-detects environment from app ID prefix
+                try {
+                    this.squarePayments = await window.Square.payments(SQUARE_APP_ID);
+                    console.log(`✅ Square Payments initialized successfully (${window.ENV_CONFIG.environment} mode)`);
+                } catch (initError) {
+                    console.error('Square init error:', initError);
+                    throw initError;
+                }
                 
                 // Create card payment form
                 this.squareCard = await this.squarePayments.card();
@@ -462,7 +478,9 @@ const ApplicationForm = {
                 
                 // Step 2: Send to backend to charge $10
                 console.log('Charging $10...');
-                const response = await fetch('http://127.0.0.1:3001/api/payment/charge', {
+                const apiUrl = `${window.ENV_CONFIG.api.baseUrl}/api/payment/charge`;
+                console.log('API URL:', apiUrl);
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -500,7 +518,7 @@ const ApplicationForm = {
                 this.loading = false;
                 
                 setTimeout(() => {
-                    window.location.href = '/evaluation/';
+                    window.location.href = '/public/evaluation/';
                 }, 2000);
                 
             } catch (error) {

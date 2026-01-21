@@ -16,8 +16,19 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=3e6f418">
     
-    <!-- Square Web Payment SDK -->
-    <script src="https://web.squarecdn.com/v1/square.js?v=3e6f418"></script>
+    <!-- Environment Configuration (loads first) -->
+    <script src="../js/config.js?v=env-auto"></script>
+    
+    <!-- Square Web Payment SDK (dynamically loaded based on environment) -->
+    <script>
+        // Load the correct Square SDK based on environment
+        (function() {
+            const script = document.createElement('script');
+            script.src = window.ENV_CONFIG.square.sdkUrl;
+            script.async = false; // Load synchronously to ensure it's ready
+            document.head.appendChild(script);
+        })();
+    </script>
     
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js?v=3e6f418"></script>
@@ -371,12 +382,11 @@
 
                     <!-- Authorization Checkbox -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: start; gap: 10px; cursor: pointer;">
-                            <input type="checkbox" v-model="authorizePayment" style="margin-top: 4px;">
-                            <span style="font-size: 14px;">
-                                I authorize Adava University to charge my card $10 now for application review, 
-                                and if accepted, charge $580 for the program fee. I understand the $10 is 
-                                fully refundable if not admitted.
+                        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+                            <input type="checkbox" v-model="authorizePayment" style="flex-shrink: 0; margin-top: 2px; width: 18px; height: 18px;">
+                            <span style="font-size: 14px; line-height: 1.5;">
+                                I authorize Adava University to charge my card $10 for application review. 
+                                This fee is fully refundable if not admitted.
                             </span>
                         </label>
                     </div>
@@ -479,6 +489,6 @@
 
     <!-- JavaScript -->
     <script src="../js/state-manager.js?v=3e6f418"></script>
-    <script src="js/app.js?v=3e6f418"></script>
+    <script src="js/app.js?v=payment-fix-002"></script></script>
 </body>
 </html>

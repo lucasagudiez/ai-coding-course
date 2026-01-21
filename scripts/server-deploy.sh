@@ -59,6 +59,21 @@ else
     exit 1
 fi
 
+# Run critical UI test (nav button visibility)
+echo "$(date): Running critical UI test (nav button)..." >> "$LOG_FILE"
+if npx playwright test tests/nav-button-visibility.spec.js --reporter=line > /tmp/critical-test-output.txt 2>&1; then
+    echo "$(date): ✅ Critical UI test passed" >> "$LOG_FILE"
+else
+    echo "$(date): ❌ Critical UI test FAILED (Apply Now button cut off) - reverting" >> "$LOG_FILE"
+    cat /tmp/critical-test-output.txt >> "$LOG_FILE"
+    
+    # Revert to last working version
+    git reset --hard "$LAST_WORKING_COMMIT"
+    
+    echo "$(date): Reverted to working version" >> "$LOG_FILE"
+    exit 1
+fi
+
 # Verify critical files exist in public/
 if [ ! -f "public/index.html" ] || [ ! -f "public/styles.css" ]; then
     echo "$(date): ❌ Critical files missing - reverting" >> "$LOG_FILE"

@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const OpenAI = require('openai');
-const { Client, Environment } = require('square');
+const { SquareClient, SquareEnvironment } = require('square');
 
 const app = express();
 const PORT = 3001;
@@ -26,17 +26,27 @@ const APPLICATIONS_CSV = path.join(__dirname, '../data/applications.csv');
 const DATA_DIR = path.join(__dirname, '../data');
 const SESSIONS_DIR = path.join(__dirname, '../data/sessions');
 
-// Initialize OpenAI
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+// Initialize OpenAI (optional - only needed for AI personalization features)
+let openai = null;
+if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'sk-placeholder-replace-with-real-key') {
+    try {
+        openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY
+        });
+        console.log('✅ OpenAI initialized');
+    } catch (error) {
+        console.log('⚠️  OpenAI initialization failed (optional feature will be disabled)');
+    }
+} else {
+    console.log('ℹ️  OpenAI not configured (AI features disabled)');
+}
 
 // Initialize Square
-const squareClient = new Client({
-    accessToken: process.env.SQUARE_ACCESS_TOKEN,
+const squareClient = new SquareClient({
+    token: process.env.SQUARE_ACCESS_TOKEN,
     environment: process.env.SQUARE_ENVIRONMENT === 'production' 
-        ? Environment.Production 
-        : Environment.Sandbox
+        ? SquareEnvironment.Production 
+        : SquareEnvironment.Sandbox
 });
 
 // Ensure sessions directory exists
@@ -757,32 +767,32 @@ app.post('/api/payment/charge', paymentLimiter, async (req, res) => {
         // Create Square customer (for card-on-file)
         let customerId;
         try {
-            const customerResponse = await squareClient.customersApi.createCustomer({
+            const customerResponse = await squareClient.customers.create({
                 emailAddress: email,
                 givenName: name ? name.split(' ')[0] : undefined,
                 familyName: name ? name.split(' ').slice(1).join(' ') : undefined
             });
-            customerId = customerResponse.result.customer.id;
+            customerId = customerResponse.customer.id;
         } catch (customerError) {
             console.error('Customer creation error:', customerError);
             // Continue without customer (less ideal but works)
         }
         
         // Charge the card
-        const paymentResponse = await squareClient.paymentsApi.createPayment({
+        const paymentResponse = await squareClient.payments.create({
             sourceId: token,
             customerId: customerId,
             amountMoney: {
-                amount: parseInt(amount),
+                amount: BigInt(amount),
                 currency: 'USD'
             },
-            idempotencyKey: `${email}-${Date.now()}-${Math.random()}`, // Unique key
+            idempotencyKey: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
             autocomplete: true, // Capture immediately
             note: note || 'Adava University Payment',
             referenceId: `${email}-${Date.now()}`
         });
         
-        const payment = paymentResponse.result.payment;
+        const payment = paymentResponse.payment;
         
         // Extract card info for display (last 4 digits)
         const cardDetails = payment.cardDetails || {};
@@ -852,20 +862,20 @@ app.post('/api/payment/charge-saved-card', paymentLimiter, async (req, res) => {
         // Access control happens at portal level
         
         // Charge the saved card
-        const paymentResponse = await squareClient.paymentsApi.createPayment({
+        const paymentResponse = await squareClient.payments.create({
             sourceId: card_id,
             customerId: customer_id,
             amountMoney: {
-                amount: parseInt(amount),
+                amount: BigInt(amount),
                 currency: 'USD'
             },
-            idempotencyKey: `${customer_id}-final-${Date.now()}`,
+            idempotencyKey: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
             autocomplete: true,
             note: 'Adava University - Program Fee',
             referenceId: `program-${customer_id}-${Date.now()}`
         });
         
-        const payment = paymentResponse.result.payment;
+        const payment = paymentResponse.payment;
         
         console.log(`✅ Program fee charged: $${amount / 100} for ${email}`);
         

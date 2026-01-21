@@ -26,10 +26,22 @@ echo ""
 
 # Step 2: Run UX tests (if playwright is available)
 echo "═══════════════════════════════════════════════════════════════"
-echo "  STEP 2: Running UX tests..."
+echo "  STEP 2: Running UX tests (including critical UI checks)..."
 echo "═══════════════════════════════════════════════════════════════"
 if command -v npx &> /dev/null && [ -f "playwright.config.js" ]; then
-    # Run playwright and capture output
+    # Run critical tests first (nav button visibility)
+    echo "   Running critical UI tests..."
+    npx playwright test tests/nav-button-visibility.spec.js --reporter=line 2>&1 | tee /tmp/playwright-critical.txt
+    
+    if grep -q "failed" /tmp/playwright-critical.txt; then
+        echo ""
+        echo "❌ DEPLOY BLOCKED: Critical UI test failed!"
+        echo "   The 'Apply Now' button is cut off or not visible."
+        echo "   Fix the CSS before deploying."
+        exit 1
+    fi
+    
+    # Run all playwright tests
     npx playwright test --reporter=line 2>&1 | tee /tmp/playwright-output.txt
     
     # Check final summary line for failures

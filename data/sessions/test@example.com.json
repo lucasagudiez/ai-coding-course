@@ -1,30 +1,27 @@
 {
   "email": "test@example.com",
   "data": {
-    "name": "Test User",
-    "email": "test@example.com",
-    "ctaFormSubmitting": false,
-    "ctaFormSent": false,
-    "ctaMessage": "",
-    "cohortFormSubmitting": false,
-    "formSent": false,
-    "formError": false,
-    "formErrorMessage": "",
-    "submittedCohort": null,
-    "nameError": false,
-    "emailError": false,
-    "toast": {
-      "show": false,
-      "message": "",
-      "type": "error"
+    "application": {
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "1 (555) 867-5309",
+      "background": "professional",
+      "experience": "tried",
+      "aiTools": "none",
+      "goal": "startup",
+      "motivation": "I want to learn AI coding to build my own startup. I've been thinking about this for months and now is the right time to invest in myself.",
+      "dreamProject": "An AI-powered productivity app that automatically organizes tasks and schedules based on your work patterns and deadlines.",
+      "uniqueSkill": "I'm a trained classical pianist and can play complex pieces by ear after hearing them once.",
+      "commitment": "yes-all",
+      "source": "google",
+      "cohort": "february",
+      "linkedin": "",
+      "portfolio": "",
+      "website": ""
     },
-    "scholarshipCode": "",
-    "scholarshipApplied": false,
-    "scholarshipError": false,
-    "mobileMenuOpen": false,
-    "scrollY": 173,
-    "page": "landing"
+    "timestamp": "2026-01-21T12:38:18.138Z",
+    "ipAddress": "127.0.0.1"
   },
-  "lastUpdated": "2026-01-21T09:15:37.185Z",
+  "lastUpdated": "2026-01-21T12:38:18.139Z",
   "createdAt": "2026-01-21T04:15:06.861Z"
 }
