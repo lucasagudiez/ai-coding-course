@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application - Adava University</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="apple-touch-icon" href="../images/favicon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/application.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
+    <!-- State Management -->
+    <script src="../js/state-manager.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Sticky Urgency Header -->
+        <div class="sticky-urgency-bar" v-show="showStickyBar">
+            <div class="sticky-content">
+                <span class="sticky-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="sticky-text">
+                    <strong>{{ spotsRemaining }} Seats Left</strong> in February Cohort · Applications close in 2 days
+                </span>
+                <button class="sticky-btn" @click="scrollToPayment">Secure Spot Now</button>
+            </div>
+        </div>
+
+        <div class="app-container">
+            <!-- Scarcity Bar with Visual -->
+            <div class="scarcity-bar">
+                <div class="scarcity-content">
+                    <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                    <small>Applications reviewed within 48 hours</small>
+                </div>
+                <div class="seats-visual">
+                    <div class="seat-grid">
+                        <div class="seat taken" v-for="n in 27" :key="'taken-' + n"></div>
+                        <div class="seat available" v-for="n in spotsRemaining" :key="'available-' + n"></div>
+                    </div>
+                    <p class="seats-label">{{ spotsRemaining }} of 30 seats left</p>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="app-header">
+                <h1>Application for Admission</h1>
+                <p class="subtitle">10-Day AI Coding Program · Taught by Engineers & Researchers from MIT • Stanford • Oxford • Cambridge • Harvard</p>
+            </div>
+
+            <!-- Highly Selective Callout -->
+            <div class="selective-admissions-box">
+                <div class="icon-wrapper">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="text-content">
+                    <h3>Highly Selective Admissions</h3>
+                    <p>We maintain high acceptance standards to ensure we can legitimately help you achieve your goals. Your answers help us determine if you're a good fit for our program. Strong candidates hear back within 24 to 48 hours.</p>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                </div>
+                <p class="progress-text">You're {{ progress }}% complete - great start!</p>
+            </div>
+
+            <!-- Application Form -->
+            <form @submit.prevent="submitApplication" class="application-form">
+                
+                <!-- Section 1: Contact Information -->
+                <div class="form-section" v-show="sections.contact">
+                    <div class="section-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h2>Basic Information</h2>
+                    </div>
+                    <p class="section-intro">Let's start with the essentials</p>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" v-model="formData.name" :placeholder="formData.name || 'Jane Smith'" readonly class="readonly-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" v-model="formData.email" :placeholder="formData.email || 'jane@example.com'" readonly class="readonly-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" v-model="formData.phone" @input="updateProgress" placeholder="+1 (555) 000-0000" required>
+                    </div>
+
+                    <button type="button" @click="completeSection('contact')" class="continue-btn" :disabled="!formData.phone">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Industry-Standard Workflows Callout -->
+                <div v-show="sections.background" class="benefit-callout">
+                    <i class="fas fa-rocket"></i>
+                    <div>
+                        <strong>Industry-Standard Workflows</strong>
+                        <p>Your responses help us tailor the $17,000 curriculum to your specific background and goals.</p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Background -->
+                <div class="form-section" v-show="sections.background">
+                    <div class="section-header">
+                        <i class="fas fa-briefcase"></i>
+                        <h2>Your Background</h2>
+                    </div>
+                    <p class="section-intro">Help us understand where you're starting from</p>
+
+                    <div class="form-group">
+                        <label>Current Status</label>
+                        <select v-model="formData.status" @change="updateProgress" required>
+                            <option value="">Select...</option>
+                            <option value="employed">Employed Full-Time</option>
+                            <option value="student">Student</option>
+                            <option value="freelance">Freelancer / Consultant</option>
+                            <option value="career-change">Career Changer</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Coding Experience</label>
+                        <select v-model="formData.codingExperience" @change="updateProgress" required>
+                            <option value="">Select...</option>
+                            <option value="none">None (Complete beginner)</option>
+                            <option value="some">Some (Tried tutorials, basic HTML/CSS)</option>
+                            <option value="intermediate">Intermediate (Built simple projects)</option>
+                            <option value="advanced">Advanced (Professional experience)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Which AI coding tools have you used? (select all that apply)</label>
+                        <div class="checkbox-grid">
+                            <label><input type="checkbox" value="cursor" v-model="formData.aiTools" @change="updateProgress"> Cursor</input>
+                            <label><input type="checkbox" value="claude" v-model="formData.aiTools" @change="updateProgress"> Claude (Anthropic)</label>
+                            <label><input type="checkbox" value="gpt4" v-model="formData.aiTools" @change="updateProgress"> GPT-4 (OpenAI)</label>
+                            <label><input type="checkbox" value="codex" v-model="formData.aiTools" @change="updateProgress"> Codex</label>
+                            <label><input type="checkbox" value="lovable" v-model="formData.aiTools" @change="updateProgress"> Lovable.dev</label>
+                            <label><input type="checkbox" value="v0" v-model="formData.aiTools" @change="updateProgress"> v0.dev</label>
+                            <label><input type="checkbox" value="replit" v-model="formData.aiTools" @change="updateProgress"> Replit AI</label>
+                            <label><input type="checkbox" value="none" v-model="formData.aiTools" @change="updateProgress"> None yet</label>
+                        </div>
+                    </div>
+
+                    <button type="button" @click="completeSection('background')" class="continue-btn" :disabled="!formData.status || !formData.codingExperience">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Testimonial Callout -->
+                <div v-show="sections.goals" class="testimonial-inline">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Went from zero coding knowledge to building AI apps in 10 days. Now earning $145K at Tesla."</p>
+                    <div class="testimonial-author">
+                        <strong>Marcus T.</strong>
+                        <span>Mechanical Engineer → AI Developer</span>
+                    </div>
+                </div>
+
+                <!-- Section 3: Goals -->
+                <div class="form-section" v-show="sections.goals">
+                    <div class="section-header">
+                        <i class="fas fa-bullseye"></i>
+                        <h2>Your Goals</h2>
+                    </div>
+                    <p class="section-intro">What are you looking to achieve?</p>
+
+                    <div class="form-group">
+                        <label>Primary Goal</label>
+                        <select v-model="formData.primaryGoal" @change="updateProgress" required>
+                            <option value="">Select...</option>
+                            <option value="get-job">Get a tech job</option>
+                            <option value="career-change">Change careers into tech</option>
+                            <option value="build-product">Build my own product/startup</option>
+                            <option value="freelance">Freelance as a developer</option>
+                            <option value="upskill">Upskill for current role</option>
+                            <option value="side-income">Create side income</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Why are you applying now, and not before or in the future?</label>
+                        <textarea v-model="formData.whyNow" @input="updateProgress" rows="3" placeholder="e.g., Career change, need new skills for current role, want to build a product..." required></textarea>
+                        <small>Be specific. Most accepted applicants write 2 to 3 sentences about their current situation and what they want to achieve.</small>
+                    </div>
+
+                    <button type="button" @click="completeSection('goals')" class="continue-btn" :disabled="!formData.primaryGoal || !formData.whyNow">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Guarantee Callout -->
+                <div v-show="sections.commitment" class="guarantee-inline">
+                    <div class="guarantee-item">
+                        <i class="fas fa-shield-check"></i>
+                        <div>
+                            <strong>100% Money Back Guarantee</strong>
+                            <p>Not admitted? Automatic refund. No questions asked.</p>
+                        </div>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>48 Hour Response Time</strong>
+                            <p>Fast review. Most applicants hear back within 24 hours.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Time Commitment -->
+                <div class="form-section" v-show="sections.commitment">
+                    <div class="section-header">
+                        <i class="fas fa-calendar-check"></i>
+                        <h2>Time Commitment</h2>
+                    </div>
+                    <p class="section-intro">2 hours/day for 10 days. That's it.</p>
+
+                    <div class="form-group">
+                        <label>Live Session Attendance</label>
+                        <select v-model="formData.liveAttendance" @change="updateProgress" required>
+                            <option value="">Select...</option>
+                            <option value="all">I can attend all 10 live sessions</option>
+                            <option value="most">I can attend most live sessions</option>
+                            <option value="some">I can attend some live sessions</option>
+                            <option value="recordings">I'll watch recordings (if I can't make live)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>How did you find us?</label>
+                        <select v-model="formData.referralSource" @change="updateProgress" required>
+                            <option value="">Select...</option>
+                            <option value="google">Google Search</option>
+                            <option value="social">Social Media</option>
+                            <option value="friend">Friend / Colleague</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="podcast">Podcast</option>
+                            <option value="blog">Blog / Article</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="button" @click="completeSection('commitment')" class="continue-btn" :disabled="!formData.liveAttendance || !formData.referralSource">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Payment Section -->
+                <div class="payment-section" v-show="sections.payment" data-section="payment">
+                    <h2><i class="fas fa-lock"></i> Application Fee: $10</h2>
+                    <p class="payment-intro">
+                        This fee filters only serious applicants and allows us to thoroughly review each application. 
+                        The $10 will be deducted from your $590 program fee if accepted. 
+                        If not admitted, you'll receive an automatic refund within 48 hours.
+                    </p>
+
+                    <div class="pricing-breakdown-compact">
+                        <div class="pricing-line">
+                            <span>Application Fee (Today)</span>
+                            <span class="price-amount">$10</span>
+                        </div>
+                        <div class="pricing-line">
+                            <span>Program Fee (If Accepted & Confirmed)</span>
+                            <span class="price-amount">$580</span>
+                        </div>
+                        <div class="pricing-line total-line">
+                            <span><strong>Total Program Cost</strong></span>
+                            <span class="price-amount"><strong>$590</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Card Input -->
+                    <div class="form-group">
+                        <label>Card Information</label>
+                        <div id="card-element" class="card-input-stripe"></div>
+                        <div id="card-errors" role="alert" class="error-message"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" :disabled="isSubmitting">
+                        <span v-if="!isSubmitting">
+                            <i class="fas fa-lock"></i> Submit Application
+                        </span>
+                        <span v-else>
+                            <i class="fas fa-spinner fa-spin"></i> Processing...
+                        </span>
+                    </button>
+                    <p class="charge-notice">Your card will be charged $10.00 when you submit this application.</p>
+
+                    <div class="security-badges">
+                        <span><i class="fas fa-shield-check"></i> 256-bit SSL Encryption</span>
+                        <span><i class="fas fa-lock"></i> Bank-Level Security</span>
+                        <span><i class="fas fa-undo"></i> $10 refunded if not selected</span>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Social Proof Pings -->
+            <div class="social-proof-ping" v-for="(ping, index) in activePings" :key="index" :style="{ bottom: (index * 80 + 20) + 'px' }">
+                <div class="ping-content">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="ping-text">
+                        <strong>{{ ping.name }}</strong> from {{ ping.location }} just applied
+                        <div class="urgency">{{ ping.urgency }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exit Intent Popup -->
+        <div class="exit-intent-popup" v-if="showExitIntent" @click="showExitIntent = false">
+            <div class="popup-content" @click.stop>
+                <button class="close-btn" @click="showExitIntent = false">×</button>
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <h3>Wait! Before You Go...</h3>
+                <p>Only {{ spotsRemaining }} spots remain in the February cohort.</p>
+                <p>If you leave now, your spot may be gone when you return.</p>
+                <div class="popup-actions">
+                    <button class="primary-btn" @click="showExitIntent = false; scrollToPayment()">Complete My Application</button>
+                    <button class="secondary-btn" @click="showExitIntent = false">I'll Come Back Later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/application.js"></script>
+</body>
+</html>
