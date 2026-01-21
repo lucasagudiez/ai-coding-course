@@ -324,7 +324,7 @@ h3 { font-size: 1.25rem; }
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 12px 0;
+    padding: 2px 0 4px 0; /* Very thin top padding (2px), more padding on bottom */
     background: rgba(15, 8, 24, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -432,6 +432,7 @@ h3 { font-size: 1.25rem; }
     border-radius: 6px;
     border: 2px solid var(--cta-teal) !important;  /* Border in same green */
     font-weight: 600 !important;
+    margin-bottom: 4px; /* Add margin to move button away from bottom edge of nav */
 }
 
 .nav-cta:hover {
