@@ -160,16 +160,22 @@ body {
 }
 
 /* Progress Bar */
-/* Progress bar - sticky at top */
+/* Progress bar - sticky at top, below the sticky scarcity bar */
 .progress-container {
     position: sticky;
-    top: 0;
-    z-index: 100;
+    top: 60px; /* Below the sticky urgency bar which is ~50px tall */
+    z-index: 99; /* Below sticky bar (z-index: 100) but above content */
     background: linear-gradient(180deg, #0a0a14 0%, #0a0a14 85%, rgba(10, 10, 20, 0) 100%);
     padding: 1rem 0;
     margin: -1rem -2rem 1rem -2rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    transition: top 0.3s ease;
+}
+
+/* When sticky bar is not shown, progress moves to very top */
+.progress-container.at-top {
+    top: 0;
 }
 
 .progress-bar {
