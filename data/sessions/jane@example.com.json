@@ -1,8 +1,8 @@
 {
-  "email": "test@example.com",
+  "email": "jane@example.com",
   "data": {
-    "name": "Test User",
-    "email": "test@example.com",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
     "ctaFormSubmitting": false,
     "ctaFormSent": false,
     "ctaMessage": "",
@@ -22,9 +22,9 @@
     "scholarshipApplied": false,
     "scholarshipError": false,
     "mobileMenuOpen": false,
-    "scrollY": 135,
+    "scrollY": 0,
     "page": "landing"
   },
-  "lastUpdated": "2026-01-21T05:49:00.958Z",
-  "createdAt": "2026-01-21T04:15:06.861Z"
+  "lastUpdated": "2026-01-21T05:49:10.415Z",
+  "createdAt": "2026-01-21T05:49:10.417Z"
 }

@@ -9,6 +9,7 @@
   "scripts": {
     "test": "node scripts/test-runner.js",
     "test:fast": "node scripts/test-runner.js",
+    "test:deploy": "npx playwright test tests/deploy-fast.spec.js --project=chromium --reporter=dot",
     "test:ux": "npx playwright test tests/ux-fast.spec.js --project=chromium --reporter=dot",
     "test:ux:smoke": "npx playwright test --project=chromium --grep @smoke",
     "test:ux:full": "npx playwright test tests/scholarship.spec.js tests/form-validation.spec.js tests/no-scroll.spec.js --project=chromium",
@@ -35,7 +36,7 @@
     "serve": "python3 -m http.server 8888",
     "serve:alt": "npx http-server . -p 8888 -c-1",
     "deploy": "./deploy.sh",
-    "precommit": "npm run test",
+    "precommit": "npm run test && npm run test:deploy",
     "check": "npm run test && npm run test:ux"
   },
   "keywords": [

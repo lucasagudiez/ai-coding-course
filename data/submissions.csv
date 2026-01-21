@@ -8,3 +8,6 @@ timestamp,name,email,cohort,scholarshipCode,ipAddress
 2026-01-18T18:18:29.205Z,Feb Daily Student,febdaily@example.com,February Daily Cohort,DAILY2024,127.0.0.1
 2026-01-18T18:18:29.214Z,Spring Weekly Student,springweekly@example.com,Spring Weekly Cohort,WEEKLY2024,127.0.0.1
 2026-01-21T04:42:28.691Z,Test User,test@example.com,CTA Lead,,127.0.0.1
+2026-01-21T05:49:12.112Z,Jane Doe,jane@example.com,february-daily,,127.0.0.1
+2026-01-21T05:49:33.500Z,Test User,test@example.com,CTA Lead,,127.0.0.1
+2026-01-21T05:52:28.209Z,Test User,test@example.com,CTA Lead,,127.0.0.1
