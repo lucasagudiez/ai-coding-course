@@ -6,9 +6,17 @@
  * 2. Card tokenization and saving
  * 3. Redirect to evaluation page
  * 4. (Future) Reservation page with $580 payment using saved card
+ * 
+ * RUNS SERIALLY (one test at a time) to avoid:
+ * - High memory usage from multiple browsers
+ * - Race conditions with shared backend
+ * - Harder debugging
  */
 
 const { test, expect } = require('@playwright/test');
+
+// Configure to run serially with only 1 worker
+test.describe.configure({ mode: 'serial' });
 
 test.describe('Payment E2E Flow - Sandbox Mode @payment', () => {
     test.beforeEach(async ({ page }) => {

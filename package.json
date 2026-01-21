@@ -9,6 +9,8 @@
   "scripts": {
     "test": "node scripts/test-runner.js",
     "test:fast": "node scripts/test-runner.js",
+    "test:payment": "npx playwright test tests/payment-e2e.spec.js --config=playwright.payment.config.js",
+    "test:payment:headless": "HEADLESS=1 npx playwright test tests/payment-e2e.spec.js --config=playwright.payment.config.js",
     "test:deploy": "npx playwright test tests/deploy-fast.spec.js --project=chromium --reporter=dot",
     "test:ux": "npx playwright test tests/ux-fast.spec.js --project=chromium --reporter=dot",
     "test:ux:smoke": "npx playwright test --project=chromium --grep @smoke",
