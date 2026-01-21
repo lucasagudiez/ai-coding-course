@@ -20,8 +20,28 @@
       "goals": false,
       "commitment": false,
       "payment": false
-    }
+    },
+    "ctaFormSubmitting": false,
+    "ctaFormSent": false,
+    "ctaMessage": "",
+    "cohortFormSubmitting": false,
+    "formSent": false,
+    "formError": false,
+    "formErrorMessage": "",
+    "submittedCohort": null,
+    "nameError": false,
+    "emailError": false,
+    "toast": {
+      "show": false,
+      "message": "",
+      "type": "error"
+    },
+    "scholarshipCode": "",
+    "scholarshipApplied": false,
+    "scholarshipError": false,
+    "mobileMenuOpen": false,
+    "scrollY": 8335
   },
-  "lastUpdated": "2026-01-21T04:25:07.275Z",
+  "lastUpdated": "2026-01-21T04:45:20.416Z",
   "createdAt": "2026-01-21T04:15:06.861Z"
 }
