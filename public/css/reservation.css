@@ -1,0 +1,213 @@
+/* Reservation Page Styles */
+
+.reservation-header {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reservation-header .logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.reservation-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #a259ff, #25877D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.reservation-header .urgency {
+    color: #ff3b5c;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.reservation-header .urgency i {
+    color: #ff6b00;
+}
+
+.reservation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Final Payment Section */
+.final-payment-section {
+    margin: 4rem 0;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+}
+
+.final-payment-section h2 {
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 2rem;
+    color: #25877D;
+}
+
+.payment-summary {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-row:last-child {
+    border-bottom: none;
+}
+
+.payment-row.total {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.payment-row.final-total {
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 2px solid rgba(37, 135, 125, 0.5);
+}
+
+.payment-row .paid {
+    color: #14b8a6;
+}
+
+.payment-row .amount {
+    color: #25877D;
+    font-size: 1.3rem;
+}
+
+.guarantee-box {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(37, 135, 125, 0.1));
+    border: 2px solid rgba(37, 135, 125, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.guarantee-box i {
+    font-size: 2.5rem;
+    color: #14b8a6;
+}
+
+.guarantee-box h4 {
+    margin-bottom: 0.5rem;
+    color: #14b8a6;
+}
+
+.guarantee-box p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.payment-form {
+    max-width: 500px;
+    margin: 2rem auto 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #25877D;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.reserve-button {
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #25877D, #14b8a6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(37, 135, 125, 0.3);
+}
+
+.reserve-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(37, 135, 125, 0.4);
+}
+
+.reserve-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.security-notice {
+    text-align: center;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.security-notice i {
+    color: #14b8a6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reservation-container {
+        padding: 1rem;
+    }
+
+    .final-payment-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .guarantee-box {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Your Spot - Adava University</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/reservation.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Component Loader -->
+    <script src="../js/component-loader.js"></script>
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <div class="reservation-header">
+            <img src="../adava-icon.svg" alt="Adava" class="logo">
+            <h1>Reserve Your Spot</h1>
+            <p class="urgency"><i class="fas fa-fire"></i> Only 3 spots remaining in February cohort</p>
+        </div>
+
+        <div class="reservation-container">
+            <!-- COMPONENT: Outcomes -->
+            <div data-component="shared/outcomes"></div>
+
+            <!-- COMPONENT: Pain Points -->
+            <div data-component="shared/pain-points"></div>
+
+            <!-- COMPONENT: Comparison Table -->
+            <div data-component="shared/comparison-table"></div>
+
+            <!-- COMPONENT: Value Stack -->
+            <div data-component="shared/value-stack"></div>
+
+            <!-- COMPONENT: Testimonials -->
+            <div data-component="shared/testimonials"></div>
+
+            <!-- COMPONENT: Stats Banner -->
+            <div data-component="shared/stats-banner"></div>
+
+            <!-- COMPONENT: Bonus Stack -->
+            <div data-component="shared/bonus-stack"></div>
+
+            <!-- Payment Section -->
+            <section class="final-payment-section">
+                <div class="container">
+                    <h2><i class="fas fa-lock"></i> Complete Your Reservation</h2>
+                    
+                    <div class="payment-summary">
+                        <div class="payment-row">
+                            <span>Application Fee (Already Paid)</span>
+                            <span class="paid">$10.00 ✓</span>
+                        </div>
+                        <div class="payment-row total">
+                            <span>Remaining Program Fee</span>
+                            <span class="amount">$580.00</span>
+                        </div>
+                        <div class="payment-row final-total">
+                            <span><strong>Total Program Cost</strong></span>
+                            <span class="amount"><strong>$590.00</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="guarantee-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>100% Money-Back Guarantee</h4>
+                            <p>If you're not satisfied after the first class, get a full refund. No questions asked.</p>
+                        </div>
+                    </div>
+
+                    <form class="payment-form" @submit.prevent="submitReservation">
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" placeholder="4242 4242 4242 4242" class="form-input" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" placeholder="MM/YY" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CVC</label>
+                                <input type="text" placeholder="123" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="reserve-button" :disabled="submitting">
+                            <span v-if="!submitting">
+                                <i class="fas fa-lock"></i> Reserve My Spot - $580
+                            </span>
+                            <span v-else>
+                                Processing...
+                            </span>
+                        </button>
+
+                        <p class="security-notice">
+                            <i class="fas fa-shield-check"></i> 256-bit SSL Encryption • Bank-Level Security
+                        </p>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/reservation.js"></script>
+</body>
+</html>
