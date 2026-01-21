@@ -451,173 +451,6 @@
             margin-top: 0.5rem;
         }
 
-        .fee-justification {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 3px solid #14b8a6;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .fee-justification h4 {
-            color: #14b8a6;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .fee-justification ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .fee-justification li {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.85rem;
-            padding: 0.25rem 0;
-            padding-left: 1.25rem;
-            position: relative;
-        }
-
-        .fee-justification li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #14b8a6;
-            font-weight: bold;
-        }
-
-        .section-accordion {
-            margin-bottom: 1.5rem;
-        }
-
-        .section-header {
-            background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1.25rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-header:hover {
-            border-color: #14b8a6;
-            background: linear-gradient(135deg, rgba(162, 89, 255, 0.3) 0%, rgba(20, 184, 166, 0.3) 100%);
-        }
-
-        .section-header.completed {
-            border-color: #14b8a6;
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(162, 89, 255, 0.15) 100%);
-        }
-
-        .section-header.active {
-            border-color: #a259ff;
-            background: linear-gradient(135deg, rgba(162, 89, 255, 0.3) 0%, rgba(20, 184, 166, 0.3) 100%);
-        }
-
-        .section-header-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(162, 89, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #a259ff;
-            font-size: 1.125rem;
-        }
-
-        .section-header.completed .section-number {
-            background: rgba(20, 184, 166, 0.3);
-            color: #14b8a6;
-        }
-
-        .section-header.active .section-number {
-            background: #a259ff;
-            color: white;
-        }
-
-        .section-info h3 {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.125rem;
-            margin: 0 0 0.25rem 0;
-        }
-
-        .section-info p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-
-        .section-icon {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 1.25rem;
-            transition: transform 0.3s ease;
-        }
-
-        .section-header.active .section-icon {
-            transform: rotate(180deg);
-        }
-
-        .section-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .section-body.expanded {
-            max-height: 5000px;
-            padding-top: 1rem;
-        }
-
-        .file-upload {
-            position: relative;
-        }
-
-        .file-upload-label {
-            display: block;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .file-upload-label:hover {
-            border-color: #a259ff;
-            background: rgba(162, 89, 255, 0.1);
-        }
-
-        .file-upload-label i {
-            font-size: 2rem;
-            color: #a259ff;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .file-upload input[type="file"] {
-            display: none;
-        }
-
-        .file-name {
-            margin-top: 0.5rem;
-            color: #14b8a6;
-            font-size: 0.9rem;
-        }
-
         .payment-breakdown {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
@@ -797,140 +630,86 @@
         <div class="application-page">
             <div class="app-container">
                 <!-- Scarcity Bar -->
-                <div class="cohort-capacity-bar">
-                    <div class="capacity-header">
-                        <span class="cohort-name">February 2026 Cohort</span>
-                        <span class="capacity-status">{{ 30 - spotsRemaining }} of 30 seats confirmed</span>
-                    </div>
-                    <div class="capacity-visual">
-                        <div class="capacity-fill" :style="{ width: ((30 - spotsRemaining) / 30 * 100) + '%' }"></div>
-                    </div>
-                    <p class="capacity-note">Limited to 30 students to maintain our 15:1 student-instructor ratio. Applications reviewed on rolling basis.</p>
+                <div class="scarcity-bar">
+                    <strong><i class="fas fa-users"></i> {{ spotsRemaining }} Seats Remaining in February Cohort (of 30 total)</strong>
+                    <small>Applications reviewed within 24-48 hours</small>
                 </div>
 
                 <div class="app-header">
                     <h1>Application for Admission</h1>
-                    <p class="subtitle">AI-First Software Development Intensive · 10-Day Program</p>
-                    <p class="instructors">Taught by engineers from MIT, Stanford, Google, Meta, Amazon, and Apple</p>
+                    <p class="subtitle">AI-First Software Development Program · 10-Day Intensive · Taught by MIT, Stanford, Google, Meta, Amazon & Apple Engineers</p>
                 </div>
 
-                <!-- Program Components -->
-                <div class="program-components">
-                    <h3>Program Structure & Investment</h3>
-                    
-                    <div class="component-list">
-                        <div class="component-item">
-                            <div class="component-info">
-                                <h4>10-Day Intensive Curriculum</h4>
-                                <p>Daily live sessions with FAANG engineers covering AI-first development workflows</p>
-                            </div>
-                            <span class="market-value">~$8,000 market value</span>
-                        </div>
-                        
-                        <div class="component-item">
-                            <div class="component-info">
-                                <h4>1-on-1 Technical Mentorship</h4>
-                                <p>Personalized code reviews and career guidance from senior engineers</p>
-                            </div>
-                            <span class="market-value">~$3,000 market value</span>
-                        </div>
-                        
-                        <div class="component-item">
-                            <div class="component-info">
-                                <h4>Portfolio Project Development</h4>
-                                <p>Three production-grade projects with professional code review</p>
-                            </div>
-                            <span class="market-value">~$2,500 market value</span>
-                        </div>
-                        
-                        <div class="component-item">
-                            <div class="component-info">
-                                <h4>Alumni Network Access</h4>
-                                <p>Private community, weekly Q&A sessions, job board, continued support</p>
-                            </div>
-                            <span class="market-value">~$2,000 market value</span>
-                        </div>
+                <!-- Value Stack -->
+                <div class="value-stack">
+                    <h3><i class="fas fa-graduation-cap"></i> Program Components & Market Value</h3>
+                    <div class="value-item">
+                        <span>10-Day Intensive AI Development Curriculum</span>
+                        <span class="value-price">~$8,000</span>
                     </div>
-                    
-                    <div class="investment-summary">
-                        <div class="market-comparison">
-                            <p class="market-note">*Combined market value of comparable services: ~$15,500</p>
-                            <p class="market-note">Traditional coding bootcamps: $12,000-$18,000 (12-24 weeks)</p>
-                        </div>
-                        <div class="program-tuition">
-                            <span class="tuition-label">Program Tuition:</span>
-                            <span class="tuition-amount">$590</span>
-                        </div>
-                        <p class="tuition-explanation">Our accelerated format and AI-first approach enables significantly lower costs while maintaining instructor quality and student outcomes.</p>
+                    <div class="value-item">
+                        <span>1-on-1 Mentorship from FAANG Senior Engineers</span>
+                        <span class="value-price">~$3,000</span>
+                    </div>
+                    <div class="value-item">
+                        <span>3 Portfolio Projects with Professional Code Review</span>
+                        <span class="value-price">~$2,500</span>
+                    </div>
+                    <div class="value-item">
+                        <span>Alumni Network Access + Job Board + Weekly Q&A</span>
+                        <span class="value-price">~$2,000</span>
+                    </div>
+                    <div class="value-item">
+                        <span>Lifetime Access to All Course Updates</span>
+                        <span class="value-price">~$1,500</span>
+                    </div>
+                    <div class="value-total">
+                        <div><span class="strike">Combined Market Value: ~$17,000</span></div>
+                        <div class="big-number">Program Tuition: $590</div>
+                        <small style="color: rgba(255, 255, 255, 0.6);">Our AI-first approach enables significantly lower costs while maintaining quality</small>
                     </div>
                 </div>
 
-                <!-- Pathway Comparison -->
-                <div class="pathway-comparison">
-                    <h3>AI Development Learning Pathways</h3>
-                    <p class="comparison-intro">We designed our program to address gaps in traditional education models while leveraging modern AI tools. Here's how different approaches compare:</p>
-                    
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Pathway</th>
-                                <th>Duration</th>
-                                <th>Investment</th>
-                                <th>AI-First Focus</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Traditional Bootcamp</td>
-                                <td>12-24 weeks</td>
-                                <td>$12,000-$18,000</td>
-                                <td>Limited</td>
-                            </tr>
-                            <tr>
-                                <td>CS Degree</td>
-                                <td>4 years</td>
-                                <td>$80,000-$200,000</td>
-                                <td>Minimal</td>
-                            </tr>
-                            <tr>
-                                <td>Self-Directed Learning</td>
-                                <td>Variable (6mo-3yr)</td>
-                                <td>$0-$500</td>
-                                <td>Depends on resources</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td><strong>Adava AI-First Program</strong></td>
-                                <td><strong>10 days intensive</strong></td>
-                                <td><strong>$590</strong></td>
-                                <td><strong>Core curriculum</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <p class="comparison-note"><em>Data based on industry averages and public program costs as of 2026. Each pathway has distinct advantages depending on individual circumstances and goals.</em></p>
-                </div>
-
-                <div class="application-progress-tracker">
-                    <div class="progress-header">
-                        <span>Application Progress</span>
-                        <span class="progress-percentage">{{ progress }}%</span>
+                <!-- Comparison -->
+                <div class="comparison-box">
+                    <h4>Compare Your Options:</h4>
+                    <div class="comparison-item">
+                        <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Traditional Coding Bootcamp</span>
+                        <span class="price">$12,000-$18,000 (12-24 weeks)</span>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                    <div class="comparison-item">
+                        <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Computer Science Degree</span>
+                        <span class="price">$80,000-$200,000 (4 years)</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="label"><i class="fas fa-circle" style="color: #888;"></i> Self-Learning Online</span>
+                        <span class="price">6 months - 3 years</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="label"><i class="fas fa-check-circle" style="color: #14b8a6;"></i> Adava AI-First Program</span>
+                        <span class="price winner">$590 (10 Days)</span>
                     </div>
                 </div>
 
-                <div class="admissions-overview">
+                <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                </div>
+                <p class="progress-text">
+                    <span v-if="progress < 50">You're <span class="highlight">{{ progress }}%</span> complete - keep going!</span>
+                    <span v-else-if="progress < 100">Almost there! <span class="highlight">{{ progress }}%</span> done</span>
+                    <span v-else><i class="fas fa-check-circle"></i> Ready to submit!</span>
+                </p>
+
+                <div class="selective-banner">
                     <h3><i class="fas fa-shield-alt"></i> Selective Admissions Process</h3>
-                    <p>We maintain a ~30% acceptance rate to preserve small cohort sizes and ensure personalized instruction. Your responses help us evaluate program fit and determine how we can best support your learning objectives.</p>
-                    <p class="review-timeline"><strong>Review Timeline:</strong> Applications are reviewed within 24-48 hours of submission.</p>
+                    <p>We maintain a ~30% acceptance rate to preserve small cohort sizes (15:1 student-instructor ratio). Your responses help us evaluate program fit and identify how we can best support your learning objectives. Qualified applicants typically hear back within 24-48 hours.</p>
                 </div>
 
                 <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
                     <!-- Basic Info -->
                     <div class="form-section">
                         <h2 class="section-title"><i class="fas fa-user"></i> Basic Information</h2>
-                        <p class="section-description">Contact details for application correspondence</p>
+                        <p class="section-description">Let's start with the essentials</p>
 
                         <div class="form-group">
                             <label>Full Name</label>
@@ -938,20 +717,25 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Email Address</label>
+                            <label>Email</label>
                             <input type="email" v-model="form.email" required placeholder="jane@example.com" @input="updateProgress">
                         </div>
 
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>Phone</label>
                             <input type="tel" v-model="form.phone" required placeholder="+1 (555) 000-0000" @input="updateProgress">
                         </div>
                     </div>
 
+                    <div class="benefit-callout">
+                        <h4><i class="fas fa-rocket"></i> Industry-Standard Workflows</h4>
+                        <p>Learn production-grade prompts and architectures used by engineers at Google, Meta, and Amazon to ship code. Modern AI-first development practices taught by experienced practitioners.</p>
+                    </div>
+
                     <!-- Background -->
                     <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-briefcase"></i> Professional Background</h2>
-                        <p class="section-description">This information helps us understand your starting point and tailor instruction accordingly</p>
+                        <h2 class="section-title"><i class="fas fa-briefcase"></i> Your Background</h2>
+                        <p class="section-description">This helps us customize your learning path</p>
 
                         <div class="form-group">
                             <label>Current Status</label>
@@ -959,27 +743,27 @@
                                 <option value="">Select...</option>
                                 <option value="student">Student (high school or college)</option>
                                 <option value="professional">Working professional</option>
-                                <option value="career-changer">Career transition</option>
+                                <option value="career-changer">Switching careers</option>
                                 <option value="entrepreneur">Entrepreneur/Founder</option>
-                                <option value="freelancer">Freelancer/Consultant</option>
+                                <option value="freelancer">Freelancer</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Programming Experience Level</label>
+                            <label>Coding Experience</label>
                             <select v-model="form.experience" required @change="updateProgress">
                                 <option value="">Select...</option>
-                                <option value="never">No prior coding experience</option>
-                                <option value="tried">Completed some tutorials</option>
-                                <option value="some">Familiar with basics</option>
-                                <option value="intermediate">Can build simple applications</option>
+                                <option value="never">Never written code</option>
+                                <option value="tried">Tried tutorials before</option>
+                                <option value="some">Know basics</option>
+                                <option value="intermediate">Can build simple apps</option>
                                 <option value="advanced">Professional developer</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>AI Coding Tools Experience (Select all that apply)</label>
+                            <label>Which AI coding tools have you used? (Select all that apply)</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
                                     <input type="checkbox" id="tool-cursor" v-model="form.aiTools" value="cursor" @change="updateProgress">
@@ -1015,61 +799,76 @@
                                 </div>
                                 <div class="checkbox-item">
                                     <input type="checkbox" id="tool-none" v-model="form.aiTools" value="none" @change="updateProgress">
-                                    <label for="tool-none">No prior experience with AI coding tools</label>
+                                    <label for="tool-none">Never used AI for coding</label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="benefit-callout">
+                        <h4><i class="fas fa-chart-line"></i> Graduate Outcomes</h4>
+                        <p>Representative outcomes from recent cohorts: Marcus (Mechanical Engineer) → $145K at Tesla. Dr. Sarah (Physician) → $165K at Epic Systems. James (Math PhD) → $195K at Anthropic. Individual results vary based on experience and market conditions.</p>
+                    </div>
+
+                    <!-- Future Pacing -->
+                    <div class="future-pacing">
+                        <h4>Consider Your Career Trajectory</h4>
+                        <p>Many graduates report significant career advancement within 6 months of completing the program. Our alumni network includes software engineers at leading technology companies, successful founders, and independent consultants. The investment you make today in developing AI-augmented development skills can accelerate your professional growth considerably.</p>
+                    </div>
+
                     <!-- Goals -->
                     <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
-                        <p class="section-description">Understanding your goals helps us provide relevant guidance and support</p>
+                        <h2 class="section-title"><i class="fas fa-bullseye"></i> Your Goals</h2>
+                        <p class="section-description">Let's make this real</p>
 
                         <div class="form-group">
-                            <label>Primary Objective</label>
+                            <label>Primary Goal</label>
                             <select v-model="form.goal" required @change="updateProgress">
                                 <option value="">Select...</option>
-                                <option value="job">Secure employment in technology sector</option>
-                                <option value="career-switch">Transition into software development career</option>
-                                <option value="level-up">Advance current technical skills</option>
-                                <option value="startup">Develop own software product/venture</option>
-                                <option value="freelance">Begin independent consulting practice</option>
-                                <option value="automate">Improve efficiency in current role through automation</option>
-                                <option value="curiosity">Personal development and learning</option>
+                                <option value="job">Get a tech job</option>
+                                <option value="career-switch">Switch careers into tech</option>
+                                <option value="level-up">Level up my current skills</option>
+                                <option value="startup">Build my own product/startup</option>
+                                <option value="freelance">Start freelancing</option>
+                                <option value="automate">Automate my current job</option>
+                                <option value="curiosity">Personal growth/curiosity</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Motivation for Applying</label>
-                            <textarea v-model="form.motivation" required placeholder="What factors led you to apply to this program at this time?" @input="updateProgress"></textarea>
-                            <p class="field-help">Please describe your specific motivations and what you hope to achieve through this program.</p>
+                            <label>Why are you applying now, and not before or in the future?</label>
+                            <textarea v-model="form.motivation" required placeholder="What's the real reason you're here today?" @input="updateProgress"></textarea>
                         </div>
+                    </div>
+
+                    <div class="benefit-callout">
+                        <h4><i class="fas fa-project-diagram"></i> Portfolio-Quality Projects</h4>
+                        <p>Build production-grade applications during the program: E-commerce platform with payment processing, AI chatbot with custom training data, SaaS dashboard with analytics. Real software that demonstrates professional-level capabilities.</p>
                     </div>
 
                     <!-- Commitment -->
                     <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-calendar-check"></i> Availability & Program Logistics</h2>
-                        <p class="section-description">Our intensive format requires approximately 2 hours daily for 10 consecutive days</p>
+                        <h2 class="section-title"><i class="fas fa-calendar-check"></i> Time Commitment</h2>
+                        <p class="section-description">2 hours/day for 10 days. That's it.</p>
 
                         <div class="form-group">
-                            <label>Live Session Attendance Capacity</label>
+                            <label>Live Session Attendance</label>
                             <select v-model="form.commitment" required @change="updateProgress">
                                 <option value="">Select...</option>
-                                <option value="yes-all">Available for all live sessions</option>
-                                <option value="yes-most">Available for majority of sessions</option>
-                                <option value="flexible">Will utilize session recordings</option>
+                                <option value="yes-all">Yes, I can attend all sessions</option>
+                                <option value="yes-most">Yes, most sessions</option>
+                                <option value="flexible">Need to watch recordings</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>How did you learn about this program?</label>
+                            <label>How did you find us?</label>
                             <select v-model="form.source" required @change="updateProgress">
                                 <option value="">Select...</option>
-                                <option value="google">Search engine</option>
+                                <option value="google">Google search</option>
                                 <option value="social">Social media</option>
-                                <option value="friend">Personal referral</option>
-                                <option value="ad">Online advertisement</option>
+                                <option value="friend">Friend/family referral</option>
+                                <option value="ad">Advertisement</option>
                                 <option value="youtube">YouTube</option>
                                 <option value="linkedin">LinkedIn</option>
                                 <option value="other">Other</option>
@@ -1077,42 +876,24 @@
                         </div>
                     </div>
 
+                    <div class="benefit-callout">
+                        <h4><i class="fas fa-infinity"></i> Continued Access & Support</h4>
+                        <p>Private alumni community, weekly live Q&A sessions, all future course updates, job board with tech roles, and continued network access. Pay once, benefit throughout your career.</p>
+                    </div>
+
                     <!-- Payment -->
                     <div class="payment-section">
-                        <h2><i class="fas fa-lock"></i> Application Processing Fee</h2>
-                        
-                        <div class="fee-explanation-box">
-                            <h4>Why We Charge an Application Fee</h4>
-                            <p>Most selective programs charge $50-$250 for application processing. We've set our fee at $1 to remain accessible while maintaining program quality.</p>
-                            
-                            <div class="fee-breakdown">
-                                <p><strong>This nominal fee covers:</strong></p>
-                                <ul>
-                                    <li>Two-stage review process (AI screening + committee evaluation)</li>
-                                    <li>Personalized assessment of program fit</li>
-                                    <li>Administrative and payment processing costs</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="refund-policy">
-                                <h4><i class="fas fa-shield-alt"></i> Refund Policy</h4>
-                                <p>If your application is not accepted, your $1 fee is automatically refunded within 48 hours. No action required.</p>
-                            </div>
-                            
-                            <p class="context-note"><em>For context: Harvard Business School's MBA application fee is $250. Most coding bootcamps charge $100-$500. Our $1 fee maintains selective admissions while removing financial barriers to application.</em></p>
-                        </div>
+                        <h2><i class="fas fa-lock"></i> Application Processing Fee: $1</h2>
                         
                         <div class="payment-info">
-                            <div class="price">$1.00</div>
-                            <p class="description">Application Processing Fee (Refundable if not admitted)</p>
+                            <div class="price">$1</div>
+                            <p class="description">Refundable if not admitted · Covers application review process</p>
                         </div>
 
-                        <div class="payment-clarity">
-                            <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 1rem;">
-                                <strong style="color: #14b8a6;">No automatic charges.</strong> You are only paying $1 today for application processing.
-                            </p>
-                            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5;">
-                                If admitted, you will receive an enrollment invitation with program details and a payment link for the $590 tuition. You will have 7 days to review and decide whether to confirm your enrollment. If not admitted, your $1 is automatically refunded.
+                        <div class="payment-breakdown">
+                            <p><span>Application Fee Today:</span> <span class="highlight">$1.00</span></p>
+                            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.75rem; line-height: 1.5;">
+                                <strong style="color: #14b8a6;">No automatic charges.</strong> If admitted, you'll receive an enrollment invitation with a payment link for the $590 program tuition. You'll have 7 days to review and decide whether to confirm enrollment. If not admitted, your $1 is automatically refunded within 48 hours.
                             </p>
                         </div>
 
@@ -1123,32 +904,43 @@
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                             <div class="form-group">
-                                <label>Expiration Date</label>
+                                <label>Expiry</label>
                                 <input type="text" v-model="form.expiry" required placeholder="MM/YY" maxlength="5" @input="updateProgress">
                             </div>
                             <div class="form-group">
-                                <label>Security Code</label>
+                                <label>CVC</label>
                                 <input type="text" v-model="form.cvc" required placeholder="123" maxlength="4" @input="updateProgress">
                             </div>
                         </div>
 
                         <button type="submit" class="submit-btn" :disabled="!isComplete">
-                            <i class="fas fa-paper-plane"></i> Submit Application
+                            <i class="fas fa-paper-plane"></i> Submit Application ($1)
                         </button>
 
-                        <p class="security-notice">
-                            <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Secure payment processing<br>
+                        <p class="guarantee">
+                            <i class="fas fa-shield-alt"></i> 256-bit SSL Encryption · Bank-Level Security<br>
                             <i class="fas fa-undo"></i> Full refund if not admitted · Processed within 48 hours
                         </p>
                     </div>
                 </form>
 
+                <!-- Social Proof Ping -->
+                <div class="social-proof-ping" v-if="showPing">
+                    <div class="ping-content">
+                        <div class="ping-avatar">{{ currentPing.initials }}</div>
+                        <div class="ping-text">
+                            <div class="ping-name">{{ currentPing.name }}</div>
+                            <div class="ping-action">{{ currentPing.action }}</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Loading State -->
                 <div class="loading-overlay" v-if="loading">
                     <div class="loading-content">
                         <div class="loading-spinner"></div>
-                        <div class="loading-text">Processing Application...</div>
-                        <p class="loading-subtext">Evaluating application completeness and program fit</p>
+                        <div class="loading-text">Analyzing Your Profile...</div>
+                        <p class="loading-subtext">Our admissions AI is reviewing your qualifications</p>
                     </div>
                 </div>
 
@@ -1158,14 +950,14 @@
                     <p v-html="qualificationMessage"></p>
                     
                     <div class="next-steps">
-                        <h4>Application Review Process:</h4>
+                        <h4>What Happens Next:</h4>
                         <ul>
                             <li>Confirmation email sent to {{ form.email }}</li>
-                            <li>Committee review within 24-48 hours</li>
-                            <li>Admission decision notification via email</li>
+                            <li>Admissions committee review within 24-48 hours</li>
+                            <li>Decision notification via email</li>
                             <li>If admitted: 7-day enrollment window with $590 tuition payment link</li>
                             <li>If not admitted: Automatic $1 refund within 48 hours</li>
-                            <li>Cohort begins {{ cohort || 'February 3rd, 2026' }}</li>
+                            <li>February cohort begins {{ cohort || 'February 3rd, 2026' }}</li>
                         </ul>
                     </div>
                 </div>
@@ -1182,7 +974,9 @@
                 submitted: false,
                 qualificationMessage: '',
                 cohort: '',
-                spotsRemaining: 23,
+                spotsRemaining: 7,
+                showPing: false,
+                currentPing: {},
                 form: {
                     name: '',
                     email: '',
@@ -1194,16 +988,6 @@
                     motivation: '',
                     commitment: '',
                     source: '',
-                    // Optional fields
-                    linkedin: '',
-                    portfolio: '',
-                    resume: null,
-                    resumeName: '',
-                    currentSalary: '',
-                    targetSalary: '',
-                    location: '',
-                    education: '',
-                    // Payment
                     cardNumber: '',
                     expiry: '',
                     cvc: ''
@@ -1231,13 +1015,6 @@
                 },
                 isComplete() {
                     return this.progress === 100;
-                },
-                canShowPayment() {
-                    // Only show payment after all required sections completed
-                    return this.isSectionCompleted(1) && 
-                           this.isSectionCompleted(2) && 
-                           this.isSectionCompleted(3) && 
-                           this.isSectionCompleted(4);
                 }
             },
             mounted() {
@@ -1245,41 +1022,48 @@
                 this.cohort = params.get('cohort') || '';
                 this.form.name = params.get('name') || '';
                 this.form.email = params.get('email') || '';
+                
+                // Start social proof pings
+                this.startSocialProof();
+                
+                // Decrement spots every 3 minutes (psychological pressure)
+                setInterval(() => {
+                    if (this.spotsRemaining > 3) {
+                        this.spotsRemaining--;
+                    }
+                }, 180000);
             },
             methods: {
-                toggleSection(sectionNum) {
-                    if (this.activeSection === sectionNum) {
-                        this.activeSection = null;
-                    } else {
-                        this.activeSection = sectionNum;
-                    }
-                },
-                isSectionCompleted(sectionNum) {
-                    switch(sectionNum) {
-                        case 1: // Basic Info
-                            return this.form.name && this.form.email && this.form.phone;
-                        case 2: // Background
-                            return this.form.background && this.form.experience && this.form.aiTools.length > 0;
-                        case 3: // Goals
-                            return this.form.goal && this.form.motivation;
-                        case 4: // Commitment
-                            return this.form.commitment && this.form.source;
-                        case 5: // Optional (always completable)
-                            return true;
-                        default:
-                            return false;
-                    }
-                },
-                handleFileUpload(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        this.form.resume = file;
-                        this.form.resumeName = file.name;
-                        this.updateProgress();
-                    }
-                },
                 updateProgress() {
-                    // Track completion for progress bar
+                    // Trigger computed property
+                },
+                startSocialProof() {
+                    const pings = [
+                        { name: 'Sarah M.', initials: 'SM', action: 'just applied from New York' },
+                        { name: 'Michael K.', initials: 'MK', action: 'just applied from San Francisco' },
+                        { name: 'Jennifer L.', initials: 'JL', action: 'just applied from Austin' },
+                        { name: 'David P.', initials: 'DP', action: 'just applied from Seattle' },
+                        { name: 'Lisa R.', initials: 'LR', action: 'just applied from Boston' },
+                        { name: 'James T.', initials: 'JT', action: 'just applied from Chicago' }
+                    ];
+                    
+                    const showRandomPing = () => {
+                        this.currentPing = pings[Math.floor(Math.random() * pings.length)];
+                        this.showPing = true;
+                        
+                        setTimeout(() => {
+                            this.showPing = false;
+                        }, 5000);
+                    };
+                    
+                    // Show first ping after 10 seconds
+                    setTimeout(showRandomPing, 10000);
+                    
+                    // Then every 20-40 seconds
+                    setInterval(() => {
+                        const delay = 20000 + Math.random() * 20000;
+                        setTimeout(showRandomPing, delay);
+                    }, 40000);
                 },
                 async submitApplication() {
                     if (!this.isComplete) {
@@ -1320,54 +1104,46 @@
                     }
                 },
                 async generateQualification() {
-                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    await new Promise(resolve => setTimeout(resolve, 3000));
                     
-                    let message = `Thank you for submitting your application. Based on your responses, our preliminary assessment indicates strong alignment with program objectives.<br><br>`;
+                    let message = `Thank you for your application. Based on your responses, our preliminary assessment indicates strong alignment with program objectives:<br><br>`;
                     
-                    const factors = [];
+                    const reasons = [];
                     
-                    // Background evaluation
                     if (this.form.background === 'professional') {
-                        factors.push('<strong>Professional Context:</strong> Your work experience provides valuable context for practical application of AI development methodologies.');
+                        reasons.push('<strong>Professional Experience:</strong> Your work experience provides valuable context for applying AI development methodologies to real-world challenges.');
                     } else if (this.form.background === 'career-changer') {
-                        factors.push('<strong>Career Transition:</strong> Your initiative in pursuing technical skill development aligns with successful program alumni profiles.');
+                        reasons.push('<strong>Career Transition:</strong> Your initiative in pursuing technical skill development aligns with successful program alumni who have transitioned into software engineering roles.');
                     } else if (this.form.background === 'student') {
-                        factors.push('<strong>Academic Background:</strong> Early adoption of AI-first development approaches positions you advantageously for emerging industry standards.');
+                        reasons.push('<strong>Academic Background:</strong> Early adoption of AI-first development approaches positions you advantageously for emerging industry standards and practices.');
                     } else if (this.form.background === 'entrepreneur') {
-                        factors.push('<strong>Entrepreneurial Perspective:</strong> Your product development objectives align well with our project-based curriculum.');
+                        reasons.push('<strong>Entrepreneurial Perspective:</strong> Your product development objectives align well with our project-based curriculum and practical application focus.');
                     }
                     
-                    // Experience evaluation
-                    if (this.form.experience === 'never' || this.form.experience === 'tried') {
-                        factors.push('<strong>Learning Approach:</strong> Starting with modern AI workflows allows for development of optimal practices from the outset.');
+                    if (this.form.experience === 'never') {
+                        reasons.push('<strong>Learning Approach:</strong> Starting with modern AI workflows allows for development of optimal practices from the outset, without needing to unlearn traditional patterns.');
                     } else if (this.form.experience === 'advanced') {
-                        factors.push('<strong>Technical Foundation:</strong> Your existing development experience combined with AI-augmented workflows should yield significant productivity improvements.');
+                        reasons.push('<strong>Technical Foundation:</strong> Your existing development experience combined with AI-augmented workflows should yield significant productivity improvements.');
                     } else {
-                        factors.push('<strong>Technical Foundation:</strong> Your current skill level provides a solid foundation for accelerated learning through AI-assisted methodologies.');
+                        reasons.push('<strong>Skill Level:</strong> Your current technical foundation provides a solid base for accelerated learning through AI-assisted development methodologies.');
                     }
                     
-                    // AI tools experience
                     if (this.form.aiTools.length === 0 || this.form.aiTools.includes('none')) {
-                        factors.push('<strong>AI Tools Training:</strong> You will receive comprehensive instruction in industry-standard AI development tools and workflows.');
+                        reasons.push('<strong>AI Tools Training:</strong> You will receive comprehensive instruction in industry-standard AI development tools and production workflows.');
                     } else {
-                        factors.push(`<strong>AI Tools Experience:</strong> Your familiarity with ${this.form.aiTools.filter(t => t !== 'none').join(', ')} demonstrates proactive engagement with modern development approaches.`);
+                        reasons.push(`<strong>AI Tools Experience:</strong> Your familiarity with ${this.form.aiTools.join(', ')} demonstrates proactive engagement with modern development approaches.`);
                     }
                     
-                    // Goal alignment
                     if (this.form.goal === 'job' || this.form.goal === 'career-switch') {
-                        factors.push('<strong>Career Objectives:</strong> Your employment goals are well-supported by our alumni network and job placement resources.');
+                        reasons.push('<strong>Career Objectives:</strong> Your employment goals are well-supported by our alumni network, job placement resources, and career development guidance.');
                     } else if (this.form.goal === 'startup') {
-                        factors.push('<strong>Product Development:</strong> Our curriculum emphasizes practical application through building production-quality software, directly supporting your venture objectives.');
+                        reasons.push('<strong>Product Development:</strong> The curriculum emphasizes practical application through building production-quality software, directly supporting your venture objectives.');
                     } else if (this.form.goal === 'freelance') {
-                        factors.push('<strong>Independent Practice:</strong> The program provides foundational skills for establishing a successful consulting or freelance practice.');
+                        reasons.push('<strong>Independent Practice:</strong> The program provides foundational skills for establishing a successful consulting or freelance practice in AI-augmented development.');
                     }
                     
-                    // Add factors to message (limit to top 3)
-                    factors.slice(0, 3).forEach(factor => {
-                        message += `• ${factor}<br><br>`;
-                    });
-                    
-                    message += `Your application will undergo full committee review within 24-48 hours. You will receive a formal admission decision via email at <strong>${this.form.email}</strong>.`;
+                    message += reasons.slice(0, 3).map(r => r).join('<br><br>');
+                    message += '<br><br>Your application will undergo full committee review. You will receive a formal decision within 24-48 hours.';
                     
                     this.qualificationMessage = message;
                     this.loading = false;
