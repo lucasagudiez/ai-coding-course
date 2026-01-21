@@ -1,34 +1,48 @@
 /**
  * Reservation Page - Final Payment
+ * Uses shared Vue components and handles payment submission
  */
 
 new Vue({
     el: '#app',
     data: {
-        submitting: false,
-        applicantName: 'Applicant',
-        cohort: 'February 2026'
-    },
-    async mounted() {
-        const state = await StateManager.getMergedState();
+        // Payment form
+        cardNumber: '',
+        expiry: '',
+        cvc: '',
+        billingZip: '',
+        isProcessing: false,
+        showSuccess: false,
         
-        // Generic copy - merge ALL fields
-        Object.assign(this.$data, state);
-        
-        StateManager.trackProgress('reservation', 90);
+        // FAQ state (for faq-section component)
+        faqOpen: {}
     },
+    
     methods: {
-        async submitReservation() {
-            this.submitting = true;
-
-            // Simulate payment processing
-            await new Promise(resolve => setTimeout(resolve, 2000));
+        submitPayment() {
+            this.isProcessing = true;
             
-            // Mark funnel as complete
-            StateManager.trackProgress('reservation', 100);
-
-            // Redirect to success/thank you page
-            window.location.href = '/thank-you/';
+            // Simulate payment processing
+            setTimeout(() => {
+                this.isProcessing = false;
+                this.showSuccess = true;
+                
+                // Save to data/submissions.csv (would be handled by server)
+                console.log('Payment submitted:', {
+                    amount: 580,
+                    cardNumber: '****' + this.cardNumber.slice(-4),
+                    timestamp: new Date().toISOString()
+                });
+            }, 2000);
+        },
+        
+        closeSuccess() {
+            // Would redirect to dashboard
+            window.location.href = '/dashboard/';
+        },
+        
+        toggleFaq(index) {
+            this.$set(this.faqOpen, index, !this.faqOpen[index]);
         }
     }
 });

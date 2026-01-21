@@ -21,6 +21,8 @@ test.describe.configure({ mode: 'serial' });
 let page;
 let landingPage;
 let applicationPage;
+let evaluationPage;
+let reservationPage;
 
 // =============================================================================
 // PAGE OBJECTS - Fast, reusable selectors
@@ -54,6 +56,25 @@ class ApplicationPage {
     get submitButton() { return this.page.locator('button[type="submit"]').first(); }
 }
 
+class EvaluationPage {
+    constructor(p) { this.page = p; }
+    
+    get logo() { return this.page.locator('.logo').first(); }
+    get title() { return this.page.locator('h1').first(); }
+    get loadingBar() { return this.page.locator('.loading-bar').first(); }
+    get resultContainer() { return this.page.locator('.result-container').first(); }
+}
+
+class ReservationPage {
+    constructor(p) { this.page = p; }
+    
+    get logo() { return this.page.locator('.logo').first(); }
+    get title() { return this.page.locator('h1').first(); }
+    get paymentForm() { return this.page.locator('.payment-form').first(); }
+    get cardInput() { return this.page.locator('input#card-number').first(); }
+    get submitButton() { return this.page.locator('.submit-payment-btn').first(); }
+}
+
 // =============================================================================
 // SETUP - Load pages ONCE, reuse for all tests
 // =============================================================================
@@ -62,6 +83,8 @@ test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     landingPage = new LandingPage(page);
     applicationPage = new ApplicationPage(page);
+    evaluationPage = new EvaluationPage(page);
+    reservationPage = new ReservationPage(page);
 });
 
 test.afterAll(async () => {
@@ -309,5 +332,70 @@ test.describe('Performance - Basic Checks', () => {
         
         // Should be instant (<500ms)
         expect(interactionTime).toBeLessThan(500);
+    });
+});
+
+// =============================================================================
+// EVALUATION PAGE TESTS - Critical path only
+// =============================================================================
+
+test.describe('Evaluation Page - Critical Path', () => {
+    
+    test.beforeAll(async () => {
+        await page.goto('/evaluation/');
+        await page.waitForLoadState('networkidle');
+    });
+    
+    test('page loads successfully', async () => {
+        await expect(page).toHaveURL(/evaluation/);
+    });
+    
+    test('logo and title visible', async () => {
+        await expect(evaluationPage.logo).toBeVisible();
+        await expect(evaluationPage.title).toBeVisible();
+    });
+    
+    test('loading bar visible initially', async () => {
+        await expect(evaluationPage.loadingBar).toBeVisible();
+    });
+    
+    test('result shows after loading completes', async () => {
+        // Wait up to 5 seconds for loading to complete
+        await expect(evaluationPage.resultContainer).toBeVisible({ timeout: 5000 });
+    });
+});
+
+// =============================================================================
+// RESERVATION PAGE TESTS - Critical path only
+// =============================================================================
+
+test.describe('Reservation Page - Critical Path', () => {
+    
+    test.beforeAll(async () => {
+        await page.goto('/reservation/');
+        await page.waitForLoadState('networkidle');
+    });
+    
+    test('page loads successfully', async () => {
+        await expect(page).toHaveURL(/reservation/);
+    });
+    
+    test('logo and title visible', async () => {
+        await expect(reservationPage.logo).toBeVisible();
+        await expect(reservationPage.title).toBeVisible();
+    });
+    
+    test('payment form visible', async () => {
+        await expect(reservationPage.paymentForm).toBeVisible();
+    });
+    
+    test('card input works', async () => {
+        await expect(reservationPage.cardInput).toBeVisible();
+        await reservationPage.cardInput.fill('4242424242424242');
+        expect(await reservationPage.cardInput.inputValue()).toContain('4242');
+    });
+    
+    test('submit button visible', async () => {
+        await expect(reservationPage.submitButton).toBeVisible();
     });
 });

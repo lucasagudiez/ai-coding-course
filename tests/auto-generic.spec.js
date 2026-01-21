@@ -47,7 +47,9 @@ function discoverStandaloneComponents() {
 function discoverPages() {
     return [
         { path: '/', name: 'Landing' },
-        { path: '/application/', name: 'Application' }
+        { path: '/application/', name: 'Application' },
+        { path: '/evaluation/', name: 'Evaluation' },
+        { path: '/reservation/', name: 'Reservation' }
     ];
 }
 

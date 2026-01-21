@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating Application - Adava University</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="apple-touch-icon" href="../images/favicon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/evaluation.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Phase -->
+        <div class="evaluation-container" v-if="!showResult">
+            <div class="evaluation-header">
+                <img src="../images/adava-icon.svg" alt="Adava" class="logo">
+                <h1>Analyzing Your Application</h1>
+                <p>Our AI is reviewing your responses...</p>
+            </div>
+
+            <div class="loading-bar-container">
+                <div class="loading-bar">
+                    <div class="loading-fill" :style="{ width: progress + '%' }"></div>
+                </div>
+                <p class="loading-text">{{ loadingMessage }}</p>
+            </div>
+
+            <div class="evaluation-steps">
+                <div class="step" :class="{ active: currentStep >= 1, complete: currentStep > 1 }">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Verifying background</span>
+                </div>
+                <div class="step" :class="{ active: currentStep >= 2, complete: currentStep > 2 }">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Analyzing goals</span>
+                </div>
+                <div class="step" :class="{ active: currentStep >= 3, complete: currentStep > 3 }">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Matching with cohort</span>
+                </div>
+                <div class="step" :class="{ active: currentStep >= 4, complete: currentStep > 4 }">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Final evaluation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Phase -->
+        <div class="result-container" v-if="showResult">
+            <div class="result-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="result-title">Congratulations! You've Been Pre-Selected</h1>
+            <p class="result-subtitle">You're a top match for our February 2026 cohort</p>
+
+            <div class="result-reasons">
+                <h3>Why You're a Great Fit:</h3>
+                <ul>
+                    <li v-for="(reason, index) in reasons" :key="index">
+                        <i class="fas fa-star"></i> {{ reason }}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="relevant-projects">
+                <h3>🚀 What You'll Build:</h3>
+                <div class="project-list">
+                    <div v-for="(project, index) in projects" :key="index" class="project-item">
+                        <i class="fas fa-code"></i> {{ project }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="matched-testimonial">
+                <h3>Someone Like You Succeeded:</h3>
+                <div class="testimonial-box">
+                    <p class="quote">"I went from mechanical engineer to software developer at Tesla in 6 months. The AI coding skills I learned gave me a massive advantage in interviews."</p>
+                    <div class="testimonial-author">
+                        <strong>Marcus Johnson</strong>
+                        <span>Mechanical Engineer → Software Developer at Tesla ($145K)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h3>What Happens Next:</h3>
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Final Review (24-48 hours)</h4>
+                        <p>Our admissions committee will review your application</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Decision Email</h4>
+                        <p>You'll receive your admission decision via email</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h4>Secure Your Spot</h4>
+                        <p>If accepted, you'll have 7 days to pay the $580 remaining fee</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <p><strong>Program starts:</strong> February 3rd, 2026</p>
+                <p><strong>Spots remaining:</strong> 3 of 30</p>
+                <p class="cta-note">Check your email in 24-48 hours for your decision</p>
+            </div>
+
+            <div class="guarantee-reminder">
+                <i class="fas fa-shield-check"></i>
+                <div>
+                    <h4>Remember: Zero Risk</h4>
+                    <p>If not admitted, your $10 application fee will be automatically refunded within 48 hours. No forms, no waiting.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/evaluation.js"></script>
+</body>
+</html>

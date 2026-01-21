@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Your Spot - Adava University</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="apple-touch-icon" href="../images/favicon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/reservation.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
+    <!-- Shared Components -->
+    <script src="../js/components.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <div class="reservation-header">
+            <img src="../images/adava-icon.svg" alt="Adava" class="logo">
+            <h1>Complete Your Reservation</h1>
+            <p class="urgency"><i class="fas fa-fire"></i> 3 spots remaining in February cohort</p>
+        </div>
+
+        <div class="reservation-container">
+            
+            <!-- Outcomes Section Component -->
+            <outcomes-section></outcomes-section>
+            
+            <!-- Stats Banner Component -->
+            <stats-banner></stats-banner>
+            
+            <!-- Value Stack Component -->
+            <value-stack></value-stack>
+            
+            <!-- Testimonial Carousel Component -->
+            <testimonial-carousel></testimonial-carousel>
+            
+            <!-- Bonus Stack Component -->
+            <bonus-stack></bonus-stack>
+            
+            <!-- Guarantee Badges Component -->
+            <guarantee-badges></guarantee-badges>
+            
+            <!-- Payment Section -->
+            <section class="final-payment-section">
+                <div class="payment-container">
+                    <h2><i class="fas fa-lock"></i> Secure Your Spot - $580 Remaining</h2>
+                    
+                    <div class="payment-summary">
+                        <div class="payment-row">
+                            <span>Application Fee</span>
+                            <span class="paid">$10.00 <i class="fas fa-check-circle"></i> Paid</span>
+                        </div>
+                        <div class="payment-row total">
+                            <span>Remaining Program Fee</span>
+                            <span class="amount">$580.00</span>
+                        </div>
+                        <div class="payment-row final-total">
+                            <span><strong>Total Program Cost</strong></span>
+                            <span class="amount"><strong>$590.00</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="guarantee-highlight">
+                        <i class="fas fa-shield-check"></i>
+                        <div>
+                            <h4>100% Money-Back Guarantee</h4>
+                            <p>Not satisfied after the first class? Get a full $590 refund. No questions asked.</p>
+                        </div>
+                    </div>
+
+                    <form class="payment-form" @submit.prevent="submitPayment">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input 
+                                id="card-number" 
+                                type="text" 
+                                v-model="cardNumber"
+                                placeholder="4242 4242 4242 4242" 
+                                maxlength="19"
+                                required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date</label>
+                                <input 
+                                    id="expiry"
+                                    type="text" 
+                                    v-model="expiry"
+                                    placeholder="MM/YY" 
+                                    maxlength="5"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvc">CVC</label>
+                                <input 
+                                    id="cvc"
+                                    type="text" 
+                                    v-model="cvc"
+                                    placeholder="123" 
+                                    maxlength="4"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="billing-zip">Billing ZIP Code</label>
+                            <input 
+                                id="billing-zip"
+                                type="text" 
+                                v-model="billingZip"
+                                placeholder="10001" 
+                                maxlength="10"
+                                required>
+                        </div>
+
+                        <button type="submit" class="submit-payment-btn" :disabled="isProcessing">
+                            <i class="fas fa-lock"></i>
+                            <span v-if="!isProcessing">Reserve My Spot - $580</span>
+                            <span v-else>Processing...</span>
+                        </button>
+                        
+                        <p class="payment-security">
+                            <i class="fas fa-shield-alt"></i> 256-bit SSL encryption • Bank-level security
+                        </p>
+                    </form>
+
+                    <div class="trust-signals">
+                        <div class="trust-item">
+                            <i class="fas fa-infinity"></i>
+                            <span>Lifetime Access</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-users"></i>
+                            <span>Join 500+ Graduates</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Job Support Included</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Section Component -->
+            <timeline-section></timeline-section>
+            
+            <!-- FAQ Section Component -->
+            <faq-section :faq-open="faqOpen" :toggle-faq="toggleFaq"></faq-section>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="success-modal" v-if="showSuccess">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>🎉 Reservation Confirmed!</h2>
+                <p>Welcome to Adava University! You're all set for the February 3rd, 2026 cohort.</p>
+                <div class="success-details">
+                    <p><strong>Confirmation email sent to:</strong> your email</p>
+                    <p><strong>Program starts:</strong> February 3rd, 2026</p>
+                    <p><strong>First class:</strong> Monday, 6:00 PM ET</p>
+                </div>
+                <button @click="closeSuccess" class="success-btn">
+                    View Dashboard <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/reservation.js"></script>
+</body>
+</html>
