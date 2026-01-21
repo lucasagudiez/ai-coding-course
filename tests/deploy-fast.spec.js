@@ -393,13 +393,15 @@ test.describe('Reservation Page - Critical Path', () => {
         await expect(reservationPage.paymentForm).toBeVisible();
     });
     
-    test('card input works', async () => {
-        await expect(reservationPage.cardInput).toBeVisible();
-        await reservationPage.cardInput.fill('4242424242424242');
-        expect(await reservationPage.cardInput.inputValue()).toContain('4242');
+    test('saved card info displayed', async () => {
+        // New flow: saved card info shown by default
+        const savedCardInfo = page.locator('.saved-card-info');
+        await expect(savedCardInfo).toBeVisible();
+        await expect(savedCardInfo).toContainText('4242');
     });
     
     test('submit button visible', async () => {
         await expect(reservationPage.submitButton).toBeVisible();
+        await expect(reservationPage.submitButton).toContainText('Confirm');
     });
 });

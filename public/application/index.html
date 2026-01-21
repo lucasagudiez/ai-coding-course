@@ -53,88 +53,6 @@
                 {{ progressMessage }}
             </p>
 
-            <!-- Selective Banner -->
-            <div class="selective-banner">
-                <h3><i class="fas fa-shield-alt"></i> Why We Need Your Information</h3>
-                <p>Your responses help us verify whether we can legitimately help you achieve your goals. We want to ensure this program is the right fit for your specific situation and that you'll get real value from the AI coding approach.</p>
-            </div>
-
-            <!-- What Happens Next Timeline -->
-            <div class="timeline-section">
-                <h3><i class="fas fa-route"></i> What Happens Next</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker">1</div>
-                        <div class="timeline-content">
-                            <h4>Submit Application ($10)</h4>
-                            <p>Complete this form and pay $10 application fee. Takes 8-12 minutes.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker">2</div>
-                        <div class="timeline-content">
-                            <h4>AI + Human Review</h4>
-                            <p>Our admissions team evaluates your application within 24-48 hours.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker">3</div>
-                        <div class="timeline-content">
-                            <h4>Acceptance Decision</h4>
-                            <p>If accepted, you'll receive an invitation to confirm your spot for $590.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker">4</div>
-                        <div class="timeline-content">
-                            <h4>Program Starts</h4>
-                            <p>February cohort begins. Transform your career in 10 days.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick FAQ -->
-            <div class="faq-section">
-                <h3><i class="fas fa-question-circle"></i> Common Questions</h3>
-                <div class="faq-item" @click="toggleFaq(0)">
-                    <div class="faq-question">
-                        <span>Is the $10 really refundable?</span>
-                        <i class="fas" :class="faqOpen[0] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    </div>
-                    <div class="faq-answer" v-show="faqOpen[0]">
-                        Yes. If not admitted, your $10 is automatically refunded within 48 hours.
-                    </div>
-                </div>
-                <div class="faq-item" @click="toggleFaq(1)">
-                    <div class="faq-question">
-                        <span>What if I'm accepted but change my mind?</span>
-                        <i class="fas" :class="faqOpen[1] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    </div>
-                    <div class="faq-answer" v-show="faqOpen[1]">
-                        No obligation. The $590 is only charged if you confirm your spot.
-                    </div>
-                </div>
-                <div class="faq-item" @click="toggleFaq(2)">
-                    <div class="faq-question">
-                        <span>Do I need coding experience?</span>
-                        <i class="fas" :class="faqOpen[2] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    </div>
-                    <div class="faq-answer" v-show="faqOpen[2]">
-                        No. 60% of graduates started from zero. The program is designed for all levels.
-                    </div>
-                </div>
-                <div class="faq-item" @click="toggleFaq(3)">
-                    <div class="faq-question">
-                        <span>What's the time commitment?</span>
-                        <i class="fas" :class="faqOpen[3] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    </div>
-                    <div class="faq-answer" v-show="faqOpen[3]">
-                        2 hours per day for 10 days. Live sessions are recorded for flexibility.
-                    </div>
-                </div>
-            </div>
-
             <!-- Form -->
             <form class="app-form" @submit.prevent="submitApplication" v-if="!submitted">
                 <!-- Basic Info - Always Visible -->
@@ -416,62 +334,17 @@
                     </button>
                 </div>
 
-                <!-- Guarantee Stack - Before Payment -->
-                <div class="guarantee-stack" v-show="sections.payment">
-                    <h3><i class="fas fa-shield-check"></i> Our Guarantees to You</h3>
-                    <div class="guarantee-grid">
-                        <div class="guarantee-item">
-                            <i class="fas fa-undo-alt"></i>
-                            <h4>$10 Fully Refundable</h4>
-                            <p>Not admitted? Instant refund within 48 hours.</p>
-                        </div>
-                        <div class="guarantee-item">
-                            <i class="fas fa-ban"></i>
-                            <h4>No Hidden Charges</h4>
-                            <p>$590 only if you choose to confirm after acceptance.</p>
-                        </div>
-                        <div class="guarantee-item">
-                            <i class="fas fa-infinity"></i>
-                            <h4>Lifetime Access</h4>
-                            <p>All updates, community, and resources. Forever.</p>
-                        </div>
-                        <div class="guarantee-item">
-                            <i class="fas fa-briefcase"></i>
-                            <h4>Job Support</h4>
-                            <p>Resume reviews, interview prep, job board access.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Trust Badges -->
-                <div class="trust-badges" v-show="sections.payment">
-                    <div class="trust-row">
-                        <div class="trust-badge">
-                            <i class="fas fa-lock"></i>
-                            <span>256-bit SSL Encrypted</span>
-                        </div>
-                        <div class="trust-badge">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Bank-Level Security</span>
-                        </div>
-                        <div class="trust-badge">
-                            <i class="fas fa-check-circle"></i>
-                            <span>PCI Compliant</span>
-                        </div>
-                        <div class="trust-badge">
-                            <i class="fas fa-user-shield"></i>
-                            <span>Privacy Protected</span>
-                        </div>
-                    </div>
-                    <p class="trust-statement">Trusted by 500+ students worldwide. Join alumni at Google, Apple, Meta, Tesla, Amazon.</p>
-                </div>
-
                 <!-- Payment -->
                 <div class="payment-section" data-section="payment" v-show="sections.payment">
                     <h2><i class="fas fa-lock"></i> Application Fee: $10</h2>
-                    <p class="fee-explanation">
-                        Refundable if not admitted. This fee allows us to thoroughly review each application and filters for serious applicants. The $10 will be deducted from your $590 program fee if accepted.
-                    </p>
+                    
+                    <div class="cost-breakdown">
+                        <p class="breakdown-line"><strong>Total Program Cost:</strong> $590</p>
+                        <p class="breakdown-line"><strong>You Pay Now:</strong> $10 (application review)</p>
+                        <p class="breakdown-line"><strong>You Pay If Accepted:</strong> $580 (to reserve spot)</p>
+                        <p class="breakdown-note">✓ This $10 will be deducted from the $590 total</p>
+                        <p class="breakdown-note">✓ Fully refundable if not admitted</p>
+                    </div>
 
                     <div class="form-group">
                         <label for="form-card">Card Number</label>
@@ -490,15 +363,14 @@
                     </div>
 
                     <button type="submit" class="submit-btn" :disabled="!isComplete">
-                        <i class="fas fa-paper-plane"></i> Submit Application
+                        <i class="fas fa-paper-plane"></i> Submit Application - $10
                     </button>
                     
-                    <p class="charge-notice">Your card will be charged $10.00. Fully refundable if not admitted.</p>
-
-                    <p class="guarantee">
-                        <i class="fas fa-shield-alt"></i> 256-bit SSL encryption · Bank-level security<br>
-                        <i class="fas fa-undo"></i> Full refund if not admitted · Processed within 48 hours
-                    </p>
+                    <div class="security-badges">
+                        <span><i class="fas fa-lock"></i> 256-bit SSL</span>
+                        <span><i class="fas fa-shield-alt"></i> Bank-Level Security</span>
+                        <span><i class="fas fa-undo"></i> Refundable if not admitted</span>
+                    </div>
                 </div>
             </form>
 

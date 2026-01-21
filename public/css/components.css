@@ -534,3 +534,186 @@
         font-size: 0.9rem;
     }
 }
+
+/* =============================================================================
+   COMPARISON TABLE COMPONENT
+   ============================================================================= */
+
+.comparison-section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.comparison-section h3 {
+    color: var(--primary-teal);
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.comparison-table {
+    background: rgba(26, 26, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.comparison-header,
+.comparison-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.comparison-header {
+    background: rgba(162, 89, 255, 0.2);
+}
+
+.comparison-cell {
+    padding: 1rem;
+    background: rgba(26, 26, 46, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.comparison-header .comparison-cell {
+    font-weight: 700;
+    font-size: 1rem;
+    background: rgba(162, 89, 255, 0.3);
+}
+
+.comparison-cell.label {
+    justify-content: flex-start;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.comparison-cell.highlight {
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(0, 212, 170, 0.2) 100%);
+    border: 1px solid rgba(0, 212, 170, 0.3);
+    color: var(--primary-teal);
+    font-weight: 600;
+}
+
+.comparison-header .comparison-cell.highlight {
+    background: linear-gradient(135deg, rgba(162, 89, 255, 0.4) 0%, rgba(0, 212, 170, 0.4) 100%);
+    font-size: 1.1rem;
+}
+
+/* =============================================================================
+   WHAT YOU'LL BUILD COMPONENT
+   ============================================================================= */
+
+.projects-section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.projects-section h3 {
+    color: var(--primary-teal);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: rgba(26, 26, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(162, 89, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(162, 89, 255, 0.2);
+}
+
+.project-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.project-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-badge {
+    background: rgba(162, 89, 255, 0.2);
+    border: 1px solid rgba(162, 89, 255, 0.4);
+    color: var(--primary-purple);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+@media (max-width: 767px) {
+    .comparison-header,
+    .comparison-row {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-header {
+        display: none;
+    }
+
+    .comparison-row {
+        margin-bottom: 1rem;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .comparison-cell.label {
+        background: rgba(162, 89, 255, 0.3);
+        font-weight: 700;
+        justify-content: center;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}

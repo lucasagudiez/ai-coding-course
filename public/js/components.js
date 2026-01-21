@@ -311,3 +311,98 @@ Vue.component('timeline-section', {
     `
 });
 
+
+// Comparison Table Component
+Vue.component('comparison-table', {
+    template: `
+        <div class="comparison-section">
+            <h3><i class="fas fa-balance-scale"></i> Compare Your Options</h3>
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div class="comparison-cell"></div>
+                    <div class="comparison-cell">Traditional Bootcamp</div>
+                    <div class="comparison-cell">CS Degree</div>
+                    <div class="comparison-cell highlight">Adava University</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Cost</div>
+                    <div class="comparison-cell">$15,000+</div>
+                    <div class="comparison-cell">$100,000+</div>
+                    <div class="comparison-cell highlight"><strong>$590</strong></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Time to Complete</div>
+                    <div class="comparison-cell">6-12 months</div>
+                    <div class="comparison-cell">4 years</div>
+                    <div class="comparison-cell highlight"><strong>10 days</strong></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">AI-First Approach</div>
+                    <div class="comparison-cell">❌ No</div>
+                    <div class="comparison-cell">❌ No</div>
+                    <div class="comparison-cell highlight"><strong>✅ Yes</strong></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">1-on-1 Mentorship</div>
+                    <div class="comparison-cell">Limited</div>
+                    <div class="comparison-cell">❌ No</div>
+                    <div class="comparison-cell highlight"><strong>✅ FAANG Engineers</strong></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Job Placement Support</div>
+                    <div class="comparison-cell">✅ Yes</div>
+                    <div class="comparison-cell">Limited</div>
+                    <div class="comparison-cell highlight"><strong>✅ Lifetime Access</strong></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Average Starting Salary</div>
+                    <div class="comparison-cell">$75K</div>
+                    <div class="comparison-cell">$85K</div>
+                    <div class="comparison-cell highlight"><strong>$94K</strong></div>
+                </div>
+            </div>
+        </div>
+    `
+});
+
+// What You'll Build Component
+Vue.component('what-youll-build', {
+    template: `
+        <div class="projects-section">
+            <h3><i class="fas fa-laptop-code"></i> What You'll Build in 10 Days</h3>
+            <p class="section-description">These aren't toy projects. They're portfolio-ready applications you can show employers.</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>AI-Powered Personal Dashboard</h4>
+                    <p>Full-stack web app with real-time data, authentication, and AI-generated insights. Deploy it live on Day 3.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">OpenAI API</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-robot"></i></div>
+                    <h4>Automated Data Analysis Tool</h4>
+                    <p>Upload datasets, get AI-powered analysis, visualizations, and business insights. Real-world utility.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">Claude API</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-comments"></i></div>
+                    <h4>Custom Chatbot Application</h4>
+                    <p>Build and deploy a specialized AI chatbot for your industry. Embed it on websites or integrate with Slack.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">LangChain</span>
+                        <span class="tech-badge">Vector DB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+});

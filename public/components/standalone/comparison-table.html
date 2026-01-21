@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Table Component</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #0f0f1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: white;
+        }
+
+        .comparison-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .comparison-section h3 {
+            color: #00d4aa;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-table {
+            background: rgba(26, 26, 46, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .comparison-header,
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-header {
+            background: rgba(162, 89, 255, 0.2);
+        }
+
+        .comparison-cell {
+            padding: 1rem;
+            background: rgba(26, 26, 46, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .comparison-header .comparison-cell {
+            font-weight: 700;
+            font-size: 1rem;
+            background: rgba(162, 89, 255, 0.3);
+        }
+
+        .comparison-cell.label {
+            justify-content: flex-start;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .comparison-cell.highlight {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.2) 0%, rgba(0, 212, 170, 0.2) 100%);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            color: #00d4aa;
+            font-weight: 600;
+        }
+
+        .comparison-header .comparison-cell.highlight {
+            background: linear-gradient(135deg, rgba(162, 89, 255, 0.4) 0%, rgba(0, 212, 170, 0.4) 100%);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 767px) {
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-header {
+                display: none;
+            }
+
+            .comparison-row {
+                margin-bottom: 1rem;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+
+            .comparison-cell.label {
+                background: rgba(162, 89, 255, 0.3);
+                font-weight: 700;
+                justify-content: center;
+            }
+
+            .comparison-cell:not(.label) {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+
+            .comparison-cell:not(.label)::before {
+                content: attr(data-label);
+                font-weight: 600;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="comparison-section">
+        <h3><i class="fas fa-balance-scale"></i> Compare Your Options</h3>
+        <div class="comparison-table">
+            <div class="comparison-header">
+                <div class="comparison-cell"></div>
+                <div class="comparison-cell">Traditional Bootcamp</div>
+                <div class="comparison-cell">CS Degree</div>
+                <div class="comparison-cell highlight">Adava University</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">Cost</div>
+                <div class="comparison-cell" data-label="Traditional:">$15,000+</div>
+                <div class="comparison-cell" data-label="CS Degree:">$100,000+</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>$590</strong></div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">Time to Complete</div>
+                <div class="comparison-cell" data-label="Traditional:">6-12 months</div>
+                <div class="comparison-cell" data-label="CS Degree:">4 years</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>10 days</strong></div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">AI-First Approach</div>
+                <div class="comparison-cell" data-label="Traditional:">❌ No</div>
+                <div class="comparison-cell" data-label="CS Degree:">❌ No</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>✅ Yes</strong></div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">1-on-1 Mentorship</div>
+                <div class="comparison-cell" data-label="Traditional:">Limited</div>
+                <div class="comparison-cell" data-label="CS Degree:">❌ No</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>✅ FAANG Engineers</strong></div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">Job Placement Support</div>
+                <div class="comparison-cell" data-label="Traditional:">✅ Yes</div>
+                <div class="comparison-cell" data-label="CS Degree:">Limited</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>✅ Lifetime Access</strong></div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell label">Average Starting Salary</div>
+                <div class="comparison-cell" data-label="Traditional:">$75K</div>
+                <div class="comparison-cell" data-label="CS Degree:">$85K</div>
+                <div class="comparison-cell highlight" data-label="Adava:"><strong>$94K</strong></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

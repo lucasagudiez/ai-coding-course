@@ -42,22 +42,40 @@
 
         <div class="reservation-container">
             
+            <!-- Comparison Table Component (NEW - Price Anchoring) -->
+            <comparison-table></comparison-table>
+            
             <!-- Value Stack Component (Full Program Value) -->
             <value-stack></value-stack>
             
             <!-- Bonus Stack Component -->
             <bonus-stack></bonus-stack>
             
+            <!-- What You'll Build Component (NEW - Tangible Outputs) -->
+            <what-youll-build></what-youll-build>
+            
             <!-- Testimonial Carousel Component -->
             <testimonial-carousel></testimonial-carousel>
             
-            <!-- Guarantee Badges Component -->
-            <guarantee-badges></guarantee-badges>
+            <!-- FAQ Section Component (MOVED - Above Payment) -->
+            <faq-section :faq-open="faqOpen" :toggle-faq="toggleFaq"></faq-section>
+            
+            <!-- Prominent Guarantee Box (Before Payment) -->
+            <div class="prominent-guarantee-box">
+                <div class="guarantee-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="guarantee-content">
+                    <h3>100% Money-Back Guarantee</h3>
+                    <p>Complete the entire program. If you don't feel it was worth every penny, we'll refund your full $590. No questions asked. No hoops to jump through.</p>
+                    <p class="guarantee-note"><i class="fas fa-check-circle"></i> Most graduates say this program was worth 10x the price</p>
+                </div>
+            </div>
 
-            <!-- Payment Section -->
+            <!-- Payment Section (Simplified - Uses Saved Card) -->
             <section class="final-payment-section">
                 <div class="payment-container">
-                    <h2><i class="fas fa-lock"></i> Secure Your Spot - $580 Remaining</h2>
+                    <h2><i class="fas fa-lock"></i> Confirm Your Reservation</h2>
                     
                     <div class="payment-summary">
                         <div class="payment-row">
@@ -74,15 +92,26 @@
                         </div>
                     </div>
 
-                    <div class="guarantee-highlight">
-                        <i class="fas fa-shield-check"></i>
-                        <div>
-                            <h4>100% Money-Back Guarantee</h4>
-                            <p>Not satisfied after the first class? Get a full $590 refund. No questions asked.</p>
-                        </div>
+                    <div class="saved-card-info">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Card ending in 4242</span>
+                        <a href="#" @click.prevent="changeCard = true" class="change-card-link">Change payment method</a>
                     </div>
 
-                    <form class="payment-form" @submit.prevent="submitPayment">
+                    <form class="payment-form" @submit.prevent="submitPayment" v-if="!changeCard">
+                        <button type="submit" class="submit-payment-btn" :disabled="isProcessing">
+                            <i class="fas fa-lock"></i>
+                            <span v-if="!isProcessing">Confirm & Pay $580</span>
+                            <span v-else>Processing...</span>
+                        </button>
+                        
+                        <p class="payment-security">
+                            <i class="fas fa-shield-alt"></i> 256-bit SSL encryption • Bank-level security
+                        </p>
+                    </form>
+
+                    <!-- Change Card Form (Hidden by default) -->
+                    <form class="payment-form" @submit.prevent="submitPayment" v-if="changeCard">
                         <div class="form-group">
                             <label for="card-number">Card Number</label>
                             <input 
@@ -130,7 +159,7 @@
 
                         <button type="submit" class="submit-payment-btn" :disabled="isProcessing">
                             <i class="fas fa-lock"></i>
-                            <span v-if="!isProcessing">Reserve My Spot - $580</span>
+                            <span v-if="!isProcessing">Confirm & Pay $580</span>
                             <span v-else>Processing...</span>
                         </button>
                         
@@ -155,9 +184,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- FAQ Section Component -->
-            <faq-section :faq-open="faqOpen" :toggle-faq="toggleFaq"></faq-section>
         </div>
 
         <!-- Success Modal -->

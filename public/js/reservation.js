@@ -13,6 +13,7 @@ new Vue({
         billingZip: '',
         isProcessing: false,
         showSuccess: false,
+        changeCard: false, // Toggle to show card form
         
         // FAQ state (for faq-section component)
         faqOpen: {}
