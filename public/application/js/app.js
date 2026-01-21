@@ -388,7 +388,13 @@ const ApplicationForm = {
 };
 
 // Initialize Vue app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load all component templates first
+    if (window.loadVueComponents) {
+        await window.loadVueComponents();
+    }
+    
+    // Then initialize the main Vue app
     new Vue({
         el: '#app',
         ...ApplicationForm

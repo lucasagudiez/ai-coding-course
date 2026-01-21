@@ -190,7 +190,7 @@ createApp({
                 console.error('Form submission error:', error);
                 this.cohortFormSubmitting = false;
                 this.formError = true;
-                this.formErrorMessage = 'Server error. Please email <a href="mailto:adavauniversity@gmail.com" style="color: #10b981; text-decoration: underline;">adavauniversity@gmail.com</a> instead.';
+                this.formErrorMessage = 'Server error. Please email adavauniversity@gmail.com instead.';
             }
         },
         
