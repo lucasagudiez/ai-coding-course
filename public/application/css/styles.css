@@ -28,12 +28,32 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     line-height: 1.6;
+    position: relative;
+}
+
+/* Network background animation */
+#network-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300%;
+    z-index: 0; /* Behind all content - particles are background decoration only */
+    pointer-events: none; /* Let clicks pass through */
+    /* Transparent - particles only, no background */
+}
+
+#app {
+    position: relative;
+    z-index: 1; /* Above the network background */
 }
 
 .app-container {
     max-width: min(90vw, 900px);
     margin: 0 auto;
     padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 1rem);
+    position: relative;
+    z-index: 1; /* Above the network background */
 }
 
 /* Header Logo */

@@ -9,9 +9,15 @@
     box-sizing: border-box;
 }
 
+html {
+    background: #0a0a14;
+    min-height: 100%;
+}
+
 body {
     background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
     background-attachment: fixed;
+    background-color: #0a0a14; /* Fallback solid color */
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     min-height: 100vh;
@@ -19,11 +25,26 @@ body {
     align-items: center;
     justify-content: center;
     padding: clamp(20px, 5vw, 40px);
+    position: relative;
+}
+
+/* Network background animation */
+#network-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300%;
+    z-index: 0; /* Behind all content - particles are background decoration only */
+    pointer-events: none; /* Let clicks pass through */
+    /* Transparent - particles only, no background */
 }
 
 #app {
     width: 100%;
     max-width: min(90vw, 900px);
+    position: relative;
+    z-index: 1; /* Above the network background */
 }
 
 /* =============================================================================
