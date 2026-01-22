@@ -436,8 +436,17 @@ const ApplicationForm = {
                     throw initError;
                 }
                 
-                // Create card payment form
-                this.squareCard = await this.squarePayments.card();
+                // Create card payment form with custom styling for helper messages only
+                this.squareCard = await this.squarePayments.card({
+                    style: {
+                        '.message-text': {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        },
+                        '.message-icon': {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    }
+                });
                 
                 // Attach to container
                 await this.squareCard.attach('#square-card-container');
