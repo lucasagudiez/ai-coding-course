@@ -11,13 +11,14 @@
     <link rel="apple-touch-icon" href="../images/favicon.png">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="css/styles.css?v=d41ac69">
+    <link rel="stylesheet" href="css/styles.css?v=3e6f418">
+    <link rel="stylesheet" href="../css/components/exit-popup.css?v=3e6f418">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=d41ac69">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=3e6f418">
     
     <!-- Environment Configuration (loads first) -->
-    <script src="../js/config.js?v=d41ac69"></script>
+    <script src="../js/config.js?v=env-auto"></script>
     
     <!-- Square Web Payment SDK (dynamically loaded based on environment) -->
     <script>
@@ -31,10 +32,10 @@
     </script>
     
     <!-- Vue.js -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js?v=d41ac69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js?v=3e6f418"></script>
     
     <!-- Vue Components (must load AFTER Vue but BEFORE app.js) -->
-    <script src="../js/component-loader.js?v=d41ac69"></script>
+    <script src="../js/component-loader.js?v=3e6f418"></script>
 </head>
 <body>
     <!-- Geometric network background -->
@@ -418,36 +419,7 @@
             </form>
 
             <!-- Exit Intent Popup -->
-            <div class="exit-intent-modal" v-if="showExitIntent" @click.self="showExitIntent = false">
-                <div class="exit-modal-content">
-                    <button class="exit-modal-close" @click="showExitIntent = false">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    
-                    <h2><i class="fas fa-hand-paper"></i> Wait! Before You Go...</h2>
-                    
-                    <div class="exit-testimonial">
-                        <p class="exit-quote">"I was about to close the tab too. Best decision I made was completing this application. Now I'm at Tesla making $145K."</p>
-                        <p class="exit-author">Marcus J., Mechanical Engineer -> Software Developer</p>
-                    </div>
-                    
-                    <div class="exit-reminder">
-                        <h3>Remember:</h3>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Only $10 to apply</li>
-                            <li><i class="fas fa-check-circle"></i> Fully refundable if not admitted</li>
-                            <li><i class="fas fa-check-circle"></i> Zero risk to you</li>
-                            <li><i class="fas fa-check-circle"></i> 3 spots left in February cohort</li>
-                        </ul>
-                    </div>
-                    
-                    <button class="exit-cta-btn" @click="showExitIntent = false">
-                        <i class="fas fa-arrow-left"></i> Continue My Application
-                    </button>
-                    
-                    <p class="exit-disclaimer">Most accepted applicants complete the form in under 10 minutes</p>
-                </div>
-            </div>
+            <exit-popup :content="exitPopupContent"></exit-popup>
 
             <!-- Social Proof Ping -->
             <div class="social-proof-ping" v-if="showPing">
@@ -491,8 +463,8 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="../js/state-manager.js?v=d41ac69"></script>
-    <script src="js/app.js?v=d41ac69"></script>
+    <script src="../js/state-manager.js?v=3e6f418"></script>
+    <script src="js/app.js?v=payment-fix-002"></script>
     
     <script>
         // Network background animation

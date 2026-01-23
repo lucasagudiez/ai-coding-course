@@ -8,18 +8,19 @@
     <link rel="icon" type="image/png" href="images/adava-favicon.png">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <!-- AOS - Animate On Scroll Library (CDN) -->
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css?v=d41ac69" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css?v=3e6f418" rel="stylesheet">
     
     <!-- GLightbox - Modern Lightbox for images -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css?v=d41ac69">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css?v=3e6f418">
     
     <!-- Custom Fonts -->
-    <link rel="stylesheet" href="fonts/fonts.css?v=d41ac69">
+    <link rel="stylesheet" href="fonts/fonts.css?v=3e6f418">
     
-    <link rel="stylesheet" href="styles.css?v=d41ac69">
+    <link rel="stylesheet" href="styles.css?v=3e6f418">
+    <link rel="stylesheet" href="css/components/exit-popup.css?v=3e6f418">
     
     <!-- Vue.js 3 Production (fast) -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js?v=d41ac69"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js?v=3e6f418"></script>
 </head>
 <body>
     <div id="app">
@@ -46,6 +47,9 @@
                 </div>
             </div>
         </transition>
+
+        <!-- Exit Intent Popup -->
+        <exit-popup :content="exitPopupContent"></exit-popup>
 
     <!-- Geometric network background -->
     <canvas id="network-bg"></canvas>
@@ -74,7 +78,7 @@
                 <a href="#method">Our Method</a>
                 <a href="#instructors">Instructors</a>
                 <a href="#curriculum">Curriculum</a>
-                <a href="#cohorts" class="nav-cta" @click.prevent="scrollTo('#cohorts')">Apply Now</a>
+                <a href="#cohorts" class="nav-cta" @click.prevent="scrollTo('#cohorts')">Reserve Your Spot</a>
             </div>
         </div>
     </nav>
@@ -141,10 +145,11 @@
                 <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
                 <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
-                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Reserve Your Spot' }}
                 </button>
                 <div v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</div>
             </form>
+            <p class="cta-microcopy">✓ 2-minute application • ✓ No payment required • ✓ Instant confirmation</p>
             <p class="cta-note">It only takes a few minutes to apply! Learn how senior engineers at top companies use AI to build software faster.</p>
         </div>
     </section>
@@ -290,7 +295,7 @@
                 <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
                 <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
-                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Reserve Your Spot' }}
                 </button>
                 <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
@@ -544,7 +549,7 @@
                 <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="ctaFormSent" @input="nameError = false">
                 <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="ctaFormSent" @input="emailError = false">
                 <button v-if="!ctaFormSent" type="submit" class="btn btn-primary pulse-glow" :disabled="ctaFormSubmitting">
-                    {{ ctaFormSubmitting ? 'Sending...' : 'Apply Now' }}
+                    {{ ctaFormSubmitting ? 'Sending...' : 'Reserve Your Spot' }}
                 </button>
                 <p v-if="ctaFormSent" class="success-message" style="color: #14b8a6; font-weight: 600; font-size: 0.85rem; line-height: 1.4; max-width: 85px; text-align: center; margin: 0;">{{ ctaMessage }}</p>
             </form>
@@ -606,7 +611,7 @@
                     <div class="scholarship-expiry" id="scholarship-expiry" style="display: none;">
                         <h3>SCHOLARSHIP EXPIRES</h3>
                         <p class="expiry-countdown" data-countdown>29:59</p>
-                        <button class="btn btn-primary pulse-glow btn-small">Apply Now</button>
+                        <button class="btn btn-primary pulse-glow btn-small">Reserve Your Spot</button>
                     </div>
                 </div>
             </div>
@@ -625,6 +630,60 @@
             </div>
 
             <p class="admissions-note">This program is highly selective and admission will be granted to a balanced cohort. Admissions are decided on a rolling basis.</p>
+            
+            <!-- Enhanced Pricing Section -->
+            <div class="pricing-enhanced">
+                <h3 class="pricing-enhanced-title">Your Investment</h3>
+                
+                <!-- ROI Calculator -->
+                <div class="roi-display">
+                    <div class="roi-row">
+                        <span>Program Investment</span>
+                        <span class="amount">$1,280</span>
+                    </div>
+                    <div class="roi-row highlight">
+                        <span>Average Graduate Salary</span>
+                        <span class="amount">$94,000/year</span>
+                    </div>
+                    <div class="roi-result">
+                        <strong>73x Return on Investment</strong>
+                        <p>Payback period: 5 days of work</p>
+                    </div>
+                </div>
+                
+                <!-- Competitive Anchoring -->
+                <div class="pricing-comparison">
+                    <h4>Learning Pathway Comparison</h4>
+                    <div class="comparison-item">
+                        <span class="pathway-name">Traditional Coding Bootcamp</span>
+                        <span class="old-price">$15,000 - $25,000</span>
+                        <span class="duration">12-24 weeks</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="pathway-name">University CS Degree</span>
+                        <span class="old-price">$100,000 - $200,000</span>
+                        <span class="duration">4 years</span>
+                    </div>
+                    <div class="comparison-item highlight">
+                        <span class="pathway-name">Adava AI-First Program</span>
+                        <span class="new-price">$1,280</span>
+                        <span class="duration">10 days</span>
+                    </div>
+                </div>
+                
+                <!-- What's Included -->
+                <div class="included-benefits">
+                    <h4>Your Investment Includes:</h4>
+                    <ul>
+                        <li>Live instruction from MIT, Stanford, Harvard engineers</li>
+                        <li>3 portfolio-ready projects</li>
+                        <li>Lifetime community access</li>
+                        <li>Weekly live Q&A sessions (forever)</li>
+                        <li>Exclusive job board (500+ roles)</li>
+                        <li>100% money-back guarantee</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -676,7 +735,7 @@
                         <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'february-daily'" @input="nameError = false">
                         <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'february-daily'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
-                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
+                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Reserve Your Spot' }}
                         </button>
                         <p v-if="formError" class="error-message" v-html="formErrorMessage"></p>
                     </form>
@@ -720,7 +779,7 @@
                         <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="nameError = false">
                         <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
-                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Apply Now' }}
+                            {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Reserve Your Spot' }}
                         </button>
                         <p v-if="formError" class="error-message" v-html="formErrorMessage"></p>
                     </form>
@@ -1065,7 +1124,7 @@
                     <a href="#method">Our Method</a>
                     <a href="#instructors">Instructors</a>
                     <a href="#curriculum">Curriculum</a>
-                    <a href="#cohorts">Apply Now</a>
+                    <a href="#cohorts">Reserve Your Spot</a>
                     <a href="#faq">FAQ</a>
                 </div>
 
@@ -1103,10 +1162,10 @@
     <!-- Component Loader - Load HTML components dynamically -->
 
     <!-- State Management -->
-    <script src="js/state-manager.js?v=d41ac69"></script>
+    <script src="js/state-manager.js?v=3e6f418"></script>
 
     <!-- Vue App - Must load BEFORE other scripts that might use Vue -->
-    <script src="js/app.js?v=d41ac69"></script>
+    <script src="js/app.js?v=3e6f418"></script>
 
     <script>
         // Network background animation
@@ -1585,17 +1644,17 @@
     </script>
 
     <!-- Vanilla Tilt - 3D Card Tilt Effect (CDN) -->
-    <script src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js?v=d41ac69"></script>
+    <script src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js?v=3e6f418"></script>
     
     <!-- AOS - Animate On Scroll (CDN) -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js?v=d41ac69"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js?v=3e6f418"></script>
     
     <!-- GLightbox - Modern Lightbox for images -->
-    <script src="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/js/glightbox.min.js?v=d41ac69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/js/glightbox.min.js?v=3e6f418"></script>
     
     <!-- GSAP + ScrollTrigger for Advanced Animations (CDN) -->
-    <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js?v=d41ac69"></script>
-    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js?v=d41ac69"></script>
+    <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js?v=3e6f418"></script>
+    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js?v=3e6f418"></script>
     
     <script>
         // Initialize AOS
@@ -2255,7 +2314,7 @@
     </script>
 
     <!-- State Manager (must load before app.js) -->
-    <script src="js/state-manager.js?v=d41ac69"></script>
+    <script src="js/state-manager.js?v=3e6f418"></script>
 
     <!-- Scroll to Top Button (Fixed Position) -->
     <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">

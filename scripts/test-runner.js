@@ -222,7 +222,7 @@ test('Page mentions AI coding/tools', () => {
 
 test('Page has apply/enroll CTA button', () => {
     assert(
-        html.includes('Apply Now') || html.includes('Enroll') || html.includes('apply-btn'),
+        html.includes('Apply Now') || html.includes('Enroll') || html.includes('Reserve Your Spot') || html.includes('apply-btn'),
         'Missing apply/enroll CTA'
     );
 });
