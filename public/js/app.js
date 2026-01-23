@@ -1,6 +1,84 @@
 const { createApp } = Vue;
 
+// Import Exit Popup Component
+const ExitPopupComponent = {
+    props: {
+        content: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
+        return {
+            show: false,
+            triggered: false
+        };
+    },
+    template: `
+        <div v-if="show" class="exit-intent-modal" @click.self="close">
+            <div class="exit-modal-content">
+                <button class="exit-modal-close" @click="close" aria-label="Close popup">
+                    ×
+                </button>
+                
+                <h2 v-html="content.headline"></h2>
+                
+                <p class="exit-description" v-html="content.description"></p>
+                
+                <div class="exit-bullets" v-if="content.bullets && content.bullets.length">
+                    <ul>
+                        <li v-for="(bullet, index) in content.bullets" :key="index">
+                            {{ bullet }}
+                        </li>
+                    </ul>
+                </div>
+                
+                <button class="exit-cta-btn" @click="close">
+                    {{ content.cta }}
+                </button>
+            </div>
+        </div>
+    `,
+    mounted() {
+        if (!sessionStorage.getItem('exitPopupSeen')) {
+            document.addEventListener('mouseleave', this.handleMouseLeave);
+            
+            if (window.innerWidth <= 768) {
+                this.inactivityTimer = setTimeout(() => {
+                    if (!this.triggered) {
+                        this.showPopup();
+                    }
+                }, 30000);
+            }
+        }
+    },
+    beforeUnmount() {
+        document.removeEventListener('mouseleave', this.handleMouseLeave);
+        if (this.inactivityTimer) {
+            clearTimeout(this.inactivityTimer);
+        }
+    },
+    methods: {
+        handleMouseLeave(e) {
+            if (e.clientY <= 0 && !this.triggered) {
+                this.showPopup();
+            }
+        },
+        showPopup() {
+            this.show = true;
+            this.triggered = true;
+            sessionStorage.setItem('exitPopupSeen', 'true');
+        },
+        close() {
+            this.show = false;
+        }
+    }
+};
+
 createApp({
+    components: {
+        'exit-popup': ExitPopupComponent
+    },
     data() {
         return {
             // Shared form data (bound to ALL inputs via v-model)
@@ -35,7 +113,19 @@ createApp({
             
             // UI state
             mobileMenuOpen: false,
-            scrollY: 0
+            scrollY: 0,
+            
+            // Exit popup content
+            exitPopupContent: {
+                headline: "Before You Go...",
+                description: "Join 200+ students learning AI-first development from MIT, Stanford, and Harvard instructors.",
+                bullets: [
+                    "Only 3 spots left in February cohort",
+                    "100% money-back guarantee",
+                    "Learn from FAANG engineers"
+                ],
+                cta: "Reserve Your Spot →"
+            }
         };
     },
     

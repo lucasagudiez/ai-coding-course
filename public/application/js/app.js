@@ -1,5 +1,84 @@
 // Application Form Logic
+
+// Exit Popup Component (reusable)
+const ExitPopupComponent = {
+    props: {
+        content: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
+        return {
+            show: false,
+            triggered: false
+        };
+    },
+    template: `
+        <div v-if="show" class="exit-intent-modal" @click.self="close">
+            <div class="exit-modal-content">
+                <button class="exit-modal-close" @click="close" aria-label="Close popup">
+                    ×
+                </button>
+                
+                <h2 v-html="content.headline"></h2>
+                
+                <p class="exit-description" v-html="content.description"></p>
+                
+                <div class="exit-bullets" v-if="content.bullets && content.bullets.length">
+                    <ul>
+                        <li v-for="(bullet, index) in content.bullets" :key="index">
+                            {{ bullet }}
+                        </li>
+                    </ul>
+                </div>
+                
+                <button class="exit-cta-btn" @click="close">
+                    {{ content.cta }}
+                </button>
+            </div>
+        </div>
+    `,
+    mounted() {
+        if (!sessionStorage.getItem('exitPopupSeen')) {
+            document.addEventListener('mouseleave', this.handleMouseLeave);
+            
+            if (window.innerWidth <= 768) {
+                this.inactivityTimer = setTimeout(() => {
+                    if (!this.triggered) {
+                        this.showPopup();
+                    }
+                }, 30000);
+            }
+        }
+    },
+    beforeUnmount() {
+        document.removeEventListener('mouseleave', this.handleMouseLeave);
+        if (this.inactivityTimer) {
+            clearTimeout(this.inactivityTimer);
+        }
+    },
+    methods: {
+        handleMouseLeave(e) {
+            if (e.clientY <= 0 && !this.triggered) {
+                this.showPopup();
+            }
+        },
+        showPopup() {
+            this.show = true;
+            this.triggered = true;
+            sessionStorage.setItem('exitPopupSeen', 'true');
+        },
+        close() {
+            this.show = false;
+        }
+    }
+};
+
 const ApplicationForm = {
+    components: {
+        'exit-popup': ExitPopupComponent
+    },
     data() {
         return {
             loading: false,
@@ -9,7 +88,6 @@ const ApplicationForm = {
             spotsRemaining: 3,  // Only 3 spots left - high scarcity
             showPing: false,
             currentPing: {},
-            showExitIntent: false,  // Exit intent popup
             showStickyBar: false,   // Sticky urgency header
             faqOpen: [false, false, false, false], // FAQ state
             // Dynamic counters
@@ -49,6 +127,17 @@ const ApplicationForm = {
                 portfolio: '',
                 website: ''
                 // Removed cardNumber, expiry, cvc - now handled by Square
+            },
+            // Exit popup content
+            exitPopupContent: {
+                headline: "Wait! Before You Go...",
+                description: "\"I was about to close the tab too. Best decision I made was completing this application. Now I'm at Tesla making $145K.\" - Marcus J., Mechanical Engineer",
+                bullets: [
+                    "Only $10 to apply",
+                    "Fully refundable if not admitted",
+                    "Most accepted applicants finish in 10 minutes"
+                ],
+                cta: "Continue My Application"
             }
         };
     },
@@ -335,7 +424,7 @@ const ApplicationForm = {
 
                 if (response.ok) {
                     // Redirect to evaluation page (email is saved in localStorage)
-                    window.location.href = `/public/evaluation/`;
+                    window.location.href = `/evaluation/`;
                 } else {
                     StateManager.showError('Error submitting.');
                     this.loading = false;
@@ -527,7 +616,7 @@ const ApplicationForm = {
                 this.loading = false;
                 
                 setTimeout(() => {
-                    window.location.href = '/public/evaluation/';
+                    window.location.href = '/evaluation/';
                 }, 2000);
                 
             } catch (error) {
