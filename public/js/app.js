@@ -303,7 +303,7 @@ createApp({
             // Valid code!
             this.scholarshipApplied = true;
             this.scholarshipError = false;
-            this.showToast(`Scholarship "${code}" applied successfully! Price reduced to $1,120`, 'success');
+            this.showToast(`Scholarship "${code}" applied successfully! Price reduced to $590`, 'success');
             
             // Show scholarship pricing
             const originalPrice = document.getElementById('original-price');
@@ -315,6 +315,46 @@ createApp({
             if (scholarshipPrice) scholarshipPrice.style.display = 'block';
             if (deadlineCard) deadlineCard.style.display = 'none';
             if (scholarshipExpiry) scholarshipExpiry.style.display = 'block';
+            
+            // Update comparison table pricing
+            this.updateComparisonPricing();
+            
+            // Update pricing enhancement section
+            this.updatePricingEnhancement();
+        },
+        
+        // Update comparison table when scholarship applied
+        updateComparisonPricing() {
+            const comparisonPrice = document.querySelector('.comparison-section .comparison-cell.highlight strong');
+            if (comparisonPrice) {
+                comparisonPrice.textContent = '$590';
+            }
+        },
+        
+        // Update pricing enhancement section when scholarship applied
+        updatePricingEnhancement() {
+            // Update ROI display
+            const investmentAmount = document.querySelector('.roi-row .amount');
+            if (investmentAmount && investmentAmount.textContent === '$1,280') {
+                investmentAmount.textContent = '$590';
+            }
+            
+            // Update ROI calculation
+            const roiResult = document.querySelector('.roi-result strong');
+            if (roiResult) {
+                roiResult.textContent = '159x Return on Investment';
+            }
+            
+            const roiPayback = document.querySelector('.roi-result p');
+            if (roiPayback) {
+                roiPayback.textContent = 'Payback period: 2-3 days of work';
+            }
+            
+            // Update pricing comparison section
+            const newPrice = document.querySelector('.comparison-item.highlight .new-price');
+            if (newPrice) {
+                newPrice.textContent = '$590';
+            }
         },
         
         // Mobile Menu Toggle

@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../css/components.css?v=3e6f418">
     <link rel="stylesheet" href="../css/reservation.css?v=3e6f418">
+    <link rel="stylesheet" href="../css/components/exit-popup.css?v=3e6f418">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=3e6f418">
@@ -28,6 +29,9 @@
     <canvas id="network-bg"></canvas>
     
     <div id="app">
+        <!-- Exit Popup Component -->
+        <exit-popup :content="exitPopupContent"></exit-popup>
+        
         <!-- Scarcity Bar -->
         <div class="scarcity-bar" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 12px 20px; text-align: center;">
             <strong><i class="fas fa-exclamation-circle"></i> 3 Seats Remaining in February Cohort</strong>
@@ -329,5 +333,14 @@
             drawNetwork();
         }
     </script>
+    
+    <!-- Exit Popup Component -->
+    <script src="../js/components/exit-popup.js?v=3e6f418"></script>
+    
+    <!-- State Manager -->
+    <script src="../js/state-manager.js?v=3e6f418"></script>
+    
+    <!-- Reservation Logic -->
+    <script src="../js/reservation.js?v=3e6f418"></script>
 </body>
 </html>

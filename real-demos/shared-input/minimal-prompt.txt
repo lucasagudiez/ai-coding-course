@@ -1,0 +1,9 @@
+Build an evaluation page for a bootcamp application.
+
+Form fields: name, email, background (textarea), dream project (textarea), unique skill (textarea), biggest fear.
+
+Pre-fill with Sarah Chen: 5th grade teacher (8 years), wants to switch to ed-tech, dyslexia struggles. Dream project: reading app for dyslexic students with adjustable fonts, TTS, teacher tracking. Unique skill: designed 500+ lesson plans for learning disabilities. Biggest fear: too old at 34, competing with CS grads.
+
+On submit: call OpenAI GPT-4 API with system prompt in system-prompt.txt. Show loading. Display response.
+
+Save as evaluation-page.html

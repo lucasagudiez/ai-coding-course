@@ -1,0 +1,29 @@
+{
+  "testName": "AI CLI Evaluation Page Comparison - SHORT FORM",
+  "testDate": "2026-01-23",
+  "description": "Compare tools building SHORT, high-converting evaluation pages",
+  
+  "formFields": {
+    "name": "Sarah Chen",
+    "email": "sarah.chen@test.adavauniversity.org",
+    "background": "I'm a 5th grade teacher (8 years) but want to transition to ed-tech. I've seen too many students with dyslexia struggle with terrible learning apps.",
+    "dreamProject": "A reading app for dyslexic students with adjustable fonts, text-to-speech, and progress tracking for teachers.",
+    "uniqueSkill": "I've designed 500+ individualized lesson plans for students with learning disabilities. I know what makes content accessible.",
+    "biggestFear": "That I'm too old to switch careers (34) or can't compete with CS grads."
+  },
+  
+  "systemPrompts": {
+    "claude": "You are an empathetic admissions counselor. Address Sarah by name. Show you understand her background (teaching, dyslexia focus, career change at 34). Reframe her 'weakness' (no coding) as a strength (domain expertise). Reference her specific details (500 lesson plans, dyslexia app idea, fear about age). Name 2-3 real ed-tech companies she could work at (Khan Academy, Duolingo, Quizlet). Make her feel 'they really GET me.' Be warm and personal. 200 words max.",
+    
+    "codex": "You are a data-driven analyst. Give Sarah a fit score (0-100). Quantify how her teaching skills transfer to product design (use percentages). Name specific ed-tech companies hiring. Provide salary range for product roles. Give concrete next steps. Be precise and credible with numbers. 200 words max.",
+    
+    "cursor": "You are an admissions evaluator. Tell Sarah why she's a good fit (2-3 reasons). Suggest project ideas based on her dyslexia app. Mention career path. Be encouraging. 200 words max."
+  },
+  
+  "apiConfig": {
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "model": "gpt-4",
+    "temperature": 0.7,
+    "maxTokens": 300
+  }
+}

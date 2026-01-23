@@ -1,5 +1,21 @@
+// Exit popup content for this page
+const exitPopupContentEvaluation = {
+    headline: "Your Evaluation is Almost Ready",
+    description: "Complete your evaluation to see your personalized learning path and curriculum recommendations.",
+    bullets: [
+        "Takes only 5 minutes",
+        "Get instant results",
+        "Unlock your personalized roadmap"
+    ],
+    cta: "Complete Evaluation"
+};
+
 // Evaluation Page Logic with Real ChatGPT Integration
 const EvaluationPage = {
+    components: {
+        'exit-popup': ExitPopupComponent
+    },
+    
     data() {
         return {
             progress: 0,
@@ -17,7 +33,9 @@ const EvaluationPage = {
             headline: '',
             // Timing
             startTime: null,
-            minLoadingTime: 10000 // 10 seconds minimum
+            minLoadingTime: 10000, // 10 seconds minimum
+            // Exit popup content
+            exitPopupContent: exitPopupContentEvaluation
         };
     },
     

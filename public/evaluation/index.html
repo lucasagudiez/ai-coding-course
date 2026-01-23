@@ -12,6 +12,7 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="../css/evaluation.css?v=3e6f418">
+    <link rel="stylesheet" href="../css/components/exit-popup.css?v=3e6f418">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=3e6f418">
@@ -24,6 +25,9 @@
     <canvas id="network-bg"></canvas>
     
     <div id="app">
+        <!-- Exit Popup Component -->
+        <exit-popup :content="exitPopupContent"></exit-popup>
+        
         <!-- Loading Phase -->
         <div class="evaluation-container" v-if="!showResult">
             <div class="evaluation-header">
@@ -270,5 +274,14 @@
             drawNetwork();
         }
     </script>
+    
+    <!-- Exit Popup Component -->
+    <script src="../js/components/exit-popup.js?v=3e6f418"></script>
+    
+    <!-- State Manager -->
+    <script src="../js/state-manager.js?v=3e6f418"></script>
+    
+    <!-- Evaluation Logic -->
+    <script src="../js/evaluation.js?v=3e6f418"></script>
 </body>
 </html>
