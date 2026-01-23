@@ -5,7 +5,7 @@
 set -e
 
 MAIN_DIR="/Users/lucas/cursor projects/adavauniversity.org"
-DEPLOY_WORKTREE="/Users/lucas/cursor projects/adavauniversity.org-deploy"
+DEPLOY_WORKTREE="/Users/lucas/cursor projects/adavauniversity.org/.worktrees/deploy"
 
 echo "🚀 Preparing deployment..."
 echo ""
