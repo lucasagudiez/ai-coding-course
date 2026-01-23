@@ -13,12 +13,20 @@ DEPLOY_DIR="/home/lucas/www/adavauniversity.org"
 LOG_FILE="/home/lucas/logs/adavauniversity-deploy.log"
 LOCK_FILE="/tmp/adavauniversity-deploy.lock"
 
+# Cleanup function to kill playwright processes
+cleanup() {
+    pkill -f "playwright test" 2>/dev/null || true
+    rm -f "$LOCK_FILE"
+}
+
+# Set trap to cleanup on exit
+trap cleanup EXIT
+
 # Prevent concurrent runs
 if [ -f "$LOCK_FILE" ]; then
     exit 0
 fi
 touch "$LOCK_FILE"
-trap "rm -f $LOCK_FILE" EXIT
 
 cd "$DEPLOY_DIR"
 

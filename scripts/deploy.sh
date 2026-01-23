@@ -7,6 +7,15 @@ set -e
 MAIN_DIR="/Users/lucas/cursor projects/adavauniversity.org"
 DEPLOY_WORKTREE="/Users/lucas/cursor projects/adavauniversity.org/.worktrees/deploy"
 
+# Cleanup function to kill playwright processes
+cleanup() {
+    echo "🧹 Cleaning up playwright processes..."
+    pkill -f "playwright test" 2>/dev/null || true
+}
+
+# Set trap to cleanup on exit
+trap cleanup EXIT
+
 echo "🚀 Preparing deployment..."
 echo ""
 
