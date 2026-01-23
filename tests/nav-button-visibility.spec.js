@@ -26,9 +26,9 @@ test.describe('Navigation "Apply Now" Button @critical', () => {
         const applyButton = page.locator('nav .nav-links a.nav-cta').first();
         await expect(applyButton).toBeVisible({ timeout: 10000 });
         
-        // Verify button text
+        // Verify button text (now "Reserve Your Spot" instead of "Apply Now")
         const buttonText = await applyButton.textContent();
-        expect(buttonText.trim()).toBe('Apply Now');
+        expect(buttonText.trim()).toMatch(/Reserve Your Spot|Apply Now/);
         
         // Get bounding box
         const buttonBox = await applyButton.boundingBox();
