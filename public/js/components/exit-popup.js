@@ -21,31 +21,8 @@ const ExitPopupComponent = {
             triggered: false
         };
     },
-    template: `
-        <div v-if="show" class="exit-intent-modal" @click.self="close">
-            <div class="exit-modal-content">
-                <button class="exit-modal-close" @click="close" aria-label="Close popup">
-                    ×
-                </button>
-                
-                <h2 v-html="content.headline"></h2>
-                
-                <p class="exit-description" v-html="content.description"></p>
-                
-                <div class="exit-bullets" v-if="content.bullets && content.bullets.length">
-                    <ul>
-                        <li v-for="(bullet, index) in content.bullets" :key="index">
-                            {{ bullet }}
-                        </li>
-                    </ul>
-                </div>
-                
-                <button class="exit-cta-btn" @click="close">
-                    {{ content.cta }}
-                </button>
-            </div>
-        </div>
-    `,
+    // Template loaded from exit-popup.html via component loader
+    template: null,
     mounted() {
         // Only show once per session
         if (!sessionStorage.getItem('exitPopupSeen')) {
@@ -85,7 +62,30 @@ const ExitPopupComponent = {
     }
 };
 
+// Load template from HTML file
+(async function loadExitPopupTemplate() {
+    try {
+        const response = await fetch('/components/templates/exit-popup.html');
+        const html = await response.text();
+        
+        // Extract template between markers
+        const startMarker = '<!-- START_COMPONENT -->';
+        const endMarker = '<!-- END_COMPONENT -->';
+        const startIndex = html.indexOf(startMarker);
+        const endIndex = html.indexOf(endMarker);
+        
+        if (startIndex !== -1 && endIndex !== -1) {
+            ExitPopupComponent.template = html
+                .substring(startIndex + startMarker.length, endIndex)
+                .trim();
+        }
+    } catch (error) {
+        console.error('Failed to load exit-popup template:', error);
+    }
+})();
+
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = ExitPopupComponent;
 }
+

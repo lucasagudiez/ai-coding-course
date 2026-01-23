@@ -1,0 +1,25 @@
+<!-- START_COMPONENT -->
+<div v-if="show" class="exit-intent-modal" @click.self="close">
+    <div class="exit-modal-content">
+        <button class="exit-modal-close" @click="close" aria-label="Close popup">
+            ×
+        </button>
+        
+        <h2 v-html="content.headline"></h2>
+        
+        <p class="exit-description" v-html="content.description"></p>
+        
+        <div class="exit-bullets" v-if="content.bullets && content.bullets.length">
+            <ul>
+                <li v-for="(bullet, index) in content.bullets" :key="index">
+                    {{ bullet }}
+                </li>
+            </ul>
+        </div>
+        
+        <button class="exit-cta-btn" @click="close">
+            {{ content.cta }}
+        </button>
+    </div>
+</div>
+<!-- END_COMPONENT -->
