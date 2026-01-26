@@ -1,11 +1,17 @@
 const { createApp } = Vue;
 
 // Exit Popup Component is loaded from external file (components/exit-popup.js)
-// No inline definition needed
+// Provide fallback if not loaded
+const ExitPopupComponentSafe = typeof ExitPopupComponent !== 'undefined' 
+    ? ExitPopupComponent 
+    : {
+        template: '<div></div>',
+        props: ['content']
+    };
 
-createApp({
+const app = createApp({
     components: {
-        'exit-popup': ExitPopupComponent
+        'exit-popup': ExitPopupComponentSafe
     },
     data() {
         return {
@@ -330,4 +336,19 @@ createApp({
             return this.scrollY > 500;
         }
     }
-}).mount('#app');
+});
+
+// Mount Vue app with error handling
+try {
+    app.mount('#app');
+} catch (error) {
+    console.error('Failed to mount Vue app:', error);
+    // Show user-friendly error message
+    const appElement = document.getElementById('app');
+    if (appElement) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = 'padding: 40px; text-align: center; color: white; background: rgba(255,0,0,0.1); border-radius: 10px; margin: 20px;';
+        errorDiv.innerHTML = '<h2>Application Error</h2><p>Please refresh the page. If the problem persists, contact support.</p>';
+        appElement.insertBefore(errorDiv, appElement.firstChild);
+    }
+}

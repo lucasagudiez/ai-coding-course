@@ -1164,7 +1164,10 @@
     <!-- State Management -->
     <script src="js/state-manager.js?v=3e6f418"></script>
 
-    <!-- Vue App - Must load BEFORE other scripts that might use Vue -->
+    <!-- Exit Popup Component (must load before app.js) -->
+    <script src="js/components/exit-popup.js?v=3e6f418"></script>
+
+    <!-- Vue App - Must load AFTER components -->
     <script src="js/app.js?v=3e6f418"></script>
 
     <script>
