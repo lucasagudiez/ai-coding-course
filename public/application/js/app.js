@@ -1,10 +1,16 @@
 // Application Form Logic
 // Exit Popup Component is loaded from external file (components/exit-popup.js)
-// No inline definition needed
+// Provide fallback if not loaded
+const ExitPopupComponentSafe = typeof ExitPopupComponent !== 'undefined' 
+    ? ExitPopupComponent 
+    : {
+        template: '<div></div>',
+        props: ['content']
+    };
 
 const ApplicationForm = {
     components: {
-        'exit-popup': ExitPopupComponent
+        'exit-popup': ExitPopupComponentSafe
     },
     data() {
         return {
@@ -582,14 +588,33 @@ const ApplicationForm = {
 
 // Initialize Vue app when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
+    // Ensure ExitPopupComponent is loaded or use fallback
+    if (typeof ExitPopupComponent === 'undefined') {
+        console.warn('ExitPopupComponent not found. Using fallback.');
+        window.ExitPopupComponent = ExitPopupComponentSafe;
+    }
+    
     // Load all component templates first
     if (window.loadVueComponents) {
         await window.loadVueComponents();
     }
     
     // Then initialize the main Vue app
-    new Vue({
-        el: '#app',
-        ...ApplicationForm
-    });
+    try {
+        new Vue({
+            el: '#app',
+            ...ApplicationForm
+        });
+        console.log('✅ Vue app initialized successfully on application page');
+    } catch (error) {
+        console.error('❌ Vue initialization failed on application page:', error);
+        // Show user-friendly error message
+        const appElement = document.getElementById('app');
+        if (appElement) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'padding: 40px; text-align: center; color: white; background: rgba(255,0,0,0.1); border-radius: 10px; margin: 20px;';
+            errorDiv.innerHTML = '<h2>Application Error</h2><p>Please refresh the page. If the problem persists, contact support.</p>';
+            appElement.insertBefore(errorDiv, appElement.firstChild);
+        }
+    }
 });

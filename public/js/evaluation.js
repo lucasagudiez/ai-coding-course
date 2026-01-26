@@ -11,9 +11,17 @@ const exitPopupContentEvaluation = {
 };
 
 // Evaluation Page Logic with Real ChatGPT Integration
+// Provide fallback if ExitPopupComponent is not loaded
+const ExitPopupComponentSafe = typeof ExitPopupComponent !== 'undefined' 
+    ? ExitPopupComponent 
+    : {
+        template: '<div></div>',
+        props: ['content']
+    };
+
 const EvaluationPage = {
     components: {
-        'exit-popup': ExitPopupComponent
+        'exit-popup': ExitPopupComponentSafe
     },
     
     data() {
@@ -214,8 +222,27 @@ const EvaluationPage = {
 
 // Initialize Vue app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new Vue({
-        el: '#app',
-        ...EvaluationPage
-    });
+    // Ensure ExitPopupComponent is loaded or use fallback
+    if (typeof ExitPopupComponent === 'undefined') {
+        console.warn('ExitPopupComponent not found. Using fallback.');
+        window.ExitPopupComponent = ExitPopupComponentSafe;
+    }
+    
+    try {
+        new Vue({
+            el: '#app',
+            ...EvaluationPage
+        });
+        console.log('✅ Vue app initialized successfully on evaluation page');
+    } catch (error) {
+        console.error('❌ Vue initialization failed on evaluation page:', error);
+        // Show user-friendly error message
+        const appElement = document.getElementById('app');
+        if (appElement) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'padding: 40px; text-align: center; color: white; background: rgba(255,0,0,0.1); border-radius: 10px; margin: 20px;';
+            errorDiv.innerHTML = '<h2>Application Error</h2><p>Please refresh the page. If the problem persists, contact support.</p>';
+            appElement.insertBefore(errorDiv, appElement.firstChild);
+        }
+    }
 });

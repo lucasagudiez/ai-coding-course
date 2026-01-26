@@ -128,9 +128,20 @@ const StateManager = {
                 const result = await response.json();
                 return result.data;
             }
+            
+            // 404 is expected when no session exists - don't log as error
+            if (response.status === 404) {
+                return null;
+            }
+            
+            // Only log non-404 errors
+            console.warn('Server load returned status:', response.status);
             return null;
         } catch (error) {
-            console.error('Server load error:', error);
+            // Network errors are expected if server is not running - only log in dev
+            if (window.location.hostname === 'localhost') {
+                console.debug('Server load error (server may not be running):', error.message);
+            }
             return null;
         }
     },

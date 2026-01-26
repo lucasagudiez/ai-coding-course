@@ -732,7 +732,7 @@
                         </div>
                     </div>
                     <form class="cohort-form" @submit.prevent="submitCohortForm('february-daily')">
-                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'february-daily'" @input="nameError = false">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s\-']+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'february-daily'" @input="nameError = false">
                         <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'february-daily'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Reserve Your Spot' }}
@@ -776,7 +776,7 @@
                         </div>
                     </div>
                     <form class="cohort-form" @submit.prevent="submitCohortForm('spring-weekly')">
-                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s'-]+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="nameError = false">
+                        <input type="text" placeholder="Your Full Name" class="form-input" :class="{ 'input-error': nameError }" pattern="[A-Za-z\s\-']+" title="Please enter only letters, spaces, hyphens, and apostrophes" v-model="name" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="nameError = false">
                         <input type="email" placeholder="Your Email Address" class="form-input" :class="{ 'input-error': emailError }" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" v-model="email" :disabled="formSent && submittedCohort === 'spring-weekly'" @input="emailError = false">
                         <button type="submit" class="btn btn-primary pulse-glow">
                             {{ cohortFormSubmitting ? 'Sending...' : formSent ? 'Sent!' : 'Reserve Your Spot' }}
@@ -2316,8 +2316,6 @@
         }
     </script>
 
-    <!-- State Manager (must load before app.js) -->
-    <script src="js/state-manager.js?v=3e6f418"></script>
 
     <!-- Scroll to Top Button (Fixed Position) -->
     <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
