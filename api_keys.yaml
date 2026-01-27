@@ -1,6 +1,4 @@
 # API Keys for Adava University
-# DO NOT COMMIT TO PUBLIC REPOS
-# Add this file to .gitignore
 
 # Square Payment Gateway
 # Dashboard: https://developer.squareup.com/apps
@@ -21,4 +19,4 @@ square_production:
 
 # OpenAI API (for LLM personalization)
 # Get key at: https://platform.openai.com/api-keys
-openai: YOUR_OPENAI_KEY_HERE
+openai: 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
