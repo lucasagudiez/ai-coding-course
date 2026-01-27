@@ -46,6 +46,145 @@ body {
 }
 
 /* =============================================================================
+   SCARCITY BAR - SIMPLE TEXT ONLY
+   ============================================================================= */
+
+.scarcity-bar-simple {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.scarcity-bar-simple strong {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.scarcity-bar-simple i {
+    font-size: 1.1rem;
+}
+
+.scarcity-bar-simple span {
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.scarcity-bar-simple .seats-count {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.95;
+}
+
+/* =============================================================================
+   SCARCITY BAR - HORIZONTAL LAYOUT
+   ============================================================================= */
+
+.scarcity-bar-horizontal {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.scarcity-text-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.scarcity-text-left strong {
+    font-size: 1.2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.scarcity-text-left small {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.scarcity-seats-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.scarcity-seats-right .seat-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    max-width: 250px;
+}
+
+.scarcity-seats-right .seat {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.scarcity-seats-right .seat.taken {
+    background: #666;
+    border: 1px solid #444;
+}
+
+.scarcity-seats-right .seat.available {
+    background: linear-gradient(135deg, #14b8a6 0%, #20c997 100%);
+    border: 1px solid #14b8a6;
+    box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.scarcity-seats-right .seats-label {
+    text-align: center;
+    color: #14b8a6;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Responsive: Stack vertically on mobile */
+@media (max-width: 768px) {
+    .scarcity-bar-horizontal {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .scarcity-text-left {
+        align-items: center;
+    }
+}
+
+/* =============================================================================
    HEADER
    ============================================================================= */
 

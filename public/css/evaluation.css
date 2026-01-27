@@ -58,6 +58,10 @@ body {
     padding: clamp(40px, 6vw, 60px) clamp(20px, 5vw, 40px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 100%;
+    /* Show immediately before Vue initializes */
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
 .evaluation-header {
@@ -206,6 +210,45 @@ body {
     padding: 60px 40px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.5s ease;
+}
+
+/* Scarcity Bar - Simple Text Only */
+.result-container .scarcity-bar-simple {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.result-container .scarcity-bar-simple strong {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.result-container .scarcity-bar-simple i {
+    font-size: 1rem;
+}
+
+.result-container .scarcity-bar-simple span {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+@media (max-width: 600px) {
+    .result-container .scarcity-bar-simple {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 
 @keyframes fadeIn {

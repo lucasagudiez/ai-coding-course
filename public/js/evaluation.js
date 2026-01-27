@@ -25,11 +25,24 @@ const EvaluationPage = {
     },
     
     data() {
+        // Get initial progress from DOM if animation already started
+        let initialProgress = 0;
+        try {
+            const loadingFill = document.getElementById('loading-fill-immediate');
+            if (loadingFill && loadingFill.style.width) {
+                const width = loadingFill.style.width;
+                initialProgress = parseFloat(width) || 0;
+            }
+        } catch (e) {
+            // Ignore errors
+        }
+        
         return {
-            progress: 0,
+            progress: Math.max(initialProgress, 0), // Start from where CSS animation left off
             currentStep: 0,
             showResult: false,
             loadingMessage: 'Initializing AI review...',
+            spotsRemaining: 3, // For scarcity bar display
             // Result data (populated by API)
             evaluation: null,
             reasons: [],
@@ -160,10 +173,11 @@ const EvaluationPage = {
             let messageIndex = 0;
             let stepIndex = 0;
             
-            // Update progress bar smoothly
+            // Update progress bar smoothly - continue from current progress
             const progressInterval = setInterval(() => {
                 if (this.progress < 95 && !this.showResult) {
-                    this.progress += 0.5;
+                    // Continue smoothly from current progress
+                    this.progress = Math.min(this.progress + 0.5, 95);
                 } else {
                     clearInterval(progressInterval);
                 }

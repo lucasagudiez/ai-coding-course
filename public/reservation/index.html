@@ -32,11 +32,11 @@
         <!-- Exit Popup Component -->
         <exit-popup :content="exitPopupContent"></exit-popup>
         
-        <!-- Scarcity Bar -->
-        <div class="scarcity-bar" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 12px 20px; text-align: center;">
-            <strong><i class="fas fa-exclamation-circle"></i> 3 Seats Remaining in February Cohort</strong>
-            <span style="margin-left: 15px; opacity: 0.9;">Applications close in 2 days</span>
-            <small style="display: block; margin-top: 5px; font-size: 0.9em;">3 of 30 seats left</small>
+        <!-- Scarcity Bar - Simple Text Only -->
+        <div class="scarcity-bar-simple">
+            <strong><i class="fas fa-exclamation-circle"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+            <span>Applications close in 2 days</span>
+            <p class="seats-count">{{ spotsRemaining }} of 30 seats left</p>
         </div>
         
         <!-- Header -->

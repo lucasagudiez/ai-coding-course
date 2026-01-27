@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../css/evaluation.css?v=3e6f418">
     <link rel="stylesheet" href="../css/components/exit-popup.css?v=3e6f418">
+    <link rel="stylesheet" href="../css/components.css?v=3e6f418">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=3e6f418">
@@ -24,11 +25,53 @@
     <!-- Geometric network background -->
     <canvas id="network-bg"></canvas>
     
+    <!-- Start loading animation IMMEDIATELY before Vue initializes -->
+    <script>
+        // Start animation IMMEDIATELY - execute as soon as script loads
+        (function() {
+            function startImmediateAnimation() {
+                // Use ID selector for faster lookup
+                const loadingFill = document.getElementById('loading-fill-immediate');
+                const loadingText = document.getElementById('loading-text-immediate');
+                
+                if (loadingFill) {
+                    // Start progress animation immediately
+                    let progress = 0;
+                    const progressInterval = setInterval(function() {
+                        if (progress < 20) { // Animate to 20% immediately
+                            progress += 0.6;
+                            loadingFill.style.width = progress + '%';
+                        } else {
+                            clearInterval(progressInterval);
+                        }
+                    }, 30); // Update every 30ms for very smooth animation
+                }
+                
+                // Update loading message immediately
+                if (loadingText) {
+                    loadingText.textContent = 'Initializing AI review...';
+                }
+            }
+            
+            // Try multiple strategies to start ASAP
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                // DOM is ready, start immediately
+                startImmediateAnimation();
+            } else {
+                // Wait for DOMContentLoaded
+                document.addEventListener('DOMContentLoaded', startImmediateAnimation);
+            }
+            
+            // Also try after a tiny delay as fallback
+            setTimeout(startImmediateAnimation, 10);
+        })();
+    </script>
+    
     <div id="app">
         <!-- Exit Popup Component -->
         <exit-popup :content="exitPopupContent"></exit-popup>
         
-        <!-- Loading Phase -->
+        <!-- Loading Phase - Show immediately before Vue initializes -->
         <div class="evaluation-container" v-if="!showResult">
             <div class="evaluation-header">
                 <div class="logo">
@@ -41,9 +84,9 @@
 
             <div class="loading-bar-container">
                 <div class="loading-bar">
-                    <div class="loading-fill" :style="{ width: progress + '%' }"></div>
+                    <div class="loading-fill" :style="{ width: (progress || 0) + '%' }" id="loading-fill-immediate"></div>
                 </div>
-                <p class="loading-text">{{ loadingMessage }}</p>
+                <p class="loading-text" id="loading-text-immediate">{{ loadingMessage || 'Initializing AI review...' }}</p>
             </div>
 
             <div class="evaluation-steps">
@@ -68,10 +111,10 @@
 
         <!-- Result Phase -->
         <div class="result-container" v-if="showResult">
-            <!-- Scarcity reminder -->
-            <div class="scarcity-reminder" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 12px 20px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
-                <strong><i class="fas fa-exclamation-circle"></i> 3 Seats Remaining in February Cohort</strong>
-                <span style="margin-left: 15px; opacity: 0.9;">Applications close in 2 days</span>
+            <!-- Scarcity Bar -->
+            <div class="scarcity-bar-simple">
+                <strong><i class="fas fa-exclamation-circle"></i> {{ spotsRemaining }} Seats Remaining in February Cohort</strong>
+                <span>Applications close in 2 days</span>
             </div>
             
             <div class="result-icon">
@@ -278,11 +321,5 @@
             drawNetwork();
         }
     </script>
-    
-    <!-- Exit Popup Component -->
-    <script src="../js/components/exit-popup.js?v=3e6f418"></script>
-    
-    <!-- State Manager -->
-    <script src="../js/state-manager.js?v=3e6f418"></script>
 </body>
 </html>

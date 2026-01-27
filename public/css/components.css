@@ -51,29 +51,37 @@
 }
 
 .seats-visual {
+    background: rgba(20, 20, 35, 0.6);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 1rem;
 }
 
 .seat-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    margin-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    max-width: 250px;
+    margin: 0 auto 0.75rem;
 }
 
 .seat {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .seat.taken {
-    background: rgba(255, 255, 255, 0.3);
+    background: #666;
+    border: 1px solid #444;
 }
 
 .seat.available {
-    background: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, #14b8a6 0%, #20c997 100%);
+    border: 1px solid #14b8a6;
+    box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -83,8 +91,10 @@
 }
 
 .seats-label {
-    font-size: 0.85rem;
-    opacity: 0.9;
+    text-align: center;
+    color: #14b8a6;
+    font-size: 0.9rem;
+    font-weight: 600;
     margin: 0;
 }
 

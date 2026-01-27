@@ -38,6 +38,9 @@ const exitPopupContentReservation = {
             showSuccess: false,
             changeCard: false, // Toggle to show card form
             
+            // Scarcity bar
+            spotsRemaining: 3,
+            
             // FAQ state (for faq-section component)
             faqOpen: {},
             
