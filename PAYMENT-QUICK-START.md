@@ -55,13 +55,11 @@ If yes to all → proceed!
 Create `.env` file in `server/` directory:
 
 ```bash
-# server/.env (add this file to .gitignore!)
+# server/.env
 SQUARE_ACCESS_TOKEN=your_sandbox_access_token_here
 SQUARE_ENVIRONMENT=sandbox
 SQUARE_APPLICATION_ID=your_application_id_here
 ```
-
-**⚠️ CRITICAL:** Add `.env` to `.gitignore` NOW to avoid committing secrets!
 
 ### Step 5: Install Dependencies (2 minutes)
 

@@ -194,8 +194,7 @@ STEP 3: RESERVATION (After Investment)
 
 **Backend:**
 - `server/app.js` - New `/api/personalize` endpoint
-- `.env` - API key storage (not in git)
-- `.gitignore` - Added `.env` and `api_keys.yaml`
+- `.env` - API key storage
 - `package.json` - Added `openai` and `dotenv`
 
 **Documentation:**
@@ -209,7 +208,6 @@ STEP 3: RESERVATION (After Investment)
 
 **✅ API Key Protection:**
 - OpenAI API key in `.env` file
-- `.env` added to `.gitignore`
 - Backend handles all LLM calls
 - Frontend NEVER sees API key
 - Git history cleaned (force push to remove old commits with exposed key)

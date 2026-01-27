@@ -46,7 +46,7 @@
 ### Credentials Storage
 
 ```bash
-# .env file (add to .gitignore)
+# .env file
 SQUARE_ACCESS_TOKEN=your_access_token_here
 SQUARE_ENVIRONMENT=sandbox  # or production
 SQUARE_APPLICATION_ID=your_application_id_here
