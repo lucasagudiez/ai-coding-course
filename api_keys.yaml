@@ -20,3 +20,12 @@ square_production:
 # OpenAI API (for LLM personalization)
 # Get key at: https://platform.openai.com/api-keys
 openai: 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
+
+# Server Access - Coworker Account
+# Run scripts/create-coworker-user.sh to generate actual credentials
+# Credentials will be saved to coworker-credentials.yml
+coworker_access:
+  username: adava-admin
+  password: GENERATED_BY_SCRIPT
+  note: Run 'sudo bash scripts/create-coworker-user.sh' on server to create user and generate password
+  credentials_file: coworker-credentials.yml
